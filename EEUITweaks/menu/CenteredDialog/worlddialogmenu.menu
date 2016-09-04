@@ -1,0 +1,108 @@
+menu
+{
+	name 'WORLD_DIALOG'
+	align center center
+	ignoreEsc
+	onOpen
+	"	
+		local x,y,w,h = Infinity_GetArea('worldDialogBackground')
+		Infinity_PushMenu('WORLD_MESSAGES')
+		Infinity_PushMenu('WORLD_DIALOG_CONFIRM')
+		greySidebars()
+	"
+	onClose
+	"
+		
+		local x,y,w,h = Infinity_GetArea('worldDialogBackground')
+		resizeDialogContent(h - 253)
+		Infinity_PopMenu('WORLD_DIALOG_CONFIRM')
+		Infinity_PopMenu('WORLD_MESSAGES')
+		ungreySidebars()
+	"
+	label
+	{
+		name "worldDialogBackground"
+		area 0 -47 863 300
+		rectangle 4
+	}
+	label
+	{
+		name "worldDialogPortraitArea"
+		area 22 -25 54 84
+		bitmap lua "worldNPCDialogPortrait"
+	}
+	text
+	{
+		name "worldNPCDialog"
+		area 86 -25 758 111
+		text lua "worldNPCDialogText"
+		text style "gamelog"
+		scrollbar	'GUISCRC'
+	}
+	text
+	{
+		name "worldDialogMessageBox"
+		enabled "showWorldMessages"
+	}
+	handle
+	{
+		enabled "showWorldMessages"
+		name "dialogHandleY"
+	}
+	text
+	{
+		name "worldDialogShowMessagesButton"
+		enabled "showWorldMessages"
+	}
+	text
+	{
+		name "worldDialogMessageDivider"
+		enabled "showWorldMessages"
+	}
+	list
+	{
+		column
+		{
+			width 100
+			label
+			{
+				area 0 0 -1 -1
+				enabled "dialogEntryGreyed()"
+				rectangle 1
+				rectangle opacity 100
+			}
+			text
+			{
+				area 0 0 -1 -1
+				text lua "getDialogEntryText(rowNumber)"
+				text style "gamelog"
+			}
+		}
+		name "worldPlayerDialogChoicesList"
+		area 86 86 758 151
+		rowheight dynamic
+		hideHighlight
+		table "worldPlayerDialogChoices"
+		var "worldPlayerDialogSelection"
+		scrollbar	'GUISCRC'
+		actionEnter
+		"
+			if(gameOptions.m_bConfirmDialog == true) then return end
+			glowTest = mouseoverRow
+			worldPlayerDialogSelection = mouseoverRow
+		"
+		actionExit
+		"
+			if(gameOptions.m_bConfirmDialog == true) then return end
+			glowTest = nil
+			worldPlayerDialogSelection = 0
+		"
+		action
+		"
+			--In confirm mode, just highlight the choice.
+			if(gameOptions.m_bConfirmDialog == true) then return end
+			worldScreen:OnDialogReplyClick(worldPlayerDialogChoices[worldPlayerDialogSelection].marker)
+			worldPlayerDialogSelection = 0
+		"
+	}
+}

@@ -1,0 +1,11 @@
+		actionUpdate
+		"
+			if (allChargenClasses[currentChargenClass].kits[currentChargenKit] and getKitDisabled(allChargenClasses[currentChargenClass].kits[currentChargenKit].id)) then
+				currentChargenKit = lastChargenKit
+			else
+				lastChargenKit = currentChargenKit
+			end
+			if (allChargenClasses[currentChargenClass].kits[currentChargenKit]) then
+				createCharScreen:OnKitSelectButtonClick(allChargenClasses[currentChargenClass].kits[currentChargenKit].id)
+			end
+		"

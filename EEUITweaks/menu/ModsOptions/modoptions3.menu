@@ -1,0 +1,256 @@
+-- Mods menu
+menu
+{
+	name	'OPTIONS_MODS'
+	modal
+	align center center
+	onOpen
+	"
+		modOptionsIdx = 0
+		modOptionsInfo = 'MODOPT_INFO'
+		modOptionsFilterRegistrations()
+		modOptionsRememberLogo(logoFrame)
+	"
+
+	button
+	{
+		area 0 0 864 710
+		mosaic	GUIDCB
+		action
+		"
+			modOptionsIdx = 0
+			modOptionsInfo = 'MODOPT_INFO'
+		"
+	}
+
+	label
+	{
+		area		207 15 481 44
+		text 		'MODOPT_TITLE'
+		text style	title
+	}
+	list
+	{
+		column
+		{
+			width 100
+			label
+			{
+				area 0 0 -1 -1
+				text lua "t(modOptionsRegistrations[rowNumber].name)"
+				text style "normal"
+				pad 8 0 0 0
+				text align left center
+				text highlight lua "modOptionsIdx == rowNumber"
+			}
+		}
+		area 		472 188 353 423
+		rowheight 	46
+		table		"modOptionsRegistrations"
+		var			modOptionsIdx
+		scrollbar	'GUISCRC'
+		hidehighlight
+		actionUpdate
+		"
+		
+			if(modOptionsIdx == 0) then
+				modOptionsInfo = 'MODOPT_INFO'
+			else
+				modOptionsInfo = modOptionsRegistrations[modOptionsIdx].description
+			end
+		"
+	}
+
+	text
+	{
+		area		36 478 399 133
+		pad			4 4 4 4
+		fill		0 0 0 128
+		text		lua "t(modOptionsInfo)"
+		text style	normal
+		scrollbar	'GUISCRC'
+	}
+	label
+	{
+		area		120 182 207 230
+		bam			MODOIMG1
+		sequence lua 'modOptionsRecallLogo()'
+		frame		0
+		align		top center
+	}
+	label
+	{
+		area 120 412 207 30
+		text lua "CBaldurChitin:GetVersionString()"
+		text style "normal"
+		text align center center
+	}
+	button
+	{
+		area		463 652 233 51
+		bam			GUIOSTUR
+		sequence	2
+		text		"DONE_BUTTON"
+		text style	"button"
+		action
+		"
+			Infinity_PopMenu()
+		"
+	}
+	button
+	{
+		area		211 652 233 51
+		bam			GUIOSTUL
+		sequence	2
+		text 		"MODOPT_CHANGE_BUTTON"
+		text style	"button"
+		clickable lua "modOptionsValidSelection()"
+		action
+		"
+			Infinity_PushMenu(modOptionsRegistrations[modOptionsIdx].menuid)
+		"
+	}
+}
+
+-- Mods Options menu
+`
+if(modOptionsRegisterMenu) then
+	modOptionsRegisterMenu('MODOPT_TITLE', 'OPTIONS_MODOPS', 'MODOPT_MODOPT_INFO', 0)
+end
+
+`
+menu
+{
+	name	'OPTIONS_MODOPS'
+	modal
+	align center center
+	onOpen
+	"
+		modOptionsOpIdx = 0
+		modOptionsOpInfo = 'MODOPT_MODOPT_INFO'
+		for index, var in ipairs(modOptionsToggles) do
+			var[4] = modOptionGetToggleOption(index)
+			if var[4] == 0 then
+				var[3] = 0
+			else
+				var[3] = 2
+ 			end
+		end
+	"
+
+	button
+	{
+		area 	40 0 512 734
+		mosaic	GUIERR8
+		action
+		"
+			modOptionsOpIdx = 0
+			modOptionsOpInfo = 'MODOPT_MODOPT_INFO'
+		"
+	}
+
+	label
+	{
+		area		106 115 382 44
+		text 		'MODOPT_MODOPT_TITLE'
+		text style	title
+	}
+
+	list
+	{	
+		column 
+		{ 
+			width 90
+			label
+			{
+				area 10 0 -1 -1
+				text lua "t(modOptionsToggles[rowNumber][1])"
+				text style "normal"
+				text align left center
+			}
+		}
+		column 
+		{ 
+			width 10
+			label
+			{
+				area		10 8 -1 -1
+				bam			ROUNDBUT
+				align 		center center
+				frame		lua "modOptionsToggles[rowNumber][3]"
+			}
+		}
+
+		area 106 162 382 92
+		rowheight	46
+		table		"modOptionsToggles"
+		var			modOptionsOpIdx
+		scrollbar	'GUISCRC'
+		action		
+		"
+			modOptionsOpInfo = modOptionsToggles[modOptionsOpIdx][2]
+
+			if(cellNumber == 2) then
+				Infinity_PlaySound('GAM_09')
+
+				modOptionsToggles[modOptionsOpIdx][3] = toggleFrame(modOptionsToggles[modOptionsOpIdx][3])
+
+				if modOptionsToggles[modOptionsOpIdx][3] == 0 then
+					modOptionsToggles[modOptionsOpIdx][4] = 0
+				else 
+					modOptionsToggles[modOptionsOpIdx][4] = 1
+				end
+			end
+		"
+		actionUpdate
+		"
+			if(modOptionsOpIdx == 0) then
+				modOptionsOpInfo = 'MODOPT_MODOPT_INFO'
+			end
+		"
+	}
+	
+	text
+	{
+		area		106 288 382 148
+		rectangle	0
+		rectangle opacity 50
+		pad			8 8 8 8
+		text		lua "t(modOptionsOpInfo)"
+		text style	normal
+		scrollbar	'GUISCRC'
+		action
+		"
+			modOptionsOpIdx = 0
+			modOptionsOpInfo = 'MODOPT_INFO'
+		"
+	}
+
+	button
+	{
+		area		151 600 300 44
+		bam			GUIOSTCL
+		sequence	2
+		text 		"CANCEL_BUTTON"
+		text style	"button"
+		action
+		"
+			Infinity_PopMenu()
+		"
+	}
+	button
+	{
+		area		151 556 300 44
+		bam			GUIOSTCL
+		sequence	2
+		text 		"DONE_BUTTON"
+		text style	"button"
+		action
+		"
+			for index, var in ipairs(modOptionsToggles) do				
+				modOptionSetToggleOption(index)
+			end
+			Infinity_PopMenu()
+		"
+	}
+}

@@ -1,0 +1,38 @@
+		action
+		"
+			if not storeScreen:IsContainer() then
+				if not storeScreen:IsCloseBagButtonClickable() or store.storeItems[storeItemsVar].valid == 1 then
+					local highlight = true
+					if(store.storeItems[storeItemsVar].highlight == 1) then highlight = false end
+					storeScreen:SelectStoreItem(storeItemsVar - 1,  highlight)
+				end
+			elseif (store.storeItems[storeItemsVar].highlight == 1) then
+				storeScreen:SelectStoreItem(storeItemsVar - 1,  false)
+			else
+				storeScreen:SelectStoreItem(storeItemsVar - 1,  true)
+				local count = store.storeItems[storeItemsVar].item.count
+				local stock = store.storeItems[storeItemsVar].numInStock
+				if (count > 1) then
+					storeScreen:SetStoreItemCount(storeItemsVar - 1, count)
+				elseif (stock > 1) then
+					storeScreen:SetStoreItemCount(storeItemsVar - 1, stock)
+				end	
+			end
+		"
+		actionalt
+		"
+			showItemDescription(store.storeItems[storeItemsVar].item, 1)
+		"
+		actionDbl
+		"
+			if not storeScreen:IsCloseBagButtonClickable() or store.storeItems[storeItemsVar].valid == 1 then
+				local maxCount = store.storeItems[storeItemsVar].maxCount
+				if(maxCount > 1) then
+					if not storeScreen:IsContainer() then
+						popupRequester(maxCount, storeSplitStack, false)
+					else
+						popupRequester(maxCount, storeSplitStack, true)
+					end
+				end
+			end
+		"

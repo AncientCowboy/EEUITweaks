@@ -1,0 +1,349 @@
+menu
+{
+	name 'STORE_BUYSELL'
+	align center center
+	offset 0 -48
+	ignoreEsc
+	onOpen "storeScreen:UpdateBuySellPanel()"
+
+	label
+	{
+		area 0 0 864 614
+		mosaic GUISTBSC
+	}
+	label
+	{
+		area 48 6 768 52
+		text lua "checkContainerText('BUY_SELL_TITLE','CONTAINER_TITLE')"
+		text style "title"
+	}
+	label
+	{
+		area 277 68 310 26
+		text lua "Infinity_FetchString(storeScreen:GetStoreName())"
+		text style "label"
+	}
+	label
+	{
+		area 274 103 313 31
+		text lua "game:GetPartyGold()"
+		text style "gold"
+	}
+	label
+	{
+		area 94 524 146 23
+		enabled "not storeScreen:IsContainer()"
+		text "COST_LABEL"
+		text style "label"
+		align right center
+	}
+	label
+	{
+		area 319 524 108 23
+		enabled "not storeScreen:IsContainer()"
+		text lua "storeScreen:GetStoreCost()"
+		text style "normal"
+		align right center
+	}
+	label
+	{
+		area 533 524 146 23
+		enabled "not storeScreen:IsContainer()"
+		text "PRICE_LABEL"
+		text style "label"
+		align right center
+	}
+	label
+	{
+		area 717 524 108 23
+		enabled "not storeScreen:IsContainer()"
+		text lua "storeScreen:GetGroupCost()"
+		text style "normal"
+		align right center
+	}
+
+	list
+	{
+		column 
+		{ 
+			width 100
+			label
+			{
+				area 0 0 412 62
+				mosaic GUISTBK2
+				respectClipping
+			}
+			label
+			{
+				area 3 0 52 62
+				bam STONSLOT
+				frame lua "getStoreSlotHighlight(store.storeItems[rowNumber].highlight)"
+				icon lua "store.storeItems[rowNumber].item.icon"
+				tint lua "store.storeItems[rowNumber].item.tint"
+				usages lua "store.storeItems[rowNumber].amountSelected" --how many selected
+				count lua "store.storeItems[rowNumber].item.stackSize" --How many to a stack
+				align center center
+			}
+			label
+			{
+				area 80 0 250 62
+				text lua "store.storeItems[rowNumber].label"
+				text style "normal"
+				text align left center
+			}
+			label
+			{
+				area 330 0 91 62
+				enabled "not storeScreen:IsContainer()"
+				text lua "store.storeItems[rowNumber].value"
+				text style "gold"
+			}
+			label
+			{
+				enabled "store.storeItems[rowNumber].valid == 0 and store.storeItems[rowNumber].highlight == 0"
+				area 0 2 410 58
+				rectangle 1
+				rectangle opacity 150
+			}
+		}
+		area 19 138 434 376
+		hidehighlight
+		rowheight	62
+		table		"store.storeItems"
+		var			"storeItemsVar"
+		scrollbar 'GUISCRC'
+		action
+		"
+			if store.storeItems[storeItemsVar].highlight == 1 then
+				storeScreen:SelectStoreItem(storeItemsVar - 1,  false)
+			elseif store.storeItems[storeItemsVar].valid == 1 then
+				storeScreen:SelectStoreItem(storeItemsVar - 1,  true)
+			end
+		"
+		actionalt
+		"
+			showItemDescription(store.storeItems[storeItemsVar].item, 1)
+		"
+		actionDbl
+		"
+			if store.storeItems[storeItemsVar].valid == 1 then
+				local maxCount = store.storeItems[storeItemsVar].maxCount
+				if(maxCount > 1) then
+					popupRequester(maxCount, storeSplitStack, false)
+				end
+			end
+		"
+	}
+
+	list
+	{
+		column 
+		{ 
+			width 100
+			label
+			{
+				area 0 0 370 62
+				mosaic GUISTBK1
+				respectClipping
+			}
+			label
+			{
+				area 3 0 52 62
+				bam STONSLOT
+				frame lua "getStoreSlotHighlight(store.groupItems[rowNumber].highlight)"
+				tint lua "store.groupItems[rowNumber].item.tint"
+				icon lua "store.groupItems[rowNumber].item.icon"
+				count lua "store.groupItems[rowNumber].count"
+				usages lua "store.groupItems[rowNumber].item.usages"
+				align center center
+			}
+			label
+			{
+				area 80 0 200 62
+				text lua "store.groupItems[rowNumber].label"
+				text style "normal"
+				text align left center
+			}
+			label
+			{
+				area 300 0 62 62
+				enabled "not storeScreen:IsContainer()"
+				text lua "store.groupItems[rowNumber].value"
+				text style "gold"
+			}
+			label
+			{
+				--#21242 We don't grey out bags, even though they're not selectable, because we can open them.
+				enabled "store.groupItems[rowNumber].valid == 0  and store.groupItems[rowNumber].item.isBag ~= 1"
+				area 0 2 368 58
+				rectangle 1
+				rectangle opacity 150
+			}
+		}
+		area 462 138 392 376
+		enabled "not storeScreen:IsCloseBagButtonClickable()"
+		hidehighlight
+		rowheight	62
+		table		"store.groupItems"
+		var			"storeGroupItemsVar"
+		scrollbar 'GUISCRC'
+		action
+		"
+			if store.groupItems[storeGroupItemsVar].item.isBag == 1 then
+				showItemDescription(store.groupItems[storeGroupItemsVar].item, 1)
+				itemDescLeftButtonAction()
+			elseif store.groupItems[storeGroupItemsVar].highlight == 1 then
+				storeScreen:SelectGroupItem(storeGroupItemsVar - 1,  false)
+			elseif store.groupItems[storeGroupItemsVar].valid == 1 then
+				storeScreen:SelectGroupItem(storeGroupItemsVar - 1,  true)
+			end
+		"
+		actionalt
+		"
+			showItemDescription(store.groupItems[storeGroupItemsVar].item, 1)
+		"
+		actionDbl
+		"
+			if store.groupItems[storeGroupItemsVar].valid ~= 0 then
+				local count = store.groupItems[storeGroupItemsVar].item.count
+				local stock = store.groupItems[storeGroupItemsVar].numInStock or 0
+				if count > 1 then
+					popupRequester(count, groupSplitStack, true)
+				elseif stock > 1 then
+					popupRequester(stock, groupSplitStack, true)
+				end	
+			end
+		"
+	}
+	list
+	{
+		column 
+		{ 
+			width 100
+			label
+			{
+				area 0 0 370 62
+				mosaic GUISTBK1
+				respectClipping
+			}
+			label
+			{
+				area 3 0 52 62
+				bam STONSLOT
+				frame lua "getStoreSlotHighlight(store.groupItems[rowNumber].highlight)"
+				tint lua "store.groupItems[rowNumber].item.tint"
+				icon lua "store.groupItems[rowNumber].item.icon"
+				count lua "store.groupItems[rowNumber].item.count"
+				usages lua "store.groupItems[rowNumber].count"
+				align center center
+			}
+			label
+			{
+				area 80 0 200 62
+				text lua "store.groupItems[rowNumber].label"
+				text style "normal"
+				text align left center
+			}
+			label
+			{
+				area 300 0 62 62
+				enabled "not storeScreen:IsContainer()"
+				text lua "store.groupItems[rowNumber].value"
+				text style "gold"
+			}
+			label
+			{
+				enabled "store.groupItems[rowNumber].valid == 0"
+				area 0 2 368 58
+				rectangle 1
+				rectangle opacity 150
+			}
+		}
+		area 462 138 392 376
+		enabled "storeScreen:IsCloseBagButtonClickable()"
+		hidehighlight
+		rowheight	62
+		table		"store.groupItems"
+		var			"storeGroupItemsVar"
+		scrollbar 'GUISCRC'
+		action
+		"
+			if store.groupItems[storeGroupItemsVar].highlight == 1 then
+				storeScreen:SelectGroupItem(storeGroupItemsVar - 1,  false)
+			elseif store.groupItems[storeGroupItemsVar].valid == 1 then
+				storeScreen:SelectGroupItem(storeGroupItemsVar - 1,  true)
+			end
+		"
+		actionalt
+		"
+			showItemDescription(store.groupItems[storeGroupItemsVar].item, 1)
+		"
+		actionDbl
+		"
+			if store.groupItems[storeGroupItemsVar].valid ~= 0 then
+				local count = store.groupItems[storeGroupItemsVar].item.count
+				local stock = store.groupItems[storeGroupItemsVar].numInStock or 0
+				if count > 1 then
+					popupRequester(count, groupSplitStack, true)
+				elseif stock > 1 then
+					popupRequester(stock, groupSplitStack, true)
+				end	
+			end
+		"
+	}
+
+	button
+	{
+		area 118 560 201 43
+		bam GUIOSTUM
+		text lua "checkContainerText('BUY_BUTTON', 'TO_BACKPACK_BUTTON')"
+		text style "button"
+		clickable lua "storeScreen:IsBuyItemButtonClickable()"
+		action
+		"
+			storeScreen:OnBuyItemButtonClick()
+		"
+	}
+	button
+	{
+		area 604 560 201 43
+		bam GUIOSTUM
+		text lua "checkContainerText('SELL_BUTTON','TO_CONTAINER_BUTTON')"
+		text style "button"
+		clickable lua "storeScreen:IsSellItemButtonClickable()"
+		action
+		"
+			storeScreen:OnSellItemButtonClick()
+		"
+	}
+	button
+	{
+		area 360 560 201 43
+		enabled "(not storeScreen:IsContainer()) and storeScreen:IsStealEnabled()"
+		bam GUIOSTUM
+		text "STEAL_BUTTON"
+		text style "button"
+		clickable lua "storeScreen:IsStealItemButtonClickable()"
+		action
+		"
+			storeScreen:OnStealItemButtonClick()
+		"
+	}
+	button
+	{
+		area 361 560 201 43
+		enabled "storeScreen:IsCloseBagButtonClickable()"
+		bam GUIOSTUM
+		text "CLOSE_CONTAINER_BUTTON"
+		text style "button"
+		action
+		"
+			storeScreen:OnCloseBagButtonClick()
+		"
+	}
+	button
+	{
+		area 19 520 68 90
+		encumbrance
+	}
+}

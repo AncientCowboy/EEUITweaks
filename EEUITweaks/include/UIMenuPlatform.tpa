@@ -1,0 +1,60 @@
+
+/*******************************************************************************
+ * EEUIGetMenuEnv
+ * Sets global variables representing current UI.MENU configuration. Currently
+ * defined variables are:
+ * 
+ * IsBG2 - BG2EE generic.
+ * IsBGEE - Base BGEE, no SOD
+ * IsSoD  - Base BGEESoD
+ * IsBG2onSoD - Kerozevok's BG2EE To BGEE Mod
+ * IsSoDOverhaul - Pecca's Dragonspear UI++
+ * IsEETBG2  - EET with default BG2 GUI
+ * IsEETSoD  - EET with SoD GUI Option
+ *
+ ******************************************************************************/
+DEFINE_ACTION_MACRO EEUIGetMenuEnv
+BEGIN
+	OUTER_SET IsBG2 = 0
+	OUTER_SET IsBGEE = 0
+	OUTER_SET IsSoD = 0
+	OUTER_SET IsBG2onSoD = 0
+	OUTER_SET IsSoDOverhaul = 0
+	OUTER_SET IsEETBG2 = 0
+	OUTER_SET IsEETSoD = 0
+
+	ACTION_IF GAME_IS ~eet~ THEN
+	BEGIN
+		ACTION_IF MOD_IS_INSTALLED ~setup-EET_end.tp2~ ~1~ THEN
+		BEGIN
+			OUTER_SET IsEETSoD = 1
+		END ELSE
+		BEGIN
+			OUTER_SET IsEETBG2 = 1
+		END
+	END ELSE ACTION_IF GAME_IS ~bg2ee~ THEN
+	BEGIN
+		OUTER_SET IsBG2 = 1
+	END ELSE 
+	BEGIN
+		ACTION_IF NOT FILE_EXISTS_IN_GAME ~BD0010.ARE~ THEN
+		BEGIN
+			OUTER_SET IsBGEE = 1
+		END ELSE
+		BEGIN
+			ACTION_IF FILE_EXISTS ~override/ULGOTHST.MOS~ THEN
+			BEGIN
+				OUTER_SET IsBG2onSoD = 1
+			END ELSE
+			BEGIN
+				ACTION_IF FILE_EXISTS_IN_GAME ~rgtitle.png~ THEN
+				BEGIN
+					OUTER_SET IsSoDOverhaul = 1
+				END ELSE
+				BEGIN
+					OUTER_SET IsSoD = 1
+				END
+			END
+		END
+	END
+END

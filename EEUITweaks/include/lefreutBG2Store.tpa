@@ -1,0 +1,103 @@
+/*******************************************************************************
+ * lefreut's BG2 Store Screen Tweaks Installation
+ ******************************************************************************/
+
+// Open UI.MENU
+PRINT @12
+SILENT
+LAUNCH_ACTION_MACRO UIMenuOpen
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @20
+END
+
+// Patch STORE_BUYSELL
+PRINT @122
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~STORE_BUYSELL~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutBG2Store/buysellmenu.menu~
+LAUNCH_ACTION_MACRO UIMenuReplaceMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @124
+END
+
+// Patch STORE_IDENTIFY
+PRINT @125
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~STORE_IDENTIFY~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutBG2Store/identifymenu.menu~
+LAUNCH_ACTION_MACRO UIMenuReplaceMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @127
+END
+
+// Patch STORE_DONATE
+PRINT @128
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~STORE_DONATE~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutBG2Store/donatemenu.menu~
+LAUNCH_ACTION_MACRO UIMenuReplaceMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @130
+END
+
+// Patch STORE_ROOMS
+PRINT @131
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~STORE_ROOMS~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutBG2Store/roomsmenu.menu~
+LAUNCH_ACTION_MACRO UIMenuReplaceMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @133
+END
+
+// Patch STORE_HEALING
+PRINT @134
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~STORE_HEALING~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutBG2Store/healingmenu.menu~
+LAUNCH_ACTION_MACRO UIMenuReplaceMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @136
+END
+
+// Patch STORE_DRINKS
+PRINT @137
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~STORE_DRINKS~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutBG2Store/drinksmenu.menu~
+LAUNCH_ACTION_MACRO UIMenuReplaceMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @139
+END
+
+// Patch STORE_CHOOSER
+PRINT @140
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~STORE_CHOOSER~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutBG2Store/choosermenu.menu~
+LAUNCH_ACTION_MACRO UIMenuReplaceMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @132
+END
+
+// Close UI.MENU
+PRINT @13
+SILENT
+LAUNCH_ACTION_MACRO UIMenuClose
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @21
+END
+
+// Copy files
+PRINT @24
+SILENT
+COPY ~%PKGNAME%/copy/lefreutBG2Store~ ~override~

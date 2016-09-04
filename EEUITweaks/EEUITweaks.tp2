@@ -1,0 +1,505 @@
+/******************************************************************************
+ * EEUITweaks
+ *
+ * An attempt to gather many of the non-'Replace UI.MENU' mods/tweaks from the
+ * BeamDog UI Modding forum into a single WeiDU collection. Goals are to
+ * simplify mod installation, particularly after an update; and to provide
+ * users with single source from which they can access many GUI mods.
+ *
+ * I'd like to acknowledge, and express my gratitude for, the work done by 
+ * @CamDawg and others on 'The Tweaks Anthology' (and its predecessor forms).
+ * It served as a model and inspiration for this UI oriented collection.
+ * 
+ *****************************************************************************/
+
+BACKUP ~EEUITweaksbackup~
+AUTHOR ~AncientCowboy on the BeamDog Forums~
+
+ALWAYS
+	ACTION_IF NOT IS_AN_INT IsBG2 THEN
+	BEGIN
+		OUTER_SPRINT PKGNAME ~EEUITweaks~
+		INCLUDE ~%PKGNAME%/lib/ACuimenulib.tph~
+		INCLUDE ~%PKGNAME%/include/UIMenuPlatform.tpa~
+		LAUNCH_ACTION_MACRO EEUIGetMenuEnv
+	END
+END
+
+VERSION ~1.5~
+
+LANGUAGE 
+	~English~ ~EEUITweaks/languages/english~ ~EEUITweaks/languages/english/setup.tra~
+
+
+///////////////////////////////////////////////////////////////////////////////
+// Test for existence of UI.MENU
+///////////////////////////////////////////////////////////////////////////////
+BEGIN @1000 DESIGNATED 10
+INSTALL_BY_DEFAULT
+NO_LOG_RECORD
+
+ACTION_IF (NOT FILE_EXISTS ~override/UI.MENU~) THEN
+BEGIN
+	FAIL @1001
+END ELSE
+BEGIN
+	PRINT @1002
+END
+
+///////////////////////////////////////////////////////////////////////////////
+// Startup/Options/Player Character/NPCs Group
+///////////////////////////////////////////////////////////////////////////////
+
+/******************************************************************************
+ * Mods Options
+ *****************************************************************************/
+BEGIN @100000 DESIGNATED 1000
+GROUP @1
+REQUIRE_PREDICATE (
+	(GAME_IS ~eet~) OR
+	(GAME_IS ~bgee~) OR
+	(GAME_IS ~bg2ee~)
+) @27
+
+ACTION_MATCH 1
+WITH
+	%IsBG2% %IsEETBG2%
+	BEGIN
+		INCLUDE ~%PKGNAME%/include/ModOptionsTOB.tpa~
+	END
+
+	DEFAULT
+		INCLUDE ~%PKGNAME%/include/ModOptionsSOD.tpa~
+
+END
+
+/******************************************************************************
+ * Hidden Game Options
+ *****************************************************************************/
+BEGIN @101000 DESIGNATED 1010
+GROUP @1
+REQUIRE_PREDICATE (
+	(GAME_IS ~eet~) OR
+	(GAME_IS ~bgee~) OR
+	(GAME_IS ~bg2ee~)
+) @27
+REQUIRE_COMPONENT ~EEUITweaks/EEUITweaks.tp2~ ~1000~ @26
+
+INCLUDE ~%PKGNAME%/include/HiddenOptions.tpa~
+
+/******************************************************************************
+ * Mr2150's Random PC Generator
+ *****************************************************************************/
+BEGIN @102000 DESIGNATED 1020
+GROUP @1
+REQUIRE_PREDICATE (
+	(GAME_IS ~eet~) OR
+	(GAME_IS ~bg2ee~) OR
+	(
+		(GAME_IS ~bgee~) AND 
+		(NOT(FILE_EXISTS_IN_GAME ~rgtitle.png~))
+	)
+) @27 // NOT Dragonspear UI++
+FORBID_COMPONENT ~EEUITweaks.tp2~ ~1060~ @102002
+
+INCLUDE ~%PKGNAME%/include/Mr2150RndChar.tpa~
+
+/******************************************************************************
+ * BillyYank's Multi-Portrait
+ *****************************************************************************/
+BEGIN @103000 DESIGNATED 1030
+SUBCOMPONENT @510
+GROUP @1
+REQUIRE_PREDICATE (
+	(GAME_IS ~eet~) OR
+	(GAME_IS ~bg2ee~) OR
+	(
+		(GAME_IS ~bgee~) AND 
+		(NOT(FILE_EXISTS_IN_GAME ~rgtitle.png~))
+	)
+) @27 // NOT Dragonspear UI++
+
+INCLUDE ~%PKGNAME%/include/BillyYankMultiPort.tpa~
+
+/******************************************************************************
+ * Mr2150's Portrait Picker
+ *****************************************************************************/
+BEGIN @104000 DESIGNATED 1040
+SUBCOMPONENT @510
+GROUP @1
+REQUIRE_PREDICATE (
+	(GAME_IS ~eet~) OR
+	(GAME_IS ~bg2ee~) OR 
+	(
+		(GAME_IS ~bgee~) AND 
+ 		(FILE_EXISTS_IN_GAME ~BD0010.ARE~) AND 
+		(NOT(FILE_EXISTS_IN_GAME ~rgtitle.png~))
+	)
+) @27 // Not BGEE nor Dragonspear UI++ 
+
+INCLUDE ~%PKGNAME%/include/Mr2150PortraitPick.tpa~
+
+/******************************************************************************
+ * Mr2150's Backup M_BG.lua
+ *****************************************************************************/
+BEGIN @104200 DESIGNATED 1042
+GROUP @1
+REQUIRE_COMPONENT ~EEUITweaks.tp2~ ~1040~ @29
+REQUIRE_PREDICATE FILE_EXISTS ~override/M_BG.lua~ @104201 
+
+COPY_EXISTING + ~M_BG.lua~ ~override/backup-M_BG~
+
+/******************************************************************************
+ * Mr2150's Update Portraits
+ *****************************************************************************/
+BEGIN @104400 DESIGNATED 1044
+GROUP @1
+REQUIRE_COMPONENT ~EEUITweaks.tp2~ ~1040~ @29
+
+INCLUDE ~%PKGNAME%/include/Mr2150UpdateM_BG.tpa~
+
+/******************************************************************************
+ * Adul's Unhide Chargen Options
+ *****************************************************************************/
+BEGIN @105000 DESIGNATED 1050
+GROUP @1
+REQUIRE_PREDICATE (
+	(GAME_IS ~eet~) OR
+	(GAME_IS ~bg2ee~) OR 
+	(
+		(GAME_IS ~bgee~) AND 
+		(NOT(FILE_EXISTS_IN_GAME ~rgtitle.png~))
+	)
+) @27 // NOT Dragonspear UI++
+
+INCLUDE ~%PKGNAME%/include/AdulUnhideChargen.tpa~
+
+
+/******************************************************************************
+ * Mr2150's Roll First
+ *****************************************************************************/
+BEGIN @106000 DESIGNATED 1060
+GROUP @1
+REQUIRE_PREDICATE (
+	(
+		(GAME_IS ~eet~) AND
+		(MOD_IS_INSTALLED ~setup-EET_end.tp2~ ~1~)
+	) OR
+	(
+		(GAME_IS ~bgee~) AND 
+		(NOT(FILE_EXISTS ~override/ULGOTHST.MOS~)) AND 
+		(NOT(FILE_EXISTS_IN_GAME ~rgtitle.png~)) AND
+		(FILE_EXISTS_IN_GAME ~BD0010.ARE~)
+	)
+) @27 // SoD/IsEETSoD Only
+FORBID_COMPONENT ~EEUITweaks.tp2~ ~1020~ @106001
+
+INCLUDE ~%PKGNAME%/include/Mr2150RollFirst.tpa~
+
+
+///////////////////////////////////////////////////////////////////////////////
+// Game World/Maps/Travel Group
+///////////////////////////////////////////////////////////////////////////////
+
+/******************************************************************************
+ * Transparent Sidebars
+ *****************************************************************************/
+BEGIN @200000 DESIGNATED 2000
+GROUP @2
+REQUIRE_PREDICATE (
+	(GAME_IS ~eet~) OR
+	(GAME_IS ~bg2ee~) OR 
+	(
+		(GAME_IS ~bgee~) AND 
+		(NOT(FILE_EXISTS_IN_GAME ~rgtitle.png~))
+	)
+) @27 // NOT Dragonspear UI++
+
+INCLUDE ~%PKGNAME%/include/TransparentSidebars.tpa~
+
+/******************************************************************************
+ * Feedback Message Box Hack
+ *****************************************************************************/
+BEGIN @201000 DESIGNATED 2010
+SUBCOMPONENT @500
+GROUP @2
+REQUIRE_PREDICATE (
+	(GAME_IS ~eet~) OR
+	(GAME_IS ~bg2ee~) OR 
+	(
+		(GAME_IS ~bgee~) AND 
+		(NOT(FILE_EXISTS ~override/ULGOTHST.MOS~))
+	)
+) @27 // Not BG2EE on BGEE
+
+INCLUDE ~%PKGNAME%/include/FeedbackHack.tpa~
+
+/******************************************************************************
+ * Adul's Message Box Button
+ *****************************************************************************/
+BEGIN @202000 DESIGNATED 2020
+SUBCOMPONENT @500
+GROUP @2
+REQUIRE_PREDICATE (
+	(GAME_IS ~eet~) OR
+	(GAME_IS ~bg2ee~) OR 
+	(
+		(GAME_IS ~bgee~) AND 
+		(NOT(FILE_EXISTS ~override/ULGOTHST.MOS~)) AND
+		(NOT(FILE_EXISTS_IN_GAME ~rgtitle.png~))
+	)
+) @27 // Neither replacement GUI
+
+INCLUDE ~%PKGNAME%/include/AdulsResizeButtons.tpa~
+
+/******************************************************************************
+ * Adul's Better Quick Loot
+ *****************************************************************************/
+BEGIN @203000 DESIGNATED 2030
+GROUP @2
+REQUIRE_PREDICATE (
+	(GAME_IS ~eet~) OR
+	(GAME_IS ~bg2ee~) OR 
+	(
+		(GAME_IS ~bgee~) AND 
+		(NOT(FILE_EXISTS_IN_GAME ~rgtitle.png~))
+	)
+) @27 // NOT Dragonspear UI++
+
+INCLUDE ~%PKGNAME%/include/AdulQuickLoot.tpa~
+
+
+/******************************************************************************
+ * lefreut's Level Up Glow no Click
+ *****************************************************************************/
+BEGIN @204000 DESIGNATED 2040
+SUBCOMPONENT @520
+GROUP @2
+REQUIRE_PREDICATE GAME_IS ~bgee bg2ee eet~ @27
+
+INCLUDE ~%PKGNAME%/include/lefreutLevelUpCommon.tpa~
+LAUNCH_ACTION_MACRO lefreutLevelUpCommon.InstallGlowNoClick
+
+/******************************************************************************
+ * lefreut's Level Up Glow with Click
+ *****************************************************************************/
+BEGIN @204200 DESIGNATED 2042
+SUBCOMPONENT @520
+GROUP @2
+REQUIRE_PREDICATE (
+	(GAME_IS ~eet~) OR
+	(GAME_IS ~bg2ee~) OR 
+	(
+		(GAME_IS ~bgee~) AND 
+		(NOT(FILE_EXISTS_IN_GAME ~rgtitle.png~))
+	)
+) @27 // NOT Dragonspear UI++
+
+INCLUDE ~%PKGNAME%/include/lefreutLevelUpCommon.tpa~
+LAUNCH_ACTION_MACRO lefreutLevelUpCommon.InstallGlowWithClick
+
+/******************************************************************************
+ * lefreut's Level Up Buttons
+ *****************************************************************************/
+BEGIN @204400 DESIGNATED 2044
+SUBCOMPONENT @520
+GROUP @2
+REQUIRE_PREDICATE (
+	(GAME_IS ~eet~) OR
+	(GAME_IS ~bg2ee~) OR 
+	(
+		(GAME_IS ~bgee~) AND 
+		(NOT(FILE_EXISTS_IN_GAME ~rgtitle.png~))
+	)
+) @27 // NOT Dragonspear UI++
+
+INCLUDE ~%PKGNAME%/include/lefreutLevelUpCommon.tpa~
+LAUNCH_ACTION_MACRO lefreutLevelUpCommon.InstallButtons
+
+
+/******************************************************************************
+ * Simple Centered Dialog
+ *****************************************************************************/
+BEGIN @205000 DESIGNATED 2050
+GROUP @2
+REQUIRE_PREDICATE (
+	(GAME_IS ~eet~) OR
+	(GAME_IS ~bg2ee~) OR 
+	(
+		(GAME_IS ~bgee~) AND 
+		(NOT(FILE_EXISTS_IN_GAME ~rgtitle.png~))
+	)
+) @27 // NOT Dragonspear UI++
+
+INCLUDE ~%PKGNAME%/include/CenteredDialog.tpa~
+
+
+///////////////////////////////////////////////////////////////////////////////
+// Record/Inventory/Journal Group
+///////////////////////////////////////////////////////////////////////////////
+
+/******************************************************************************
+ * Leveling Progress Bars Tweaks
+ *****************************************************************************/
+BEGIN @300000 DESIGNATED 3000
+GROUP @3
+REQUIRE_PREDICATE GAME_IS ~bgee bg2ee eet~ @27
+
+INCLUDE ~%PKGNAME%/include/ProgressBars.tpa~
+
+/******************************************************************************
+ * Leveling Progress Bars Options
+ *****************************************************************************/
+BEGIN @301000 DESIGNATED 3010
+GROUP @3
+REQUIRE_PREDICATE GAME_IS ~bgee bg2ee eet~ @27
+REQUIRE_COMPONENT ~EEUITweaks.tp2~ ~1000~ @26
+REQUIRE_COMPONENT ~EEUITweaks.tp2~ ~3000~ @301001
+
+INCLUDE ~%PKGNAME%/include/ProgressBarsOptions.tpa~
+
+/******************************************************************************
+ * Mr2150's Journal Fixes
+ *****************************************************************************/
+BEGIN @302000 DESIGNATED 3020
+GROUP @3
+REQUIRE_PREDICATE (
+	(GAME_IS ~eet~) OR
+	(GAME_IS ~bg2ee~) OR 
+	(
+		(GAME_IS ~bgee~) AND 
+		(NOT(FILE_EXISTS_IN_GAME ~rgtitle.png~))
+	)
+) @27 // NOT Dragonspear UI++
+
+INCLUDE ~%PKGNAME%/include/Mr2150JrnlFix.tpa~
+
+/******************************************************************************
+ * lefreut's Customize All Characters
+ *****************************************************************************/
+BEGIN @303000 DESIGNATED 3030
+GROUP @3
+REQUIRE_PREDICATE GAME_IS ~bgee bg2ee eet~ @27
+
+INCLUDE ~%PKGNAME%/include/lefreutCustomAll.tpa~
+
+
+///////////////////////////////////////////////////////////////////////////////
+// Stores/DialogsSpell Books Group
+///////////////////////////////////////////////////////////////////////////////
+
+/******************************************************************************
+ * Joined Store Panels Using lefreut's Solution
+ *****************************************************************************/
+BEGIN @400000 DESIGNATED 4000
+GROUP @4
+REQUIRE_PREDICATE (
+	(GAME_IS ~eet~) OR
+	(GAME_IS ~bg2ee~) OR 
+	(
+		(GAME_IS ~bgee~) AND 
+		(NOT(FILE_EXISTS ~override/ULGOTHST.MOS~)) AND
+		(NOT(FILE_EXISTS_IN_GAME ~rgtitle.png~))
+	)
+) @27 // Neither replacement GUI
+FORBID_COMPONENT ~EEUITweaks.tp2~ ~4005~ @400001
+
+INCLUDE ~%PKGNAME%/include/StoreFix.tpa~
+
+/******************************************************************************
+ * lefreut's BG2 Store Screen Tweaks
+ *****************************************************************************/
+BEGIN @400500 DESIGNATED 4005
+GROUP @4
+REQUIRE_PREDICATE (
+	(GAME_IS ~bg2ee~) OR 
+	(
+		(GAME_IS ~eet~) AND
+		(NOT(MOD_IS_INSTALLED ~setup-EET_end.tp2~ ~1~))
+
+	) OR
+	(
+		(GAME_IS ~bgee~) AND (FILE_EXISTS ~override/ULGOTHST.MOS~)
+	)
+) @27 // BG2 or BG2onSoD EETBG2
+FORBID_COMPONENT ~EEUITweaks.tp2~ ~4000~ @400501 // Joined Store Panels Using lefreut's Solution
+FORBID_COMPONENT ~EEUITweaks.tp2~ ~4020~ @400503 // Adul's Improved Store Useability
+FORBID_COMPONENT ~EEUITweaks.tp2~ ~4010~ @400502 // lefreut's Steal Multiple Items (Order dependency)
+
+INCLUDE ~%PKGNAME%/include/lefreutBG2Store.tpa~
+
+
+/******************************************************************************
+ * lefreut's Steal Multiple Items
+ *****************************************************************************/
+BEGIN @401000 DESIGNATED 4010
+GROUP @4
+REQUIRE_PREDICATE (
+	(GAME_IS ~eet~) OR
+	(GAME_IS ~bg2ee~) OR 
+	(
+		(GAME_IS ~bgee~) AND 
+		(NOT(FILE_EXISTS_IN_GAME ~rgtitle.png~))
+	)
+) @27 // NOT Dragonspear UI++
+
+INCLUDE ~%PKGNAME%/include/lefreutStealMulti.tpa~
+
+/******************************************************************************
+ * Adul's Improved Store Useability
+ *****************************************************************************/
+BEGIN @402000 DESIGNATED 4020
+GROUP @4
+REQUIRE_PREDICATE (
+	(GAME_IS ~eet~) OR
+	(GAME_IS ~bg2ee~) OR 
+	(
+		(GAME_IS ~bgee~) AND 
+		(NOT(FILE_EXISTS_IN_GAME ~rgtitle.png~))
+	)
+) @27 // NOT Dragonspear UI++
+FORBID_COMPONENT ~EEUITweaks.tp2~ ~4005~ @402001 // lefreut's BG2 Store Screen Tweaks
+
+INCLUDE ~%PKGNAME%/include/AdulImprovedStore.tpa~
+
+
+///////////////////////////////////////////////////////////////////////////////
+// Multiplayer/General/Other Group
+///////////////////////////////////////////////////////////////////////////////
+
+/******************************************************************************
+ * lefreut's Tooltip Scrolls
+ *****************************************************************************/
+BEGIN @500000 DESIGNATED 5000
+GROUP @5
+REQUIRE_PREDICATE (
+	(GAME_IS ~eet~) OR
+	(GAME_IS ~bg2ee~) OR 
+	(
+		(GAME_IS ~bgee~) AND 
+		(NOT(FILE_EXISTS_IN_GAME ~rgtitle.png~))
+	)
+) @27 // NOT Dragonspear UI++
+
+PRINT @24
+SILENT
+COPY ~%PKGNAME%/copy/lefreutTooltip~ ~override~
+
+
+
+// Works around bug in WeiDU. See CamDawg's 'Groups' WeiDU tutorial
+BEGIN ~dummy~
+DEPRECATED ~Dummy component~
+GROUP @1
+BEGIN ~dummy~
+DEPRECATED ~Dummy component~
+GROUP @2
+BEGIN ~dummy~
+DEPRECATED ~Dummy component~
+GROUP @3
+BEGIN ~dummy~
+DEPRECATED ~Dummy component~
+GROUP @4
+BEGIN ~dummy~
+DEPRECATED ~Dummy component~
+GROUP @5

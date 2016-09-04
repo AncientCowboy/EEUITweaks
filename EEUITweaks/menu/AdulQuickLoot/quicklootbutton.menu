@@ -1,0 +1,31 @@
+	button
+	{
+		area 21 12 32 32
+		bam ROUNDBUT
+		toggle groundItemsButtonToggle
+		action
+		"
+			if(groundItemsButtonToggle == 1) then
+				worldScreen:StartGroundItems()
+				setQuickLootPosition(true)
+			else
+				worldScreen:StopGroundItems()
+			end
+		"
+	}
+	button
+	{
+		area 21 12 0 0
+		on e
+		toggle groundItemsButtonToggle
+		action
+		"
+			Infinity_PlaySound('GAM_09')
+			if(groundItemsButtonToggle == 1) then
+				worldScreen:StartGroundItems()
+				setQuickLootPosition()
+			else
+				worldScreen:StopGroundItems()
+			end
+		"
+	}

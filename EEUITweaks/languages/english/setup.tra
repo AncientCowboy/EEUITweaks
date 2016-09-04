@@ -1,0 +1,287 @@
+///////////////////////////////////////////////////////////////////////////////
+// Overrides for WeiDU email prompts
+///////////////////////////////////////////////////////////////////////////////
+
+@-1004="PLEASE zip/rar the file"
+@-1005="along with UI.MENU and send via message to"
+
+///////////////////////////////////////////////////////////////////////////////
+// EEUITweaks general strings
+///////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////////
+// Groups
+///////////////////////////////////////////////////////////////////////////////
+
+@1    ="Startup/Options/Character Gen"
+@2    ="Game World/Maps/Travel"
+@3    ="Record/Inventory/Journal"
+@4    ="Stores/Dialogs/Spell Books"
+@5    ="Multiplayer/General/Other"
+
+///////////////////////////////////////////////////////////////////////////////
+// Common Information/Errors/Warnings
+///////////////////////////////////////////////////////////////////////////////
+
+@10   = ~Requires BGEE~
+@11   = ~Requires BG2EE~
+@12   = ~Opening UI.MENU~
+@13   = ~Closing UI.MENU~
+@14   = ~Installing for BGEE configuration~
+@15   = ~Cannot identify UI platform~
+@16   = ~Installing for BG2EE GUI To BGEE configuration~
+@17   = ~Copying UI specific files~
+@18   = ~Installing for Dragonspear UI++ configuration~
+@19   = ~Installing for standard SoD configuration~
+@20   = ~Failure attempting to open UI.MENU~
+@21   = ~Failure attempting to close UI.MENU~
+@22   = ~Encountered error determining if running BG2EE GUI To BGEE~
+@23   = ~Encountered error determining if running Dragonspear UI++~
+@24   = ~Copying files to override~
+@25   = ~Requires either BGEE or BG2EE~
+@26   = ~Mods Options must be installed for this mod to function~
+@27   = ~Mod is either not supported or not useful for your game configuration~
+@28   = ~Installing for BG2EE configuration~
+@29   = ~Mr2150's Portrait Picker must be installed for this mod to function~
+@30   = ~Copying language specific files for:~
+@31   = ~Installing for EET BG2 GUI configuration~
+@32   = ~Installing for EET SoD GUI configuration~
+
+///////////////////////////////////////////////////////////////////////////////
+// Specific Menu patching/error messages
+///////////////////////////////////////////////////////////////////////////////
+
+@100  = ~Patching START_OPTIONS menu~
+@101  = ~Unable to get START_OPTIONS menu~
+@102  = ~Unable to patch START_OPTIONS menu~
+@103  = ~Encountered error updating UI.MENU~
+@104  = ~Patching ESC_MENU menu~
+@105  = ~Unable to get ESC_MENU menu~
+@106  = ~Unable to patch ESC_MENU menu~
+@107  = ~Patching OPTIONS_GAMEPLAY menu~
+@108  = ~Unable to get OPTIONS_GAMEPLAY menu~
+@109  = ~Unable to patch OPTIONS_GAMEPLAY menu~
+@110  = ~Patching CHARACTER menu~
+@111  = ~Unable to get CHARACTER menu~
+@112  = ~Unable to patch CHARACTER menu~
+@113  = ~Patching LEFT_SIDEBAR menu~
+@114  = ~Unable to get LEFT_SIDEBAR menu~
+@115  = ~Unable to patch LEFT_SIDEBAR menu~
+@116  = ~Patching RIGHT_SIDEBAR menu~
+@117  = ~Unable to get RIGHT_SIDEBAR menu~
+@118  = ~Unable to patch RIGHT_SIDEBAR menu~
+@119  = ~Patching WORLD_ACTIONBAR menu~
+@120  = ~Unable to get WORLD_ACTIONBAR menu~
+@121  = ~Unable to patch WORLD_ACTIONBAR menu~
+@122  = ~Patching STORE_BUYSELL menu~
+@123  = ~Unable to get STORE_BUYSELL menu~
+@124  = ~Unable to patch STORE_BUYSELL menu~
+@125  = ~Patching STORE_IDENTIFY menu~
+@126  = ~Unable to get STORE_IDENTIFY menu~
+@127  = ~Unable to patch STORE_IDENTIFY menu~
+@128  = ~Patching STORE_DONATE menu~
+@129  = ~Unable to get STORE_DONATE menu~
+@130  = ~Unable to patch STORE_DONATE menu~
+@131  = ~Patching STORE_ROOMS menu~
+@132  = ~Unable to get STORE_ROOMS menu~
+@133  = ~Unable to patch STORE_ROOMS menu~
+@134  = ~Patching STORE_HEALING menu~
+@135  = ~Unable to get STORE_HEALING menu~
+@136  = ~Unable to patch STORE_HEALING menu~
+@137  = ~Patching STORE_DRINKS menu~
+@138  = ~Unable to get STORE_DRINKS menu~
+@139  = ~Unable to patch STORE_DRINKS menu~
+@140  = ~Patching STORE_CHOOSER menu~
+@141  = ~Unable to get STORE_CHOOSER menu~
+@142  = ~Unable to patch STORE_CHOOSER menu~
+@143  = ~Patching textflash menu~
+@144  = ~Unable to get textflash menu~
+@145  = ~Unable to patch textflash menu~
+@146  = ~Patching JOURNAL menu~
+@147  = ~Unable to get JOURNAL menu~
+@148  = ~Unable to patch JOURNAL menu~
+@149  = ~Patching CHARGEN menu~
+@150  = ~Unable to get CHARGEN menu~
+@151  = ~Unable to patch CHARGEN menu~
+@152  = ~Patching CHARACTER_CUSTOMIZE menu~
+@153  = ~Unable to get CHARACTER_CUSTOMIZE menu~
+@154  = ~Unable to patch CHARACTER_CUSTOMIZE menu~
+@155  = ~Patching WORLD_MESSAGES menu~
+@156  = ~Unable to get WORLD_MESSAGES menu~
+@157  = ~Unable to patch WORLD_MESSAGES menu~
+@158  = ~Patching CHARGEN_PORTRAIT menu~
+@159  = ~Unable to get CHARGEN_PORTRAIT menu~
+@160  = ~Unable to patch CHARGEN_PORTRAIT menu~
+@161  = ~Patching CHARGEN_RACE menu~
+@162  = ~Unable to get CHARGEN_RACE menu~
+@163  = ~Unable to patch CHARGEN_RACE menu~
+@164  = ~Patching CHARGEN_CLASS menu~
+@165  = ~Unable to get CHARGEN_CLASS menu~
+@166  = ~Unable to patch CHARGEN_CLASS menu~
+@167  = ~Patching CHARGEN_KIT menu~
+@168  = ~Unable to get CHARGEN_KIT menu~
+@169  = ~Unable to patch CHARGEN_KIT menu~
+@170  = ~Patching CHARGEN_ALIGNMENT menu~
+@171  = ~Unable to get CHARGEN_ALIGNMENT menu~
+@172  = ~Unable to patch CHARGEN_ALIGNMENT menu~
+@173  = ~Patching CHARGEN_HATEDRACE menu~
+@174  = ~Unable to get CHARGEN_HATEDRACE menu~
+@175  = ~Unable to patch CHARGEN_HATEDRACE menu~
+@176  = ~Patching CHARGEN_PROFICIENCIES menu~
+@177  = ~Unable to get CHARGEN_PROFICIENCIES menu~
+@178  = ~Unable to patch CHARGEN_PROFICIENCIES menu~
+@179  = ~Patching POPUP_REQUESTER menu~
+@180  = ~Unable to get POPUP_REQUESTER menu~
+@181  = ~Unable to patch POPUP_REQUESTER menu~
+@182  = ~Patching CHARGEN_ABILITIES menu~
+@183  = ~Unable to get CHARGEN_ABILITIES menu~
+@184  = ~Unable to patch CHARGEN_ABILITIES menu~
+@185  = ~Patching WORLD_DIALOG_CONFIRM menu~
+@186  = ~Unable to get WORLD_DIALOG_CONFIRM menu~
+@187  = ~Unable to patch WORLD_DIALOG_CONFIRM menu~
+
+///////////////////////////////////////////////////////////////////////////////
+// Subcomponent groups
+///////////////////////////////////////////////////////////////////////////////
+
+@500  = ~Feedback Message Box Re-sizers~
+@510  = ~Portrait Selectors~
+@520  = ~lefreut's Better Level Up Indicators~
+
+///////////////////////////////////////////////////////////////////////////////
+// Component specific strings
+///////////////////////////////////////////////////////////////////////////////
+// Test for UI.MENU existence
+@1000 = ~UI.MENU Test~
+@1001 = ~Cannot find UI.MENU in override directory. Attempting to install mods will fail until this is corrected.~
+@1002 = ~Test passed - UI.MENU found~
+
+///////////////////////////////////////////////////////////////////////////////
+// Startup/Options/Player Character/NPCs Group
+///////////////////////////////////////////////////////////////////////////////
+
+@100000 = ~Mods Options~
+@100001 = ~Appending Mods Options menu~
+@100002 = ~Encountered error appending Mods Options menu~
+@100003 = ~Patching OptionsButtons assignment Lua block~
+@100004 = ~Unable to find Lua block containing OptionsButtons assignment~
+@100005 = ~Unable to patch Lua block containing OptionsButtons assignment~
+
+@101000 = ~Hidden Game Options~
+@101001 = ~Mods Options must be installed for this mod to function~
+@101002 = ~Appending Hidden Game Options menu to UI.MENU~
+@101003 = ~Hidden Game Options menu already installed - skipping~
+@101004 = ~Encountered error appending Hidden Game Options menu~
+
+@102000 = ~Mr2150's Random PC Generator~
+@102001 = ~The user directory below does not exist. Skipping installation of zzzzzzz.BMP~
+@102002 = ~Incompatible with previously installed Mr2150's Roll First~
+
+@103000 = ~BillyYank's Multi-Portrait Mod~
+
+@104000 = ~Mr2150's Portrait Picker~
+@104001 = 
+~How often do you play the game with Scale UI enabled?
+(1) Never
+(2) Always
+(3) Sometimes
+(4) I don't know
+Please enter return or a number between 1 and 4 [1]~
+
+@104200 = ~Mr2150's Backup M_BG.lua~
+@104201 = ~Skipping - override/M_BG.lua not found~
+
+@104400 = ~Mr2150's Update Portraits~
+@104401 = ~The directory: ~
+@104402 = ~ does not exist~
+@104403 = ~Please enter return (to cancel), or the full path to your portrait directory~
+@104404 = ~Re-creating missing M_BG.lua~
+@104405 = ~Removing entries in M_BG.lua that no longer exist~
+@104406 = ~Adding new entries for portraits that match the criteria~
+
+@105000 = ~Adul's Unhide Chargen Options~
+
+@106000 = ~Mr2150's Roll First~
+@106001 = ~Incompatible with previously installed Mr2150's Random PC Generator~
+
+///////////////////////////////////////////////////////////////////////////////
+// Game World/Maps/Travel Group
+///////////////////////////////////////////////////////////////////////////////
+
+@200000 = ~Transparent Sidebars~
+
+@201000 = ~Feedback Message Box Buttons Hack~
+
+@202000 = ~Adul's Message Box Resize Button~
+
+@203000 = ~Adul's Better Quick Loot~
+@203001 = ~Replacing WORLD_QUICKLOOT~
+@203002 = ~Error encountered replacing WORLD_QUICKLOOT~
+@203003 = ~Patching WORLD_MESSAGES Lua code block~
+@203004 = ~Error encountered patching WORLD_MESSAGES Lua code block~
+
+@204000 = ~lefreut's Level Up Glow no Click~
+@204200 = ~lefreut's Level Up Glow with Click~
+@204400 = ~lefreut's Level Up Buttons~
+// Common messages
+@204401 = ~Patching updateAttrTable function~
+@204402 = ~Unable to get code block containing updateAttrTable function~
+@204403 = ~Unable to patch updateAttrTable function~
+@204404 = ~Replacing WORLD_LEVEL_UP_BUTTONS menu~
+@204405 = ~Unable to replace WORLD_LEVEL_UP_BUTTONS menu~
+
+@205000 = ~Simple Centered Dialog~
+@205001 = ~Replacing WORLD_DIALOG menu~
+@205002 = ~Unable to replace WORLD_DIALOG menu~
+
+///////////////////////////////////////////////////////////////////////////////
+// Record/Inventory/Journal Group
+///////////////////////////////////////////////////////////////////////////////
+
+@300000 = ~Leveling Progress Bars Tweaks~
+@300001 = ~Patching updateAttrTable for BG2EE GUI To BGEE platform~ 
+@300002 = ~Encountered error patching updateAttrTable for BG2EE GUI To BGEE platform~ 
+@300003 = ~Creating external Lua leveling information tables~ 
+@300004 = ~Encountered error creating external Lua leveling information tables~ 
+
+@301000 = ~Leveling Progress Bars Options~
+@301001 = ~Leveling Progress Bars Tweaks must be installed for this mod to function~
+@301002 = ~Appending Progress Bars Options menu to UI.MENU~
+@301003 = ~Progress Bars Options menu already installed~
+@301004 = ~Encountered error appending Progress Bars Options menu~
+
+@302000 = ~Mr2150's Journal Fixes~
+@302001 = ~Replacing Journal Lua functions~
+@302002 = ~Unable to get Journal Lua functions~
+@302003 = ~Encountered error replacing Journal Lua functions~
+
+@303000 = ~lefreut's Customize All Characters~
+
+///////////////////////////////////////////////////////////////////////////////
+// Stores/DialogsSpell Books Group
+///////////////////////////////////////////////////////////////////////////////
+
+@400000 = ~Joined Store Panels Using lefreut's Solution~
+@400001 = ~Incompatible with previously installed lefreut's BG2 Store Screen Tweaks~
+
+@400500 = ~lefreut's BG2 Store Screen Tweaks~
+@400501 = ~Incompatible with previously installed Joined Store Panels Using lefreut's Solution~
+@400502 = ~Will break previously installed lefreut's Steal Multiple Items. Install this mod first~
+@400503 = ~Incompatible with previously installed Adul's Improved Store Useability~
+
+@401000	= ~lefreut's Steal Multiple Items~
+// Following shared with Adul's Improved Store Usability
+@401001	= ~Patching STORE_BUYSELL Lua block~
+@401002	= ~Unable to get STORE_BUYSELL Lua block~
+@401003	= ~Unable to patch STORE_BUYSELL Lua block~
+
+@402000 = ~Adul's Improved Store Usability~
+@402001 = ~Incompatible with previously installed lefreut's BG2 Store Screen Tweaks~
+
+///////////////////////////////////////////////////////////////////////////////
+// Multiplayer/General/Other Group
+///////////////////////////////////////////////////////////////////////////////
+
+@500000 = ~lefreut's Tooltip Scroll~
+
+

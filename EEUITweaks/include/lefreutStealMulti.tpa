@@ -1,0 +1,232 @@
+/*******************************************************************************
+ * PatchLuaBlock
+ * 
+ * Adds the 'canSteal' function to the STORE_BUYSELL Lua block  
+ *
+ * On completion $UIMenuIF("Succeeded") 1 => Success, 0 => Failure
+ * 
+ ******************************************************************************/
+DEFINE_ACTION_MACRO lefreutStealMulti.PatchLuaBlock
+BEGIN
+	LOCAL_SPRINT tempstr $UIMenuIF("Body")
+	LOCAL_SPRINT adder ~~
+
+	// Read patch insertion from canSteal.lua
+	LOCAL_SET found = SIZE_OF_FILE ~%PKGNAME%/lua/lefreutStealMulti/canSteal.lua~
+	COPY - ~%PKGNAME%/lua/lefreutStealMulti/canSteal.lua~ ~.../CounterInLine~
+		READ_ASCII 0 adder (%found%)
+	OUTER_SET found = 0 
+
+	// Put code block into inline file
+	COPY - ~ToInlineTemplate~ ~.../CounterInLine~
+		REPLACE_EVALUATE ~dummy~ BEGIN END
+		~%tempstr%~
+	OUTER_SPRINT tempstr ~~
+
+	// Split the block into "before last `" and "last `" chunks, insert new code
+	COPY - ~.../CounterInLine~ ~.../CounterInLine~
+	REPLACE_EVALUATE ~\(^[%TAB% ]*`[^`]+%MEOL%\)\([%TAB% ]*`.*%MEOL%\)~
+	BEGIN
+		SPRINT tempstr ~%MATCH1%%adder%%MATCH2%~
+		SET found = 1
+	END
+	~%tempstr%~
+
+	// If not found, nothing to do but fail.
+	ACTION_IF NOT %found% THEN
+	BEGIN
+		LOG ~In lefreutStealMulti.PatchLuaBlock - failed to split Lua code block~
+		OUTER_SET $UIMenuIF("Succeeded") = 0
+	END
+
+	// Success - copy .../CounterInLine to $UIMenuIF("Body")
+	ACTION_IF %found% THEN
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Body") ~~
+		OUTER_SET found = SIZE_OF_FILE ~.../CounterInLine~
+		COPY - ~.../CounterInLine~ ~.../CounterInLine~
+			READ_ASCII 0 $UIMenuIF("Body") (%found%-1)
+			OUTER_SET $UIMenuIF("Succeeded") = 1
+	END
+	COPY - ~EmptyInlineTemplate~ ~.../CounterInline~
+END
+
+/*******************************************************************************
+ * PatchBuySell1
+ * 
+ * Replaces clickable definition for STEAL_BUTTON 
+ *
+ * On completion $UIMenuIF("Succeeded") 1 => Success, 0 => Failure
+ * 
+ ******************************************************************************/
+DEFINE_ACTION_MACRO lefreutStealMulti.PatchBuySell1
+BEGIN
+	LOCAL_SPRINT tempstr $UIMenuIF("Body")
+	LOCAL_SPRINT adder ~%TAB%%TAB%clickable lua "canSteal()"%LE%~
+	LOCAL_SET found = 0
+
+	// Put code block into inline file
+	COPY - ~ToInlineTemplate~ ~.../CounterInLine~
+		REPLACE_EVALUATE ~dummy~ BEGIN END
+		~%tempstr%~
+	OUTER_SPRINT tempstr ~~
+
+	// Replace clickable entry of STEAL_BUTTON
+	COPY - ~.../CounterInLine~ ~.../CounterInLine~
+		REPLACE_EVALUATE ~\(^[%TAB% ]*button%MWHITE%{%MNOBRACE%+text[%TAB% ]+%MQUOTE%STEAL_BUTTON%MQUOTE%%MNOBRACE%+\)\(^[%TAB% ]*clickable[%TAB% ]+lua[%TAB% ]+%MQUOTE%%MNOTQUOTE%+%MQUOTE%.*%MEOL%\)\(%MNOBRACE%+}.*%MEOL%\)~
+		BEGIN
+			SPRINT tempstr ~%MATCH1%%adder%%MATCH3%~
+			SET found = 1
+		END
+		~%tempstr%~
+
+	// If not found, nothing to do but fail.
+	ACTION_IF NOT %found% THEN
+	BEGIN
+		LOG ~In lefreutStealMulti.PatchBuySell1 - failed to match STEAL_BUTTON clickable~
+		OUTER_SET $UIMenuIF("Succeeded") = 0
+	END
+
+	// Success - copy .../CounterInLine to $UIMenuIF("Body")
+	ACTION_IF %found% THEN
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Body") ~~
+		OUTER_SET found = SIZE_OF_FILE ~.../CounterInLine~
+		COPY - ~.../CounterInLine~ ~.../CounterInLine~
+			READ_ASCII 0 $UIMenuIF("Body") (%found%-1)
+			OUTER_SET $UIMenuIF("Succeeded") = 1
+	END
+	COPY - ~EmptyInlineTemplate~ ~.../CounterInline~
+END
+
+/*******************************************************************************
+ * PatchBuySell2
+ * 
+ * Replaces action for STEAL_BUTTON with the contents of modstealbutton.menu   
+ *
+ * On completion $UIMenuIF("Succeeded") 1 => Success, 0 => Failure
+ * 
+ ******************************************************************************/
+DEFINE_ACTION_MACRO lefreutStealMulti.PatchBuySell2
+BEGIN
+	LOCAL_SPRINT tempstr $UIMenuIF("Body")
+	LOCAL_SPRINT adder ~~
+
+	// Read patch insertion from modstealbutton.menu
+	LOCAL_SET found = SIZE_OF_FILE ~%PKGNAME%/menu/lefreutStealMulti/modstealbutton.menu~
+	COPY - ~%PKGNAME%/menu/lefreutStealMulti/modstealbutton.menu~ ~.../CounterInLine~
+		READ_ASCII 0 adder (%found%)
+	OUTER_SET found = 0 
+
+	// Put current menu definition into inline file
+	COPY - ~ToInlineTemplate~ ~.../CounterInLine~
+		REPLACE_EVALUATE ~dummy~ BEGIN END
+		~%tempstr%~
+	OUTER_SPRINT tempstr ~~
+
+	// Replace action entry of STEAL_BUTTON
+	COPY - ~.../CounterInLine~ ~.../CounterInLine~
+		REPLACE_EVALUATE ~\(^[%TAB% ]*button%MWHITE%{%MNOBRACE%+text[%TAB% ]+%MQUOTE%STEAL_BUTTON%MQUOTE%%MNOBRACE%+\)\(^[%TAB% ]*action%MWHITE%%MQUOTE%%MNOTQUOTE%+%MQUOTE%.*%MEOL%\)\(%MNOBRACE%+}.*%MEOL%\)~
+		BEGIN
+			SPRINT tempstr ~%MATCH1%%adder%%MATCH3%~
+			SET found = 1
+		END
+		~%tempstr%~
+
+	// If not found, nothing to do but fail.
+	ACTION_IF NOT %found% THEN
+	BEGIN
+		LOG ~In lefreutStealMulti.PatchBuySell2 - failed to match STEAL_BUTTON action~
+		OUTER_SET $UIMenuIF("Succeeded") = 0
+	END
+
+	// Success - copy .../CounterInLine to $UIMenuIF("Body")
+	ACTION_IF %found% THEN
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Body") ~~
+		OUTER_SET found = SIZE_OF_FILE ~.../CounterInLine~
+		COPY - ~.../CounterInLine~ ~.../CounterInLine~
+			READ_ASCII 0 $UIMenuIF("Body") (%found%-1)
+			OUTER_SET $UIMenuIF("Succeeded") = 1
+	END
+	COPY - ~EmptyInlineTemplate~ ~.../CounterInline~
+END
+
+
+/*******************************************************************************
+ * lefreut's Steal Multiple Items Installation
+ ******************************************************************************/
+// Open UI.MENU
+PRINT @12
+SILENT
+LAUNCH_ACTION_MACRO UIMenuOpen
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @20
+END
+
+// Patch STORE_BUYSELL Lua block
+PRINT @401001
+SILENT
+
+OUTER_SPRINT $UIMenuIF("LuaRegex") ~function[%TAB% ]+getStoreSlotHighlight([^)]+)~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+LAUNCH_ACTION_MACRO UIMenuGetMatchingLuaBlock
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @401002
+END
+
+LAUNCH_ACTION_MACRO lefreutStealMulti.PatchLuaBlock
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @401003
+END
+LAUNCH_ACTION_MACRO UIMenuUpdateLuaBlock
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @103
+END
+
+// Patch STORE_BUYSELL menu
+PRINT @122
+SILENT
+
+OUTER_SPRINT $UIMenuIF("MenuName") ~STORE_BUYSELL~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+LAUNCH_ACTION_MACRO UIMenuGetMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @123
+END
+
+LAUNCH_ACTION_MACRO lefreutStealMulti.PatchBuySell1
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @124
+END
+
+LAUNCH_ACTION_MACRO lefreutStealMulti.PatchBuySell2
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @124
+END
+
+LAUNCH_ACTION_MACRO UIMenuUpdateMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @103
+END
+
+// Close UI.MENU
+PRINT @13
+SILENT
+LAUNCH_ACTION_MACRO UIMenuClose
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @21
+END
+
+
+
+

@@ -1,0 +1,25 @@
+	button
+	{
+		enabled "worldMessageBoxTop < 0"
+		area 857 203 45 48
+		bam GUISV10
+		sequence 1
+		on c
+		action
+		"
+			dragMessagesY(2000)
+			dragMessagesY(-92)
+		"
+	}
+	button
+	{
+		enabled "worldMessageBoxTop >= 0"
+		area 857 203 45 48
+		bam GUISV10
+		sequence 0
+		on c
+		action
+		"
+			dragMessagesY(-2000)
+		"
+	}

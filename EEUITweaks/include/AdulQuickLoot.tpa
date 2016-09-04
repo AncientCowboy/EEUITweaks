@@ -1,0 +1,183 @@
+/*******************************************************************************
+ * PatchRemoveMoveCode
+ *
+ * Removes code line 'Infinity_SetOffset('WORLD_QUICKLOOT',0, -toolbarTop)'
+ * from Lua code block supporting WORLD_MESSAGES
+ *
+ * Returns $UIMenuIF("Succeeded") 1 => Success, 0 => Failure
+ *
+ ******************************************************************************/
+DEFINE_ACTION_MACRO AdulQuickLoot.PatchRemoveMoveCode
+BEGIN
+	LOCAL_SPRINT tempstr ~~
+	LOCAL_SPRINT targetmatch ~Infinity_SetOffset[%TAB% ]*([%TAB% ]*%MQUOTE%WORLD_QUICKLOOT%MQUOTE%[%TAB% ]*,[%TAB% ]*0[%TAB% ]*,[%TAB% ]*-toolbarTop[%TAB% ]*)~
+	LOCAL_SET found = 0
+
+	// Get code block
+	OUTER_SPRINT $UIMenuIF("LuaRegex") ~%targetmatch%~
+	OUTER_SPRINT $UIMenuIF("Body") ~~
+	LAUNCH_ACTION_MACRO UIMenuGetMatchingLuaBlock
+
+	ACTION_IF $UIMenuIF("Succeeded") THEN
+	BEGIN
+		// Copy code block to inline file
+		OUTER_SPRINT tempstr $UIMenuIF("Body")
+		COPY - ~ToInlineTemplate~ ~.../CounterInLine~
+			REPLACE_EVALUATE ~dummy~ BEGIN END
+			~%tempstr%~
+
+		// Replace target code with ~~
+		COPY - ~.../CounterInLine~ ~.../CounterInLine~
+			REPLACE_EVALUATE ~%targetmatch%~
+			BEGIN
+				SET found = 1
+			END
+			~~
+
+		ACTION_IF %found% THEN
+		BEGIN
+			// Put modified code block into $UIMenuIF("Body")			
+			OUTER_SET found = SIZE_OF_FILE ~.../CounterInLine~
+			COPY - ~.../CounterInLine~ ~.../CounterInLine~
+			READ_ASCII 0 $UIMenuIF("Body") (%found%-1)
+
+			// Update code block
+			LAUNCH_ACTION_MACRO UIMenuUpdateLuaBlock
+			// Success or failure will propagate back to main code
+			ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+			BEGIN
+				LOG ~In AdulQuickLoot.PatchRemoveMoveCode: UIMenuUpdateLuaBlock failed~
+			END
+		END ELSE		
+		BEGIN // Not found. Logically should never happen - but bugs happen
+			OUTER_SET $UIMenuIF("Succeeded") = 0
+			LOG ~In AdulQuickLoot.PatchRemoveMoveCode: Couldn't find match pattern in block selected by same pattern~
+		END
+
+		// Cleanup
+		COPY - ~EmptyInlineTemplate~ ~.../CounterInline~
+
+	END ELSE
+	BEGIN // Failure of UIMenuGetMatchingLuaBlock propagates back to main code
+		LOG ~In AdulQuickLoot.PatchRemoveMoveCode: UIMenuGetMatchingLuaBlock failed~
+	END
+END
+
+/*******************************************************************************
+ * PatchWorldActionBar
+ *
+ * Modifies the button that shows/hides quick loot, adds quick key (e)
+ * 
+ * Returns $UIMenuIF("Succeeded") 1 => Success, 0 => Failure
+ *
+ ******************************************************************************/
+DEFINE_ACTION_MACRO AdulQuickLoot.PatchWorldActionBar 
+BEGIN
+	LOCAL_SPRINT tempstr $UIMenuIF("Body")
+	LOCAL_SPRINT adder ~~
+
+	// Read quicklootbutton.menu into adder
+	LOCAL_SET found = SIZE_OF_FILE ~%PKGNAME%/menu/AdulQuickLoot/quicklootbutton.menu~
+	COPY - ~%PKGNAME%/menu/AdulQuickLoot/quicklootbutton.menu~ ~.../CounterInLine~
+		READ_ASCII 0 adder (%found%)
+	OUTER_SET found = 0 
+
+	// Put current menubody into inline file
+	COPY - ~ToInlineTemplate~ ~.../CounterInLine~
+		REPLACE_EVALUATE ~dummy~ BEGIN END
+		~%tempstr%~
+	OUTER_SPRINT tempstr ~~
+
+	// Search and replace the target button
+	COPY - ~.../CounterInLine~ ~.../CounterInLine~
+		REPLACE_EVALUATE ~^[%TAB% ]button%MWHITE%{%MNOBRACE%+toggle[%TAB% ]+groundItemsButtonToggle%MNOBRACE%+}.*%MEOL%~ 
+		BEGIN
+			SET found = 1
+		END
+		~%adder%~
+
+	// Not found - give up
+	ACTION_IF NOT %found% THEN 
+	BEGIN
+		LOG ~In AdulQuickLoot.PatchWorldActionBar - failed to find quick loot activate button~
+		OUTER_SET $UIMenuIF("Succeeded") = 0
+	END ELSE 
+
+	// Success - copy .../CounterInLine to $UIMenuIF("Body")
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Body") ~~
+		OUTER_SET found = SIZE_OF_FILE ~.../CounterInLine~
+		COPY - ~.../CounterInLine~ ~.../CounterInLine~
+			READ_ASCII 0 $UIMenuIF("Body") (%found%-1)
+		OUTER_SET $UIMenuIF("Succeeded") = 1
+	END
+	COPY - ~EmptyInlineTemplate~ ~.../CounterInline~
+END
+
+/*******************************************************************************
+ * Adul's Better Quick Loot Installation
+ ******************************************************************************/
+// Copy files
+PRINT @24
+SILENT
+COPY ~%PKGNAME%/copy/AdulQuickLoot~ ~override~
+
+// Open UI.MENU
+PRINT @12
+SILENT
+LAUNCH_ACTION_MACRO UIMenuOpen
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @20
+END
+
+// Patch WORLD_ACTIONBAR
+PRINT @119
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~WORLD_ACTIONBAR~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+LAUNCH_ACTION_MACRO UIMenuGetMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @120
+END
+LAUNCH_ACTION_MACRO AdulQuickLoot.PatchWorldActionBar
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @121
+END
+LAUNCH_ACTION_MACRO UIMenuUpdateMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @103
+END
+
+// Replace WORLD_QUICKLOOT menu
+PRINT @203001
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~WORLD_QUICKLOOT~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/AdulQuickLoot/quicklootmenu.menu~
+LAUNCH_ACTION_MACRO UIMenuReplaceMenuMixed
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN 
+BEGIN
+	FAIL @203002
+END
+
+// Remove WORLD_MESSAGES code block line that moves the quick loot bar
+PRINT @203003
+SILENT
+LAUNCH_ACTION_MACRO AdulQuickLoot.PatchRemoveMoveCode
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN 
+BEGIN
+	FAIL @203004
+END
+
+// Close UI.MENU
+PRINT @13
+SILENT
+LAUNCH_ACTION_MACRO UIMenuClose
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @21
+END
+

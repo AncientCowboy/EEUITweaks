@@ -1,0 +1,70 @@
+/*******************************************************************************
+ * Feedback Buttons Hack Installation
+ ******************************************************************************/	
+// Copy files
+PRINT @24
+SILENT
+COPY ~%PKGNAME%/copy/FeedbackHack/M_FeedHk.lua~ ~override~
+COPY ~%PKGNAME%/copy/FeedbackHack/en_FeedH.lua~ ~override~
+
+// Open UI.MENU
+PRINT @12
+SILENT
+LAUNCH_ACTION_MACRO UIMenuOpen
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @20
+END
+
+// Patch WORLD_ACTIONBAR
+PRINT @119
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~WORLD_ACTIONBAR~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+LAUNCH_ACTION_MACRO UIMenuGetMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @120
+END
+ACTION_MATCH 1
+WITH
+	%IsSoD% %IsEETSoD%
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/newbuttons.menu~
+	END
+	%IsSoDOverhaul%
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/newbuttons2.menu~
+	END
+	%IsBG2% %IsEETBG2%
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/newbuttons3.menu~
+	END
+	%IsBGEE%
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/newbuttons4.menu~
+	END
+
+	DEFAULT
+		FAIL @15
+END
+LAUNCH_ACTION_MACRO UIMenuAppendMenuElements
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @121
+END
+LAUNCH_ACTION_MACRO UIMenuUpdateMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @103
+END
+		
+// Close UI.MENU
+PRINT @13
+SILENT
+LAUNCH_ACTION_MACRO UIMenuClose
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @21
+END
+

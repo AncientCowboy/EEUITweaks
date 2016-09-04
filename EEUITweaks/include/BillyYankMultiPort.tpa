@@ -1,0 +1,90 @@
+/*******************************************************************************
+ * BillyYank's Multi-Portrait Installation
+ ******************************************************************************/
+// Open UI.MENU
+PRINT @12
+SILENT
+LAUNCH_ACTION_MACRO UIMenuOpen
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @20
+END
+
+// Patch CHARGEN_PORTRAIT menu
+PRINT @158
+SILENT
+
+OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_PORTRAIT~
+ACTION_MATCH 1
+WITH
+	%IsSoD% %IsEETSoD%
+	BEGIN
+		PRINT @19
+		SILENT
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/BillyYankMultiPort/chargenportSOD.menu~
+	END
+
+	%IsBG2onSoD%
+	BEGIN
+		PRINT @16
+		SILENT
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/BillyYankMultiPort/chargenportBG2.menu~
+	END
+
+	%IsBG2% %IsEETBG2%
+	BEGIN
+		PRINT @28
+		SILENT
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/BillyYankMultiPort/chargenportBG2.menu~
+	END
+
+	%IsBGEE% 
+	BEGIN
+		PRINT @14
+		SILENT
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/BillyYankMultiPort/chargenportBGEE.menu~
+	END
+
+	DEFAULT
+		FAIL @15
+END
+
+LAUNCH_ACTION_MACRO UIMenuReplaceMenuMixed
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @160
+END
+
+// Close up
+PRINT @13
+SILENT
+LAUNCH_ACTION_MACRO UIMenuClose
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @21
+END
+
+// Copying ui specific files
+PRINT @17
+SILENT
+ACTION_MATCH 1
+WITH
+	%IsSoD% %IsEETSoD%
+	BEGIN
+		COPY ~%PKGNAME%/copy/BillyYankMultiPort/SOD~ ~override~
+	END
+
+	%IsBG2% %IsBG2onSoD% %IsEETBG2%
+	BEGIN
+		COPY ~%PKGNAME%/copy/BillyYankMultiPort/BG2~ ~override~
+	END
+
+	%IsBGEE%
+	BEGIN
+		COPY ~%PKGNAME%/copy/BillyYankMultiPort/BGEE~ ~override~
+	END
+
+	DEFAULT
+		FAIL @15
+END
+

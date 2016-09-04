@@ -1,0 +1,108 @@
+menu
+{
+	name 'WORLD_DIALOG'
+	align center center
+	ignoreEsc
+	onOpen
+	"	
+		local x,y,w,h = Infinity_GetArea('worldDialogBackground')
+		Infinity_PushMenu('WORLD_MESSAGES')
+		Infinity_PushMenu('WORLD_DIALOG_CONFIRM')
+		greySidebars()
+	"
+	onClose
+	"
+		
+		local x,y,w,h = Infinity_GetArea('worldDialogBackground')
+		resizeDialogContent(h - 253)
+		Infinity_PopMenu('WORLD_DIALOG_CONFIRM')
+		Infinity_PopMenu('WORLD_MESSAGES')
+		ungreySidebars()
+	"
+	label
+	{
+		name "worldDialogBackground"
+		area 0 0 863 253
+		rectangle 4
+	}
+	label
+	{
+		name "worldDialogPortraitArea"
+		area 22 22 54 84
+		bitmap lua "worldNPCDialogPortrait"
+	}
+	text
+	{
+		name "worldNPCDialog"
+		area 84 22 749 38
+		text lua "worldNPCDialogText"
+		text style "normal"
+		scrollbar	'GUISCRC'
+	}
+	text
+	{
+		name "worldDialogMessageBox"
+		enabled "showWorldMessages"
+	}
+	handle
+	{
+		enabled "showWorldMessages"
+		name "dialogHandleY"
+	}
+	text
+	{
+		name "worldDialogShowMessagesButton"
+		area 754 16 62 28
+	}
+	text
+	{
+		name "worldDialogMessageDivider"
+		enabled "showWorldMessages"
+	}
+	list
+	{
+		column
+		{
+			width 100
+			label
+			{
+				area 0 0 -1 -1
+				enabled "dialogEntryGreyed()"
+				rectangle 1
+				rectangle opacity 100
+			}
+			text
+			{
+				area 0 0 -1 -1
+				text lua "getDialogEntryText(rowNumber)"
+				text style "normal"
+			}
+		}
+		name "worldPlayerDialogChoicesList"
+		area 84 76 749 177
+		rowheight dynamic
+		hideHighlight
+		table "worldPlayerDialogChoices"
+		var "worldPlayerDialogSelection"
+		scrollbar	'GUISCRC'
+		actionEnter
+		"
+			if(gameOptions.m_bConfirmDialog == true) then return end
+			glowTest = mouseoverRow
+			worldPlayerDialogSelection = mouseoverRow
+		"
+		actionExit
+		"
+			if(gameOptions.m_bConfirmDialog == true) then return end
+			glowTest = nil
+			worldPlayerDialogSelection = 0
+		"
+		action
+		"
+			--In confirm mode, just highlight the choice.
+			if(gameOptions.m_bConfirmDialog == true) then return end
+			worldScreen:OnDialogReplyClick(worldPlayerDialogChoices[worldPlayerDialogSelection].marker)
+			worldPlayerDialogSelection = 0
+		"
+	}
+}

@@ -1,0 +1,264 @@
+/*******************************************************************************
+ * PatchUpperPanel
+ * Replaces align and optional offset lines with 'align center center' and
+ * 'offset 0 -56'
+ *
+ * On return $UIMenuIF("Succeeded") is 1 on success, 0 on error
+ *
+ ******************************************************************************/
+DEFINE_ACTION_MACRO StoreFix.PatchUpperPanel
+BEGIN
+	LOCAL_SPRINT tempstr $UIMenuIF("Body")
+	LOCAL_SPRINT adder ~align center center%LE%%TAB%offset 0 -56%LE%~
+	LOCAL_SET found = 0
+
+	// Put current menu declaration into inline file
+	COPY - ~ToInlineTemplate~ ~.../CounterInLine~
+		REPLACE_EVALUATE ~dummy~ BEGIN END
+		~%tempstr%~
+	OUTER_SPRINT tempstr ~~
+
+	// Search and replace
+	COPY - ~.../CounterInLine~ ~.../CounterInLine~
+		REPLACE_EVALUATE ~\(menu%MWHITE%{%MNOBRACE%+\)align.+%MEOL%\(%MWHITE%offset.+%MEOL%\)?~
+		BEGIN
+			SET found = 1
+		END
+		~%MATCH1%%adder%~
+
+	// Not found - give up
+	ACTION_IF NOT %found% THEN
+	BEGIN
+		LOG ~In StoreFix.PatchUpperPanel - failed to find align parameter. UI.MENU too unusual to handle - bailing out~
+		OUTER_SET $UIMenuIF("Succeeded") = 0
+	END ELSE 
+
+	// Success - copy .../CounterInLine to $UIMenuIF("Body")
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Body") ~~
+		OUTER_SET found = SIZE_OF_FILE ~.../CounterInLine~
+		COPY - ~.../CounterInLine~ ~.../CounterInLine~
+			READ_ASCII 0 $UIMenuIF("Body") (%found%-1)
+		
+		OUTER_SET $UIMenuIF("Succeeded") = 1
+	END
+	COPY - ~EmptyInlineTemplate~ ~.../CounterInline~
+END
+
+/*******************************************************************************
+ * PatchLowerPanel
+ * Replaces align and optional offset lines with 'align center center' and
+ * 'offset 0 299'
+ *
+ * On return $UIMenuIF("Succeeded") is 1 on success, 0 on error
+ *
+ ******************************************************************************/
+DEFINE_ACTION_MACRO StoreFix.PatchLowerPanel
+BEGIN
+	LOCAL_SPRINT tempstr $UIMenuIF("Body")
+	LOCAL_SPRINT adder ~align center center%LE%%TAB%offset 0 299%LE%~
+	LOCAL_SET found = 0
+
+	// Put current menubody into inline file
+	COPY - ~ToInlineTemplate~ ~.../CounterInLine~
+		REPLACE_EVALUATE ~dummy~ BEGIN END
+		~%tempstr%~
+	OUTER_SPRINT tempstr ~~
+
+	// Search and replace
+	COPY - ~.../CounterInLine~ ~.../CounterInLine~
+		REPLACE_EVALUATE ~\(menu%MWHITE%{%MNOBRACE%+\)align.+%MEOL%\(%MWHITE%offset.+%MEOL%\)?~
+		BEGIN
+			SET found = 1
+		END
+		~%MATCH1%%adder%~
+
+	// Not found - give up
+	ACTION_IF NOT %found% THEN
+	BEGIN
+		LOG ~In StoreFix.PatchUpperPanel - failed to find align parameter. UI.MENU too unusual to handle - bailing out~
+		OUTER_SET $UIMenuIF("Succeeded") = 0
+	END ELSE 
+
+	// Success - copy .../CounterInLine to $UIMenuIF("Body")
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Body") ~~
+		OUTER_SET found = SIZE_OF_FILE ~.../CounterInLine~
+		COPY - ~.../CounterInLine~ ~.../CounterInLine~
+			READ_ASCII 0 $UIMenuIF("Body") (%found%-1)
+		
+		OUTER_SET $UIMenuIF("Succeeded") = 1
+	END
+	COPY - ~EmptyInlineTemplate~ ~.../CounterInline~
+END
+
+
+/*******************************************************************************
+ * Store Screens Installation
+ ******************************************************************************/
+
+// Open UI.MENU
+PRINT @12
+SILENT
+LAUNCH_ACTION_MACRO UIMenuOpen
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @20
+END
+
+// Patch STORE_BUYSELL
+PRINT @122
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~STORE_BUYSELL~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+LAUNCH_ACTION_MACRO UIMenuGetMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @123
+END
+LAUNCH_ACTION_MACRO StoreFix.PatchUpperPanel
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @124
+END
+LAUNCH_ACTION_MACRO UIMenuUpdateMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @103
+END
+
+// Patch STORE_IDENTIFY
+PRINT @125
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~STORE_IDENTIFY~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+LAUNCH_ACTION_MACRO UIMenuGetMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @126
+END
+LAUNCH_ACTION_MACRO StoreFix.PatchUpperPanel
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @127
+END
+LAUNCH_ACTION_MACRO UIMenuUpdateMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @103
+END
+
+// Patch STORE_DONATE
+PRINT @128
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~STORE_DONATE~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+LAUNCH_ACTION_MACRO UIMenuGetMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @129
+END
+LAUNCH_ACTION_MACRO StoreFix.PatchUpperPanel
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @130
+END
+LAUNCH_ACTION_MACRO UIMenuUpdateMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @103
+END
+
+// Patch STORE_ROOMS
+PRINT @131
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~STORE_ROOMS~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+LAUNCH_ACTION_MACRO UIMenuGetMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @132
+END
+LAUNCH_ACTION_MACRO StoreFix.PatchUpperPanel
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @133
+END
+LAUNCH_ACTION_MACRO UIMenuUpdateMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @103
+END
+
+// Patch STORE_HEALING
+PRINT @134
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~STORE_HEALING~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+LAUNCH_ACTION_MACRO UIMenuGetMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @135
+END
+LAUNCH_ACTION_MACRO StoreFix.PatchUpperPanel
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @136
+END
+LAUNCH_ACTION_MACRO UIMenuUpdateMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @103
+END
+
+// Patch STORE_DRINKS
+PRINT @137
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~STORE_DRINKS~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+LAUNCH_ACTION_MACRO UIMenuGetMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @138
+END
+LAUNCH_ACTION_MACRO StoreFix.PatchUpperPanel
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @139
+END
+LAUNCH_ACTION_MACRO UIMenuUpdateMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @103
+END
+
+// Patch STORE_CHOOSER
+PRINT @140
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~STORE_CHOOSER~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+LAUNCH_ACTION_MACRO UIMenuGetMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @141
+END
+LAUNCH_ACTION_MACRO StoreFix.PatchLowerPanel
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @142
+END
+LAUNCH_ACTION_MACRO UIMenuUpdateMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @103
+END
+
+// Close UI.MENU
+PRINT @13
+SILENT
+LAUNCH_ACTION_MACRO UIMenuClose
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @21
+END
+

@@ -1,0 +1,19 @@
+	button
+	{
+		area 0 0 500 140
+		action
+		"
+			FindTitle = getSubtitleString()
+			if (sidebarsGreyed ~= 1) then
+				if journalOpen ~= 1 then
+					e:GetActiveEngine():OnLeftPanelButtonClick(2)
+				end
+				QFilter = 0
+				local tf = next(textflashes)
+				setSelectedQuest(textflashes[tf][5])
+				CloseAll()
+				findQuestPopUp()
+				CheckForOpenedQuests()
+			end
+		"
+	}

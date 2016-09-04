@@ -1,0 +1,7 @@
+	label
+	{
+		area 472 414 364 184
+		text lua "'Total: ' .. totalAbilities .. '\nStrength: ' .. storedStats[1] .. '\nDexterity: ' .. storedStats[2] .. '\nConstitution: ' .. storedStats[3] ..  '\nIntelligence: ' .. storedStats[4] ..  '\nWisdom: ' .. storedStats[5] ..  '\nCharisma: ' .. storedStats[6]"
+		text style "normal"
+		text align left center
+	}

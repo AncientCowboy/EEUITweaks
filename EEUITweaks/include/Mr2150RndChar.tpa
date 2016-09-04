@@ -1,0 +1,198 @@
+/*******************************************************************************
+ * ChargenPatch1
+ *
+ * Adds onopen "randomCharacter = 0" immediately after ignoreesc in CHARGEN
+ * 
+ * Results in $UIMenuIF("Succeeded") 1 => Success, 0 => Failure
+ *
+ ******************************************************************************/
+DEFINE_ACTION_MACRO Mr2150RndChar.ChargenPatch1
+BEGIN
+	LOCAL_SPRINT tempstr $UIMenuIF("Body")
+	LOCAL_SPRINT adder ~%TAB%onopen%LE%%TAB%"%LE%%TAB%%TAB%randomCharacter = 0%LE%%TAB%"%LE%~
+	LOCAL_SPRINT adder2 ~%LE%%TAB%%TAB%randomCharacter = 0%LE%%TAB%~
+	LOCAL_SET found = 0
+
+	// Put current menu definition into inline file
+	COPY - ~ToInlineTemplate~ ~.../CounterInLine~
+		REPLACE_EVALUATE ~dummy~ BEGIN END
+		~%tempstr%~
+	OUTER_SPRINT teempstr ~~
+
+	// Allow for other patches that may have already added onopen - first single quote delimited
+	COPY - ~.../CounterInLine~ ~.../CounterInLine~
+		REPLACE_EVALUATE CASE_INSENSITIVE ~\(^[%TAB% ]*onopen%MWHITE%%MSQUOTE%%MNOTSQUOTE%*\)\(%MSQUOTE%.*%MEOL%\)~
+		BEGIN
+			SPRINT tempstr ~%MATCH1%%adder2%%MATCH2%~
+			SET found = 1
+		END
+		~%tempstr%~
+
+	ACTION_IF NOT %found% THEN
+	BEGIN // Try for double quote
+		COPY - ~.../CounterInLine~ ~.../CounterInLine~
+			REPLACE_EVALUATE CASE_INSENSITIVE ~\(^[%TAB% ]*onopen%MWHITE%%MDQUOTE%%MNOTDQUOTE%*\)\(%MDQUOTE%.*%MEOL%\)~
+			BEGIN
+				SPRINT tempstr ~%MATCH1%%adder2%%MATCH2%~
+				SET found = 1
+			END
+			~%tempstr%~
+
+	END
+
+	ACTION_IF NOT %found% THEN
+	BEGIN // No existing onopen - Add code after ignoreesc
+		COPY - ~.../CounterInLine~ ~.../CounterInLine~
+			REPLACE_EVALUATE CASE_INSENSITIVE ~^[%TAB% ]*ignoreesc.*%MEOL%~
+			BEGIN
+				SPRINT tempstr ~%MATCH0%%adder%~
+				SET found = 1
+			END
+			~%tempstr%~
+	END
+
+	// Not found, fail
+	ACTION_IF NOT %found% THEN
+	BEGIN
+		LOG ~In Mr2150RndChar.ChargenPatch1 - failed to insert onopen code~
+		OUTER_SET $UIMenuIF("Succeeded") = 0
+	END ELSE
+
+	// Otherwise, success. Copy .../CounterInLine to $UIMenuIF("Body")
+	ACTION_IF %found% THEN
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Body") ~~
+		OUTER_SET found = SIZE_OF_FILE ~.../CounterInLine~
+		COPY - ~.../CounterInLine~ ~.../CounterInLine~
+			READ_ASCII 0 $UIMenuIF("Body") (%found%-1)
+		OUTER_SET $UIMenuIF("Succeeded") = 1
+	END
+	COPY - ~EmptyInlineTemplate~ ~.../CounterInline~
+END
+
+/*******************************************************************************
+ * ChargenPatch2
+ *
+ * Inserts two button definitions after IMPORT_BUTTON in CHARGEN menu
+ * 
+ * Results in $UIMenuIF("Succeeded") 1 => Success, 0 => Failure
+ *
+ ******************************************************************************/
+DEFINE_ACTION_MACRO Mr2150RndChar.ChargenPatch2
+BEGIN
+	LOCAL_SPRINT tempstr $UIMenuIF("Body")
+	LOCAL_SPRINT adder ~~
+	LOCAL_SPRINT fname ~~
+	LOCAL_SET found = 1
+
+	// Read patch insertion from appropriate chargenbutton???.menu
+	ACTION_MATCH 1
+	WITH
+		%IsBG2% %IsBGEE% %IsBG2onSoD% %IsEETBG2%
+		BEGIN
+			OUTER_SPRINT fname ~%PKGNAME%/menu/Mr2150RndChar/chargenbuttonbg2.menu~
+		END
+
+		%IsSoD% %IsEETSoD%
+		BEGIN
+			OUTER_SPRINT fname ~%PKGNAME%/menu/Mr2150RndChar/chargenbuttonsod.menu~
+		END
+
+		DEFAULT
+			OUTER_SET found = 0
+	END
+
+	ACTION_IF %found% THEN
+	BEGIN
+		OUTER_SET found = SIZE_OF_FILE ~%fname%~
+		COPY - ~%fname%~ ~.../CounterInLine~
+			READ_ASCII 0 adder (%found%)
+		OUTER_SET found = 0 
+
+		// Put current menu definition into inline file
+		COPY - ~ToInlineTemplate~ ~.../CounterInLine~
+			REPLACE_EVALUATE ~dummy~ BEGIN END
+			~%tempstr%~
+		OUTER_SPRINT teempstr ~~
+
+		// Find and replace IMPORT_BUTTON
+		COPY - ~.../CounterInLine~ ~.../CounterInLine~
+		REPLACE_EVALUATE ~^[%TAB% ]*button%MWHITE%{%MNOBRACE%+text[%TAB% ]+%MQUOTE%[%TAB% ]*IMPORT_BUTTON[%TAB% ]*%MQUOTE%%MNOBRACE%+}.*%MEOL%~
+		BEGIN
+			SPRINT tempstr ~%MATCH0%%adder%~
+			SET found = 1
+		END
+		~%tempstr%~
+
+		ACTION_IF %found% THEN
+		BEGIN
+			OUTER_SPRINT $UIMenuIF("Body") ~~
+			OUTER_SET found = SIZE_OF_FILE ~.../CounterInLine~
+			COPY - ~.../CounterInLine~ ~.../CounterInLine~
+				READ_ASCII 0 $UIMenuIF("Body") (%found%-1)
+			OUTER_SET $UIMenuIF("Succeeded") = 1
+		END ELSE
+		BEGIN // Couldn't find IMPORT_BUTTON
+			LOG ~In Mr2150RndChar.ChargenPatch2 - Couldn't find IMPORT_BUTTON~
+			OUTER_SET $UIMenuIF("Succeeded") = 0
+		END
+		COPY - ~EmptyInlineTemplate~ ~.../CounterInline~
+	END ELSE
+	BEGIN // Invalid platform
+		LOG ~In ChargenPatch2 - Unknown platform~
+		OUTER_SET $UIMenuIF("Succeeded") = 0
+	END
+END
+
+/*******************************************************************************
+ * Mr2150's Random PC Generator Installation
+ ******************************************************************************/
+// Open UI.MENU
+PRINT @12
+SILENT
+LAUNCH_ACTION_MACRO UIMenuOpen
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @20
+END
+
+// Patch CHARGEN menu
+PRINT @149
+SILENT
+
+OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+LAUNCH_ACTION_MACRO UIMenuGetMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @150
+END
+LAUNCH_ACTION_MACRO Mr2150RndChar.ChargenPatch1
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @151
+END
+LAUNCH_ACTION_MACRO Mr2150RndChar.ChargenPatch2
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @151
+END
+LAUNCH_ACTION_MACRO UIMenuUpdateMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @103
+END
+
+// Close up
+PRINT @13
+SILENT
+LAUNCH_ACTION_MACRO UIMenuClose
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @21
+END
+
+// Copy files
+PRINT @24
+SILENT
+COPY ~%PKGNAME%/copy/Mr2150RndChar/M_random.lua~ ~override~

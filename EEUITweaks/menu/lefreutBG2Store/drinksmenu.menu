@@ -1,0 +1,120 @@
+menu
+{
+	name 'STORE_DRINKS'
+	align center center
+	offset 0 -48
+	ignoreEsc
+	onOpen 
+	"
+		storeScreen:UpdateBuyDrinksPanel()
+		store.drinkText = ''
+	"
+
+	label
+	{
+		area 0 0 864 614
+		mosaic GUISTIDB
+	}
+	label
+	{
+		area 48 6 768 52
+		text "DRINKS_TITLE"
+		text style "title"
+	}
+	label
+	{
+		area 277 68 310 26
+		text lua "Infinity_FetchString(storeScreen:GetStoreName())"
+		text style "label"
+	}
+	label
+	{
+		area 274 103 313 31
+		text lua "game:GetPartyGold()"
+		text style "gold"
+	}
+	label
+	{
+		area 68 526 146 23
+		text "COST_LABEL"
+		text style "label"
+		align right center
+	}
+	label
+	{
+		area 260 526 108 23
+		enabled "storeDrinksVar ~= nil and store.drinks[storeDrinksVar] ~= nil"
+		text lua "store.drinks[storeDrinksVar].value"
+		text style "normal"
+		align right center
+	}
+	list
+	{
+		column 
+		{ 
+			width 100
+			label
+			{
+				area 0 0 318 62
+				mosaic GUISTBK3
+				respectClipping
+			}
+			label
+			{
+				area 8 0 200 62
+				text lua "store.drinks[rowNumber].name"
+				text style "normal"
+				text align left center
+			}
+			label
+			{
+				area 260 0 54 62
+				text lua "store.drinks[rowNumber].value"
+				text style "gold"
+				text align center center
+			}
+			label
+			{
+				enabled "store.drinks[rowNumber].valid == 0"
+				area 0 2 312 58
+				rectangle 1
+				rectangle opacity 150
+			}
+		}
+		area 54 138 350 384
+		rowheight	62
+		table		"store.drinks"
+		var			"storeDrinksVar"
+		scrollbar 'GUISCRC'
+	}
+	button
+	{
+		area 118 554 204 48
+		bam GUIOSTUM
+		text "DRINK_LABEL"
+		text style "button"
+		clickable lua "storeDrinksVar ~= nil and storeDrinksVar ~= 0"
+		action
+		"
+			storeScreen:OnBuyDrinkButtonClick(storeDrinksVar - 1)
+		"
+	}
+	label
+	{
+		area 484 184 132 90
+		bam lua "store.qualityIcon"
+	}
+	label
+	{
+		area 616 184 183 90
+		text "RUMORS_LABEL"
+		text style "label_parchment"
+	}
+	text
+	{
+		area 484 274 315 273
+		text lua "store.drinkText"
+		text style "normal_parchment"
+		scrollbar 'GUISCRC'
+	}
+}
