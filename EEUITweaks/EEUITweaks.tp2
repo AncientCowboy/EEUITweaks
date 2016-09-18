@@ -12,7 +12,7 @@
  * 
  *****************************************************************************/
 
-BACKUP ~EEUITweaksbackup~
+BACKUP ~EEUITweaks/backup~
 AUTHOR ~AncientCowboy on the BeamDog Forums~
 
 ALWAYS
