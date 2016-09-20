@@ -1,0 +1,104 @@
+/*******************************************************************************
+ * lefreut's 1.3-ish Dialog Box Installation
+ ******************************************************************************/
+// Open UI.MENU
+PRINT @12
+SILENT
+LAUNCH_ACTION_MACRO UIMenuOpen
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @20
+END
+
+// Replace WORLD_DIALOG menu
+PRINT @205001
+SILENT
+
+OUTER_SPRINT $UIMenuIF("MenuName") ~WORLD_DIALOG~
+ACTION_IF IsBG2 OR IsBGEE OR IsEETBG2 OR IsBG2onSoD THEN
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreut1_3ishDialog/WldDlgMenuBG.menu~
+END ELSE
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreut1_3ishDialog/WldDlgMenuSOD.menu~
+END
+LAUNCH_ACTION_MACRO UIMenuReplaceMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @205002
+END
+
+// Replace WORLD_DIALOG_CONFIRM menu
+PRINT @206001
+SILENT
+
+OUTER_SPRINT $UIMenuIF("MenuName") ~WORLD_DIALOG_CONFIRM~
+ACTION_IF IsBG2 OR IsBGEE OR IsEETBG2 OR IsBG2onSoD THEN
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreut1_3ishDialog/WDConfirmMenuBG.menu~
+END ELSE
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreut1_3ishDialog/WDConfirmMenuSOD.menu~
+END
+LAUNCH_ACTION_MACRO UIMenuReplaceMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @206002
+END
+
+// Replace WORLD_DIALOG Lua code block
+PRINT @206003
+SILENT
+
+OUTER_SPRINT $UIMenuIF("LuaRegex") ~worldNPCDialogText[%TAB% ]*=[%TAB% ]*""~
+LAUNCH_ACTION_MACRO UIMenuGetMatchingLuaBlock
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @206004
+END
+
+ACTION_IF IsBG2 OR IsBGEE OR IsEETBG2 OR IsBG2onSoD THEN
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/lefreut1_3ishDialog/WldDlgCodeBG.lua~
+END ELSE
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/lefreut1_3ishDialog/WldDlgCodeSOD.lua~
+END
+LAUNCH_ACTION_MACRO UIMenuReplaceLuaBlock
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @206005
+END
+
+// Replace WORLD_DIALOG_CONFIRM Lua code block
+PRINT @206006
+SILENT
+
+OUTER_SPRINT $UIMenuIF("LuaRegex") ~function[%TAB% ]+getDialogButtonEnabled[%TAB% ]*([%TAB% ]*)~
+LAUNCH_ACTION_MACRO UIMenuGetMatchingLuaBlock
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @206007
+END
+
+ACTION_IF IsBG2 OR IsBGEE OR IsEETBG2 OR IsBG2onSoD THEN
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/lefreut1_3ishDialog/WDConfirmCodeBG.lua~
+END ELSE
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/lefreut1_3ishDialog/WDConfirmCodeSOD.lua~
+END
+LAUNCH_ACTION_MACRO UIMenuReplaceLuaBlock
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @206008
+END
+
+// Close UI.MENU
+PRINT @13
+SILENT
+LAUNCH_ACTION_MACRO UIMenuClose
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @21
+END

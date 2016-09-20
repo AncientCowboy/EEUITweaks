@@ -25,7 +25,7 @@ ALWAYS
 	END
 END
 
-VERSION ~1.5~
+VERSION ~1.6~
 
 LANGUAGE 
 	~English~ ~EEUITweaks/languages/english~ ~EEUITweaks/languages/english/setup.tra~
@@ -183,7 +183,7 @@ GROUP @1
 REQUIRE_PREDICATE (
 	(
 		(GAME_IS ~eet~) AND
-		(MOD_IS_INSTALLED ~setup-EET_end.tp2~ ~1~)
+		(MOD_IS_INSTALLED ~setup-EET_end.tp2~ ~0~)
 	) OR
 	(
 		(GAME_IS ~bgee~) AND 
@@ -330,8 +330,31 @@ REQUIRE_PREDICATE (
 		(NOT(FILE_EXISTS_IN_GAME ~rgtitle.png~))
 	)
 ) @27 // NOT Dragonspear UI++
+FORBID_COMPONENT ~EEUITweaks.tp2~ ~2060~ @205003
 
 INCLUDE ~%PKGNAME%/include/CenteredDialog.tpa~
+
+
+/******************************************************************************
+ * lefreut's 1.3-ish Dialog Box
+ *****************************************************************************/
+BEGIN @206000 DESIGNATED 2060
+GROUP @2
+REQUIRE_PREDICATE (
+	(
+		(GAME_IS ~eet~) AND
+		(NOT(MOD_IS_INSTALLED ~setup-EET_end.tp2~ ~0~))
+
+	) OR
+	(GAME_IS ~bg2ee~) OR
+	(
+		(GAME_IS ~bgee~) AND 
+		(NOT(FILE_EXISTS_IN_GAME ~rgtitle.png~))
+	)
+) @27 // Neither Dragonspear UI++ nor SOD option on eet
+FORBID_COMPONENT ~EEUITweaks.tp2~ ~2050~ @206009
+
+INCLUDE ~%PKGNAME%/include/lefreut1_3ishDialog.tpa~
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -384,6 +407,52 @@ REQUIRE_PREDICATE GAME_IS ~bgee bg2ee eet~ @27
 INCLUDE ~%PKGNAME%/include/lefreutCustomAll.tpa~
 
 
+/******************************************************************************
+ * Mr2150's Auto-Identify Items
+ *****************************************************************************/
+BEGIN @304000 DESIGNATED 3040
+SUBCOMPONENT @530
+GROUP @3
+REQUIRE_PREDICATE GAME_IS ~bgee bg2ee eet~ @27
+OUTER_SPRINT mrautoidgoldcost ~~
+INCLUDE ~%PKGNAME%/include/Mr2150IdentifyItems.tpa~
+
+BEGIN @304100 DESIGNATED 3041
+SUBCOMPONENT @530
+GROUP @3
+REQUIRE_PREDICATE GAME_IS ~bgee bg2ee eet~ @27
+OUTER_SPRINT mrautoidgoldcost ~%TAB%%TAB%%TAB%costGold = 10~
+INCLUDE ~%PKGNAME%/include/Mr2150IdentifyItems.tpa~
+
+BEGIN @304200 DESIGNATED 3042
+SUBCOMPONENT @530
+GROUP @3
+REQUIRE_PREDICATE GAME_IS ~bgee bg2ee eet~ @27
+OUTER_SPRINT mrautoidgoldcost ~%TAB%%TAB%%TAB%costGold = 25~
+INCLUDE ~%PKGNAME%/include/Mr2150IdentifyItems.tpa~
+
+BEGIN @304300 DESIGNATED 3043
+SUBCOMPONENT @530
+GROUP @3
+REQUIRE_PREDICATE GAME_IS ~bgee bg2ee eet~ @27
+OUTER_SPRINT mrautoidgoldcost ~%TAB%%TAB%%TAB%costGold = 50~
+INCLUDE ~%PKGNAME%/include/Mr2150IdentifyItems.tpa~
+
+BEGIN @304400 DESIGNATED 3044
+SUBCOMPONENT @530
+GROUP @3
+REQUIRE_PREDICATE GAME_IS ~bgee bg2ee eet~ @27
+OUTER_SPRINT mrautoidgoldcost ~%TAB%%TAB%%TAB%costGold = 100~
+INCLUDE ~%PKGNAME%/include/Mr2150IdentifyItems.tpa~
+
+BEGIN @304500 DESIGNATED 3045
+SUBCOMPONENT @530
+GROUP @3
+REQUIRE_PREDICATE GAME_IS ~bgee bg2ee eet~ @27
+OUTER_SPRINT mrautoidgoldcost ~%TAB%%TAB%%TAB%costGold =200~
+INCLUDE ~%PKGNAME%/include/Mr2150IdentifyItems.tpa~
+
+
 ///////////////////////////////////////////////////////////////////////////////
 // Stores/DialogsSpell Books Group
 ///////////////////////////////////////////////////////////////////////////////
@@ -415,7 +484,7 @@ REQUIRE_PREDICATE (
 	(GAME_IS ~bg2ee~) OR 
 	(
 		(GAME_IS ~eet~) AND
-		(NOT(MOD_IS_INSTALLED ~setup-EET_end.tp2~ ~1~))
+		(NOT(MOD_IS_INSTALLED ~setup-EET_end.tp2~ ~0~))
 
 	) OR
 	(
@@ -485,6 +554,36 @@ PRINT @24
 SILENT
 COPY ~%PKGNAME%/copy/lefreutTooltip~ ~override~
 
+
+/******************************************************************************
+ * lefreut's Box 5 (Dialog Box) Override
+ *****************************************************************************/
+BEGIN @502000 DESIGNATED 5020
+GROUP @5
+REQUIRE_PREDICATE (
+	(GAME_IS ~eet~) OR
+	(GAME_IS ~bg2ee~) OR 
+	(
+		(GAME_IS ~bgee~) AND 
+		(NOT(FILE_EXISTS_IN_GAME ~rgtitle.png~))
+	)
+) @27 // NOT Dragonspear UI++
+
+PRINT @24
+SILENT
+COPY ~%PKGNAME%/copy/lefreutBox5~ ~override~
+
+
+/******************************************************************************
+ * lefreut's Scroll Bar Override
+ *****************************************************************************/
+BEGIN @503000 DESIGNATED 5030
+GROUP @5
+REQUIRE_PREDICATE GAME_IS ~bgee bg2ee eet~ @27
+
+PRINT @24
+SILENT
+COPY ~%PKGNAME%/copy/lefreutBG2ScrollBar~ ~override~
 
 
 // Works around bug in WeiDU. See CamDawg's 'Groups' WeiDU tutorial

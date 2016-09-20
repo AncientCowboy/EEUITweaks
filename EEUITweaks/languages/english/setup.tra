@@ -147,6 +147,7 @@
 @500  = ~Feedback Message Box Re-sizers~
 @510  = ~Portrait Selectors~
 @520  = ~lefreut's Better Level Up Indicators~
+@530  = ~Mr2150's Auto-Identify Items~
 
 ///////////////////////////////////////////////////////////////////////////////
 // Component specific strings
@@ -231,8 +232,21 @@ Please enter return or a number between 1 and 4 [1]~
 @204405 = ~Unable to replace WORLD_LEVEL_UP_BUTTONS menu~
 
 @205000 = ~Simple Centered Dialog~
+@205003 = ~Incompatible with previously installed lefreut's 1.3-ish Dialog Box~
+// Shared between Simple and lefreut's
 @205001 = ~Replacing WORLD_DIALOG menu~
 @205002 = ~Unable to replace WORLD_DIALOG menu~
+
+@206000 = ~lefreut's 1.3-ish Dialog Box~
+@206001 = ~Replacing WORLD_DIALOG_CONFIRM menu~
+@206002 = ~Unable to replace WORLD_DIALOG_CONFIRM menu~
+@206003 = ~Replacing WORLD_DIALOG Lua code block~
+@206004 = ~Unable to find WORLD_DIALOG Lua code block~
+@206005 = ~Unable to replace WORLD_DIALOG Lua code block~
+@206006 = ~Replacing WORLD_DIALOG_CONFIRM Lua code block~
+@206007 = ~Unable to find WORLD_DIALOG_CONFIRM Lua code block~
+@206008 = ~Unable to replace WORLD_DIALOG_CONFIRM Lua code block~
+@206009 = ~Incompatible with previously installed Simple Centered Dialog~
 
 ///////////////////////////////////////////////////////////////////////////////
 // Record/Inventory/Journal Group
@@ -257,8 +271,19 @@ Please enter return or a number between 1 and 4 [1]~
 
 @303000 = ~lefreut's Customize All Characters~
 
+@304000 = ~No charge to identify items~
+@304002	= ~Patching ITEM_DESCRIPTION Lua block~
+@304003	= ~Unable to get ITEM_DESCRIPTION Lua block~
+@304004	= ~Unable to patch ITEM_DESCRIPTION Lua block~
+@304100	= ~Pay  10gp to identify items~
+@304200	= ~Pay  25gp to identify items~
+@304300	= ~Pay  50gp to identify items~
+@304400	= ~Pay 100gp to identify items~
+@304500	= ~Pay 200gp to identify items~
+
+
 ///////////////////////////////////////////////////////////////////////////////
-// Stores/DialogsSpell Books Group
+// Stores/Dialogs/Spell Books Group
 ///////////////////////////////////////////////////////////////////////////////
 
 @400000 = ~Joined Store Panels Using lefreut's Solution~
@@ -283,5 +308,10 @@ Please enter return or a number between 1 and 4 [1]~
 ///////////////////////////////////////////////////////////////////////////////
 
 @500000 = ~lefreut's Tooltip Scroll~
+
+@502000 = ~lefreut's Box 5 (Dialog Box) Override~
+
+@503000 = ~lefreut's Scroll Bar Override~
+
 
 

@@ -244,7 +244,8 @@ local function getCurrentLevelXP(targetDetails)
 		targetKit and 
 		targetLevel and
 		#targetKit > 0 and
-		not string.match(targetKit, "placeholder")
+		not string.match(targetKit, "placeholder") and
+		KitStringToXPMap[targetKit]
 		) 
 	then
 		currentlevelxp = KitStringToXPMap[targetKit][2][tonumber(targetLevel)]
