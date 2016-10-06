@@ -1,6 +1,13 @@
+	label
+	{
+		name "HackBack"
+		area 648 0 84 42
+		fill 0 0 0 150
+	}
 	button
 	{
-		area 648 1 43 40
+		name "FBHackUp"
+		area 648 2 43 40
 		bam GUIOSW
 		sequence 0
 		frame 0
@@ -11,7 +18,8 @@
 	}
 	button
 	{
-		area 689 1 43 40
+		name "FBHackDown"
+		area 689 2 43 40
 		bam GUIOSW
 		sequence 1
 		frame 0

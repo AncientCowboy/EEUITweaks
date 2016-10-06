@@ -3,14 +3,15 @@ menu
 	name 'WORLD_DIALOG_CONFIRM'
 	align center bottom
 	ignoreEsc
+	offset 0 -10
 	button
 	{
-		area 0 0 302 45
+		area 0 0 300 44
 		bam GUIOSTCL
 		text lua "dialogButtonText"
 		enabled "getDialogButtonEnabled()"
 		text style "button"
-		action 
+		action
 		"
 			worldScreen:StepDialog()
 		"

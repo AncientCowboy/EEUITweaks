@@ -25,26 +25,11 @@ ALWAYS
 	END
 END
 
-VERSION ~1.6~
+VERSION ~1.7~
 
 LANGUAGE 
 	~English~ ~EEUITweaks/languages/english~ ~EEUITweaks/languages/english/setup.tra~
 
-
-///////////////////////////////////////////////////////////////////////////////
-// Test for existence of UI.MENU
-///////////////////////////////////////////////////////////////////////////////
-BEGIN @1000 DESIGNATED 10
-INSTALL_BY_DEFAULT
-NO_LOG_RECORD
-
-ACTION_IF (NOT FILE_EXISTS ~override/UI.MENU~) THEN
-BEGIN
-	FAIL @1001
-END ELSE
-BEGIN
-	PRINT @1002
-END
 
 ///////////////////////////////////////////////////////////////////////////////
 // Startup/Options/Player Character/NPCs Group
@@ -357,6 +342,20 @@ FORBID_COMPONENT ~EEUITweaks.tp2~ ~2050~ @206009
 INCLUDE ~%PKGNAME%/include/lefreut1_3ishDialog.tpa~
 
 
+/******************************************************************************
+ * Dee's Permanent Thieving Button
+ *****************************************************************************/
+BEGIN @207000 DESIGNATED 2070
+GROUP @2
+REQUIRE_PREDICATE (
+	(GAME_IS ~eet~) OR
+	(GAME_IS ~bgee~) OR
+	(GAME_IS ~bg2ee~)
+) @27 // Until proven otherwise
+
+INCLUDE ~%PKGNAME%/include/DeesPermanentThieving.tpa~
+
+
 ///////////////////////////////////////////////////////////////////////////////
 // Record/Inventory/Journal Group
 ///////////////////////////////////////////////////////////////////////////////
@@ -451,6 +450,16 @@ GROUP @3
 REQUIRE_PREDICATE GAME_IS ~bgee bg2ee eet~ @27
 OUTER_SPRINT mrautoidgoldcost ~%TAB%%TAB%%TAB%costGold =200~
 INCLUDE ~%PKGNAME%/include/Mr2150IdentifyItems.tpa~
+
+
+/******************************************************************************
+ * lefreut's Improved Inventory Screen
+ *****************************************************************************/
+BEGIN @305000 DESIGNATED 3050
+GROUP @3
+REQUIRE_PREDICATE GAME_IS ~bgee bg2ee eet~ @27
+
+INCLUDE ~%PKGNAME%/include/lefreutImprovedInventory.tpa~
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -559,20 +568,8 @@ COPY ~%PKGNAME%/copy/lefreutTooltip~ ~override~
  * lefreut's Box 5 (Dialog Box) Override
  *****************************************************************************/
 BEGIN @502000 DESIGNATED 5020
+DEPRECATED @502000
 GROUP @5
-REQUIRE_PREDICATE (
-	(GAME_IS ~eet~) OR
-	(GAME_IS ~bg2ee~) OR 
-	(
-		(GAME_IS ~bgee~) AND 
-		(NOT(FILE_EXISTS_IN_GAME ~rgtitle.png~))
-	)
-) @27 // NOT Dragonspear UI++
-
-PRINT @24
-SILENT
-COPY ~%PKGNAME%/copy/lefreutBox5~ ~override~
-
 
 /******************************************************************************
  * lefreut's Scroll Bar Override

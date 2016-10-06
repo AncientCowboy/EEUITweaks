@@ -1,13 +1,11 @@
 menu
 {
 	name 'WORLD_DIALOG'
-	offset 0 -57
+	offset 0 -54
 	align center bottom
 	ignoreEsc
 	onOpen
 	"
-		local x,y,w,h = Infinity_GetArea('worldDialogBackground')
-		toolbarTop = toolbarTop + h
 		Infinity_PushMenu('WORLD_DIALOG_CONFIRM')
 		greySidebars()
 		savedText = ''
@@ -16,21 +14,19 @@ menu
 	"
 	onClose
 	"
-		local x,y,w,h = Infinity_GetArea('worldDialogBackground')
-		toolbarTop = toolbarTop - h
 		Infinity_PopMenu('WORLD_DIALOG_CONFIRM')
 		ungreySidebars()
 	"
 	label
 	{
 		name "worldDialogBackground"
-		area 0 0 863 253
+		area 0 0 863 210
 		rectangle 4
 	}
 	label
 	{
 		name "worldDialogPortraitArea"
-		area 24 24 54 84
+		area 24 20 54 84
 		bitmap lua "worldNPCDialogPortrait"
 	}
 	list
@@ -46,7 +42,7 @@ menu
 			}
 		}
 		name "dummyMessageBox"
-		area 88 24 740 205
+		area 88 20 740 170
 		enabled "0"
 		rowheight dynamic
 		hideHighlight
@@ -91,7 +87,7 @@ menu
 			}
 		}
 		name "worldPlayerDialogChoicesList"
-		area 88 24 756 205
+		area 88 20 756 170
 		rowheight dynamic
 		hideHighlight
 		table "mergeDialog(worldPlayerDialogChoices)"

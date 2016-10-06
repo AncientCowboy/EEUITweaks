@@ -1,4 +1,57 @@
 /*******************************************************************************
+ * OnOpenPatch
+ *
+ * Inserts resizing code in OnOpen section
+ *
+ * Returns $UIMenuIF("Succeeded") 1 => Success, 0 => Failure
+ *
+ ******************************************************************************/
+DEFINE_ACTION_MACRO FeedbackHack.OnOpenPatch
+BEGIN
+	LOCAL_SPRINT tempstr $UIMenuIF("Body")
+	LOCAL_SPRINT adder ~~
+	LOCAL_SPRINT filestr $UIMenuIF("Filespec")
+
+	// Read patch insertion from onopeninsert.lua
+	LOCAL_SET found = SIZE_OF_FILE ~%filestr%~
+	COPY - ~%filestr%~ ~.../CounterInLine~
+		READ_ASCII 0 adder (%found%)
+	OUTER_SET found = 0 
+
+	// Put code block into inline file
+	COPY - ~ToInlineTemplate~ ~.../CounterInLine~
+		REPLACE_EVALUATE ~dummy~ BEGIN END
+		~%tempstr%~
+	OUTER_SPRINT tempstr ~~
+
+	// Insert code at top of OnOpen
+	COPY - ~.../CounterInLine~ ~.../CounterInLine~
+		REPLACE_EVALUATE CASE_INSENSITIVE ~^[%TAB% ]*onopen%MWHITE%%MQUOTE%[%TAB% ]*%MEOL%~
+		BEGIN
+			SPRINT tempstr ~%MATCH0%%adder%~
+			SET found = 1
+		END
+		~%tempstr%~
+
+	// Not found - give up
+	ACTION_IF NOT %found% THEN
+	BEGIN
+		LOG ~In FeedbackHack.OnOpenPatch - failed to find OnOpen section~
+		OUTER_SET $UIMenuIF("Succeeded") = 0
+	END ELSE 
+
+	// Success somewhere - copy .../CounterInLine to $UIMenuIF("Body")
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Body") ~~
+		OUTER_SET found = SIZE_OF_FILE ~.../CounterInLine~
+		COPY - ~.../CounterInLine~ ~.../CounterInLine~
+			READ_ASCII 0 $UIMenuIF("Body") (%found%-1)
+		OUTER_SET $UIMenuIF("Succeeded") = 1
+	END
+	COPY - ~EmptyInlineTemplate~ ~.../CounterInline~
+END
+
+/*******************************************************************************
  * Feedback Buttons Hack Installation
  ******************************************************************************/	
 // Copy files
@@ -49,6 +102,33 @@ WITH
 		FAIL @15
 END
 LAUNCH_ACTION_MACRO UIMenuAppendMenuElements
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @121
+END
+ACTION_MATCH 1
+WITH
+	%IsSoD% %IsEETSoD%
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/FeedbackHack/onopeninsert.lua~
+	END
+	%IsSoDOverhaul%
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/FeedbackHack/onopeninsert3.lua~
+	END
+	%IsBG2% %IsEETBG2%
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/FeedbackHack/onopeninsert2.lua~
+	END
+	%IsBGEE%
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/FeedbackHack/onopeninsert2.lua~
+	END
+
+	DEFAULT
+		FAIL @15
+END
+LAUNCH_ACTION_MACRO FeedbackHack.OnOpenPatch
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
 	FAIL @121

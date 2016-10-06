@@ -1,5 +1,6 @@
 	button
 	{
+		name "FBHackUp"
 		area 770 -1 43 46
 		bam GUISVRB
 		sequence 0
@@ -11,6 +12,7 @@
 	}
 	button
 	{
+		name "FBHackDown"
 		area 814 -1 43 46
 		bam GUISVRB
 		sequence 1

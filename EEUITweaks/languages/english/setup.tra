@@ -139,6 +139,9 @@
 @185  = ~Patching WORLD_DIALOG_CONFIRM menu~
 @186  = ~Unable to get WORLD_DIALOG_CONFIRM menu~
 @187  = ~Unable to patch WORLD_DIALOG_CONFIRM menu~
+@188  = ~Patching INVENTORY menu~
+@189  = ~Unable to get INVENTORY menu~
+@190  = ~Unable to patch INVENTORY menu~
 
 ///////////////////////////////////////////////////////////////////////////////
 // Subcomponent groups
@@ -152,7 +155,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Component specific strings
 ///////////////////////////////////////////////////////////////////////////////
-// Test for UI.MENU existence
+// Test for UI.MENU existence. Defunct as of V1.7. Placeholder - don't reuse
 @1000 = ~UI.MENU Test~
 @1001 = ~Cannot find UI.MENU in override directory. Attempting to install mods will fail until this is corrected.~
 @1002 = ~Test passed - UI.MENU found~
@@ -247,6 +250,10 @@ Please enter return or a number between 1 and 4 [1]~
 @206007 = ~Unable to find WORLD_DIALOG_CONFIRM Lua code block~
 @206008 = ~Unable to replace WORLD_DIALOG_CONFIRM Lua code block~
 @206009 = ~Incompatible with previously installed Simple Centered Dialog~
+@206010 = ~Replacing WORLD_MESSAGEBOXHISTORY menu~
+@206011 = ~Unable to replace WORLD_MESSAGEBOXHISTORY menu~
+
+@207000 = ~Dee's Permanent Thieving Button~
 
 ///////////////////////////////////////////////////////////////////////////////
 // Record/Inventory/Journal Group
@@ -280,6 +287,11 @@ Please enter return or a number between 1 and 4 [1]~
 @304300	= ~Pay  50gp to identify items~
 @304400	= ~Pay 100gp to identify items~
 @304500	= ~Pay 200gp to identify items~
+
+@305000 = ~lefreut's Improved Inventory Screen~
+@305001 = ~Replacing INVENTORY Lua code block~
+@305002 = ~Unable to find INVENTORY Lua code block~
+@305003 = ~Unable to replace INVENTORY Lua code block~
 
 
 ///////////////////////////////////////////////////////////////////////////////
