@@ -1,0 +1,115 @@
+/*******************************************************************************
+ * lefreut's Improved Inventory Screen Installation
+ ******************************************************************************/	
+// Open UI.MENU
+PRINT @12
+SILENT
+LAUNCH_ACTION_MACRO UIMenuOpen
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @20
+END
+
+// Patch INVENTORY
+PRINT @188
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~INVENTORY~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+LAUNCH_ACTION_MACRO UIMenuGetMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @189
+END
+ACTION_MATCH 1
+WITH
+	%IsSoD% %IsEETSoD% %IsSoDOverhaul%
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutImprovedInventory/inventorymenu1.menu~
+	END
+	%IsBG2% %IsEETBG2% %IsBG2onSoD%
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutImprovedInventory/inventorymenu2.menu~
+	END
+	%IsBGEE%
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutImprovedInventory/inventorymenu3.menu~
+	END
+
+	DEFAULT
+		FAIL @15
+END
+LAUNCH_ACTION_MACRO UIMenuReplaceMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @190
+END
+
+// Replace INVENTORY Lua code block
+PRINT @305001
+SILENT
+
+OUTER_SPRINT $UIMenuIF("LuaRegex") ~TEXT_inventoryError[%TAB% ]*=[%TAB% ]*""~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+LAUNCH_ACTION_MACRO UIMenuGetMatchingLuaBlock
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @305002
+END
+
+ACTION_MATCH 1
+WITH
+	%IsSoD% %IsEETSoD% %IsSoDOverhaul%
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/lefreutImprovedInventory/inventorycode1.lua~
+	END
+	%IsBG2% %IsEETBG2% %IsBG2onSoD%
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/lefreutImprovedInventory/inventorycode2.lua~
+	END
+	%IsBGEE%
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/lefreutImprovedInventory/inventorycode3.lua~
+	END
+
+	DEFAULT
+		FAIL @15
+END
+LAUNCH_ACTION_MACRO UIMenuReplaceLuaBlock
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @305003
+END
+
+// Close UI.MENU
+PRINT @13
+SILENT
+LAUNCH_ACTION_MACRO UIMenuClose
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @21
+END
+
+// Copying ui specific files
+PRINT @17
+SILENT
+ACTION_MATCH 1
+WITH
+	%IsSoD% %IsEETSoD% %IsSoDOverhaul%
+	BEGIN
+		COPY ~%PKGNAME%/copy/lefreutImprovedInventory/SOD~ ~override~
+	END
+
+	%IsBG2% %IsBG2onSoD% %IsEETBG2%
+	BEGIN
+		COPY ~%PKGNAME%/copy/lefreutImprovedInventory/BG2~ ~override~
+	END
+
+	%IsBGEE%
+	BEGIN
+		COPY ~%PKGNAME%/copy/lefreutImprovedInventory/BGEE~ ~override~
+	END
+
+	DEFAULT
+		FAIL @15
+END
+

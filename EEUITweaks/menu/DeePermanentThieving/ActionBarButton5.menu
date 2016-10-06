@@ -1,0 +1,11 @@
+	button
+	{
+		name "PermanentThieving"
+		area 775 1 52 54
+		enabled "keybindings[2][7][6] ~= 0"
+		bam GUIBTACT
+		frame 26
+		tooltip lua "string.format('%s : %s',string.upper(string.char(keybindings[2][7][6])),getHotkeyName(2,7))"
+		action "Infinity_PressKeyboardButton(string.format('%c', keybindings[2][7][6]))"
+		actionAlt "Infinity_PressKeyboardButton(string.format('%c', 27))"
+	}
