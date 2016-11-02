@@ -1,0 +1,61 @@
+/*******************************************************************************
+ * lefreut's Improved Record Screen Installation
+ ******************************************************************************/	
+// Uninstall Leveling Progress Bars Tweaks if it has been installed
+ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~3000~ THEN
+BEGIN
+	PRINT @306005
+	PRINT @306006
+	SILENT
+	UNINSTALL ~EEUITweaks.tp2~ ~3000~
+END
+
+// Open UI.MENU
+PRINT @12
+SILENT
+LAUNCH_ACTION_MACRO UIMenuOpen
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @20
+END
+
+// Replace CHARACTER
+PRINT @306001
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~CHARACTER~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutImprovedRecordScreen/recordmenus1.menu~
+LAUNCH_ACTION_MACRO UIMenuReplaceMenuMixed
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @306003
+END
+
+// Replace CHARACTER_EXPORT menu
+PRINT @306007
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~CHARACTER_EXPORT~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutImprovedRecordScreen/exportmenu1.menu~
+LAUNCH_ACTION_MACRO UIMenuReplaceMenuMixed
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @306008
+END
+
+// Close UI.MENU
+PRINT @13
+SILENT
+LAUNCH_ACTION_MACRO UIMenuClose
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @21
+END
+
+// Copying ui specific files
+PRINT @17
+SILENT
+COPY ~%PKGNAME%/copy/lefreutImprovedRecordScreen/BG2~ ~override~
+
+
+

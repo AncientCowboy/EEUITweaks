@@ -1,0 +1,104 @@
+/******************************************************************************
+ * lefreut's Customize Screens Tweaks Installation
+ *****************************************************************************/
+// Uninstall Customize All Characters if it has been installed
+ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~3030~ THEN
+BEGIN
+	PRINT @302814
+	SILENT
+	UNINSTALL ~EEUITweaks.tp2~ ~3030~
+END
+
+// Open UI.MENU
+PRINT @12
+SILENT
+LAUNCH_ACTION_MACRO UIMenuOpen
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @20
+END
+
+// Replace CHARACTER_CUSTOMIZE menu
+PRINT @302801
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~CHARACTER_CUSTOMIZE~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCustomizeScreensTweaks/CustomizeMenu1.menu~
+LAUNCH_ACTION_MACRO UIMenuReplaceMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @302802
+END
+
+// Replace CHARACTER_BIOGRAPHY menu
+PRINT @302803
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~CHARACTER_BIOGRAPHY~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCustomizeScreensTweaks/BiographyMenu1.menu~
+LAUNCH_ACTION_MACRO UIMenuReplaceMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @302804
+END
+
+// Replace CHARACTER_SCRIPT
+PRINT @302808
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~CHARACTER_SCRIPT~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCustomizeScreensTweaks/ScriptMenu1.menu~
+LAUNCH_ACTION_MACRO UIMenuReplaceMenuMixed
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @302809
+END
+
+// Replace CHARACTER_COLOR menu
+PRINT @302810
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~CHARACTER_COLOR~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCustomizeScreensTweaks/ColorMenu1.menu~
+LAUNCH_ACTION_MACRO UIMenuReplaceMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @302811
+END
+
+// Replace CHARACTER_SOUND menu
+PRINT @302812
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~CHARACTER_SOUND~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCustomizeScreensTweaks/SoundMenu1.menu~
+LAUNCH_ACTION_MACRO UIMenuReplaceMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @302813
+END
+
+ACTION_IF ((NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1030~))AND(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1040~))) THEN
+BEGIN
+	// Adding CHARACTER_PORTRAIT
+	PRINT @302815
+	SILENT
+	OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_PORTRAIT~
+	OUTER_SPRINT $UIMenuIF("Body") ~~
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCustomizeScreensTweaks/ChargenPortraitMenu1.menu~
+	LAUNCH_ACTION_MACRO UIMenuReplaceMenuMixed
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @302816
+	END
+END
+
+// Close UI.MENU
+PRINT @13
+SILENT
+LAUNCH_ACTION_MACRO UIMenuClose
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @21
+END
+

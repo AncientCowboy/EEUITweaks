@@ -1,0 +1,146 @@
+menu
+{
+	name 'CHARACTER_PORTRAIT'
+	align center center
+	ignoreesc
+	label
+	{
+		area 0 0 864 710
+		mosaic GUIAPBR
+	}
+	label
+	{
+		area 82 12 700 40
+		text "APPEARANCE_TITLE"
+		text style "title"
+	}
+	button
+	{
+		area 184 284 52 132
+		bam GUIPRC
+		sequence 0
+		action "createCharScreen:DecCurrentPortrait()"
+	}
+	button
+	{
+		area 634 284 52 132
+		bam GUIPRC
+		sequence 1
+		action "createCharScreen:IncCurrentPortrait()"
+	}
+	label
+	{
+		area 327 190 212 330
+		bitmap lua "createCharScreen:GetCurrentPortrait()"
+	}
+	button
+	{
+		on return
+		bam GUIOSTUL
+		area 210 653 234 44
+		text style "button"
+		text "DONE_BUTTON"
+		clickable lua "createCharScreen:IsDoneButtonClickable()"
+		action
+		"
+			Infinity_PopMenu()
+			createCharScreen:OnDoneButtonClick()
+		"
+	}
+	button
+	{
+		on escape
+		area 464 653 234 44
+		bam GUIOSTUR
+		text style "button"
+		text "CANCEL_BUTTON"
+		action
+		"
+			Infinity_PopMenu()
+			createCharScreen:OnCancelButtonClick()
+		"
+	}
+}
+menu
+{
+	name 'CHARGEN_PORTRAIT'
+	align center center
+	ignoreesc
+	onOpen
+	"
+		if CurrentlyInGame() then
+			Infinity_PushMenu('CHARACTER_PORTRAIT')
+			Infinity_PopMenu('CHARGEN_PORTRAIT')
+		end
+	"
+	label
+	{
+		area 0 92 1024 676
+		mosaic GUIAPB
+	}
+	label
+	{
+		area 28 172 304 44
+		text "APPEARANCE_TITLE"
+		text style "title"
+	}
+	button
+	{
+		area 280 302 52 132
+		bam GUIPRC
+		sequence 0
+		action "createCharScreen:DecCurrentPortrait()"
+	}
+	button
+	{
+		area 692 302 52 132
+		bam GUIPRC
+		sequence 1
+		action "createCharScreen:IncCurrentPortrait()"
+	}
+
+	label
+	{
+		area 406 206 212 330
+		bitmap lua "createCharScreen:GetCurrentPortrait()"
+	}
+	button
+	{
+		area 358 648 300 44
+		bam GUIOSTCL
+		text "CUSTOM_BUTTON"
+		text style "button"
+		action
+		"
+			TEXT_popup_big = 17188
+			Infinity_PushMenu('POPUP_BIG')
+		"
+	}
+	button
+	{
+		on escape
+		area 194 718 234 44
+		text "BACK_BUTTON"
+		text style "button"
+		bam GUIOSTUL
+		action
+		"
+			Infinity_PopMenu()
+			createCharScreen:OnCancelButtonClick()
+		"
+	}
+	button
+	{
+		on return
+		area 438 718 201 44
+		bam GUIOSTUM
+		text "DONE_BUTTON"
+		text style "button"
+		clickable lua "createCharScreen:IsDoneButtonClickable()"
+		action
+		"
+			Infinity_PopMenu()
+			createCharScreen:OnDoneButtonClick()
+		"
+	}
+}

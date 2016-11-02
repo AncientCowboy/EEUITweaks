@@ -1,0 +1,112 @@
+menu
+{
+	name 'CHARACTER_CUSTOMIZE'
+	align center center
+	modal
+	ignoreesc
+	onOpen
+	"
+		currentPanelID = const.CUSTOMIZE_ID
+	"
+	label
+	{
+		area 0 0 864 710
+		mosaic GUICUSTB
+	}
+	label
+	{
+		area 82 12 700 40
+		text "CUSTOMIZE_TITLE"
+		text style title
+	}
+	text
+	{
+		area 436 130 378 470
+		text 11327 --Customize help text
+		scrollbar 'GUISCRC'
+		text style	normal
+		text color D
+	}
+	button
+	{
+		bam GUICHLNG
+		area 42 192 340 32
+		text style "button"
+		text "APPEARANCE_BUTTON"
+		action
+		"
+			characterScreen:OnAppearanceButtonClick()
+		"
+	}
+	button
+	{
+		bam GUICHLNG
+		area 42 228 340 32
+		text style "button"
+		text "SOUNDS_BUTTON"
+		action
+		"
+			characterScreen:OnSoundsButtonClick()
+		"
+	}
+	button
+	{
+		bam GUICHLNG
+		area 42 264 340 32
+		text style "button"
+		text "COLORS_BUTTON"
+		action
+		"
+			characterScreen:OnHairSkinButtonClick()
+		"
+	}
+	button
+	{
+		bam GUICHLNG
+		area 42 300 340 32
+		text style "button"
+		text "SCRIPT_BUTTON"
+		action
+		"
+			characterScreen:OnScriptButtonClick()
+		"
+	}
+	button
+	{
+		bam GUICHLNG
+		area 42 336 340 32
+		text style "button"
+		text "BIOGRAPHY_BUTTON"
+		action
+		"
+			characterScreen:OnCusomizeBiographyButtonClick()
+		"
+	}
+	button
+	{
+		bam GUIOSTUL
+		area 210 653 234 44
+		text style "button"
+		text "DONE_BUTTON"
+		action
+		"
+			characterScreen:OnDoneButtonClick()
+			currentPanelID = 0
+			Infinity_PopMenu('CHARACTER_CUSTOMIZE')
+		"
+	}
+	button
+	{
+		on escape
+		bam GUIOSTUR
+		area 464 653 234 44
+		text style "button"
+		text "CANCEL_BUTTON"
+		action
+		"
+			characterScreen:OnCancelButtonClick()
+			currentPanelID = 0
+			Infinity_PopMenu('CHARACTER_CUSTOMIZE')
+		"
+	}
+}

@@ -25,7 +25,7 @@ ALWAYS
 	END
 END
 
-VERSION ~1.7~
+VERSION ~1.8~
 
 LANGUAGE 
 	~English~ ~EEUITweaks/languages/english~ ~EEUITweaks/languages/english/setup.tra~
@@ -168,7 +168,7 @@ GROUP @1
 REQUIRE_PREDICATE (
 	(
 		(GAME_IS ~eet~) AND
-		(MOD_IS_INSTALLED ~setup-EET_end.tp2~ ~0~)
+		(MOD_IS_INSTALLED ~setup-EET_gui.tp2~ ~0~)
 	) OR
 	(
 		(GAME_IS ~bgee~) AND 
@@ -178,8 +178,37 @@ REQUIRE_PREDICATE (
 	)
 ) @27 // SoD/IsEETSoD Only
 FORBID_COMPONENT ~EEUITweaks.tp2~ ~1020~ @106001
+FORBID_COMPONENT ~EEUITweaks.tp2~ ~1070~ @106002
 
 INCLUDE ~%PKGNAME%/include/Mr2150RollFirst.tpa~
+
+
+/******************************************************************************
+ * Faydark's Abilities Auto-Roller
+ *****************************************************************************/
+BEGIN @107000 DESIGNATED 1070
+GROUP @1
+REQUIRE_PREDICATE (
+	(
+		(GAME_IS ~eet~) AND
+		(MOD_IS_INSTALLED ~setup-EET_gui.tp2~ ~0~)
+	) OR
+	(
+		(GAME_IS ~bgee~) AND
+		(
+			( // IsBGEE
+				(NOT(FILE_EXISTS_IN_GAME ~BD0010.ARE~))
+			) OR 
+			( // IsSoD
+				(NOT(FILE_EXISTS ~override/ULGOTHST.MOS~)) AND 
+				(NOT(FILE_EXISTS_IN_GAME ~rgtitle.png~))
+			)
+		)
+	)
+) @27 // IsBGEE/IsSoD/IsEETSoD Only
+FORBID_COMPONENT ~EEUITweaks.tp2~ ~1060~ @102002
+
+INCLUDE ~%PKGNAME%/include/FaydarkAutoRoll.tpa~
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -328,7 +357,7 @@ GROUP @2
 REQUIRE_PREDICATE (
 	(
 		(GAME_IS ~eet~) AND
-		(NOT(MOD_IS_INSTALLED ~setup-EET_end.tp2~ ~0~))
+		(NOT(MOD_IS_INSTALLED ~setup-EET_gui.tp2~ ~0~))
 
 	) OR
 	(GAME_IS ~bg2ee~) OR
@@ -359,6 +388,25 @@ INCLUDE ~%PKGNAME%/include/DeesPermanentThieving.tpa~
 ///////////////////////////////////////////////////////////////////////////////
 // Record/Inventory/Journal Group
 ///////////////////////////////////////////////////////////////////////////////
+
+/******************************************************************************
+ * lefreut's Improved Record Screen
+ *****************************************************************************/
+BEGIN @306000 DESIGNATED 2900
+GROUP @3
+REQUIRE_PREDICATE (
+	(GAME_IS ~bg2ee~) OR 
+	(
+		(GAME_IS ~eet~) AND
+		(NOT(MOD_IS_INSTALLED ~setup-EET_gui.tp2~ ~0~))
+
+	) OR
+	(
+		(GAME_IS ~bgee~) AND (FILE_EXISTS ~override/ULGOTHST.MOS~)
+	)
+) @27 // BG2 or BG2onSoD EETBG2
+
+INCLUDE ~%PKGNAME%/include/lefreutImprovedRecordScreen.tpa~
 
 /******************************************************************************
  * Leveling Progress Bars Tweaks
@@ -397,11 +445,32 @@ REQUIRE_PREDICATE (
 INCLUDE ~%PKGNAME%/include/Mr2150JrnlFix.tpa~
 
 /******************************************************************************
+ * lefreut's Customize Screens Tweaks
+ *****************************************************************************/
+BEGIN @302800 DESIGNATED 3028
+GROUP @3
+REQUIRE_PREDICATE (
+	(GAME_IS ~bg2ee~) OR 
+	(
+		(GAME_IS ~eet~) AND
+		(NOT(MOD_IS_INSTALLED ~setup-EET_gui.tp2~ ~0~))
+
+	) OR
+	(
+		(GAME_IS ~bgee~) AND (FILE_EXISTS ~override/ULGOTHST.MOS~)
+	)
+) @27 // BG2 or BG2onSoD or EETBG2
+
+INCLUDE ~%PKGNAME%/include/lefreutCustomizeScreensTweaks.tpa~
+
+
+/******************************************************************************
  * lefreut's Customize All Characters
  *****************************************************************************/
 BEGIN @303000 DESIGNATED 3030
 GROUP @3
 REQUIRE_PREDICATE GAME_IS ~bgee bg2ee eet~ @27
+FORBID_COMPONENT ~EEUITweaks.tp2~ ~3028~ @303001
 
 INCLUDE ~%PKGNAME%/include/lefreutCustomAll.tpa~
 
@@ -463,7 +532,7 @@ INCLUDE ~%PKGNAME%/include/lefreutImprovedInventory.tpa~
 
 
 ///////////////////////////////////////////////////////////////////////////////
-// Stores/DialogsSpell Books Group
+// Stores/Dialogs/Spell Books Group
 ///////////////////////////////////////////////////////////////////////////////
 
 /******************************************************************************
@@ -493,7 +562,7 @@ REQUIRE_PREDICATE (
 	(GAME_IS ~bg2ee~) OR 
 	(
 		(GAME_IS ~eet~) AND
-		(NOT(MOD_IS_INSTALLED ~setup-EET_end.tp2~ ~0~))
+		(NOT(MOD_IS_INSTALLED ~setup-EET_gui.tp2~ ~0~))
 
 	) OR
 	(
@@ -581,6 +650,29 @@ REQUIRE_PREDICATE GAME_IS ~bgee bg2ee eet~ @27
 PRINT @24
 SILENT
 COPY ~%PKGNAME%/copy/lefreutBG2ScrollBar~ ~override~
+
+
+/******************************************************************************
+ * lefreut's Improved Fonts
+ *****************************************************************************/
+BEGIN @504000 DESIGNATED 5040
+GROUP @5
+REQUIRE_PREDICATE (
+	(GAME_IS ~bg2ee~) OR 
+	(
+		(GAME_IS ~eet~) AND
+		(NOT(MOD_IS_INSTALLED ~setup-EET_gui.tp2~ ~0~))
+
+	) OR
+	(
+		(GAME_IS ~bgee~) AND (FILE_EXISTS ~override/ULGOTHST.MOS~)
+	)
+) @27 // BG2 or BG2onSoD or EETBG2
+
+
+PRINT @24
+SILENT
+COPY ~%PKGNAME%/copy/lefreutImprovedFonts/M_BG2STYLES.lua~ ~override/M_STYLES.lua~
 
 
 // Works around bug in WeiDU. See CamDawg's 'Groups' WeiDU tutorial

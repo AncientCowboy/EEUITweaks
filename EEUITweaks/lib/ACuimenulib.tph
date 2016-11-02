@@ -1,5 +1,5 @@
 /*******************************************************************************
- * UI.MENU abstraction WeiDU library Version 4.0
+ * UI.MENU abstraction WeiDU library Version 4.1
  *
  * Provides a medium level abstraction of the contents of UI.MENU with
  * a fairly simple Macro interface for use by installation packages.
@@ -710,7 +710,7 @@ BEGIN
 
 		// Read and replace MenuName tag with adder
 		COPY - ~$uimenulibglobal("uibuffer")~ ~$uimenulibglobal("uibuffer")~
-			REPLACE_EVALUATE ~^[%TAB% ]*%tagstring%.*%MEOL%~
+			REPLACE_EVALUATE ~^[%TAB% ]*%tagstring%[%TAB% ]*%MEOL%~
 			BEGIN
 				found = 1
 			END
