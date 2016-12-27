@@ -1,9 +1,14 @@
 /*******************************************************************************
- * StartOptionsFirstPatch
- * Adds 'if (modOptionsStartMenu) then modOptionsStartMenu() end' to onopen
- * On completion $UIMenuIF("Succeeded") 1 => Success, 0 => Failure
+ *
+ * IsSoD IsEETSoD Section
+ *
  ******************************************************************************/
-DEFINE_ACTION_MACRO ModOptionsSOD.StartOptionsFirstPatch 
+//
+// ModOptions.StartOptionsFirstPatch
+// Adds 'if (modOptionsStartMenu) then modOptionsStartMenu() end' to onopen
+// On completion $UIMenuIF("Succeeded") 1 => Success, 0 => Failure
+//
+DEFINE_ACTION_MACRO ModOptions.StartOptionsFirstPatch 
 BEGIN
 	LOCAL_SPRINT tempstr $UIMenuIF("Body")
 	LOCAL_SPRINT adder ~if (modOptionsStartMenu) then modOptionsStartMenu() end~
@@ -39,7 +44,7 @@ BEGIN
 	// If not found, look for and patch onopen followed by single quoted code block
 	ACTION_IF NOT %found% THEN
 	BEGIN
-		LOG ~In ModOptionsSOD.StartOptionsFirstPatch - failed to find onopen with double quotes. Trying single~
+		LOG ~In ModOptions.StartOptionsFirstPatch - failed to find onopen with double quotes. Trying single~
 		COPY - ~.../CounterInLine~ ~.../CounterInLine~
 			REPLACE_EVALUATE CASE_INSENSITIVE ~onopen%MWHITE%%MSQUOTE%\(%MNOTSQUOTE%*\)%MSQUOTE%~
 			BEGIN
@@ -52,7 +57,7 @@ BEGIN
 	// If not found, look for size x y line and insert our onopen after it
 	ACTION_IF NOT %found% THEN
 	BEGIN
-		LOG ~In ModOptionsSOD.StartOptionsFirstPatch - failed to find onopen with single quotes. Trying to add after size~
+		LOG ~In ModOptions.StartOptionsFirstPatch - failed to find onopen with single quotes. Trying to add after size~
 		OUTER_SPRINT adder ~%TAB%onopen%LE%%TAB%"%LE%%TAB%%TAB%%adder%%LE%%TAB%"%LE%~
 		COPY - ~.../CounterInLine~ ~.../CounterInLine~
 			REPLACE_EVALUATE CASE_INSENSITIVE ~size%MWHITE%[0-9]*%MWHITE%[0-9]*.*%MEOL%~
@@ -66,7 +71,7 @@ BEGIN
 	// Not found - give up
 	ACTION_IF NOT %found% THEN
 	BEGIN
-		LOG ~In ModOptionsSOD.StartOptionsFirstPatch - failed to find size line~
+		LOG ~In ModOptions.StartOptionsFirstPatch - failed to find size line~
 		OUTER_SET $UIMenuIF("Succeeded") = 0
 	END ELSE 
 	// Success somewhere - copy .../CounterInLine to $UIMenuIF("Body")
@@ -80,13 +85,13 @@ BEGIN
 	COPY - ~EmptyInlineTemplate~ ~.../CounterInline~
 END
 
-/*******************************************************************************
- * StartOptionsSecondPatch
- * Names the list 'OPTIONS_LIST' and sets the list's Y and Height area 
- * parameters to accomodate the 'MODS' button
- * On completion $UIMenuIF("Succeeded") 1 => Success, 0 => Failure
- ******************************************************************************/
-DEFINE_ACTION_MACRO ModOptionsSOD.StartOptionsSecondPatch 
+//
+// ModOptions.StartOptionsSecondPatch
+// Names the list 'OPTIONS_LIST' and sets the list's Y and Height area 
+// parameters to accomodate the 'MODS' button
+// On completion $UIMenuIF("Succeeded") 1 => Success, 0 => Failure
+//
+DEFINE_ACTION_MACRO ModOptions.StartOptionsSecondPatch 
 BEGIN
 	LOCAL_SPRINT tempstr $UIMenuIF("Body")
 	LOCAL_SPRINT adder ~~
@@ -130,7 +135,7 @@ BEGIN
 	// If not found, nothing to do but fail.
 	ACTION_IF NOT %found% THEN
 	BEGIN
-		LOG ~In ModOptionsSOD.StartOptionsSecondPatch - failed to find list to name - bailing out~
+		LOG ~In ModOptions.StartOptionsSecondPatch - failed to find list to name - bailing out~
 		OUTER_SET $UIMenuIF("Succeeded") = 0
 	END ELSE 
 
@@ -147,7 +152,7 @@ BEGIN
 		// If not found, fail
 		ACTION_IF NOT %found% THEN
 		BEGIN
-			LOG ~In ModOptionsSOD.StartOptionsSecondPatch failed to find the previously found area definition - bailing out~
+			LOG ~In ModOptions.StartOptionsSecondPatch failed to find the previously found area definition - bailing out~
 			OUTER_SET $UIMenuIF("Succeeded") = 0
 		END ELSE
 		// Success - copy .../CounterInLine to $UIMenuIF("Body")
@@ -162,12 +167,12 @@ BEGIN
 	COPY - ~EmptyInlineTemplate~ ~.../CounterInline~
 END
 
-/*******************************************************************************
- * EscMenuPatch
- * Adds the button defined in modoesc1.menu as the last element in the menu
- * On completion $UIMenuIF("Succeeded") 1 => Success, 0 => Failure
- ******************************************************************************/
-DEFINE_ACTION_MACRO ModOptionsSOD.EscMenuPatch
+//
+// ModOptions.EscMenuPatch
+// Adds the button defined in modoesc1.menu as the last element in the menu
+// On completion $UIMenuIF("Succeeded") 1 => Success, 0 => Failure
+//
+DEFINE_ACTION_MACRO ModOptions.EscMenuPatch
 BEGIN
 	LOCAL_SPRINT tempstr $UIMenuIF("Body")
 	LOCAL_SPRINT adder ~~
@@ -207,7 +212,7 @@ BEGIN
 	// If not found, nothing to do but fail.
 	ACTION_IF NOT %found% THEN
 	BEGIN
-		LOG ~In ModOptionsSOD.EscMenuPatch - failed to match menu body. UI.MENU too unusual to handle - bailing out~
+		LOG ~In ModOptions.EscMenuPatch - failed to match menu body. UI.MENU too unusual to handle - bailing out~
 		OUTER_SET $UIMenuIF("Succeeded") = 0
 	END ELSE 
 
@@ -222,13 +227,13 @@ BEGIN
 	COPY - ~EmptyInlineTemplate~ ~.../CounterInline~
 END
 
-/*******************************************************************************
- * OptionsButtonsLuaPatch
- * Adds the OptionsButtons conditional assignment defined in modobutton1.lua
- * to the Lua code block containing the default OptionsButtons definition
- * On completion $UIMenuIF("Succeeded") 1 => Success, 0 => Failure
- ******************************************************************************/
-DEFINE_ACTION_MACRO ModOptionsSOD.OptionsButtonsLuaPatch
+//
+// ModOptions.OptionsButtonsLuaPatch
+// Adds the OptionsButtons conditional assignment defined in modobutton1.lua
+// to the Lua code block containing the default OptionsButtons definition
+// On completion $UIMenuIF("Succeeded") 1 => Success, 0 => Failure
+//
+DEFINE_ACTION_MACRO ModOptions.OptionsButtonsLuaPatch
 BEGIN
 	LOCAL_SPRINT tempstr $UIMenuIF("Body")
 	LOCAL_SPRINT adder ~~
@@ -268,7 +273,7 @@ BEGIN
 	// If not found, nothing to do but fail.
 	ACTION_IF NOT %found% THEN
 	BEGIN
-		LOG ~In ModOptionsSOD.OptionsButtonsLuaPatch - failed to match OptionsButtons assignment - bailing out~
+		LOG ~In ModOptions.OptionsButtonsLuaPatch - failed to match OptionsButtons assignment - bailing out~
 		OUTER_SET $UIMenuIF("Succeeded") = 0
 	END ELSE 
 
@@ -282,14 +287,122 @@ BEGIN
 	END
 	COPY - ~EmptyInlineTemplate~ ~.../CounterInline~
 END
-	
+
+//
+// ModOptions.SoDSpecific
+// Main sequence
+//	
+DEFINE_ACTION_MACRO ModOptions.SoDSpecific
+BEGIN
+	// SoD configuration
+	PRINT @19
+
+	// Patch START_OPTIONS
+	PRINT @100
+	SILENT
+
+	OUTER_SPRINT $UIMenuIF("MenuName") ~START_OPTIONS~
+	OUTER_SPRINT $UIMenuIF("Body") ~~
+	LAUNCH_ACTION_MACRO UIMenuGetMenu
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @101
+	END
+
+	LAUNCH_ACTION_MACRO ModOptions.StartOptionsFirstPatch
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @102
+	END
+	LAUNCH_ACTION_MACRO ModOptions.StartOptionsSecondPatch
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @102
+	END
+
+	LAUNCH_ACTION_MACRO UIMenuUpdateMenu
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @103
+	END
+
+	// Patch ESC_MENU
+	PRINT @104
+	SILENT
+
+	OUTER_SPRINT $UIMenuIF("MenuName") ~ESC_MENU~
+	OUTER_SPRINT $UIMenuIF("Body") ~~
+	LAUNCH_ACTION_MACRO UIMenuGetMenu
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @105
+	END
+
+	LAUNCH_ACTION_MACRO ModOptions.EscMenuPatch
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @106
+	END
+
+	LAUNCH_ACTION_MACRO UIMenuUpdateMenu
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @103
+	END
+
+	// Patch OptionsButtons assignment
+	PRINT @100003
+	SILENT
+
+	OUTER_SPRINT $UIMenuIF("LuaRegex") ~OptionsButtons%MWHITE%=%MWHITE%{~
+	OUTER_SPRINT $UIMenuIF("Body") ~~
+	OUTER_SET $UIMenuIF("LuaID")  = 0 - 1
+	LAUNCH_ACTION_MACRO UIMenuGetMatchingLuaBlock
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN BEGIN
+		FAIL @100004
+	END
+
+	LAUNCH_ACTION_MACRO ModOptions.OptionsButtonsLuaPatch
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN BEGIN
+		FAIL @100005
+	END
+
+	LAUNCH_ACTION_MACRO UIMenuUpdateLuaBlock
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @103
+	END
+
+ 	// Add Mods Options menus
+ 	PRINT @100001
+	SILENT
+
+	OUTER_SPRINT $UIMenuIF("MenuName") ~OPTIONS_MODS~
+	OUTER_SPRINT $UIMenuIF("Body") ~~
+	LAUNCH_ACTION_MACRO UIMenuGetMenu
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN 
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/ModsOptions/modoptions1.menu~
+		LAUNCH_ACTION_MACRO UIMenuAppendFile
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @100002
+		END
+	END
+END
+
 /*******************************************************************************
- * PatchBG2onSoDStartOptions
- * Inserts button defined in 'modostartopt1.menu' as the last element of
- * START_OPTIONS menu.
- * On completion $UIMenuIF("Succeeded") 1 => Success, 0 => Failure
+ *
+ * IsBG2onSoD Section
+ *
  ******************************************************************************/
-DEFINE_ACTION_MACRO ModOptionsSOD.PatchBG2onSoDStartOptions
+//
+// ModOptions.PatchBG2onSoDStartOptions
+// Inserts button defined in 'modostartopt1.menu' as the last element of
+// START_OPTIONS menu.
+// On completion $UIMenuIF("Succeeded") 1 => Success, 0 => Failure
+//
+DEFINE_ACTION_MACRO ModOptions.PatchBG2onSoDStartOptions
 BEGIN
 	LOCAL_SPRINT tempstr $UIMenuIF("Body")
 	LOCAL_SPRINT adder ~~
@@ -329,7 +442,7 @@ BEGIN
 	// If not found, nothing to do but fail.
 	ACTION_IF NOT %found% THEN
 	BEGIN
-		LOG ~In ModOptionsSOD.PatchBG2onSoDStartOptions - failed to match menu body - bailing out~
+		LOG ~In ModOptions.PatchBG2onSoDStartOptions - failed to match menu body - bailing out~
 		OUTER_SET $UIMenuIF("Succeeded") = 0
 	END ELSE 
 
@@ -344,12 +457,12 @@ BEGIN
 	COPY - ~EmptyInlineTemplate~ ~.../CounterInline~
 END
 
-/*******************************************************************************
- * BG2onSoDEscMenuFirstPatch
- * Adds enabled criteria to the "OPTIONS_TITLE" label
- * On completion $UIMenuIF("Succeeded") 1 => Success, 0 => Failure
- ******************************************************************************/
-DEFINE_ACTION_MACRO ModOptionsSOD.BG2onSoDEscMenuFirstPatch
+//
+// ModOptions.BG2onSoDEscMenuFirstPatch
+// Adds enabled criteria to the "OPTIONS_TITLE" label
+// On completion $UIMenuIF("Succeeded") 1 => Success, 0 => Failure
+//
+DEFINE_ACTION_MACRO ModOptions.BG2onSoDEscMenuFirstPatch
 BEGIN
 	LOCAL_SPRINT tempstr $UIMenuIF("Body")
 	LOCAL_SPRINT adder ~%LE%%TAB%%TAB%enabled "(not(modOptionsIngameDisabled) and 1) or modOptionsIngameDisabled()"~
@@ -384,7 +497,7 @@ BEGIN
 	// Not found - give up
 	ACTION_IF NOT %found% THEN
 	BEGIN
-		LOG ~In ModOptionsSOD.BG2onSoDEscMenuFirstPatch - failed to find OPTIONS_TITLE label - bailing out~
+		LOG ~In ModOptions.BG2onSoDEscMenuFirstPatch - failed to find OPTIONS_TITLE label - bailing out~
 		OUTER_SET $UIMenuIF("Succeeded") = 0
 	END ELSE 
 
@@ -399,12 +512,12 @@ BEGIN
 	COPY - ~EmptyInlineTemplate~ ~.../CounterInline~
 END
 
-/*******************************************************************************
- * BG2onSoDEscMenuSecondPatch
- * Adds enabled criteria to the "versionString" label
- * On completion $UIMenuIF("Succeeded") 1 => Success, 0 => Failure
- ******************************************************************************/
-DEFINE_ACTION_MACRO ModOptionsSOD.BG2onSoDEscMenuSecondPatch
+//
+// ModOptions.BG2onSoDEscMenuSecondPatch
+// Adds enabled criteria to the "versionString" label
+// On completion $UIMenuIF("Succeeded") 1 => Success, 0 => Failure
+//
+DEFINE_ACTION_MACRO ModOptions.BG2onSoDEscMenuSecondPatch
 BEGIN
 	LOCAL_SPRINT tempstr $UIMenuIF("Body")
 	LOCAL_SPRINT adder ~%LE%%TAB%%TAB%enabled "(not(modOptionsIngameDisabled) and 1) or modOptionsIngameDisabled()"~
@@ -439,7 +552,7 @@ BEGIN
 	// Not found - give up
 	ACTION_IF NOT %found% THEN
 	BEGIN
-		LOG ~In ModOptionsSOD.BG2onSoDEscMenuSecondPatch - failed to find versionString label - bailing out~
+		LOG ~In ModOptions.BG2onSoDEscMenuSecondPatch - failed to find versionString label - bailing out~
 		OUTER_SET $UIMenuIF("Succeeded") = 0
 	END ELSE
 
@@ -454,12 +567,12 @@ BEGIN
 	COPY - ~EmptyInlineTemplate~ ~.../CounterInline~
 END
 
-/*******************************************************************************
- * BG2onSoDEscMenuThirdPatch
- * Inserts button defined in modoesc2.menu before the GAMEPLAY_BUTTON button
- * On completion $UIMenuIF("Succeeded") 1 => Success, 0 => Failure
- ******************************************************************************/
-DEFINE_ACTION_MACRO ModOptionsSOD.BG2onSoDEscMenuThirdPatch
+//
+// ModOptions.BG2onSoDEscMenuThirdPatch
+// Inserts button defined in modoesc2.menu before the GAMEPLAY_BUTTON button
+// On completion $UIMenuIF("Succeeded") 1 => Success, 0 => Failure
+//
+DEFINE_ACTION_MACRO ModOptions.BG2onSoDEscMenuThirdPatch
 BEGIN
 	LOCAL_SPRINT tempstr $UIMenuIF("Body")
 	LOCAL_SPRINT adder ~~
@@ -499,7 +612,7 @@ BEGIN
 	// Not found - give up
 	ACTION_IF NOT %found% THEN
 	BEGIN
-		LOG ~In ModOptionsSOD.BG2onSoDEscMenuThirdPatch - failed to find GAMEPLAY_BUTTON - bailing out~
+		LOG ~In ModOptions.BG2onSoDEscMenuThirdPatch - failed to find GAMEPLAY_BUTTON - bailing out~
 		OUTER_SET $UIMenuIF("Succeeded") = 0
 	END ELSE 
 
@@ -515,12 +628,107 @@ BEGIN
 
 END
 	
+//
+// ModOptions.BG2onSoDSpecific
+// Main sequence
+//	
+DEFINE_ACTION_MACRO ModOptions.BG2onSoDSpecific
+BEGIN
+	PRINT @16 // Installing BG2onSoD
+	
+	// Copy specific override files
+	PRINT @17
+	SILENT
+	COPY ~%PKGNAME%/copy/ModsOptions/MODOPSOD.BAM~ ~override~
+	COPY ~%PKGNAME%/copy/ModsOptions/GUIERR8.MOS~ ~override~
+	
+	// Patch START_OPTIONS
+	PRINT @100
+	SILENT
+	OUTER_SPRINT $UIMenuIF("MenuName") ~START_OPTIONS~
+	OUTER_SPRINT $UIMenuIF("Body") ~~
+	LAUNCH_ACTION_MACRO UIMenuGetMenu
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN 
+	BEGIN
+		FAIL @101
+	END
+
+	LAUNCH_ACTION_MACRO ModOptions.PatchBG2onSoDStartOptions
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @102
+	END
+
+	LAUNCH_ACTION_MACRO UIMenuUpdateMenu
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @103
+	END
+
+	// Patch ESC_MENU
+	PRINT @104
+	SILENT
+	OUTER_SPRINT $UIMenuIF("MenuName") ~ESC_MENU~
+	OUTER_SPRINT $UIMenuIF("Body") ~~
+	LAUNCH_ACTION_MACRO UIMenuGetMenu
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @105
+	END
+
+	LAUNCH_ACTION_MACRO ModOptions.BG2onSoDEscMenuFirstPatch
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @106
+	END
+
+	LAUNCH_ACTION_MACRO ModOptions.BG2onSoDEscMenuSecondPatch
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @106
+	END
+
+	LAUNCH_ACTION_MACRO ModOptions.BG2onSoDEscMenuThirdPatch
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @106
+	END
+
+	LAUNCH_ACTION_MACRO UIMenuUpdateMenu
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @103
+	END
+
+ 	// Add Mods Options menus
+ 	PRINT @100001
+	SILENT
+
+	OUTER_SPRINT $UIMenuIF("MenuName") ~OPTIONS_MODS~
+	OUTER_SPRINT $UIMenuIF("Body") ~~
+	LAUNCH_ACTION_MACRO UIMenuGetMenu
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/ModsOptions/modoptions2.menu~
+		LAUNCH_ACTION_MACRO UIMenuAppendFile
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @100002
+		END
+	END
+END
+
 /*******************************************************************************
- * SoDOverhaulOptionsGameplayPatch
- * Puts enabled entry on UI_SETTINGS button, adds conditional MODOPT button
- * On completion $UIMenuIF("Succeeded") 1 => Success, 0 => Failure
+ *
+ * IsSoDOverhaul Section
+ *
  ******************************************************************************/
-DEFINE_ACTION_MACRO ModOptionsSOD.SoDOverhaulOptionsGameplayPatch
+//
+// ModOptions.SoDOverhaulOptionsGameplayPatch
+// Puts enabled entry on UI_SETTINGS button, adds conditional MODOPT button
+// On completion $UIMenuIF("Succeeded") 1 => Success, 0 => Failure
+//
+DEFINE_ACTION_MACRO ModOptions.SoDOverhaulOptionsGameplayPatch
 BEGIN
 	LOCAL_SPRINT tempstr $UIMenuIF("Body")
 	LOCAL_SPRINT adder ~enabled%TAB%%TAB%"(modsInGameContext and (modOptionsIngameEnabled() == 0)) or ((not modsInGameContext) and (modOptionsStartupEnabled() == 0))"%LE%~
@@ -551,7 +759,7 @@ BEGIN
 	// Not found - give up
 	ACTION_IF NOT %found% THEN
 	BEGIN
-		LOG ~In ModOptionsSOD.SoDOverhaulOptionsGameplayPatch - failed to find UI SETTINGS buton - bailing out~
+		LOG ~In ModOptions.SoDOverhaulOptionsGameplayPatch - failed to find UI SETTINGS buton - bailing out~
 		OUTER_SET $UIMenuIF("Succeeded") = 0
 	END ELSE 
 
@@ -566,12 +774,12 @@ BEGIN
 	COPY - ~EmptyInlineTemplate~ ~.../CounterInline~
 END
 
-/*******************************************************************************
- * SoDOverhaulStartOptionsPatch
- * Adds "modsInGameContext = false" to the beginning of the onopen event
- * On completion $UIMenuIF("Succeeded") 1 => Success, 0 => Failure
- ******************************************************************************/
-DEFINE_ACTION_MACRO ModOptionsSOD.SoDOverhaulStartOptionsPatch
+//
+// ModOptions.SoDOverhaulStartOptionsPatch
+// Adds "modsInGameContext = false" to the beginning of the onopen event
+// On completion $UIMenuIF("Succeeded") 1 => Success, 0 => Failure
+//
+DEFINE_ACTION_MACRO ModOptions.SoDOverhaulStartOptionsPatch
 BEGIN
 	LOCAL_SPRINT tempstr $UIMenuIF("Body")
 	LOCAL_SPRINT adder ~%LE%%TAB%%TAB%modsInGameContext = false%LE%~
@@ -596,7 +804,7 @@ BEGIN
 	// If not found, nothing to do but fail.
 	ACTION_IF NOT %found% THEN
 	BEGIN
-		LOG ~In ModOptionsSOD.SoDOverhaulStartOptionsPatch - failed to find onopen - bailing out~
+		LOG ~In ModOptions.SoDOverhaulStartOptionsPatch - failed to find onopen - bailing out~
 		OUTER_SET $UIMenuIF("Succeeded") = 0
 	END ELSE
 
@@ -611,12 +819,12 @@ BEGIN
 	COPY - ~EmptyInlineTemplate~ ~.../CounterInline~
 END
 
-/*******************************************************************************
- * SoDOverhaulEscMenuPatch
- * Adds "modsInGameContext = true" to the beginning of the onopen event
- * On completion $UIMenuIF("Succeeded") 1 => Success, 0 => Failure
- ******************************************************************************/
-DEFINE_ACTION_MACRO ModOptionsSOD.SoDOverhaulEscMenuPatch
+//
+// ModOptions.SoDOverhaulEscMenuPatch
+// Adds "modsInGameContext = true" to the beginning of the onopen event
+// On completion $UIMenuIF("Succeeded") 1 => Success, 0 => Failure
+//
+DEFINE_ACTION_MACRO ModOptions.SoDOverhaulEscMenuPatch
 BEGIN
 	LOCAL_SPRINT tempstr $UIMenuIF("Body")
 	LOCAL_SPRINT adder ~%LE%%TAB%%TAB%modsInGameContext = true%LE%~
@@ -641,7 +849,7 @@ BEGIN
 	// If not found, nothing to do but fail.
 	ACTION_IF NOT %found% THEN
 	BEGIN
-		LOG ~In ModOptionsSOD.SoDOverhaulEscMenuPatch - failed to find onopen - bailing out~
+		LOG ~In ModOptions.SoDOverhaulEscMenuPatch - failed to find onopen - bailing out~
 		OUTER_SET $UIMenuIF("Succeeded") = 0
 	END ELSE
 
@@ -656,13 +864,117 @@ BEGIN
 	COPY - ~EmptyInlineTemplate~ ~.../CounterInline~
 END
 
+//
+// ModOptions.SoDOverhaulSpecific
+// Main sequence
+//	
+DEFINE_ACTION_MACRO ModOptions.SoDOverhaulSpecific
+BEGIN
+	// Installing Dragonspear UI++
+	PRINT @18
+
+	// Patch OPTIONS_GAMEPLAY
+	PRINT @107
+	SILENT
+
+	OUTER_SPRINT $UIMenuIF("MenuName") ~OPTIONS_GAMEPLAY~
+	OUTER_SPRINT $UIMenuIF("Body") ~~
+	LAUNCH_ACTION_MACRO UIMenuGetMenu
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @108
+	END
+
+	LAUNCH_ACTION_MACRO ModOptions.SoDOverhaulOptionsGameplayPatch
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @109
+	END
+
+	LAUNCH_ACTION_MACRO UIMenuUpdateMenu
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @103
+	END
+
+	// Patch START_OPTIONS
+	PRINT @100
+	SILENT
+
+	OUTER_SPRINT $UIMenuIF("MenuName") ~START_OPTIONS~
+	OUTER_SPRINT $UIMenuIF("Body") ~~
+	LAUNCH_ACTION_MACRO UIMenuGetMenu
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @101
+	END
+
+	LAUNCH_ACTION_MACRO ModOptions.SoDOverhaulStartOptionsPatch
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @102
+	END
+
+	LAUNCH_ACTION_MACRO UIMenuUpdateMenu
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @103
+	END
+
+	// Patch ESC_MENU
+	PRINT @104
+	SILENT
+
+	OUTER_SPRINT $UIMenuIF("MenuName") ~ESC_MENU~
+	OUTER_SPRINT $UIMenuIF("Body") ~~
+	LAUNCH_ACTION_MACRO UIMenuGetMenu
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @105
+	END
+
+	LAUNCH_ACTION_MACRO ModOptions.SoDOverhaulEscMenuPatch
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @106
+	END
+
+	LAUNCH_ACTION_MACRO UIMenuUpdateMenu
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @103
+	END
+
+ 	// Add Mods Options menus and registration code for UI SETTINGS
+ 	PRINT @100001
+	SILENT
+
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/ModsOptions/modoptions1.menu~
+	LAUNCH_ACTION_MACRO UIMenuAppendFile
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @100002
+	END
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/ModsOptions/modouiset1.lua~
+	LAUNCH_ACTION_MACRO UIMenuAppendFile
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @100002
+	END
+END
+
 /*******************************************************************************
- * PatchBGEEStartOptions
- * Inserts button defined in 'modostartopt2.menu' as the last element of
- * START_OPTIONS menu.
- * On completion $UIMenuIF("Succeeded") 1 => Success, 0 => Failure
+ *
+ * IsBGEE Section
+ *
  ******************************************************************************/
-DEFINE_ACTION_MACRO ModOptionsSOD.PatchBGEEStartOptions
+//
+// ModOptions.PatchBGEEStartOptions
+// Inserts button defined in 'modostartopt2.menu' as the last element of
+// START_OPTIONS menu.
+// On completion $UIMenuIF("Succeeded") 1 => Success, 0 => Failure
+//
+DEFINE_ACTION_MACRO ModOptions.PatchBGEEStartOptions
 BEGIN
 	LOCAL_SPRINT tempstr $UIMenuIF("Body")
 	LOCAL_SPRINT adder ~~
@@ -702,7 +1014,7 @@ BEGIN
 	// If not found, nothing to do but fail.
 	ACTION_IF NOT %found% THEN
 	BEGIN
-		LOG ~In ModOptionsSOD.PatchBGEEStartOptions - failed to match menu body - bailing out~
+		LOG ~In ModOptions.PatchBGEEStartOptions - failed to match menu body - bailing out~
 		OUTER_SET $UIMenuIF("Succeeded") = 0
 	END ELSE 
 
@@ -717,12 +1029,12 @@ BEGIN
 	COPY - ~EmptyInlineTemplate~ ~.../CounterInline~
 END
 
-/*******************************************************************************
- * BGEEEscMenuThirdPatch
- * Inserts button defined in modoesc3.menu before the GAMEPLAY_BUTTON button
- * On completion $UIMenuIF("Succeeded") 1 => Success, 0 => Failure
- ******************************************************************************/
-DEFINE_ACTION_MACRO ModOptionsSOD.BGEEEscMenuThirdPatch
+//
+// ModOptions.BGEEEscMenuThirdPatch
+// Inserts button defined in modoesc3.menu before the GAMEPLAY_BUTTON button
+// On completion $UIMenuIF("Succeeded") 1 => Success, 0 => Failure
+//
+DEFINE_ACTION_MACRO ModOptions.BGEEEscMenuThirdPatch
 BEGIN
 	LOCAL_SPRINT tempstr $UIMenuIF("Body")
 	LOCAL_SPRINT adder ~~
@@ -762,7 +1074,7 @@ BEGIN
 	// Not found - give up
 	ACTION_IF NOT %found% THEN
 	BEGIN
-		LOG ~In ModOptionsSOD.BGEEEscMenuThirdPatch - failed to find GAMEPLAY_BUTTON - bailing out~
+		LOG ~In ModOptions.BGEEEscMenuThirdPatch - failed to find GAMEPLAY_BUTTON - bailing out~
 		OUTER_SET $UIMenuIF("Succeeded") = 0
 	END ELSE 
 
@@ -778,99 +1090,11 @@ BEGIN
 
 END
 	
-/*******************************************************************************
- * BG2onSoDSpecific
- ******************************************************************************/
-DEFINE_ACTION_MACRO ModOptionsSOD.BG2onSoDSpecific
-BEGIN
-	PRINT @16 // Installing BG2onSoD
-	
-	// Copy specific override files
-	PRINT @17
-	SILENT
-	COPY ~%PKGNAME%/copy/ModsOptions/MODOPSOD.BAM~ ~override~
-	COPY ~%PKGNAME%/copy/ModsOptions/GUIERR8.MOS~ ~override~
-	
-	// Patch START_OPTIONS
-	PRINT @100
-	SILENT
-	OUTER_SPRINT $UIMenuIF("MenuName") ~START_OPTIONS~
-	OUTER_SPRINT $UIMenuIF("Body") ~~
-	LAUNCH_ACTION_MACRO UIMenuGetMenu
-	ACTION_IF NOT $UIMenuIF("Succeeded") THEN 
-	BEGIN
-		FAIL @101
-	END
-
-	LAUNCH_ACTION_MACRO ModOptionsSOD.PatchBG2onSoDStartOptions
-	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
-	BEGIN
-		FAIL @102
-	END
-
-	LAUNCH_ACTION_MACRO UIMenuUpdateMenu
-	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
-	BEGIN
-		FAIL @103
-	END
-
-	// Patch ESC_MENU
-	PRINT @104
-	SILENT
-	OUTER_SPRINT $UIMenuIF("MenuName") ~ESC_MENU~
-	OUTER_SPRINT $UIMenuIF("Body") ~~
-	LAUNCH_ACTION_MACRO UIMenuGetMenu
-	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
-	BEGIN
-		FAIL @105
-	END
-
-	LAUNCH_ACTION_MACRO ModOptionsSOD.BG2onSoDEscMenuFirstPatch
-	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
-	BEGIN
-		FAIL @106
-	END
-
-	LAUNCH_ACTION_MACRO ModOptionsSOD.BG2onSoDEscMenuSecondPatch
-	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
-	BEGIN
-		FAIL @106
-	END
-
-	LAUNCH_ACTION_MACRO ModOptionsSOD.BG2onSoDEscMenuThirdPatch
-	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
-	BEGIN
-		FAIL @106
-	END
-
-	LAUNCH_ACTION_MACRO UIMenuUpdateMenu
-	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
-	BEGIN
-		FAIL @103
-	END
-
- 	// Add Mods Options menus
- 	PRINT @100001
-	SILENT
-
-	OUTER_SPRINT $UIMenuIF("MenuName") ~OPTIONS_MODS~
-	OUTER_SPRINT $UIMenuIF("Body") ~~
-	LAUNCH_ACTION_MACRO UIMenuGetMenu
-	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
-	BEGIN
-		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/ModsOptions/modoptions2.menu~
-		LAUNCH_ACTION_MACRO UIMenuAppendFile
-		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
-		BEGIN
-			FAIL @100002
-		END
-	END
-END
-
-/*******************************************************************************
- * BGEESpecific
- ******************************************************************************/
-DEFINE_ACTION_MACRO ModOptionsSOD.BGEESpecific
+//
+// ModOptions.BGEESpecific
+// Main sequence
+//	
+DEFINE_ACTION_MACRO ModOptions.BGEESpecific
 BEGIN
 	PRINT @14 // Installing BGEE
 	
@@ -890,7 +1114,7 @@ BEGIN
 		FAIL @101
 	END
 
-	LAUNCH_ACTION_MACRO ModOptionsSOD.PatchBGEEStartOptions
+	LAUNCH_ACTION_MACRO ModOptions.PatchBGEEStartOptions
 	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 	BEGIN
 		FAIL @102
@@ -913,19 +1137,19 @@ BEGIN
 		FAIL @105
 	END
 
-	LAUNCH_ACTION_MACRO ModOptionsSOD.BG2onSoDEscMenuFirstPatch
+	LAUNCH_ACTION_MACRO ModOptions.BG2onSoDEscMenuFirstPatch
 	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 	BEGIN
 		FAIL @106
 	END
 
-	LAUNCH_ACTION_MACRO ModOptionsSOD.BG2onSoDEscMenuSecondPatch
+	LAUNCH_ACTION_MACRO ModOptions.BG2onSoDEscMenuSecondPatch
 	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 	BEGIN
 		FAIL @106
 	END
 
-	LAUNCH_ACTION_MACRO ModOptionsSOD.BGEEEscMenuThirdPatch
+	LAUNCH_ACTION_MACRO ModOptions.BGEEEscMenuThirdPatch
 	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 	BEGIN
 		FAIL @106
@@ -956,14 +1180,256 @@ BEGIN
 END
 
 /*******************************************************************************
- * SoDSpecific
+ *
+ * IsBG2 IsEETBG2 Section
+ *
  ******************************************************************************/
-DEFINE_ACTION_MACRO ModOptionsSOD.SoDSpecific
+//
+// ModOptions.TOBPatchStartOptions
+// Inserts button defined in 'modostartopt1.menu' as the last element of
+// START_OPTIONS menu.
+// On completion $UIMenuIF("Succeeded") 1 => Success, 0 => Failure
+//
+DEFINE_ACTION_MACRO ModOptions.TOBPatchStartOptions
 BEGIN
-	// SoD configuration
-	PRINT @19
+	LOCAL_SPRINT tempstr $UIMenuIF("Body")
+	LOCAL_SPRINT adder ~~
 
-	// Patch START_OPTIONS
+	// Read patch insertion from modostartopt1.menu
+	LOCAL_SET found = SIZE_OF_FILE ~%PKGNAME%/menu/ModsOptions/modostartopt1.menu~
+	COPY - ~%PKGNAME%/menu/ModsOptions/modostartopt1.menu~ ~.../CounterInLine~
+		READ_ASCII 0 adder (%found%)
+	OUTER_SET found = 0 
+
+	// Put current menu definition into inline file
+	COPY - ~ToInlineTemplate~ ~.../CounterInLine~
+		REPLACE_EVALUATE ~dummy~ BEGIN END
+		~%tempstr%~
+	OUTER_SPRINT tempstr ~~
+
+	// First check if the button has already been manually patched in
+	COPY - ~.../CounterInLine~ ~.../CounterInLine~
+		REPLACE_EVALUATE ~MODOPT_BUTTON~
+		BEGIN
+			SET found = 1
+		END
+		~%MATCH0%~
+
+	// If not, search for all of menu except closing brace, insert new button code
+	ACTION_IF NOT %found% THEN
+	BEGIN
+		COPY - ~.../CounterInLine~ ~.../CounterInLine~
+			REPLACE_EVALUATE CASE_INSENSITIVE ~menu%MWHITE%{\(%MNOBRACE%*%MBRACES%\)+%MNOBRACE%*~
+			BEGIN
+				SPRINT tempstr ~%MATCH0%%adder%~
+				SET found = 1
+			END
+			~%tempstr%~
+	END
+
+	// If not found, nothing to do but fail.
+	ACTION_IF NOT %found% THEN
+	BEGIN
+		LOG ~In ModOptions.TOBPatchStartOptions - failed to match menu body - bailing out~
+		OUTER_SET $UIMenuIF("Succeeded") = 0
+	END ELSE 
+
+	// Success copy .../CounterInLine to $UIMenuIF("Body")
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Body") ~~
+		OUTER_SET found = SIZE_OF_FILE ~.../CounterInLine~
+		COPY - ~.../CounterInLine~ ~.../CounterInLine~
+			READ_ASCII 0 $UIMenuIF("Body") (%found%-1)
+		OUTER_SET $UIMenuIF("Succeeded") = 1
+	END
+	COPY - ~EmptyInlineTemplate~ ~.../CounterInline~
+END
+
+//
+// ModOptions.TOBEscMenuFirstPatch
+// Adds enabled criteria to the "OPTIONS_TITLE" label
+// On completion $UIMenuIF("Succeeded") 1 => Success, 0 => Failure
+//
+DEFINE_ACTION_MACRO ModOptions.TOBEscMenuFirstPatch
+BEGIN
+	LOCAL_SPRINT tempstr $UIMenuIF("Body")
+	LOCAL_SPRINT adder ~%LE%%TAB%%TAB%enabled "(not(modOptionsIngameDisabled) and 1) or modOptionsIngameDisabled()"~
+	LOCAL_SET found = 0
+
+	// Put current menu definition into inline file
+	COPY - ~ToInlineTemplate~ ~.../CounterInLine~
+		REPLACE_EVALUATE ~dummy~ BEGIN END
+		~%tempstr%~
+	OUTER_SPRINT tempstr ~~
+
+	// First, check to see if the patch has already been manually applied.
+	COPY - ~.../CounterInLine~ ~.../CounterInLine~
+		REPLACE_EVALUATE ~([%TAB% ]*not[%TAB% ]*([%TAB% ]*modOptionsIngameDisabled[%TAB% ]*)%MNOBRACE%*OPTIONS_TITLE~
+		BEGIN
+			SET found = 1
+		END
+		~%MATCH0%~
+
+	// If not found, look for and patch the 'text "OPTIONS_TITLE"' label
+	ACTION_IF NOT %found% THEN
+	BEGIN
+		COPY - ~.../CounterInLine~ ~.../CounterInLine~
+			REPLACE_EVALUATE CASE_INSENSITIVE ~\(label%MWHITE%{\)\(%MWHITE%area[%TAB% ]+[0-9]+[%TAB% ]+[0-9]+[%TAB% ]+[0-9]+[%TAB% ][0-9]+%MWHITE%text[%TAB% ]+%MQUOTE%[%TAB% ]*OPTIONS_TITLE[%TAB% ]*%MQUOTE%\)~
+			BEGIN
+				SPRINT tempstr ~%MATCH1%%adder%%MATCH2%~
+				SET found = 1
+			END
+			~%tempstr%~
+	END
+
+	// Not found - give up
+	ACTION_IF NOT %found% THEN
+	BEGIN
+		LOG ~In ModOptions.TOBEscMenuFirstPatch - failed to find OPTIONS_TITLE label - bailing out~
+		OUTER_SET $UIMenuIF("Succeeded") = 0
+	END ELSE 
+
+	// Success - copy .../CounterInLine to $UIMenuIF("Body")
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Body") ~~
+		OUTER_SET found = SIZE_OF_FILE ~.../CounterInLine~
+		COPY - ~.../CounterInLine~ ~.../CounterInLine~
+			READ_ASCII 0 $UIMenuIF("Body") (%found%-1)
+		OUTER_SET $UIMenuIF("Succeeded") = 1
+	END
+	COPY - ~EmptyInlineTemplate~ ~.../CounterInline~
+END
+
+//
+// ModOptions.TOBEscMenuSecondPatch
+// Adds enabled criteria to the "versionString" label
+// On completion $UIMenuIF("Succeeded") 1 => Success, 0 => Failure
+//
+DEFINE_ACTION_MACRO ModOptions.TOBEscMenuSecondPatch
+BEGIN
+	LOCAL_SPRINT tempstr $UIMenuIF("Body")
+	LOCAL_SPRINT adder ~%LE%%TAB%%TAB%enabled "(not(modOptionsIngameDisabled) and 1) or modOptionsIngameDisabled()"~
+	LOCAL_SET found = 0
+
+	// Put current menu definition into inline file
+	COPY - ~ToInlineTemplate~ ~.../CounterInLine~
+		REPLACE_EVALUATE ~dummy~ BEGIN END
+		~%tempstr%~
+	OUTER_SPRINT tempstr ~~
+
+	// First, check to see if the patch has already been manually applied.
+	COPY - ~.../CounterInLine~ ~.../CounterInLine~
+		REPLACE_EVALUATE ~([%TAB% ]*not[%TAB% ]*([%TAB% ]*modOptionsIngameDisabled[%TAB% ]*)%MNOBRACE%*versionString~
+		BEGIN
+			SET found = 1
+		END
+		~%MATCH0%~
+
+	// If not found, look for and patch the 'text lua "versionString"' label
+	ACTION_IF NOT %found% THEN
+	BEGIN
+		COPY - ~.../CounterInLine~ ~.../CounterInLine~
+			REPLACE_EVALUATE CASE_INSENSITIVE ~\(label%MWHITE%{\)\(%MWHITE%area[%TAB% ]+[0-9]+[%TAB% ]+[0-9]+[%TAB% ]+[0-9]+[%TAB% ][0-9]+%MWHITE%text[%TAB% ]+lua[%TAB% ]+%MQUOTE%[%TAB% ]*versionString[%TAB% ]*%MQUOTE%\)~
+			BEGIN
+				SPRINT tempstr ~%MATCH1%%adder%%MATCH2%~
+				SET found = 1
+			END
+			~%tempstr%~
+	END
+
+	// Not found - give up
+	ACTION_IF NOT %found% THEN
+	BEGIN
+		LOG ~In ModOptions.TOBEscMenuSecondPatch - failed to find versionString label - bailing out~
+		OUTER_SET $UIMenuIF("Succeeded") = 0
+	END ELSE
+
+	// Success - copy .../CounterInLine to $UIMenuIF("Body")
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Body") ~~
+		OUTER_SET found = SIZE_OF_FILE ~.../CounterInLine~
+		COPY - ~.../CounterInLine~ ~.../CounterInLine~
+			READ_ASCII 0 $UIMenuIF("Body") (%found%-1)
+		OUTER_SET $UIMenuIF("Succeeded") = 1
+	END
+	COPY - ~EmptyInlineTemplate~ ~.../CounterInline~
+END
+
+//
+// ModOptions.TOBEscMenuThirdPatch
+// Inserts button defined in modoesc2.menu before the GAMEPLAY_BUTTON button
+// On completion $UIMenuIF("Succeeded") 1 => Success, 0 => Failure
+//
+DEFINE_ACTION_MACRO ModOptions.TOBEscMenuThirdPatch
+BEGIN
+	LOCAL_SPRINT tempstr $UIMenuIF("Body")
+	LOCAL_SPRINT adder ~~
+
+	// Read patch insertion from modoesc2.menu
+	LOCAL_SET found = SIZE_OF_FILE ~%PKGNAME%/menu/ModsOptions/modoesc2.menu~
+	COPY - ~%PKGNAME%/menu/ModsOptions/modoesc2.menu~ ~.../CounterInLine~
+		READ_ASCII 0 adder (%found%)
+	OUTER_SET found = 0 
+
+	// Put current menu definition into inline file
+	COPY - ~ToInlineTemplate~ ~.../CounterInLine~
+		REPLACE_EVALUATE ~dummy~ BEGIN END
+		~%tempstr%~
+	OUTER_SPRINT tempstr ~~
+
+	// First check if the button has already been manually patched in
+	COPY - ~.../CounterInLine~ ~.../CounterInLine~
+		REPLACE_EVALUATE ~Infinity_PushMenu[%TAB% ]*([%TAB% ]*%MQUOTE%[%TAB% ]*OPTIONS_MODS[%TAB% ]*%MQUOTE%[%TAB% ]*)~
+		BEGIN
+			SET found = 1
+		END
+		~%MATCH0%~
+
+	// If not, search for GAMEPLAY_BUTTON, insert new button code before
+	ACTION_IF NOT %found% THEN
+	BEGIN
+		COPY - ~.../CounterInLine~ ~.../CounterInLine~
+			REPLACE_EVALUATE CASE_INSENSITIVE ~[%TAB% ]+button%MWHITE%{%MNOBRACE%+Infinity_PushMenu[%TAB% ]*([%TAB ]*%MQUOTE%OPTIONS_GAMEPLAY%MQUOTE%[%TAB% ]*)~
+			BEGIN
+				SPRINT tempstr ~%adder%%MATCH0%~
+				SET found = 1
+			END
+			~%tempstr%~
+	END
+
+	// Not found - give up
+	ACTION_IF NOT %found% THEN
+	BEGIN
+		LOG ~In ModOptions.TOBEscMenuThirdPatch - failed to find GAMEPLAY_BUTTON - bailing out~
+		OUTER_SET $UIMenuIF("Succeeded") = 0
+	END ELSE 
+
+	// Success - copy .../CounterInLine to $UIMenuIF("Body")
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Body") ~~
+		OUTER_SET found = SIZE_OF_FILE ~.../CounterInLine~
+		COPY - ~.../CounterInLine~ ~.../CounterInLine~
+			READ_ASCII 0 $UIMenuIF("Body") (%found%-1)
+		OUTER_SET $UIMenuIF("Succeeded") = 1
+	END
+	COPY - ~EmptyInlineTemplate~ ~.../CounterInline~
+
+END
+
+//
+// ModOptions.BG2TOBSpecific
+// Main sequence
+//	
+DEFINE_ACTION_MACRO ModOptions.BG2TOBSpecific
+BEGIN	
+	PRINT @28 // Installing BG2EE
+	
+	// Copy specific override files
+	PRINT @17
+	SILENT
+	COPY ~%PKGNAME%/copy/ModsOptions/modoimg1.BAM~ ~override~
+
+	// Patch START_OPTIONS menu
 	PRINT @100
 	SILENT
 
@@ -975,12 +1441,7 @@ BEGIN
 		FAIL @101
 	END
 
-	LAUNCH_ACTION_MACRO ModOptionsSOD.StartOptionsFirstPatch
-	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
-	BEGIN
-		FAIL @102
-	END
-	LAUNCH_ACTION_MACRO ModOptionsSOD.StartOptionsSecondPatch
+	LAUNCH_ACTION_MACRO ModOptions.TOBPatchStartOptions
 	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 	BEGIN
 		FAIL @102
@@ -1004,7 +1465,19 @@ BEGIN
 		FAIL @105
 	END
 
-	LAUNCH_ACTION_MACRO ModOptionsSOD.EscMenuPatch
+	LAUNCH_ACTION_MACRO ModOptions.TOBEscMenuFirstPatch
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @106
+	END
+
+	LAUNCH_ACTION_MACRO ModOptions.TOBEscMenuSecondPatch
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @106
+	END
+
+	LAUNCH_ACTION_MACRO ModOptions.TOBEscMenuThirdPatch
 	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 	BEGIN
 		FAIL @106
@@ -1016,39 +1489,317 @@ BEGIN
 		FAIL @103
 	END
 
-	// Patch OptionsButtons assignment
-	PRINT @100003
-	SILENT
-
-	OUTER_SPRINT $UIMenuIF("LuaRegex") ~OptionsButtons%MWHITE%=%MWHITE%{~
-	OUTER_SPRINT $UIMenuIF("Body") ~~
-	OUTER_SET $UIMenuIF("LuaID")  = 0 - 1
-	LAUNCH_ACTION_MACRO UIMenuGetMatchingLuaBlock
-	ACTION_IF NOT $UIMenuIF("Succeeded") THEN BEGIN
-		FAIL @100004
-	END
-
-	LAUNCH_ACTION_MACRO ModOptionsSOD.OptionsButtonsLuaPatch
-	ACTION_IF NOT $UIMenuIF("Succeeded") THEN BEGIN
-		FAIL @100005
-	END
-
-	LAUNCH_ACTION_MACRO UIMenuUpdateLuaBlock
-	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
-	BEGIN
-		FAIL @103
-	END
-
- 	// Add Mods Options menus
- 	PRINT @100001
+	// Add ModsOptions menus
+	PRINT @100001
 	SILENT
 
 	OUTER_SPRINT $UIMenuIF("MenuName") ~OPTIONS_MODS~
 	OUTER_SPRINT $UIMenuIF("Body") ~~
 	LAUNCH_ACTION_MACRO UIMenuGetMenu
-	ACTION_IF NOT $UIMenuIF("Succeeded") THEN 
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN // Install main menu and options menu
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/ModsOptions/modoptions3.menu~
+		LAUNCH_ACTION_MACRO UIMenuAppendFile
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @100002
+		END
+	END ELSE 
+	BEGIN // Old package installed, just patch main menu
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/ModsOptions/modooptmod1.menu~
+		LAUNCH_ACTION_MACRO UIMenuReplaceMenu
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @100002
+		END
+	END
+END
+
+/*******************************************************************************
+ *
+ * IsEETBG2 Section
+ *
+ ******************************************************************************/
+//
+// ModOptions.BG2EETSpecific
+// Main sequence
+//	
+DEFINE_ACTION_MACRO ModOptions.BG2EETSpecific
+BEGIN	
+	PRINT @28 // Installing BG2EE
+	
+	// Copy specific override files
+	PRINT @17
+	SILENT
+	COPY ~%PKGNAME%/copy/ModsOptions/modoimg2.BAM~ ~override~
+
+	// Patch START_OPTIONS menu
+	PRINT @100
+	SILENT
+
+	OUTER_SPRINT $UIMenuIF("MenuName") ~START_OPTIONS~
+	OUTER_SPRINT $UIMenuIF("Body") ~~
+	LAUNCH_ACTION_MACRO UIMenuGetMenu
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 	BEGIN
-		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/ModsOptions/modoptions1.menu~
+		FAIL @101
+	END
+
+	LAUNCH_ACTION_MACRO ModOptions.TOBPatchStartOptions
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @102
+	END
+
+	LAUNCH_ACTION_MACRO UIMenuUpdateMenu
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @103
+	END
+
+	// Patch ESC_MENU
+	PRINT @104
+	SILENT
+
+	OUTER_SPRINT $UIMenuIF("MenuName") ~ESC_MENU~
+	OUTER_SPRINT $UIMenuIF("Body") ~~
+	LAUNCH_ACTION_MACRO UIMenuGetMenu
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @105
+	END
+
+	LAUNCH_ACTION_MACRO ModOptions.TOBEscMenuFirstPatch
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @106
+	END
+
+	LAUNCH_ACTION_MACRO ModOptions.TOBEscMenuSecondPatch
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @106
+	END
+
+	LAUNCH_ACTION_MACRO ModOptions.TOBEscMenuThirdPatch
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @106
+	END
+
+	LAUNCH_ACTION_MACRO UIMenuUpdateMenu
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @103
+	END
+
+	// Add ModsOptions menus
+	PRINT @100001
+	SILENT
+
+	OUTER_SPRINT $UIMenuIF("MenuName") ~OPTIONS_MODS~
+	OUTER_SPRINT $UIMenuIF("Body") ~~
+	LAUNCH_ACTION_MACRO UIMenuGetMenu
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN // Install main menu and options menu
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/ModsOptions/modoptions6.menu~
+		LAUNCH_ACTION_MACRO UIMenuAppendFile
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @100002
+		END
+	END ELSE 
+	BEGIN // Old package installed, just patch main menu
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/ModsOptions/modooptmod1.menu~
+		LAUNCH_ACTION_MACRO UIMenuReplaceMenu
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @100002
+		END
+	END
+END
+
+/*******************************************************************************
+ *
+ * IsLeUIBG2 Section
+ *
+ ******************************************************************************/
+//
+// ModOptions.LeUIBG2Specific
+// Main sequence
+//	
+DEFINE_ACTION_MACRO ModOptions.LeUIBG2Specific
+BEGIN	
+	PRINT @34 // Installing LeUI BG2EE
+	
+	// Copy specific override files
+	PRINT @17
+	SILENT
+	COPY ~%PKGNAME%/copy/ModsOptions/modoimg1.BAM~ ~override~
+
+	// Patch START_OPTIONS menu
+	PRINT @100
+	SILENT
+
+	OUTER_SPRINT $UIMenuIF("MenuName") ~START_OPTIONS~
+	OUTER_SPRINT $UIMenuIF("Body") ~~
+	LAUNCH_ACTION_MACRO UIMenuGetMenu
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @101
+	END
+
+	LAUNCH_ACTION_MACRO ModOptions.TOBPatchStartOptions
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @102
+	END
+
+	LAUNCH_ACTION_MACRO UIMenuUpdateMenu
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @103
+	END
+
+	// Patch ESC_MENU
+	PRINT @104
+	SILENT
+
+	OUTER_SPRINT $UIMenuIF("MenuName") ~ESC_MENU~
+	OUTER_SPRINT $UIMenuIF("Body") ~~
+	LAUNCH_ACTION_MACRO UIMenuGetMenu
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @105
+	END
+
+	LAUNCH_ACTION_MACRO ModOptions.TOBEscMenuFirstPatch
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @106
+	END
+
+	LAUNCH_ACTION_MACRO ModOptions.TOBEscMenuThirdPatch
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @106
+	END
+
+	LAUNCH_ACTION_MACRO UIMenuUpdateMenu
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @103
+	END
+
+	// Add ModsOptions menus
+	PRINT @100001
+	SILENT
+
+	OUTER_SPRINT $UIMenuIF("MenuName") ~OPTIONS_MODS~
+	OUTER_SPRINT $UIMenuIF("Body") ~~
+	LAUNCH_ACTION_MACRO UIMenuGetMenu
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN // Install main menu and options menu
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/ModsOptions/modoptions5.menu~
+		LAUNCH_ACTION_MACRO UIMenuAppendFile
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @100002
+		END
+	END ELSE 
+	BEGIN // Old package installed, just patch main menu
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/ModsOptions/modooptmod1.menu~
+		LAUNCH_ACTION_MACRO UIMenuReplaceMenu
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @100002
+		END
+	END
+END
+
+/*******************************************************************************
+ *
+ * IsLeUISOD Section
+ *
+ ******************************************************************************/
+//
+// ModOptions.LeUISODSpecific
+// Main sequence
+//	
+DEFINE_ACTION_MACRO ModOptions.LeUISODSpecific
+BEGIN	
+	PRINT @35 // Installing LeUI SoD
+	
+	// Copy specific override files
+	PRINT @17
+	SILENT
+	COPY ~%PKGNAME%/copy/ModsOptions/MODOPSOD.BAM~ ~override~
+	COPY ~%PKGNAME%/copy/ModsOptions/GUIERR8.MOS~ ~override~
+
+	// Patch START_OPTIONS menu
+	PRINT @100
+	SILENT
+
+	OUTER_SPRINT $UIMenuIF("MenuName") ~START_OPTIONS~
+	OUTER_SPRINT $UIMenuIF("Body") ~~
+	LAUNCH_ACTION_MACRO UIMenuGetMenu
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @101
+	END
+
+	LAUNCH_ACTION_MACRO ModOptions.TOBPatchStartOptions
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @102
+	END
+
+	LAUNCH_ACTION_MACRO UIMenuUpdateMenu
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @103
+	END
+
+	// Patch ESC_MENU
+	PRINT @104
+	SILENT
+
+	OUTER_SPRINT $UIMenuIF("MenuName") ~ESC_MENU~
+	OUTER_SPRINT $UIMenuIF("Body") ~~
+	LAUNCH_ACTION_MACRO UIMenuGetMenu
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @105
+	END
+
+	LAUNCH_ACTION_MACRO ModOptions.TOBEscMenuFirstPatch
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @106
+	END
+
+	LAUNCH_ACTION_MACRO ModOptions.TOBEscMenuThirdPatch
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @106
+	END
+
+	LAUNCH_ACTION_MACRO UIMenuUpdateMenu
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @103
+	END
+
+	// Add ModsOptions menus
+	PRINT @100001
+	SILENT
+
+	OUTER_SPRINT $UIMenuIF("MenuName") ~OPTIONS_MODS~
+	OUTER_SPRINT $UIMenuIF("Body") ~~
+	LAUNCH_ACTION_MACRO UIMenuGetMenu
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN // Install main menu and options menu
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/ModsOptions/modoptions7.menu~
 		LAUNCH_ACTION_MACRO UIMenuAppendFile
 		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 		BEGIN
@@ -1058,38 +1809,25 @@ BEGIN
 END
 
 /*******************************************************************************
- * SoDOverhaulSpecific
+ *
+ * IsLeUIBG1 Section
+ *
  ******************************************************************************/
-DEFINE_ACTION_MACRO ModOptionsSOD.SoDOverhaulSpecific
-BEGIN
-	// Installing Dragonspear UI++
-	PRINT @18
-
-	// Patch OPTIONS_GAMEPLAY
-	PRINT @107
+//
+// ModOptions.LeUIBG1Specific
+// Main sequence
+//	
+DEFINE_ACTION_MACRO ModOptions.LeUIBG1Specific
+BEGIN	
+	PRINT @36 // Installing LeUI BG1EE
+	
+	// Copy specific override files
+	PRINT @17
 	SILENT
+	COPY ~%PKGNAME%/copy/ModsOptions/MODOPSOD.BAM~ ~override~
+	COPY ~%PKGNAME%/copy/ModsOptions/GUIERR8.MOS~ ~override~
 
-	OUTER_SPRINT $UIMenuIF("MenuName") ~OPTIONS_GAMEPLAY~
-	OUTER_SPRINT $UIMenuIF("Body") ~~
-	LAUNCH_ACTION_MACRO UIMenuGetMenu
-	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
-	BEGIN
-		FAIL @108
-	END
-
-	LAUNCH_ACTION_MACRO ModOptionsSOD.SoDOverhaulOptionsGameplayPatch
-	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
-	BEGIN
-		FAIL @109
-	END
-
-	LAUNCH_ACTION_MACRO UIMenuUpdateMenu
-	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
-	BEGIN
-		FAIL @103
-	END
-
-	// Patch START_OPTIONS
+	// Patch START_OPTIONS menu
 	PRINT @100
 	SILENT
 
@@ -1101,7 +1839,7 @@ BEGIN
 		FAIL @101
 	END
 
-	LAUNCH_ACTION_MACRO ModOptionsSOD.SoDOverhaulStartOptionsPatch
+	LAUNCH_ACTION_MACRO ModOptions.TOBPatchStartOptions
 	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 	BEGIN
 		FAIL @102
@@ -1125,7 +1863,13 @@ BEGIN
 		FAIL @105
 	END
 
-	LAUNCH_ACTION_MACRO ModOptionsSOD.SoDOverhaulEscMenuPatch
+	LAUNCH_ACTION_MACRO ModOptions.TOBEscMenuFirstPatch
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @106
+	END
+
+	LAUNCH_ACTION_MACRO ModOptions.TOBEscMenuThirdPatch
 	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 	BEGIN
 		FAIL @106
@@ -1137,21 +1881,111 @@ BEGIN
 		FAIL @103
 	END
 
- 	// Add Mods Options menus and registration code for UI SETTINGS
- 	PRINT @100001
+	// Add ModsOptions menus
+	PRINT @100001
 	SILENT
 
-	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/ModsOptions/modoptions1.menu~
-	LAUNCH_ACTION_MACRO UIMenuAppendFile
+	OUTER_SPRINT $UIMenuIF("MenuName") ~OPTIONS_MODS~
+	OUTER_SPRINT $UIMenuIF("Body") ~~
+	LAUNCH_ACTION_MACRO UIMenuGetMenu
 	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
-	BEGIN
-		FAIL @100002
+	BEGIN // Install main menu and options menu
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/ModsOptions/modoptions7.menu~
+		LAUNCH_ACTION_MACRO UIMenuAppendFile
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @100002
+		END
 	END
-	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/ModsOptions/modouiset1.lua~
-	LAUNCH_ACTION_MACRO UIMenuAppendFile
+END
+
+/*******************************************************************************
+ *
+ * IsEETLeUI Section
+ *
+ ******************************************************************************/
+//
+// ModOptions.EETLeUISpecific
+// Main sequence
+//	
+DEFINE_ACTION_MACRO ModOptions.EETLeUISpecific
+BEGIN	
+	PRINT @37 // Installing LeUI EET
+	
+	// Copy specific override files
+	PRINT @17
+	SILENT
+	COPY ~%PKGNAME%/copy/ModsOptions/modoimg2.BAM~ ~override~
+
+	// Patch START_OPTIONS menu
+	PRINT @100
+	SILENT
+
+	OUTER_SPRINT $UIMenuIF("MenuName") ~START_OPTIONS~
+	OUTER_SPRINT $UIMenuIF("Body") ~~
+	LAUNCH_ACTION_MACRO UIMenuGetMenu
 	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 	BEGIN
-		FAIL @100002
+		FAIL @101
+	END
+
+	LAUNCH_ACTION_MACRO ModOptions.TOBPatchStartOptions
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @102
+	END
+
+	LAUNCH_ACTION_MACRO UIMenuUpdateMenu
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @103
+	END
+
+	// Patch ESC_MENU
+	PRINT @104
+	SILENT
+
+	OUTER_SPRINT $UIMenuIF("MenuName") ~ESC_MENU~
+	OUTER_SPRINT $UIMenuIF("Body") ~~
+	LAUNCH_ACTION_MACRO UIMenuGetMenu
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @105
+	END
+
+	LAUNCH_ACTION_MACRO ModOptions.TOBEscMenuFirstPatch
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @106
+	END
+
+	LAUNCH_ACTION_MACRO ModOptions.TOBEscMenuThirdPatch
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @106
+	END
+
+	LAUNCH_ACTION_MACRO UIMenuUpdateMenu
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @103
+	END
+
+	// Add ModsOptions menus
+	PRINT @100001
+	SILENT
+
+	OUTER_SPRINT $UIMenuIF("MenuName") ~OPTIONS_MODS~
+	OUTER_SPRINT $UIMenuIF("Body") ~~
+	LAUNCH_ACTION_MACRO UIMenuGetMenu
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN // Install main menu and options menu
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/ModsOptions/modoptions6.menu~
+		LAUNCH_ACTION_MACRO UIMenuAppendFile
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @100002
+		END
 	END
 END
 
@@ -1175,20 +2009,58 @@ COPY ~%PKGNAME%/copy/ModsOptions/en_ModOp.lua~ ~override~
 
 ACTION_MATCH 1
 WITH
-	%IsBG2onSoD%
-	BEGIN
-		LAUNCH_ACTION_MACRO ModOptionsSOD.BG2onSoDSpecific
-	END
-	%IsSoDOverhaul%
-	BEGIN
-		LAUNCH_ACTION_MACRO ModOptionsSOD.SoDOverhaulSpecific
-	END
 	%IsSoD% %IsEETSoD%
 	BEGIN
-		LAUNCH_ACTION_MACRO ModOptionsSOD.SoDSpecific
+		LAUNCH_ACTION_MACRO ModOptions.SoDSpecific
 	END
-	DEFAULT // Nothing left except base BGEE
-		LAUNCH_ACTION_MACRO ModOptionsSOD.BGEESpecific
+
+	%IsBG2onSoD%
+	BEGIN
+		LAUNCH_ACTION_MACRO ModOptions.BG2onSoDSpecific
+	END
+	
+	%IsSoDOverhaul%
+	BEGIN
+		LAUNCH_ACTION_MACRO ModOptions.SoDOverhaulSpecific
+	END
+
+	%IsBGEE%
+	BEGIN
+		LAUNCH_ACTION_MACRO ModOptions.BGEESpecific
+	END
+
+	%IsBG2%
+	BEGIN
+		LAUNCH_ACTION_MACRO ModOptions.BG2TOBSpecific
+	END
+
+	%IsEETBG2%
+	BEGIN
+		LAUNCH_ACTION_MACRO ModOptions.BG2EETSpecific
+	END
+
+	%IsLeUIBG2%
+	BEGIN
+		LAUNCH_ACTION_MACRO ModOptions.LeUIBG2Specific
+	END
+
+	%IsLeUISOD%
+	BEGIN
+		LAUNCH_ACTION_MACRO ModOptions.LeUISODSpecific
+	END
+
+	%IsLeUIBG1%
+	BEGIN
+		LAUNCH_ACTION_MACRO ModOptions.LeUIBG1Specific
+	END
+
+	%IsEETLeUI%
+	BEGIN
+		LAUNCH_ACTION_MACRO ModOptions.EETLeUISpecific
+	END
+
+	DEFAULT // Nothing left except Fail
+		FAIL @33
 
 END
 

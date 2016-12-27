@@ -21,7 +21,7 @@ BEGIN
 	LOCAL_SET		lvllimit = 0
 
 // Build the 3 arrays we need to correlate base class names and class IDs
-	ACTION_IF %IsBG2% OR %IsEETBG2% OR %IsEETBG2% THEN
+	ACTION_IF %IsBG2% OR %IsEETBG2% OR %IsEETSoD% OR %IsLeUIBG2% OR %IsEETLeUI% THEN
 	BEGIN
 		OUTER_SPRINT target2da ~clastext.2DA~
 		OUTER_SET clasmincol = 10
@@ -29,7 +29,7 @@ BEGIN
 		OUTER_SET lvllimit = 42
 	END ELSE
 	BEGIN
-		ACTION_IF %IsBGEE% THEN
+		ACTION_IF %IsBGEE% OR %IsLeUIBG1% THEN
 		BEGIN
 			OUTER_SPRINT target2da ~clastext.2DA~
 			OUTER_SET clasmincol = 9
@@ -378,13 +378,24 @@ BEGIN
 	LOCAL_SET WT = 0		// Combat stat W
 	LOCAL_SET YT = 0		// Combat stat Y
 	LOCAL_SET XT = 0		// Combat stat X
-	LOCAL_SET Y9 = 0		// Show combat stats Y
-	LOCAL_SET W9 = 0		// Show combat stats W
+	LOCAL_SET Y9 = 0		// Show combat stats Y (clickable)
+	LOCAL_SET W9 = 0		// Show combat stats W (clickable)
 	LOCAL_SET XLP = 0		// Large small portrait X
 	LOCAL_SET YLP = 0		// Large small portrait Y
 	LOCAL_SET WLP = 0		// Large small portrait W
 	LOCAL_SET HLP = 0		// Large small portrait H
-	
+// Added alternate Y's for Bars On Bottom
+	LOCAL_SET YPB = 0		// Small Portrait Y 
+	LOCAL_SET YLPB = 0		// Large small portrait Y
+	LOCAL_SET Y1B = 0		// First title Y, first level up Y
+	LOCAL_SET YP22B = 0		// First progressbar and overlay label Y
+	LOCAL_SET YP44B = 0		// Second title Y, second level up Y
+	LOCAL_SET YP66B = 0		// Second progressbar and overlay label Y
+	LOCAL_SET YP88B = 0		// Third title Y, third level up Y
+	LOCAL_SET YP110B = 0	// Third progressbar and overlay label Y
+	LOCAL_SET YTB = 0		// Combat stat Y
+	LOCAL_SET Y9B = 0		// Show combat stats Y (clickable)
+
 	LOCAL_SPRINT lhl  ~label%MNOBRACE%*{%MNOBRACE%*enabled[%TAB% ]+%MQUOTE%[%TAB% ]*hidePortrait%MNOTQUOTE%*%MQUOTE%%MNOBRACE%+}~
 	LOCAL_SPRINT lhb  ~button%MNOBRACE%*{%MNOBRACE%*enabled[%TAB% ]+%MQUOTE%[%TAB% ]*hidePortrait%MNOTQUOTE%*%MQUOTE%%MNOBRACE%+}~
 	LOCAL_SPRINT lh22 ~button%MNOBRACE%*{%MNOBRACE%*enabled[%TAB% ]+%MQUOTE%[%TAB% ]*not[%TAB% ]+hidePortrait[%TAB% ]*%MQUOTE%%MNOBRACE%+name[%TAB% ]+%MQUOTE%[%TAB% ]*BUTTON_2_2[%TAB% ]*%MQUOTE%%MNOBRACE%+area[%TAB% ]+\([0-9]+\)[%TAB% ]+\([0-9]+\)[%TAB% ]+\([0-9]+\)[%TAB% ]+\([0-9]+\)%MNOBRACE%+}~
@@ -474,6 +485,16 @@ BEGIN
 			SET HLP = %H1% - (%YLP% - %Y1%)
 			SET WLP = (%HLP% * 169) / 266
 			SET XLP = %X1% + ((%W1% - %WLP%) / 2)
+			SET YPB = %Y1%
+			SET YLPB = %Y1%
+			SET Y1B = %Y1% + (%H1%-132)
+			SET YP22B = %Y1B% + 22
+			SET YP44B = %Y1B% + 44
+			SET YP66B = %Y1B% + 66
+			SET YP88B = %Y1B% + 88
+			SET YP110B = %Y1B% + 110
+			SET YTB = %YPB%
+			SET Y9B = %YPB%
 			SPRINT adder EVAL ~%adder%~
 			SET found = 1
 		END
@@ -512,6 +533,16 @@ BEGIN
 			SET HLP = %H1% - (%YLP% - %Y1%)
 			SET WLP = (%HLP% * 169) / 266
 			SET XLP = %X1% + ((%W1% - %WLP%) / 2)
+			SET YPB = %Y1%
+			SET YLPB = %Y1%
+			SET Y1B = %Y1% + (%H1%-132)
+			SET YP22B = %Y1B% + 22
+			SET YP44B = %Y1B% + 44
+			SET YP66B = %Y1B% + 66
+			SET YP88B = %Y1B% + 88
+			SET YP110B = %Y1B% + 110
+			SET YTB = %YPB%
+			SET Y9B = %YPB%
 			SPRINT adder EVAL ~%adder%~
 			SET found = 1
 		END
@@ -584,6 +615,18 @@ BEGIN
 	LOCAL_SET WLP = 0		// Large small portrait W
 	LOCAL_SET HLP = 0		// Large small portrait H
 	
+// Added alternate Y's for Bars On Bottom
+	LOCAL_SET YPB = 0		// Small Portrait Y 
+	LOCAL_SET YLPB = 0		// Large small portrait Y
+	LOCAL_SET Y1B = 0		// First title Y, first level up Y
+	LOCAL_SET YP22B = 0		// First progressbar and overlay label Y
+	LOCAL_SET YP44B = 0		// Second title Y, second level up Y
+	LOCAL_SET YP66B = 0		// Second progressbar and overlay label Y
+	LOCAL_SET YP88B = 0		// Third title Y, third level up Y
+	LOCAL_SET YP110B = 0	// Third progressbar and overlay label Y
+	LOCAL_SET YTB = 0		// Combat stat Y
+	LOCAL_SET Y9B = 0		// Show combat stats Y (clickable)
+
 	// Read patch insertion from characterpatch3.menu
 	OUTER_SET found = SIZE_OF_FILE ~%PKGNAME%/menu/ProgressBar/characterpatch3.menu~
 	COPY - ~%PKGNAME%/menu/ProgressBar/characterpatch3.menu~ ~.../CounterInLine~
@@ -627,6 +670,16 @@ BEGIN
 		SET HLP = %H1% - (%YLP% - %Y1%) + 2
 		SET WLP = (%HLP% * 169) / 266
 		SET XLP = %X1% + ((%W1% - %WLP%) / 2)
+		SET YPB = %Y1%
+		SET YLPB = %Y1%
+		SET Y1B = %Y1% + (%H1%-132)
+		SET YP22B = %Y1B% + 22
+		SET YP44B = %Y1B% + 44
+		SET YP66B = %Y1B% + 66
+		SET YP88B = %Y1B% + 88
+		SET YP110B = %Y1B% + 110
+		SET YTB = %YPB%
+		SET Y9B = %YPB%
 		SPRINT adder EVAL ~%adder%~
 		SET found = 1
 	END
@@ -716,7 +769,7 @@ END
  * Progress Bar Tweaks Installation
  ******************************************************************************/
 // Test for lefreut's Improved Record Screen
-OUTER_SET ProgressBars.lefreuts = (MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2900~)
+OUTER_SET ProgressBars.lefreuts = ((MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2900~) OR (MOD_IS_INSTALLED ~LeUI.tp2~ ~0~))
 
 
 // Open UI.MENU

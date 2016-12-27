@@ -43,6 +43,10 @@ WITH
 	BEGIN
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ActionBarButton5.menu~
 	END
+	%IsLeUIBG2% %IsLeUISOD% %IsLeUIBG1% %IsEETLeUI%
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ActionBarButton6.menu~
+	END
 
 	DEFAULT
 		FAIL @15

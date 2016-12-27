@@ -4,6 +4,7 @@ modOptionStrings = {
 	MODOPT_TITLE = "Mods Options",
 	MODOPT_BUTTON = "MODS OPTIONS",
 	MODOPT_INFO = "Change settings affecting the behavior and/or appearance of the selected mod",
+--	MODOPT_INFO = "Now is the time for all good men to come to the aid of now is the time for all bad men to come to the aid of now is the time for all gold men to come to the aid of now is the time for all red men to come to the aid of their country",
 	MODOPT_CHANGE_BUTTON = "CHANGE",
 -- Mods Options Settings support
 	MODOPT_MODOPT_TITLE = "Mods Options Settings",

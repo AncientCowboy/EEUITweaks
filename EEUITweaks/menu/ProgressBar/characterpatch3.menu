@@ -7,7 +7,7 @@
 
 	label
  	{
- 		enabled		"hidePortrait"
+ 		enabled		"hidePortrait and prgBarPBarsTop()"
  		area		%XP2% %Y1% %WM4% 20
  		text		lua "getFirstLevelLabel()"
  		text style  'normal'
@@ -16,7 +16,16 @@
  	}
 	label
  	{
-		enabled		"hidePortrait"
+ 		enabled		"hidePortrait and prgBarPBarsBottom()"
+ 		area		%XP2% %Y1B% %WM4% 20
+ 		text		lua "getFirstLevelLabel()"
+ 		text style  'normal'
+ 		text align	center top
+ 		text shadow 1
+ 	}
+	label
+ 	{
+		enabled		"hidePortrait and prgBarPBarsTop()"
  		area		%XP2% %YP22% %WM4% 20
  		progressbar lua "getPercent(getFirstLevelXPDeltas(true))" --progress percentage, number 0-100
  		greyscale	0 --display greyscale or not, number 0-1
@@ -25,8 +34,26 @@
  	}
 	label
  	{
- 		enabled		"hidePortrait"
+		enabled		"hidePortrait and prgBarPBarsBottom()"
+ 		area		%XP2% %YP22B% %WM4% 20
+ 		progressbar lua "getPercent(getFirstLevelXPDeltas(true))" --progress percentage, number 0-100
+ 		greyscale	0 --display greyscale or not, number 0-1
+		progressbar color lua "prgBarColor()"
+		progressbar full lua "prgBarFull()"
+ 	}
+	label
+ 	{
+ 		enabled		"hidePortrait and prgBarPBarsTop()"
  		area		%XP2% %YP22% %WM4% 20
+ 		text		lua "getAdjustedFirstLevelString()"
+ 		text style  'normal'
+ 		text align	center center
+ 		text shadow 1
+	}
+	label
+ 	{
+ 		enabled		"hidePortrait and prgBarPBarsBottom()"
+ 		area		%XP2% %YP22B% %WM4% 20
  		text		lua "getAdjustedFirstLevelString()"
  		text style  'normal'
  		text align	center center
@@ -34,8 +61,21 @@
 	}
 	button
 	{
- 		enabled		"hidePortrait"
+ 		enabled		"hidePortrait and prgBarPBarsTop()"
  		area		%X1% %Y1% %W1% 45
+		action		
+		"
+			if(firstCanLevelUp()) then 
+				characterScreen:OnLevelUpButtonClick() 
+			else 
+				currentTab = 1; updateAttrTable(); 
+			end
+		"
+ 	}
+	button
+	{
+ 		enabled		"hidePortrait and prgBarPBarsBottom()"
+ 		area		%X1% %Y1B% %W1% 45
 		action		
 		"
 			if(firstCanLevelUp()) then 
@@ -48,7 +88,7 @@
 	
 	label
  	{
- 		enabled		"hidePortrait and (characters[currentID].classlevel.second ~= nil)"
+ 		enabled		"hidePortrait and prgBarPBarsTop() and (characters[currentID].classlevel.second ~= nil)"
  		area		%XP2% %YP44% %WM4% 20
  		text		lua "getSecondLevelLabel()"
  		text style  'normal'
@@ -57,7 +97,16 @@
 	}
 	label
  	{
- 		enabled     "hidePortrait and (characters[currentID].classlevel.second ~= nil)"
+ 		enabled		"hidePortrait and prgBarPBarsBottom() and (characters[currentID].classlevel.second ~= nil)"
+ 		area		%XP2% %YP44B% %WM4% 20
+ 		text		lua "getSecondLevelLabel()"
+ 		text style  'normal'
+ 		text align	center top
+ 		text shadow 1
+	}
+	label
+ 	{
+ 		enabled     "hidePortrait and prgBarPBarsTop() and (characters[currentID].classlevel.second ~= nil)"
  		area		%XP2% %YP66% %WM4% 20
  		progressbar lua "getPercent(getSecondLevelXPDeltas())"
 		greyscale	lua "prgBarGreyScale()"
@@ -66,16 +115,47 @@
  	}
 	label
  	{
- 		enabled		"hidePortrait and (characters[currentID].classlevel.second ~= nil)"
+ 		enabled     "hidePortrait and prgBarPBarsBottom() and (characters[currentID].classlevel.second ~= nil)"
+ 		area		%XP2% %YP66B% %WM4% 20
+ 		progressbar lua "getPercent(getSecondLevelXPDeltas())"
+		greyscale	lua "prgBarGreyScale()"
+		progressbar color lua "prgBarColor()"
+		progressbar full lua "prgBarFull()"
+ 	}
+	label
+ 	{
+ 		enabled		"hidePortrait and prgBarPBarsTop() and (characters[currentID].classlevel.second ~= nil)"
  		area		%XP2% %YP66% %WM4% 20
  		text		lua "getAdjustedSecondLevelString()"
  		text style  'normal'
  		text align	center center
  		text shadow 1
 	}
+	label
+ 	{
+ 		enabled		"hidePortrait and prgBarPBarsBottom() and (characters[currentID].classlevel.second ~= nil)"
+ 		area		%XP2% %YP66B% %WM4% 20
+ 		text		lua "getAdjustedSecondLevelString()"
+ 		text style  'normal'
+ 		text align	center center
+ 		text shadow 1
+	}
 	button {
- 		enabled		"hidePortrait and (characters[currentID].classlevel.second ~= nil)"
+ 		enabled		"hidePortrait and prgBarPBarsTop() and (characters[currentID].classlevel.second ~= nil)"
  		area		%X1% %YP44% %W1% 45
+		action		
+		"
+			if(secondCanLevelUp()) then
+				characterScreen:OnLevelUpButtonClick()
+			else
+				currentTab = 1;
+				updateAttrTable();
+			end
+		"
+ 	}
+	button {
+ 		enabled		"hidePortrait and prgBarPBarsBottom() and (characters[currentID].classlevel.second ~= nil)"
+ 		area		%X1% %YP44B% %W1% 45
 		action		
 		"
 			if(secondCanLevelUp()) then
@@ -89,8 +169,17 @@
 	
 	label
  	{
- 		enabled		"hidePortrait and (characters[currentID].classlevel.third ~= nil)"
+ 		enabled		"hidePortrait and prgBarPBarsTop() and (characters[currentID].classlevel.third ~= nil)"
  		area		%XP2% %YP88% %WM4% 20
+ 		text		lua "getThirdLevelLabel()"
+ 		text style  'normal'
+ 		text align	center top
+ 		text shadow 1
+ 	}
+	label
+ 	{
+ 		enabled		"hidePortrait and prgBarPBarsBottom() and (characters[currentID].classlevel.third ~= nil)"
+ 		area		%XP2% %YP88B% %WM4% 20
  		text		lua "getThirdLevelLabel()"
  		text style  'normal'
  		text align	center top
@@ -98,8 +187,17 @@
  	}
  	label
  	{
- 		enabled     "hidePortrait and (characters[currentID].classlevel.third ~= nil)"
+ 		enabled     "hidePortrait and prgBarPBarsTop() and (characters[currentID].classlevel.third ~= nil)"
  		area		%XP2% %YP110% %WM4% 20
+ 		progressbar lua "getPercent(getThirdLevelXPDeltas())" --progress percentage, number 0-100
+ 		greyscale	0 --display greyscale or not, number 0-1
+		progressbar color lua "prgBarColor()"
+		progressbar full lua "prgBarFull()"
+ 	}
+ 	label
+ 	{
+ 		enabled     "hidePortrait and prgBarPBarsBottom() and (characters[currentID].classlevel.third ~= nil)"
+ 		area		%XP2% %YP110B% %WM4% 20
  		progressbar lua "getPercent(getThirdLevelXPDeltas())" --progress percentage, number 0-100
  		greyscale	0 --display greyscale or not, number 0-1
 		progressbar color lua "prgBarColor()"
@@ -107,8 +205,17 @@
  	}
 	label
  	{
- 		enabled		"hidePortrait and (characters[currentID].classlevel.third ~= nil)"
+ 		enabled		"hidePortrait and prgBarPBarsTop() and (characters[currentID].classlevel.third ~= nil)"
  		area		%XP2% %YP110% %WM4% 20
+ 		text		lua "getAdjustedThirdLevelString()"
+ 		text style  'normal'
+ 		text align	center center
+ 		text shadow 1
+	}
+	label
+ 	{
+ 		enabled		"hidePortrait and prgBarPBarsBottom() and (characters[currentID].classlevel.third ~= nil)"
+ 		area		%XP2% %YP110B% %WM4% 20
  		text		lua "getAdjustedThirdLevelString()"
  		text style  'normal'
  		text align	center center
@@ -116,8 +223,22 @@
 	}
 	button
 	{
- 		enabled		"hidePortrait and (characters[currentID].classlevel.third ~= nil)"
+ 		enabled		"hidePortrait and prgBarPBarsTop() and (characters[currentID].classlevel.third ~= nil)"
  		area		%X1% %YP88% %W1% 45
+		action
+		"
+			if(thirdCanLevelUp()) then
+				characterScreen:OnLevelUpButtonClick()
+			else
+				currentTab = 1;
+				updateAttrTable();
+			end
+		"
+ 	}
+	button
+	{
+ 		enabled		"hidePortrait and prgBarPBarsBottom() and (characters[currentID].classlevel.third ~= nil)"
+ 		area		%X1% %YP88B% %W1% 45
 		action
 		"
 			if(thirdCanLevelUp()) then
@@ -131,21 +252,43 @@
 	
 	button
 	{
-		enabled		"hidePortrait and prgBarCombatEnabled()"
+		enabled		"hidePortrait and prgBarPBarsTop() and prgBarCombatEnabled()"
 		area		%XM1% %YP% 64 100
 		bitmap		lua "characters[currentID].portrait"
 	}
 	button
 	{
-		enabled		"hidePortrait and prgBarCombatDisabled()"
+		enabled		"hidePortrait and prgBarPBarsTop() and prgBarCombatDisabled()"
 		area		%XLP% %YLP% %WLP% %HLP%
+		bitmap		lua "characters[currentID].portrait"
+		action		"hidePortrait = false"
+	}
+	button
+	{
+		enabled		"hidePortrait and prgBarPBarsBottom() and prgBarCombatEnabled()"
+		area		%XM1% %YPB% 64 100
+		bitmap		lua "characters[currentID].portrait"
+	}
+	button
+	{
+		enabled		"hidePortrait and prgBarPBarsBottom() and prgBarCombatDisabled()"
+		area		%XLP% %YLPB% %WLP% %HLP%
 		bitmap		lua "characters[currentID].portrait"
 		action		"hidePortrait = false"
 	}
 	label
 	{
-		enabled		"hidePortrait and prgBarCombatEnabled()"
+		enabled		"hidePortrait and prgBarPBarsTop() and prgBarCombatEnabled()"
 		area		%XT% %YT% %WT% 100
+ 		text		lua "getCombatString()"
+ 		text style  'normal'
+ 		text align	left center
+ 		text shadow 1
+	}
+	label
+	{
+		enabled		"hidePortrait and prgBarPBarsBottom() and prgBarCombatEnabled()"
+		area		%XT% %YTB% %WT% 100
  		text		lua "getCombatString()"
  		text style  'normal'
  		text align	left center
@@ -153,8 +296,14 @@
 	}
 	button
 	{
-		enabled		"hidePortrait and prgBarCombatEnabled()"
+		enabled		"hidePortrait and prgBarPBarsTop() and prgBarCombatEnabled()"
 		area		%XM1% %Y9% %W9% 105
+		action		"currentTab = 9; updateAttrTable()"
+	}
+	button
+	{
+		enabled		"hidePortrait and prgBarPBarsBottom() and prgBarCombatEnabled()"
+		area		%XM1% %Y9B% %W9% 105
 		action		"currentTab = 9; updateAttrTable()"
 	}
 	

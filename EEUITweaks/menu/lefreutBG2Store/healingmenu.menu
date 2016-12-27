@@ -4,7 +4,10 @@ menu
 	align center center
 	offset 0 -48
 	ignoreEsc
-	onOpen "storeScreen:UpdateBuySpellPanel()"
+	onOpen
+	"
+		storeScreen:UpdateBuySpellPanel()
+	"
 
 	label
 	{
@@ -45,8 +48,8 @@ menu
 	}
 	list
 	{
-		column 
-		{ 
+		column
+		{
 			width 100
 			label
 			{
@@ -79,7 +82,7 @@ menu
 			}
 			label
 			{
-				enabled "store.healingSpells[rowNumber].valid == 0"
+				enabled "store.healingSpells[rowNumber].valid == 0 or store.healingSpells[rowNumber].value > game:GetPartyGold()"
 				area 0 2 312 58
 				rectangle 1
 				rectangle opacity 150
@@ -93,33 +96,42 @@ menu
 		scrollbar 'GUISCRC'
 		action
 		"
-			local highlight = true
-			if(store.healingSpells[healingSpellsVar].highlight == 1) then highlight = false end
-			if(highlight == true and store.healingSpells[healingSpellsVar].valid == 0) then return end
-			storeScreen:SelectSpellItem( healingSpellsVar - 1,  highlight)
+			local spell = store.healingSpells[healingSpellsVar]
+			if spell.highlight == 1 then
+				storeScreen:SelectSpellItem(healingSpellsVar - 1,  false)
+				store.spellText = ''
+			elseif spell.valid == 1 and spell.value <= game:GetPartyGold() then
+				storeScreen:SelectSpellItem(healingSpellsVar - 1,  true)
+				if store.spell[healingSpellsVar].valid == 0 then
+					storeScreen:SelectSpellItem(healingSpellsVar - 1,  false)
+					store.spellText = ''
+				end
+			end
 		"
 		actionAlt
 		"
 			local spell = store.healingSpells[healingSpellsVar]
-			popupDetails(16189, spell.name, spell.description,spell.icon)
+			popupDetails(16189, spell.name, spell.description, spell.icon)
 		"
 	}
 	button
 	{
-		area 120 554 200 44
+		area 119 554 201 44
 		bam GUIOSTUM
 		text "BUY_BUTTON"
 		text style "button"
+		clickable lua "storeScreen:GetSpellCost() > 0"
 		action
 		"
 			storeScreen:OnBuySpellButtonClick()
+			store.spellText = ''
 		"
 	}
 	text
 	{
-		area 473 182 320 364
+		area 480 182 313 364
 		text lua "store.spellText"
 		text style "normal_parchment"
-		scrollbar 'GUISCRC'
+		scrollbar 'GUISBR'
 	}
 }

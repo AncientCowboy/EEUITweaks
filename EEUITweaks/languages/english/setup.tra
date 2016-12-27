@@ -46,6 +46,11 @@
 @30   = ~Copying language specific files for:~
 @31   = ~Installing for EET BG2 GUI configuration~
 @32   = ~Installing for EET SoD GUI configuration~
+@33   = ~Error in EEUITweaks.tp2 - Invalid configuration for this patch~
+@34   = ~Installing for LeUI BG2EE configuration~
+@35   = ~Installing for LeUI BG1EE/SoD configuration~
+@36   = ~Installing for LeUI BG1EE configuration~
+@37   = ~Installing for LeUI EET configuration~
 
 ///////////////////////////////////////////////////////////////////////////////
 // Specific Menu patching/error messages
@@ -142,6 +147,9 @@
 @188  = ~Patching INVENTORY menu~
 @189  = ~Unable to get INVENTORY menu~
 @190  = ~Unable to patch INVENTORY menu~
+@191  = ~Patching ITEM_DESCRIPTION menu~
+@192  = ~Unable to get ITEM_DESCRIPTION menu~
+@193  = ~Unable to patch ITEM_DESCRIPTION menu~
 
 ///////////////////////////////////////////////////////////////////////////////
 // Subcomponent groups
@@ -236,6 +244,10 @@ Please enter return or a number between 1 and 4 [1]~
 
 @205000 = ~Simple Centered Dialog~
 @205003 = ~Incompatible with previously installed lefreut's 1.3-ish Dialog Box~
+@205004 = ~Unable to get WORLD_DIALOG menu~
+@205005 = ~Unable to patch WORLD_DIALOG menu~
+@205006 = ~Unable to update WORLD_DIALOG menu~
+@205007 = ~Patching WORLD_DIALOG menu~
 // Shared between Simple and lefreut's
 @205001 = ~Replacing WORLD_DIALOG menu~
 @205002 = ~Unable to replace WORLD_DIALOG menu~
@@ -252,6 +264,8 @@ Please enter return or a number between 1 and 4 [1]~
 @206009 = ~Incompatible with previously installed Simple Centered Dialog~
 @206010 = ~Replacing WORLD_MESSAGEBOXHISTORY menu~
 @206011 = ~Unable to replace WORLD_MESSAGEBOXHISTORY menu~
+@206012 = ~Uninstalling incompatible version of Simple Centered Dialog~
+@206013 = ~Installing it again will make it compatible~
 
 @207000 = ~Dee's Permanent Thieving Button~
 
@@ -301,6 +315,7 @@ Please enter return or a number between 1 and 4 [1]~
 @304002	= ~Patching ITEM_DESCRIPTION Lua block~
 @304003	= ~Unable to get ITEM_DESCRIPTION Lua block~
 @304004	= ~Unable to patch ITEM_DESCRIPTION Lua block~
+@304005	= ~Incompatible with previously installed lefreut's BG2 Store Screen Tweaks~
 @304100	= ~Pay  10gp to identify items~
 @304200	= ~Pay  25gp to identify items~
 @304300	= ~Pay  50gp to identify items~
@@ -331,14 +346,20 @@ Please enter return or a number between 1 and 4 [1]~
 
 @400500 = ~lefreut's BG2 Store Screen Tweaks~
 @400501 = ~Incompatible with previously installed Joined Store Panels Using lefreut's Solution~
-@400502 = ~Will break previously installed lefreut's Steal Multiple Items. Install this mod first~
+@400502 = ~Uninstalling previously intalled but redundant lefreut's Steal Multiple Items~
 @400503 = ~Incompatible with previously installed Adul's Improved Store Useability~
+@400504 = ~Replacing ITEM_DESCRIPTION Lua block~
+@400505	= ~Unable to get ITEM_DESCRIPTION Lua block~
+@400506	= ~Unable to patch ITEM_DESCRIPTION Lua block~
+@400507	= ~Incompatible with previously installed Mr2150's Auto-Identify Items~
 
 @401000	= ~lefreut's Steal Multiple Items~
+@401004 = ~Redundant with previously installed lefreut's BG2 Store Screen Tweaks~
 // Following shared with Adul's Improved Store Usability
 @401001	= ~Patching STORE_BUYSELL Lua block~
 @401002	= ~Unable to get STORE_BUYSELL Lua block~
 @401003	= ~Unable to patch STORE_BUYSELL Lua block~
+
 
 @402000 = ~Adul's Improved Store Usability~
 @402001 = ~Incompatible with previously installed lefreut's BG2 Store Screen Tweaks~

@@ -96,7 +96,7 @@ menu
 			}
 		}
 
-		area 520 116 305 322		
+		area 520 116 305 342		
 		rowheight	46
 		table		"progBarOptionsToggles"
 		var			currentProgBarIdx
@@ -201,7 +201,6 @@ menu
 			currentProgBarRadio = 0
 		"
 	}
-
 	button
 	{
 		area			245 224 10 36
@@ -246,7 +245,6 @@ menu
 			currentProgBarRadio = 0
 		"
 	}
-
 	button
 	{
 		area			29 264 10 36
@@ -291,7 +289,6 @@ menu
 			currentProgBarRadio = 0
 		"
 	}
-
 	button
 	{
 		area			245 264 10 36
@@ -366,7 +363,6 @@ menu
 			currentProgBarRadio = 0
 		"
 	}
-
 	button
 	{
 		area			245 348 10 36
@@ -411,7 +407,6 @@ menu
 			currentProgBarRadio = 0
 		"
 	}
-
 	button
 	{
 		area			29 388 10 36
@@ -456,7 +451,6 @@ menu
 			currentProgBarRadio = 0
 		"
 	}
-
 	button
 	{
 		area			245 388 10 36

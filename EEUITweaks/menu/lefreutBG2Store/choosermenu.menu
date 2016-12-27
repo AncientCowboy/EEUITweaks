@@ -12,7 +12,7 @@ menu
 		local buttonId = storeScreen:GetPanelButtonId(storeCurMenuId)
 		storePanelButtonHighlightGroup = Infinity_FindUIItemByName('BUTTON_storechooser_' .. buttonId)
 	"
-	onClose 
+	onClose
 	"
 		local menuName = storeScreen:GetMenuName(storeCurMenuId)
 		Infinity_PopMenu(menuName)
@@ -26,8 +26,8 @@ menu
 	}
 	label
 	{
-		area 62 22 80 70
-		bam lua "store.icon"
+		area 66 22 63 66
+		mosaic lua "store.icon"
 	}
 	button
 	{

@@ -4,7 +4,7 @@ menu
 	align center center
 	offset 0 -48
 	ignoreEsc
-	onOpen 
+	onOpen
 	"
 		storeScreen:UpdateDonatePanel()
 		store.donateText = ''
@@ -30,7 +30,7 @@ menu
 	label
 	{
 		area 73 151 311 267
-		bam "DONATE"
+		bam DONATE
 		frame lua "getDonationFrame()"
 	}
 	label
@@ -42,10 +42,10 @@ menu
 	edit
 	{
 		name		"storeDonateAmountEditArea"
-		area		119 477 122 48
+		area		119 477 102 48
 		var			storeDonateAmountEdit
 		text style	"edit"
-		text align left center
+		text align right center
 		maxlines	1
 		action
 		"
@@ -60,35 +60,40 @@ menu
 	button
 	{
 		bam GUIOSW
-		area 244 481 44 44
+		area 288 482 45 42
 		sequence 0
+		clickable lua "(tonumber(storeDonateAmountEdit) or 0) < game:GetPartyGold()"
 		action
 		"
-			changeDonationAmount(1)
+			local amt = tonumber(storeDonateAmountEdit) or 0
+			storeDonateAmountEdit = amt + 1
 		"
 		actionHold
 		"
-			changeDonationAmount(1)
+			local amt = tonumber(storeDonateAmountEdit) or 0
+			storeDonateAmountEdit = amt + 1
 		"
 	}
 	button
 	{
 		bam GUIOSW
-		area 288 481 44 44
+		area 244 482 45 42
 		sequence 1
-		clickable lua "tonumber(storeDonateAmountEdit) > 0"
+		clickable lua "(tonumber(storeDonateAmountEdit) or 0) > 0"
 		action
 		"
-				changeDonationAmount(-1)
+			local amt = tonumber(storeDonateAmountEdit) or 0
+			storeDonateAmountEdit = amt - 1
 		"
 		actionHold
 		"
-				changeDonationAmount(-1)
+			local amt = tonumber(storeDonateAmountEdit) or 0
+			storeDonateAmountEdit = amt - 1
 		"
 	}
 	button
 	{
-		area 119 537 204 44
+		area 119 537 201 44
 		bam GUIOSTUM
 		text "DONATE_BUTTON"
 		text style "button"
@@ -106,9 +111,9 @@ menu
 	}
 	text
 	{
-		area 473 182 320 364
+		area 480 182 313 364
 		text lua "store.donateText"
 		text style "normal_parchment"
-		scrollbar 'GUISCRC'
+		scrollbar 'GUISBR'
 	}
 }

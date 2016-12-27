@@ -13,7 +13,7 @@ END
 
 ACTION_MATCH 1
 WITH
-	%IsBG2% %IsEETBG2%
+	%IsBG2% %IsEETBG2% %IsLeUIBG2% %IsEETLeUI%
 	BEGIN
 		// Copy files
 		PRINT @17
@@ -44,7 +44,7 @@ WITH
 		END
 	END
 
-	%IsBG2onSoD%
+	%IsBG2onSoD% %IsLeUISOD% %IsLeUIBG1%
 	BEGIN
 		// Copy files
 		PRINT @17

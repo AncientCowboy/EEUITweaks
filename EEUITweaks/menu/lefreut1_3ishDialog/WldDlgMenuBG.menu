@@ -8,9 +8,8 @@ menu
 	"
 		Infinity_PushMenu('WORLD_DIALOG_CONFIRM')
 		greySidebars()
-		savedText = ''
-		initialTop = nil
-		previousTop = 0
+		previousTop = nil
+		scrolled = false
 	"
 	onClose
 	"
@@ -34,38 +33,24 @@ menu
 		column
 		{
 			width 100
-			text
+			label
 			{
-				area 0 0 -1 -1
-				text lua "computeDialogText()"
-				text style "normal"
-			}
-		}
-		name "dummyMessageBox"
-		area 88 20 740 170
-		enabled "0"
-		rowheight dynamic
-		hideHighlight
-		table "{0}"
-		scrollbar	'GUISCRC'
-	}
-	list
-	{
-		column
-		{
-			width 100
-			text
-			{
-				area 0 0 -1 -1
-				enabled "rowNumber == 1 and computeDialogText() ~= '' and savedText ~= ''"
-				text lua "computeDialogText()"
-				text style "normal"
+				area 0 0 -1 0
+				enabled "rowNumber == 1 and not scrolled"
 			}
 			text
 			{
 				area 0 0 -1 -1
-				enabled "rowNumber == 2 and savedText ~= ''"
 				pad 0 0 0 12
+				enabled "rowNumber == 2 and scrolled"
+				text lua "worldMessageBoxText"
+				text style "normal"
+			}
+			text
+			{
+				area 0 0 -1 -1
+				pad 0 0 0 12
+				enabled "rowNumber == 2 and not scrolled"
 				text lua "worldNPCDialogText:gsub('\n', ': ', 1)"
 				text style "normal"
 			}
@@ -73,7 +58,7 @@ menu
 			{
 				area 0 0 -1 -1
 				pad 12 0 0 0
-				enabled "rowNumber > 2 and dialogEntryGreyed() and savedText ~= ''"
+				enabled "rowNumber > 2 and dialogEntryGreyed()"
 				rectangle 1
 				rectangle opacity 100
 			}
@@ -81,7 +66,7 @@ menu
 			{
 				area 0 0 -1 -1
 				pad 12 0 0 0
-				enabled "rowNumber > 2 and savedText ~= ''"
+				enabled "rowNumber > 2"
 				text lua "getDialogEntryText(rowNumber)"
 				text style "normal"
 			}
@@ -92,9 +77,8 @@ menu
 		hideHighlight
 		table "mergeDialog(worldPlayerDialogChoices)"
 		var "worldPlayerDialogSelection"
-		scrollbar	'GUISCRC'
+		scrollbar 'GUISCRC'
 		scrollbar func "dialogScroll"
-		scrollbar hide lua 'initialTop ~= nil'
 		actionEnter
 		"
 			worldPlayerDialogSelection = mouseoverRow

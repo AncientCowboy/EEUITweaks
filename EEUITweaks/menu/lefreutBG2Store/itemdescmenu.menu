@@ -1,0 +1,82 @@
+menu
+{
+	name 'ITEM_DESCRIPTION'
+	align center center
+	modal
+	label
+	{
+		area 0 0 864 710
+		mosaic GUIINVHI
+	}
+	label
+	{
+		area 81 11 700 44
+		text lua "itemDesc.item.name"
+		text style title
+	}
+	label
+	{
+		area 402 66 52 52
+		icon lua "itemDesc.item.icon"
+	}
+	text
+	{
+		area 356 185 430 340
+		text lua "itemDesc.item.description"
+		scrollbar 'GUISBR'
+		text style "parchment"
+	}
+	text
+	{
+		area 66 185 280 28
+		enabled "itemDesc.item.identified == 0"
+		text style "parchment"
+		text align center center
+		text lua "Infinity_FetchString(17108)"
+	}
+	label
+	{
+		area 66 185 280 340
+		bam lua "itemDesc.item.descPicture"
+		sequence 0
+		frame 0
+		align center center
+	}
+	button
+	{
+		bam			GUIOSTUL
+		area		57 638 234 44
+		enabled "itemDescLeftButtonEnabled()"
+		clickable lua "itemDesc.item.identified == 1 or Infinity_GetSpellIdentifyEnabled(itemDesc.id)"
+		text lua "itemDescLeftButtonText()"
+		text style "button"
+		action
+		"
+			itemDescLeftButtonAction()
+		"
+	}
+	button
+	{
+		bam			GUIOSTUM
+		area		327 638 201 44
+		text  "DONE_BUTTON"
+		text style "button"
+		action
+		"
+			Infinity_PopMenu()
+		"
+	}
+	button
+	{
+		bam			GUIOSTUR
+		area		572 638 234 44
+		enabled "itemDescRightButtonEnabled()"
+		clickable lua "itemDesc.item.identified == 1 or Infinity_GetScrollIdentifyEnabled(itemDesc.id)"
+		text lua "itemDescRightButtonText()"
+		text style "button"
+		action
+		"
+			itemDescRightButtonAction()
+		"
+	}
+}

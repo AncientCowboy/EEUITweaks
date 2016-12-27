@@ -1,10 +1,19 @@
+`
+selectedDrinks = 0
+function getDrinkSlotHighlight()
+    if rowNumber == selectedDrinks then
+        return 2
+    end
+    return 0
+end
+`
 menu
 {
 	name 'STORE_DRINKS'
 	align center center
 	offset 0 -48
 	ignoreEsc
-	onOpen 
+	onOpen
 	"
 		storeScreen:UpdateBuyDrinksPanel()
 		store.drinkText = ''
@@ -43,15 +52,15 @@ menu
 	label
 	{
 		area 260 526 108 23
-		enabled "storeDrinksVar ~= nil and store.drinks[storeDrinksVar] ~= nil"
-		text lua "store.drinks[storeDrinksVar].value"
+		enabled "store.drinks[selectedDrinks] ~= nil"
+		text lua "store.drinks[selectedDrinks].value"
 		text style "normal"
 		align right center
 	}
 	list
 	{
-		column 
-		{ 
+		column
+		{
 			width 100
 			label
 			{
@@ -61,7 +70,20 @@ menu
 			}
 			label
 			{
-				area 8 0 200 62
+				area 3 0 52 62
+				bam STONSLOT
+				frame lua "getDrinkSlotHighlight()"
+				align center center
+			}
+			label
+			{
+				area 3 5 52 52
+				mosaic lua "'TVRNDRK' .. (rowNumber % 3)"
+				align center center
+			}
+			label
+			{
+				area 68 0 200 62
 				text lua "store.drinks[rowNumber].name"
 				text style "normal"
 				text align left center
@@ -75,34 +97,47 @@ menu
 			}
 			label
 			{
-				enabled "store.drinks[rowNumber].valid == 0"
+				enabled "store.drinks[rowNumber].valid == 0 or store.drinks[rowNumber].value > game:GetPartyGold()"
 				area 0 2 312 58
 				rectangle 1
 				rectangle opacity 150
 			}
 		}
 		area 54 138 350 384
+		hidehighlight
 		rowheight	62
 		table		"store.drinks"
 		var			"storeDrinksVar"
 		scrollbar 'GUISCRC'
+		action
+		"
+			local drink = store.drinks[storeDrinksVar]
+			if selectedDrinks == storeDrinksVar then
+				selectedDrinks = 0
+			elseif drink.valid == 1 and drink.value <= game:GetPartyGold() then
+				selectedDrinks = storeDrinksVar
+			end
+		"
 	}
 	button
 	{
-		area 118 554 204 48
+		area 119 554 201 44
 		bam GUIOSTUM
 		text "DRINK_LABEL"
 		text style "button"
-		clickable lua "storeDrinksVar ~= nil and storeDrinksVar ~= 0"
+		clickable lua "selectedDrinks ~= 0 and store.drinks[selectedDrinks].value <= game:GetPartyGold()"
 		action
 		"
-			storeScreen:OnBuyDrinkButtonClick(storeDrinksVar - 1)
+			storeScreen:OnBuyDrinkButtonClick(selectedDrinks - 1)
+			if store.drinks[selectedDrinks].value > game:GetPartyGold() then
+				selectedDrinks = 0
+			end
 		"
 	}
 	label
 	{
 		area 484 184 132 90
-		bam lua "store.qualityIcon"
+		mosaic lua "store.qualityIcon"
 	}
 	label
 	{
@@ -115,6 +150,6 @@ menu
 		area 484 274 315 273
 		text lua "store.drinkText"
 		text style "normal_parchment"
-		scrollbar 'GUISCRC'
+		scrollbar 'GUISBR'
 	}
 }

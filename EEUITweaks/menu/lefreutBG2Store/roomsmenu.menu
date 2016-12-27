@@ -4,10 +4,11 @@ menu
 	align center center
 	offset 0 -48
 	ignoreEsc
-	onOpen 
+	onOpen
 	"
 		storeScreen:SetRoomType(0)
 		storeScreen:UpdateRentRoomPanel()
+		store.roomText = ''
 	"
 
 	label
@@ -33,11 +34,11 @@ menu
 		text lua "game:GetPartyGold()"
 		text style "gold"
 	}
-	
+
 	button
 	{
 		area 31 148 245 161
-		bam "INNROOMS"
+		bam INNROOMS
 		sequence 0
 		clickable lua "storeScreen:IsRoomTypeClickable(1)"
 		action
@@ -49,7 +50,7 @@ menu
 	button
 	{
 		name "BUTTON_room_peasant"
-		area 31 324 202 44
+		area 31 324 201 44
 		bam GUIOSTUM
 		text "PEASANT_BUTTON"
 		text style "button"
@@ -60,11 +61,11 @@ menu
 			storeScreen:SetRoomType(1)
 		"
 	}
-	
+
 	button
 	{
 		area 385 148 245 161
-		bam "INNROOMS"
+		bam INNROOMS
 		sequence 1
 		clickable lua "storeScreen:IsRoomTypeClickable(2)"
 		action
@@ -76,7 +77,7 @@ menu
 	button
 	{
 		name "BUTTON_room_merchant"
-		area 385 324 202 44
+		area 385 324 201 44
 		bam GUIOSTUM
 		text "MERCHANT_BUTTON"
 		text style "button"
@@ -87,11 +88,11 @@ menu
 			storeScreen:SetRoomType(2)
 		"
 	}
-	
+
 	button
 	{
 		area 31 387 245 161
-		bam "INNROOMS"
+		bam INNROOMS
 		sequence 2
 		clickable lua "storeScreen:IsRoomTypeClickable(3)"
 		frame 0
@@ -104,7 +105,7 @@ menu
 	button
 	{
 		name "BUTTON_room_noble"
-		area 31 560 202 44
+		area 31 560 201 44
 		bam GUIOSTUM
 		text "NOBLE_BUTTON"
 		text style "button"
@@ -115,11 +116,11 @@ menu
 			storeScreen:SetRoomType(3)
 		"
 	}
-	
+
 	button
 	{
 		area 385 387 245 161
-		bam "INNROOMS"
+		bam INNROOMS
 		sequence 3
 		clickable lua "storeScreen:IsRoomTypeClickable(4)"
 		action
@@ -131,7 +132,7 @@ menu
 	button
 	{
 		name "BUTTON_room_royal"
-		area 385 560 202 44
+		area 385 560 201 44
 		bam GUIOSTUM
 		text "ROYAL_BUTTON"
 		text style "button"
@@ -162,10 +163,11 @@ menu
 	}
 	button
 	{
-		area 643 521 204 48
+		area 643 521 201 44
 		bam GUIOSTUM
 		text "RENT_BUTTON"
 		text style "button"
+		clickable lua "storeScreen:GetRoomCost() > 0 and storeScreen:GetRoomCost() <= game:GetPartyGold()"
 		action
 		"
 			storeScreen:OnRentRoomButtonClick()

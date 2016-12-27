@@ -2,6 +2,14 @@
  * lefreut's BG2 Store Screen Tweaks Installation
  ******************************************************************************/
 
+// Uninstall lefreut's Steal Multiple Items if it has been installed
+ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~4010~ THEN
+BEGIN
+	PRINT @400502
+	SILENT
+	UNINSTALL ~EEUITweaks.tp2~ ~4010~
+END
+
 // Open UI.MENU
 PRINT @12
 SILENT
@@ -70,8 +78,9 @@ END
 PRINT @137
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~STORE_DRINKS~
+OUTER_SPRINT $UIMenuIF("Body") ~~
 OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutBG2Store/drinksmenu.menu~
-LAUNCH_ACTION_MACRO UIMenuReplaceMenu
+LAUNCH_ACTION_MACRO UIMenuReplaceMenuMixed
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
 	FAIL @139
@@ -85,8 +94,53 @@ OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutBG2Store/choosermenu.m
 LAUNCH_ACTION_MACRO UIMenuReplaceMenu
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
-	FAIL @132
+	FAIL @142
 END
+
+// Patch ITEM_DESCRIPTION
+PRINT @191
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~ITEM_DESCRIPTION~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutBG2Store/itemdescmenu.menu~
+LAUNCH_ACTION_MACRO UIMenuReplaceMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @193
+END
+
+// Replace STORE_BUYSELL Lua code block
+PRINT @401001
+SILENT
+
+OUTER_SPRINT $UIMenuIF("LuaRegex") ~store[%TAB% ]*=[%TAB% ]*{}~
+LAUNCH_ACTION_MACRO UIMenuGetMatchingLuaBlock
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @401002
+END
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/lefreutBG2Store/buysellcode.lua~
+LAUNCH_ACTION_MACRO UIMenuReplaceLuaBlock
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @401003
+END
+
+// Replace ITEM_DESCRIPTION Lua code block
+PRINT @400504
+SILENT
+OUTER_SPRINT $UIMenuIF("LuaRegex") ~function[%TAB% ]+showItemDescriptionInventory[%TAB% ]*([%TAB% ]*%NAMECHARS%+[%TAB% ]*)~
+LAUNCH_ACTION_MACRO UIMenuGetMatchingLuaBlock
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @400505
+END
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/lefreutBG2Store/itemdesccode.lua~
+LAUNCH_ACTION_MACRO UIMenuReplaceLuaBlock
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @400506
+END
+
 
 // Close UI.MENU
 PRINT @13

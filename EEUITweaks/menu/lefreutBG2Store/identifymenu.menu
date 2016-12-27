@@ -49,8 +49,8 @@ menu
 	}
 	list
 	{
-		column 
-		{ 
+		column
+		{
 			width 100
 			label
 			{
@@ -86,18 +86,17 @@ menu
 		scrollbar 'GUISCRC'
 		action
 		"
-			local highlight = true
-			if(store.identifyItems[identifyItemsVar].highlight == 1) then highlight = false end
-			storeScreen:SelectIdentifyItem(identifyItemsVar - 1,  highlight)
+			local highlight = store.identifyItems[identifyItemsVar].highlight ~= 1
+			storeScreen:SelectIdentifyItem(identifyItemsVar - 1, highlight)
 		"
 	}
 	button
 	{
-		area 118 554 204 44
+		area 119 554 201 44
 		bam GUIOSTUM
 		text "IDENTIFY_BUTTON"
 		text style "button"
-		clickable lua "storeScreen:IsIdentifyItemButtonClickable()"
+		clickable lua "storeScreen:IsIdentifyItemButtonClickable() and storeScreen:GetIdentifyCost() <= game:GetPartyGold()"
 		action
 		"
 			storeScreen:OnIdentifyItemButtonClick()
@@ -105,9 +104,9 @@ menu
 	}
 	text
 	{
-		area 473 182 320 364
+		area 480 182 313 364
 		text lua "store.identifyText"
 		text style "normal_parchment"
-		scrollbar 'GUISCRC'
+		scrollbar 'GUISBR'
 	}
 }

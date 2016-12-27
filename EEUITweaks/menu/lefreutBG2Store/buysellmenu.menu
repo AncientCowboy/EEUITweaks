@@ -64,8 +64,8 @@ menu
 
 	list
 	{
-		column 
-		{ 
+		column
+		{
 			width 100
 			label
 			{
@@ -80,8 +80,8 @@ menu
 				frame lua "getStoreSlotHighlight(store.storeItems[rowNumber].highlight)"
 				icon lua "store.storeItems[rowNumber].item.icon"
 				tint lua "store.storeItems[rowNumber].item.tint"
-				usages lua "store.storeItems[rowNumber].amountSelected" --how many selected
-				count lua "store.storeItems[rowNumber].item.stackSize" --How many to a stack
+				usages lua "getItemUsages()"
+				count lua "store.storeItems[rowNumber].amountSelected"
 				align center center
 			}
 			label
@@ -114,22 +114,30 @@ menu
 		scrollbar 'GUISCRC'
 		action
 		"
-			if store.storeItems[storeItemsVar].highlight == 1 then
-				storeScreen:SelectStoreItem(storeItemsVar - 1,  false)
-			elseif store.storeItems[storeItemsVar].valid == 1 then
-				storeScreen:SelectStoreItem(storeItemsVar - 1,  true)
+			if store.storeItems[storeItemsVar] then
+				local highlight = store.storeItems[storeItemsVar].highlight ~= 1
+				storeScreen:SelectStoreItem(storeItemsVar - 1, highlight)
+				if highlight and storeScreen:IsContainer() then
+					local maxCount = store.storeItems[storeItemsVar].maxCount
+					if maxCount > 1 then
+						storeScreen:SetStoreItemCount(storeItemsVar - 1, maxCount)
+					end
+				end
 			end
 		"
 		actionalt
 		"
-			showItemDescription(store.storeItems[storeItemsVar].item, 1)
+			if store.storeItems[storeItemsVar] then
+				showItemDescription(store.storeItems[storeItemsVar], 2)
+			end
 		"
 		actionDbl
 		"
-			if store.storeItems[storeItemsVar].valid == 1 then
-				local maxCount = store.storeItems[storeItemsVar].maxCount
-				if(maxCount > 1) then
-					popupRequester(maxCount, storeSplitStack, false)
+			local item = store.storeItems[storeItemsVar]
+			if item and item.valid ~= 0 then
+				local maxCount = item.maxCount
+				if maxCount > 1 then
+					popupRequester(maxCount, storeSplitStack, storeScreen:IsContainer())
 				end
 			end
 		"
@@ -137,8 +145,8 @@ menu
 
 	list
 	{
-		column 
-		{ 
+		column
+		{
 			width 100
 			label
 			{
@@ -153,8 +161,8 @@ menu
 				frame lua "getStoreSlotHighlight(store.groupItems[rowNumber].highlight)"
 				tint lua "store.groupItems[rowNumber].item.tint"
 				icon lua "store.groupItems[rowNumber].item.icon"
-				count lua "store.groupItems[rowNumber].count"
 				usages lua "store.groupItems[rowNumber].item.usages"
+				count lua "store.groupItems[rowNumber].count"
 				align center center
 			}
 			label
@@ -181,7 +189,6 @@ menu
 			}
 		}
 		area 462 138 392 376
-		enabled "not storeScreen:IsCloseBagButtonClickable()"
 		hidehighlight
 		rowheight	62
 		table		"store.groupItems"
@@ -189,116 +196,53 @@ menu
 		scrollbar 'GUISCRC'
 		action
 		"
-			if store.groupItems[storeGroupItemsVar].item.isBag == 1 then
-				showItemDescription(store.groupItems[storeGroupItemsVar].item, 1)
-				itemDescLeftButtonAction()
-			elseif store.groupItems[storeGroupItemsVar].highlight == 1 then
-				storeScreen:SelectGroupItem(storeGroupItemsVar - 1,  false)
-			elseif store.groupItems[storeGroupItemsVar].valid == 1 then
-				storeScreen:SelectGroupItem(storeGroupItemsVar - 1,  true)
+			if store.groupItems[storeGroupItemsVar] then
+				if store.groupItems[storeGroupItemsVar].item.isBag == 1 then
+					showItemDescription(store.groupItems[storeGroupItemsVar], 1)
+					itemDescRightButtonAction()
+				elseif store.groupItems[storeGroupItemsVar].valid ~= 0 then
+					local highlight = store.groupItems[storeGroupItemsVar].highlight ~= 1
+					storeScreen:SelectGroupItem(storeGroupItemsVar - 1, highlight)
+					if highlight then
+						local count = store.groupItems[storeGroupItemsVar].item.count
+						local stock = store.groupItems[storeGroupItemsVar].numInStock or 0
+						if count > 1 then
+							storeScreen:SetGroupItemCount(storeGroupItemsVar - 1, count)
+						elseif stock > 1 then
+							storeScreen:SetGroupItemCount(storeGroupItemsVar - 1, stock)
+						end
+					end
+				end
 			end
 		"
 		actionalt
 		"
-			showItemDescription(store.groupItems[storeGroupItemsVar].item, 1)
+			if store.groupItems[storeGroupItemsVar] then
+				showItemDescription(store.groupItems[storeGroupItemsVar], 1)
+			end
 		"
 		actionDbl
 		"
-			if store.groupItems[storeGroupItemsVar].valid ~= 0 then
-				local count = store.groupItems[storeGroupItemsVar].item.count
-				local stock = store.groupItems[storeGroupItemsVar].numInStock or 0
+			local item = store.groupItems[storeGroupItemsVar]
+			if item and item.valid ~= 0 then
+				local count = item.item.count
+				local stock = item.numInStock or 0
 				if count > 1 then
 					popupRequester(count, groupSplitStack, true)
 				elseif stock > 1 then
 					popupRequester(stock, groupSplitStack, true)
-				end	
-			end
-		"
-	}
-	list
-	{
-		column 
-		{ 
-			width 100
-			label
-			{
-				area 0 0 370 62
-				mosaic GUISTBK1
-				respectClipping
-			}
-			label
-			{
-				area 3 0 52 62
-				bam STONSLOT
-				frame lua "getStoreSlotHighlight(store.groupItems[rowNumber].highlight)"
-				tint lua "store.groupItems[rowNumber].item.tint"
-				icon lua "store.groupItems[rowNumber].item.icon"
-				count lua "store.groupItems[rowNumber].item.count"
-				usages lua "store.groupItems[rowNumber].count"
-				align center center
-			}
-			label
-			{
-				area 80 0 200 62
-				text lua "store.groupItems[rowNumber].label"
-				text style "normal"
-				text align left center
-			}
-			label
-			{
-				area 300 0 62 62
-				enabled "not storeScreen:IsContainer()"
-				text lua "store.groupItems[rowNumber].value"
-				text style "gold"
-			}
-			label
-			{
-				enabled "store.groupItems[rowNumber].valid == 0"
-				area 0 2 368 58
-				rectangle 1
-				rectangle opacity 150
-			}
-		}
-		area 462 138 392 376
-		enabled "storeScreen:IsCloseBagButtonClickable()"
-		hidehighlight
-		rowheight	62
-		table		"store.groupItems"
-		var			"storeGroupItemsVar"
-		scrollbar 'GUISCRC'
-		action
-		"
-			if store.groupItems[storeGroupItemsVar].highlight == 1 then
-				storeScreen:SelectGroupItem(storeGroupItemsVar - 1,  false)
-			elseif store.groupItems[storeGroupItemsVar].valid == 1 then
-				storeScreen:SelectGroupItem(storeGroupItemsVar - 1,  true)
-			end
-		"
-		actionalt
-		"
-			showItemDescription(store.groupItems[storeGroupItemsVar].item, 1)
-		"
-		actionDbl
-		"
-			if store.groupItems[storeGroupItemsVar].valid ~= 0 then
-				local count = store.groupItems[storeGroupItemsVar].item.count
-				local stock = store.groupItems[storeGroupItemsVar].numInStock or 0
-				if count > 1 then
-					popupRequester(count, groupSplitStack, true)
-				elseif stock > 1 then
-					popupRequester(stock, groupSplitStack, true)
-				end	
+				end
 			end
 		"
 	}
 
 	button
 	{
-		area 118 560 201 43
+		area 118 560 201 44
 		bam GUIOSTUM
 		text lua "checkContainerText('BUY_BUTTON', 'TO_BACKPACK_BUTTON')"
 		text style "button"
-		clickable lua "storeScreen:IsBuyItemButtonClickable()"
+		clickable lua "storeScreen:IsBuyItemButtonClickable() and storeScreen:GetStoreCost() <= game:GetPartyGold()"
 		action
 		"
 			storeScreen:OnBuyItemButtonClick()
@@ -306,7 +250,7 @@ menu
 	}
 	button
 	{
-		area 604 560 201 43
+		area 604 560 201 44
 		bam GUIOSTUM
 		text lua "checkContainerText('SELL_BUTTON','TO_CONTAINER_BUTTON')"
 		text style "button"
@@ -318,20 +262,47 @@ menu
 	}
 	button
 	{
-		area 360 560 201 43
+		area 360 560 201 44
 		enabled "(not storeScreen:IsContainer()) and storeScreen:IsStealEnabled()"
 		bam GUIOSTUM
 		text "STEAL_BUTTON"
 		text style "button"
-		clickable lua "storeScreen:IsStealItemButtonClickable()"
+		clickable lua "canSteal()"
 		action
 		"
-			storeScreen:OnStealItemButtonClick()
+			local toSteal = {}
+			for k, v in pairs(store.storeItems) do
+				if v.highlight == 1 then
+					table.insert(toSteal, v.item.name)
+					for i=2, v.amountSelected do table.insert(toSteal, v.item.name) end
+					storeScreen:SelectStoreItem(k - 1,  false)
+				end
+			end
+
+			for _, name in pairs(toSteal) do
+				local steal = 0
+				for k, v in pairs(store.storeItems) do
+					if v.highlight == 1 then
+						steal = 0
+						break
+					end
+					if v.item.name == name then
+						steal = k
+					end
+				end
+
+				if steal == 0 then
+					break
+				end
+
+				storeScreen:SelectStoreItem(steal - 1,  true)
+				storeScreen:OnStealItemButtonClick()
+			end
 		"
 	}
 	button
 	{
-		area 361 560 201 43
+		area 361 560 201 44
 		enabled "storeScreen:IsCloseBagButtonClickable()"
 		bam GUIOSTUM
 		text "CLOSE_CONTAINER_BUTTON"

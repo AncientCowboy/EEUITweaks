@@ -9,6 +9,7 @@ menu
 		area 11 14 64 90
 		sequence 0
 		action "Infinity_ActivateRecord(0)"
+		actionAlt "Infinity_OnPortraitRClick(0)"
 		pulse 1
 	}
 	button
@@ -17,6 +18,7 @@ menu
 		area 11 106 64 90
 		sequence 0
 		action "Infinity_ActivateRecord(1)"
+		actionAlt "Infinity_OnPortraitRClick(1)"
 		pulse 1
 	}
 	button
@@ -25,6 +27,7 @@ menu
 		area 11 198 64 90
 		sequence 0
 		action "Infinity_ActivateRecord(2)"
+		actionAlt "Infinity_OnPortraitRClick(2)"
 		pulse 1
 	}
 	button
@@ -33,6 +36,7 @@ menu
 		area 11 290 64 90
 		sequence 0
 		action "Infinity_ActivateRecord(3)"
+		actionAlt "Infinity_OnPortraitRClick(3)"
 		pulse 1
 	}
 	button
@@ -41,6 +45,7 @@ menu
 		area 11 382 64 90
 		sequence 0
 		action "Infinity_ActivateRecord(4)"
+		actionAlt "Infinity_OnPortraitRClick(4)"
 		pulse 1
 	}
 	button
@@ -49,6 +54,7 @@ menu
 		area 11 474 64 90
 		sequence 0
 		action "Infinity_ActivateRecord(5)"
+		actionAlt "Infinity_OnPortraitRClick(5)"
 		pulse 1
 	}
 }

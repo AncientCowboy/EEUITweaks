@@ -96,7 +96,7 @@ menu
 			}
 		}
 
-		area 520 116 305 322		
+		area 520 116 305 342		
 		rowheight	46
 		table		"progBarOptionsToggles"
 		var			currentProgBarIdx

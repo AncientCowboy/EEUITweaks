@@ -97,6 +97,10 @@ WITH
 	BEGIN
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/newbuttons4.menu~
 	END
+	%IsLeUIBG2% %IsLeUISOD% %IsLeUIBG1% %IsEETLeUI%
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/newbuttons5.menu~
+	END
 
 	DEFAULT
 		FAIL @15
@@ -116,7 +120,7 @@ WITH
 	BEGIN
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/FeedbackHack/onopeninsert3.lua~
 	END
-	%IsBG2% %IsEETBG2%
+	%IsBG2% %IsEETBG2% %IsLeUIBG2% %IsLeUISOD% %IsLeUIBG1% %IsEETLeUI%
 	BEGIN
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/FeedbackHack/onopeninsert2.lua~
 	END

@@ -47,7 +47,8 @@ LanguageMatch = {
 --[[ KitStringToXPMap table entries
 ['Initialized']  => true (once KitString initialization is complete)
 ['IniInited'] => true once INI file info has been initialized
-['Matchstring']  => appropriate language specific match string from LanguageMatch
+['Matchstring']  => appropriate language specific match string from LanguageMatch.
+Used to parse kit name and current level from characters[currentID].claslevel.first/second/third.details string
 [first kit name] => 
     {[1] MIXEDID,
      [2] => {[1]  Level 1 XP
@@ -77,6 +78,8 @@ LanguageMatch = {
 ['NoPortrait'] => true disables portrait click alternate display
 ['FirstPortrait'] => 0 as last, 1 portrait, 2 alternate display
 ['NoCombat'] => true disables combat stats on alternate display
+['BarsBottom'] => true makes small portrait (and combat stats) appear above the 
+                  progress bars on alternate display
 ]]
 	
 local KitStringToXPMap
@@ -84,6 +87,8 @@ KitStringToXPMap = {}
 
 local function initializeXPMapKits()
 	for k,v in pairs(MixIdtoClassIdMap) do
+--		tstr = Infinity_FetchString(k)
+--		Infinity_Log(tostring(k) .. " -> " .. tstr .. " -> " .. tostring(v) .. "\n")
 		KitStringToXPMap[Infinity_FetchString(k)] = {k,ClassIdToXPLevelMap[v]}
 	end
 	if(uiTranslationFile) then
@@ -180,6 +185,14 @@ function prgBarUpdateOptions()
 		KitStringToXPMap['FirstPortrait'] = 0	
 	end
 	
+	v1 = Infinity_GetINIValue('Progress Bar','Bars On Bottom')
+	if(v1 and v1 ~= 0) then	
+		KitStringToXPMap['BarsBottom'] = true
+		inioptionsset = 1
+	else
+		KitStringToXPMap['BarsBottom'] = false
+	end
+
 	if(inioptionsset == 0) then -- All options were zero including the tag that is written to 1 when Options Menu saves. Set default colors
 		v1 = 128
 		v2 = 0
@@ -197,6 +210,9 @@ function prgBarUpdateOptions()
 
 end
 
+--[[
+Called in CHARACTER:onopen
+]]
 function initPgBarMods()
 	if (not(KitStringToXPMap['Initialized'])) then
 		initializeXPMapKits()
@@ -235,10 +251,13 @@ local function getDualToActivate()
 	end
 	return need, have
 end
-
-local function getCurrentLevelXP(targetDetails)
+--[[
+Returns the XP base value for the kit and level described by string 'targetDetails'
+]]
+local function getCurrentLevelBaseXP(targetDetails)
 	local currentlevelxp = 0
 
+	-- Capture kit name, current level from targetDetails string
 	local targetKit,targetLevel = string.match(targetDetails, KitStringToXPMap['Matchstring'])
 	if	( -- Fail safe for kit strings that haven't yet been put into language files
 		targetKit and 
@@ -253,13 +272,22 @@ local function getCurrentLevelXP(targetDetails)
 	return currentlevelxp
 end
 
+--[[
+Returns current XP value and next (soonest) level up XP val, as deltas if Delta enabled.
+Used to fill 'overall' progressbar via 'getPercent'
+]]
 function getNextLevelXPDeltas()
--- If can't determine language or 'NoDelta' return non-delta values
+-- If can't determine language or 'NoDelta' option set, return non-delta values
 	if ((not KitStringToXPMap['Matchstring']) or KitStringToXPMap['NoDelta']) then
 		return characters[currentID].level.xp, characters[currentID].level.nextLvlXp
 	end
 
-	local candidates = {} -- Array of current level base XP for each class that will next level up
+--[[ 
+Array of current char/current level base XP for each class that is defined, allowed
+(e.g. not dual initial class) to level up, and whose next level up XP is the same as
+the char's 'nextLvlXp' value.
+]]
+	local candidates = {} 
 	
 	if	(
 		characters[currentID].classlevel.third and
@@ -267,7 +295,7 @@ function getNextLevelXPDeltas()
 		characters[currentID].classlevel.third.nextLvlXp == characters[currentID].level.nextLvlXp
 		)
 	then
-		candidates[#candidates+1] = getCurrentLevelXP(characters[currentID].classlevel.third.details)
+		candidates[#candidates+1] = getCurrentLevelBaseXP(characters[currentID].classlevel.third.details)
 	end
 	
 	if	(
@@ -276,16 +304,17 @@ function getNextLevelXPDeltas()
 		characters[currentID].classlevel.second.nextLvlXp == characters[currentID].level.nextLvlXp
 		)
 	then
-		candidates[#candidates+1] = getCurrentLevelXP(characters[currentID].classlevel.second.details)
+		candidates[#candidates+1] = getCurrentLevelBaseXP(characters[currentID].classlevel.second.details)
 	end
 	
 	if (characters[currentID].classlevel.first.nextLvlXp == characters[currentID].level.nextLvlXp) then
-		candidates[#candidates+1] = getCurrentLevelXP(characters[currentID].classlevel.first.details)
+		candidates[#candidates+1] = getCurrentLevelBaseXP(characters[currentID].classlevel.first.details)
 	end
 		
 	local currentlevelxp
 	if(#candidates > 0) then
 		currentlevelxp = candidates[1]
+-- If more than 1, keep the one with the most 'recent' (greatest) base.
 		for i = 2, #candidates do
 			currentlevelxp = math.max(currentlevelxp, candidates[i])
 		end
@@ -299,7 +328,7 @@ end
 function getFirstLevelXPDeltas()
 	local currentlevelxp = 0
 	if(not KitStringToXPMap['NoDelta']) then
-		currentlevelxp = getCurrentLevelXP(characters[currentID].classlevel.first.details)
+		currentlevelxp = getCurrentLevelBaseXP(characters[currentID].classlevel.first.details)
 	end
 	return characters[currentID].classlevel.first.xp - currentlevelxp, 
 	       characters[currentID].classlevel.first.nextLvlXp - currentlevelxp
@@ -316,7 +345,7 @@ function getSecondLevelXPDeltas()
 		need = characters[currentID].classlevel.second.nextLvlXp
 		have = characters[currentID].classlevel.second.xp
 		if(KitStringToXPMap['Matchstring'] and not(KitStringToXPMap['NoDelta'])) then
-			currentlevelxp = getCurrentLevelXP(characters[currentID].classlevel.second.details)
+			currentlevelxp = getCurrentLevelBaseXP(characters[currentID].classlevel.second.details)
 		end
 	else   --Dual-class
 		need, have = getDualToActivate()
@@ -341,7 +370,7 @@ function getThirdLevelXPDeltas()
 	
 	local currentlevelxp = 0
 	if(KitStringToXPMap['Matchstring'] and (not KitStringToXPMap['NoDelta'])) then
-		currentlevelxp = getCurrentLevelXP(characters[currentID].classlevel.third.details)
+		currentlevelxp = getCurrentLevelBaseXP(characters[currentID].classlevel.third.details)
 	end
 	return characters[currentID].classlevel.third.xp - currentlevelxp, 
 	       characters[currentID].classlevel.third.nextLvlXp - currentlevelxp
@@ -528,14 +557,27 @@ function prgBarCombatDisabled()
 	return (KitStringToXPMap['NoCombat'])
 end
 
+function prgBarPBarsTop()
+	return not(KitStringToXPMap['BarsBottom'])
+end
+
+function prgBarPBarsBottom()
+	return (KitStringToXPMap['BarsBottom'])
+end
+
+--[[
+Called in CHARACTER:onopen, passed current value of 'hidePortrait', 
+returns value to be assigned to 'hidePortrait'.
+Return value is based on 'FirstPortrait' option
+]]
 function prgBarInitialDisplay(hidePortrait)
 	if(KitStringToXPMap['NoPortrait']) then 
 		return false
-	elseif(KitStringToXPMap['FirstPortrait'] == 0) then
+	elseif(KitStringToXPMap['FirstPortrait'] == 0) then -- Prior
 		return hidePortrait
-	elseif(KitStringToXPMap['FirstPortrait'] == 1) then
+	elseif(KitStringToXPMap['FirstPortrait'] == 1) then -- Portrait
 		return false
-	else
+	else -- ['FirstPortrait'] == 2 Alternate
 		return true
 	end
 end
@@ -550,6 +592,7 @@ progBarOptionsToggles = {
 	{"PROGBAROPT_GREY_SCALE_DUAL_LABEL",	"PROGBAROPT_GREY_SCALE_DUAL_DESCR", 	0,	0,	"Progress Bar",	"Grey Scale Dual-Class"},
 	{"PROGBAROPT_DISABLE_PORTRAIT_LABEL",	"PROGBAROPT_DISABLE_PORTRAIT_DESCR", 	0,	0,	"Progress Bar",	"Disable Portrait Alternate"},
 	{"PROGBAROPT_DISABLE_COMBAT_LABEL",	    "PROGBAROPT_DISABLE_COMBAT_DESCR", 	    0,	0,	"Progress Bar",	"Disable Combat Stats"},
+	{"PROGBAROPT_BARS_BOTTOM_LABEL",	    "PROGBAROPT_BARS_BOTTOM_DESCR", 	    0,	0,	"Progress Bar",	"Bars On Bottom"},
 }
 
 -- slider value, INI section name, INI option key
