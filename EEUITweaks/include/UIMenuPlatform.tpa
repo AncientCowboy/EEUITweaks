@@ -15,6 +15,7 @@
  * IsLeUISOD - Lefreut's UI on BGEESoD
  * IsLeUIBG1 - Lefreut's UI on BGEE no SoD
  * IsEETLeUI - EET with Lefreut's UI
+ * IsKRDS - Kilivitz's Revised Dragon Scale UI on SoD
  ******************************************************************************/
 DEFINE_ACTION_MACRO EEUIGetMenuEnv
 BEGIN
@@ -29,6 +30,7 @@ BEGIN
 	OUTER_SET IsLeUISOD = 0
 	OUTER_SET IsLeUIBG1 = 0
 	OUTER_SET IsEETLeUI = 0
+	OUTER_SET IsKRDS = 0
 
 	ACTION_IF GAME_IS ~eet~ THEN
 	BEGIN
@@ -94,8 +96,15 @@ BEGIN
 						LOG ~IsBG2onSoD~
 					END ELSE
 					BEGIN
-						OUTER_SET IsSoD = 1
-						LOG ~IsSoD~
+						ACTION_IF FILE_EXISTS ~override/M_CKUI.LUA~ THEN
+						BEGIN
+							OUTER_SET IsKRDS = 1
+							LOG ~IsKRDS~
+						END ELSE
+						BEGIN
+							OUTER_SET IsSoD = 1
+							LOG ~IsSoD~
+						END
 					END
 				END
 			END

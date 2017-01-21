@@ -1,0 +1,30 @@
+	button
+	{
+		enabled "createCharScreen:GetCurrentStep() == 0 and rollFirst == 0"
+		area 36 575 340 46
+		text "ROLL FIRST"
+		text style "button"
+		bam GUIBUTWX
+		sequence 0
+		action "randomise()"
+	}
+	label
+	{
+		enabled "createCharScreen:GetCurrentStep() == 8"
+		area 397 152 345 466
+		rectangle 3
+	}
+	label
+	{
+		enabled "createCharScreen:GetCurrentStep() == 8"
+		area 397 152 345 466
+		rectangle 3
+	}
+	label
+	{
+		enabled "rollFirst == 1 or createCharScreen:GetCurrentStep() == 8"
+		area 434 440 288 159
+		text style "button"
+		text lua "'Total: ' .. totalAbilities .. '\nStrength: ' .. storedStats[1] .. '\nDexterity: ' .. storedStats[2] .. '\nConstitution: ' .. storedStats[3] .. '\nIntelligence: ' .. storedStats[4] .. '\nWisdom: ' .. storedStats[5] .. '\nCharisma: ' .. storedStats[6]"
+		text align left center
+	}

@@ -1,0 +1,12 @@
+	button
+	{
+		area 36 360 340 46
+		enabled "rollFirst == 1"
+		bam GUIBUTWX
+		sequence 0
+		clickable lua "createCharScreen:GetCurrentStep() == 8"
+		glow lua "createCharScreen:GetCurrentStep() == 8"
+		text "ABILITIES_BUTTON"
+		text style "button"
+		action "autoroll()"
+	}

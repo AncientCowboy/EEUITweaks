@@ -1,0 +1,271 @@
+menu
+{
+	name 'JOURNAL'
+	align center center
+	modal
+	onOpen
+	"
+		buildQuestDisplay()
+		chapter = math.max(0, Infinity_GetMaxChapterPage())
+		journalMode = 0
+		local tf = next(textflashes)
+		if tf then
+			setSelectedQuest(textflashes[tf][5])
+			textflashes[tf] = nil
+		end
+		pushSidebars()
+	"
+	onClose
+	"
+		showJournal = 0
+		if not wasPaused then
+			worldScreen:TogglePauseGame(true)
+		end
+	"
+	label
+	{
+		area 0 0 864 710
+		mosaic GUIJRNL
+	}
+	label
+	{
+		area 82 12 700 40
+		mosaic lua "pauseJournal()"
+		text "JOURNAL_LABEL"
+		text style title
+	}
+	button
+	{
+		area 24 132 52 132
+		bam GUIPRC
+		sequence 0
+		action
+		"
+			incrChapter(-1)
+		"
+	}
+	button
+	{
+		area 788 132 52 132
+		bam GUIPRC
+		sequence 1
+		action
+		"
+			incrChapter(1)
+		"
+	}
+
+	label -- Initial
+	{
+		area 152 190 40 38
+		bam INITIALS
+		sequence lua "string.byte(chapterText()) - 1"
+	}
+	label -- Chapter
+	{
+		area 195 190 200 38
+		text lua "string.sub(chapterText(), 2)"
+		text style "parchment"
+		text point 14
+	}
+	list --quest
+	{
+		column
+		{
+			width 100
+			label
+			{
+				enabled "questEnabled(rowNumber) and getFinished(rowNumber) == journalMode"
+				area 0 0 -1 -1
+				text lua "questDisplay[rowNumber].hidden and '+' or '-'"
+				text style "edit"
+				text color 5
+			}
+			label
+			{
+				enabled "questEnabled(rowNumber) and getFinished(rowNumber) == journalMode"
+				area 8 0 -1 -1
+				pad 0 0 0 10
+				text lua "getQuestText(rowNumber)"
+				text style "parchment"
+				text color M
+			}
+			label
+			{
+				enabled "questEnabled(rowNumber) and getFinished(rowNumber) == journalMode and not questDisplay[rowNumber].hidden"
+				area 16 24 536 2
+				fill 0 0 0 180
+			}
+			label
+			{
+				enabled "objectiveEnabled(rowNumber) and getFinished(rowNumber) == journalMode"
+				area 16 0 -1 -1
+				text lua "getObjectiveText(rowNumber)"
+				text style "parchment"
+				text color 0 64 0 255
+			}
+			label
+			{
+				enabled "entryEnabled(rowNumber) and getFinished(rowNumber) == journalMode"
+				area 16 0 -1 -1
+				text lua "getEntryText(rowNumber)"
+				text style "parchment"
+			}
+		}
+		enabled "journalMode == 0 or journalMode == 1"
+		rowheight dynamic
+		hidehighlight
+		table		"questDisplay"
+		var			selectedQuest
+		scrollbar	'GUISBR'
+		area		152 236 582 346
+		action
+		"
+			if questDisplay[selectedQuest].quest then
+				if(questDisplay[selectedQuest].hidden) then
+					questDisplay[selectedQuest].hidden = nil
+				else
+					questDisplay[selectedQuest].hidden = 1
+				end
+			end
+		"
+	}
+	list --journal
+	{
+		column
+		{
+			width 100
+			label
+			{
+				enabled "getTitleEnabled(journalDisplay, rowNumber)"
+				area 0 0 -1 -1
+				pad 0 16 0 0
+				text lua "getTitleText(journalDisplay, rowNumber)"
+				text style "parchment"
+				text color 0 64 0 255
+			}
+			label
+			{
+				enabled "getJournalEnabled(journalDisplay, rowNumber)"
+				area 0 0 -1 -1
+				pad 0 16 0 0
+				text lua "getJournalText(journalDisplay, rowNumber)"
+				text style "parchment"
+			}
+		}
+		enabled "journalMode == 2"
+		rowheight dynamic
+		hidehighlight
+		table		"journalDisplay"
+		var			selectedJournal
+		scrollbar	'GUISBR'
+		area		152 236 582 346
+		action
+		"
+			journalNoteEditRef = getJournalEntryRef(journalDisplay, selectedJournal)
+			journalNoteEdit = Infinity_FetchString(journalNoteEditRef)
+			Infinity_PushMenu('EDIT_JOURNAL')
+		"
+	}
+	list --user
+	{
+		column
+		{
+			width 100
+			label
+			{
+				enabled "getTitleEnabled(userDisplay, rowNumber)"
+				area 0 0 -1 -1
+				pad 0 16 0 0
+				text lua "getTitleText(userDisplay, rowNumber)"
+				text style "parchment"
+				text color 0 64 0 255
+			}
+			label
+			{
+				enabled "getJournalEnabled(userDisplay, rowNumber)"
+				area 0 0 -1 -1
+				pad 0 16 0 0
+				text lua "getJournalText(userDisplay, rowNumber)"
+				text style "parchment"
+			}
+		}
+		enabled "journalMode == 3"
+		rowheight dynamic
+		hidehighlight
+		table		"userDisplay"
+		var			selectedUser
+		scrollbar	'GUISBR'
+		area		152 236 582 346
+		action
+		"
+			journalNoteEditRef = getJournalEntryRef(userDisplay, selectedUser)
+			journalNoteEdit = Infinity_FetchString(journalNoteEditRef)
+			Infinity_PushMenu('EDIT_JOURNAL')
+		"
+	}
+
+	button
+	{
+		area 72 94 234 44
+		bam GUIOSTUL
+		glow lua "journalMode == 0"
+		text "QUESTS_BUTTON"
+		text style "button"
+		action
+		"
+			journalMode = 0
+		"
+	}
+	button
+	{
+		area 556 94 234 44
+		bam GUIOSTUR
+		glow lua "journalMode == 1"
+		text "DONE_QUESTS_BUTTON"
+		text style "button"
+		action
+		"
+			journalMode = 1
+		"
+	}
+	button
+	{
+		area 58 604 234 44
+		bam GUIOSTLL
+		glow lua "journalMode == 2"
+		text "JOURNAL_BUTTON"
+		text style "button"
+		action
+		"
+			journalMode = 2
+		"
+	}
+	button
+	{
+		area 332 610 201 44
+		bam GUIOSTLM
+		enabled "journalMode == 3"
+		clickable lua "chapter == Infinity_GetMaxChapterPage()"
+		text 'ADD_BUTTON'
+		text style "button"
+		action
+		"
+			journalNoteEdit = ''
+			journalNoteEditRef = nil
+			Infinity_PushMenu('EDIT_JOURNAL')
+		"
+	}
+	button
+	{
+		area 572 604 234 44
+		glow lua "journalMode == 3"
+		bam GUIOSTLR
+		text "USER_BUTTON"
+		text style "button"
+		action
+		"
+			journalMode = 3
+		"
+	}
+}

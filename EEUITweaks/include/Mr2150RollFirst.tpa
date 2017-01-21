@@ -541,6 +541,116 @@ BEGIN
 END
 
 /*******************************************************************************
+ * ChargenPatch5
+ *
+ * Adds contents of file %PKGNAME%/menu/Mr2150RollFirst/chargenbutton3.menu
+ * after ABILITIES_BUTTON
+ * 
+ * Results in $UIMenuIF("Succeeded") 1 => Success, 0 => Failure
+ *
+ ******************************************************************************/
+DEFINE_ACTION_MACRO Mr2150RollFirst.ChargenPatch5
+BEGIN
+	LOCAL_SPRINT tempstr $UIMenuIF("Body")
+	LOCAL_SPRINT adder ~~
+	LOCAL_SET found = 0
+
+	// Read insertion file into adder
+	OUTER_SET found = SIZE_OF_FILE ~%PKGNAME%/menu/Mr2150RollFirst/chargenbutton3.menu~
+	COPY - ~%PKGNAME%/menu/Mr2150RollFirst/chargenbutton3.menu~ ~.../CounterInLine~
+		READ_ASCII 0 adder (%found%)
+	OUTER_SET found = 0 
+
+	// Put current menu definition into inline file
+	COPY - ~ToInlineTemplate~ ~.../CounterInLine~
+		REPLACE_EVALUATE ~dummy~ BEGIN END
+		~%tempstr%~
+	OUTER_SPRINT teempstr ~~
+
+	// Find target, insert code
+	COPY - ~.../CounterInLine~ ~.../CounterInLine~
+		REPLACE_EVALUATE CASE_INSENSITIVE ~^[%TAB% ]*button%MWHITE%{%MNOBRACE%+text[%TAB% ]+%MQUOTE%ABILITIES_BUTTON%MQUOTE%%MNOBRACE%+}.*%MEOL%~
+		BEGIN
+			SPRINT tempstr ~%MATCH0%%adder%~
+			SET found = 1
+		END
+		~%tempstr%~
+
+	// Not found, fail
+	ACTION_IF NOT %found% THEN
+	BEGIN
+		LOG ~In Mr2150RollFirst.ChargenPatch5 - failed to find target code~
+		OUTER_SET $UIMenuIF("Succeeded") = 0
+	END ELSE
+
+	// Otherwise, success. Copy .../CounterInLine to $UIMenuIF("Body")
+	ACTION_IF %found% THEN
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Body") ~~
+		OUTER_SET found = SIZE_OF_FILE ~.../CounterInLine~
+		COPY - ~.../CounterInLine~ ~.../CounterInLine~
+			READ_ASCII 0 $UIMenuIF("Body") (%found%-1)
+		OUTER_SET $UIMenuIF("Succeeded") = 1
+	END
+	COPY - ~EmptyInlineTemplate~ ~.../CounterInline~
+END
+
+/*******************************************************************************
+ * ChargenPatch6
+ *
+ * Adds contents of file %PKGNAME%/menu/Mr2150RollFirst/chargenbutton4labels.menu
+ * after IMPORT_BUTTON
+ * 
+ * Results in $UIMenuIF("Succeeded") 1 => Success, 0 => Failure
+ *
+ ******************************************************************************/
+DEFINE_ACTION_MACRO Mr2150RollFirst.ChargenPatch6
+BEGIN
+	LOCAL_SPRINT tempstr $UIMenuIF("Body")
+	LOCAL_SPRINT adder ~~
+	LOCAL_SET found = 0
+
+	// Read insertion file into adder
+	OUTER_SET found = SIZE_OF_FILE ~%PKGNAME%/menu/Mr2150RollFirst/chargenbutton4labels.menu~
+	COPY - ~%PKGNAME%/menu/Mr2150RollFirst/chargenbutton4labels.menu~ ~.../CounterInLine~
+		READ_ASCII 0 adder (%found%)
+	OUTER_SET found = 0 
+
+	// Put current menu definition into inline file
+	COPY - ~ToInlineTemplate~ ~.../CounterInLine~
+		REPLACE_EVALUATE ~dummy~ BEGIN END
+		~%tempstr%~
+	OUTER_SPRINT teempstr ~~
+
+	// Find target, insert code
+	COPY - ~.../CounterInLine~ ~.../CounterInLine~
+		REPLACE_EVALUATE CASE_INSENSITIVE ~^[%TAB% ]*button%MWHITE%{%MNOBRACE%+text[%TAB% ]+%MQUOTE%IMPORT_BUTTON%MQUOTE%%MNOBRACE%+}.*%MEOL%~
+		BEGIN
+			SPRINT tempstr ~%MATCH0%%adder%~
+			SET found = 1
+		END
+		~%tempstr%~
+
+	// Not found, fail
+	ACTION_IF NOT %found% THEN
+	BEGIN
+		LOG ~In Mr2150RollFirst.ChargenPatch6 - failed to find target code~
+		OUTER_SET $UIMenuIF("Succeeded") = 0
+	END ELSE
+
+	// Otherwise, success. Copy .../CounterInLine to $UIMenuIF("Body")
+	ACTION_IF %found% THEN
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Body") ~~
+		OUTER_SET found = SIZE_OF_FILE ~.../CounterInLine~
+		COPY - ~.../CounterInLine~ ~.../CounterInLine~
+			READ_ASCII 0 $UIMenuIF("Body") (%found%-1)
+		OUTER_SET $UIMenuIF("Succeeded") = 1
+	END
+	COPY - ~EmptyInlineTemplate~ ~.../CounterInline~
+END
+
+/*******************************************************************************
  * Mr2150's Roll First Installation
  ******************************************************************************/
 // Open UI.MENU
@@ -576,16 +686,32 @@ BEGIN
 	FAIL @151
 END
 
-LAUNCH_ACTION_MACRO Mr2150RollFirst.ChargenPatch3
-ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+ACTION_IF %IsKRDS% THEN
 BEGIN
-	FAIL @151
-END
+	LAUNCH_ACTION_MACRO Mr2150RollFirst.ChargenPatch5
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @151
+	END
 
-LAUNCH_ACTION_MACRO Mr2150RollFirst.ChargenPatch4
-ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	LAUNCH_ACTION_MACRO Mr2150RollFirst.ChargenPatch6
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @151
+	END
+END ELSE
 BEGIN
-	FAIL @151
+	LAUNCH_ACTION_MACRO Mr2150RollFirst.ChargenPatch3
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @151
+	END
+
+	LAUNCH_ACTION_MACRO Mr2150RollFirst.ChargenPatch4
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @151
+	END
 END
 
 LAUNCH_ACTION_MACRO UIMenuUpdateMenu

@@ -389,12 +389,12 @@ BEGIN
 
 	ACTION_PHP_EACH uimenulibglobal AS key => value 
 	BEGIN
-		ACTION_IF (VARIABLE_IS_SET $uimenulibglobal("%key%_%key_1%")) 
+		ACTION_IF (VARIABLE_IS_SET $uimenulibglobal("%key%_%key_1%")) THEN
 		BEGIN
 			OUTER_SPRINT ~$uimenulibglobal("%key%_%key_1%")~ ~~
 		END ELSE 
 		BEGIN
-			ACTION_IF (IS_AN_INT $uimenulibglobal("%key%")) 
+			ACTION_IF (IS_AN_INT $uimenulibglobal("%key%")) THEN
 			BEGIN
 				OUTER_SET ~$uimenulibglobal("%key%")~ = 0
 			END ELSE 
@@ -407,6 +407,7 @@ BEGIN
 	OUTER_SET $uimenulibglobal("luacount") = 0
 	OUTER_SET $uimenulibglobal("commentcount") = 0
 	COPY - ~EmptyInlineTemplate~ ~$uimenulibglobal("uibuffer")~
+	COPY - ~EmptyInlineTemplate~ ~$uimenulibglobal("uimenutransientlocal")~
 END
 
 /*******************************************************************************
@@ -422,11 +423,13 @@ END
  ******************************************************************************/
 DEFINE_ACTION_MACRO UIMenuOpen 
 BEGIN
-	ACTION_IF ($uimenulibglobal("state") = 0) 
+	ACTION_IF ($uimenulibglobal("state") = 0) THEN
 	BEGIN // Closed 
+		LAUNCH_ACTION_MACRO	uimenuclearglobal
 		COPY_EXISTING - ~UI.MENU~ ~$uimenulibglobal("uibuffer")~
 		// No need to do this more than once
-		ACTION_IF ~%LE%~ STRING_EQUAL ~~ BEGIN
+		ACTION_IF ~%LE%~ STRING_EQUAL ~~  THEN
+		BEGIN
 			LAUNCH_ACTION_MACRO uimenudetermineeol
 		END
 
@@ -460,7 +463,7 @@ END
 DEFINE_ACTION_MACRO UIMenuClose 
 BEGIN
 
-	ACTION_IF ($uimenulibglobal("state") = 1) 
+	ACTION_IF ($uimenulibglobal("state") = 1) THEN
 	BEGIN // Open
 		// Insert menus
 		LAUNCH_ACTION_MACRO uimenuinsertmenus
@@ -496,7 +499,7 @@ END
  ******************************************************************************/
 DEFINE_ACTION_MACRO UIMenuAbort 
 BEGIN
-	ACTION_IF ($uimenulibglobal("state") = 1) 
+	ACTION_IF ($uimenulibglobal("state") = 1) THEN
 	BEGIN // Open
 		// Reset $uimenulibglobal to closed and empty
 		LAUNCH_ACTION_MACRO	uimenuclearglobal
@@ -518,7 +521,7 @@ DEFINE_ACTION_MACRO UIMenuAppendFile
 BEGIN
 	LOCAL_SPRINT	filespec	$UIMenuIF("Filespec")
 
-	ACTION_IF ($uimenulibglobal("state") = 1) 
+	ACTION_IF ($uimenulibglobal("state") = 1) THEN
 	BEGIN // Open
 		COPY - ~$uimenulibglobal("uibuffer")~ ~$uimenulibglobal("uibuffer")~
 			APPEND_FILE ~%filespec%~
@@ -555,9 +558,9 @@ BEGIN
 	LOCAL_SPRINT tempstr ~~
 	LOCAL_SPRINT menuname $UIMenuIF("MenuName")
 
-	ACTION_IF ($uimenulibglobal("state") = 1) 
+	ACTION_IF ($uimenulibglobal("state") = 1) THEN
 	BEGIN // Open
-		ACTION_IF (VARIABLE_IS_SET $uimenulibglobal(~menus_%menuname%~)) 
+		ACTION_IF (VARIABLE_IS_SET $uimenulibglobal(~menus_%menuname%~)) THEN
 		BEGIN
 			OUTER_SPRINT $UIMenuIF("Body") $uimenulibglobal(~menus_%menuname%~)
 			OUTER_SET $UIMenuIF("Succeeded") = 1
@@ -588,7 +591,7 @@ END
 DEFINE_ACTION_MACRO UIMenuUpdateMenu 
 BEGIN
 	LOCAL_SPRINT name $UIMenuIF("MenuName")
-	ACTION_IF ($uimenulibglobal("state") = 1) 
+	ACTION_IF ($uimenulibglobal("state") = 1) THEN
 	BEGIN // Open
 		ACTION_DEFINE_ASSOCIATIVE_ARRAY uimenulibglobal 
 		BEGIN
@@ -625,9 +628,9 @@ BEGIN
 	LOCAL_SPRINT target ~~
 	LOCAL_SET    found = 0
 
-	ACTION_IF ($uimenulibglobal("state") = 1) 
+	ACTION_IF ($uimenulibglobal("state") = 1) THEN
 	BEGIN // Open
-		ACTION_IF VARIABLE_IS_SET $uimenulibglobal("%namevar%") 
+		ACTION_IF VARIABLE_IS_SET $uimenulibglobal("%namevar%") THEN
 		BEGIN // Valid menu name
 			// Get the contents of the file and extract comments
 			COPY - ~%filespec%~ ~$uimenulibglobal("uimenutransientlocal")~
@@ -641,7 +644,7 @@ BEGIN
 					SET found = 1
 				END
 				~~
-			ACTION_IF %found% 
+			ACTION_IF %found% THEN
 			BEGIN
 				ACTION_DEFINE_ASSOCIATIVE_ARRAY uimenulibglobal 
 				BEGIN
@@ -699,7 +702,7 @@ BEGIN
 	LOCAL_SPRINT 	adder ~~
 	LOCAL_SET		found = 0
 
-	ACTION_IF ($uimenulibglobal("state") = 1) 
+	ACTION_IF ($uimenulibglobal("state") = 1) THEN
 	BEGIN // Open
 		// Read contents of filespec into adder
 		OUTER_SET found = SIZE_OF_FILE ~%filespec%~
@@ -769,7 +772,7 @@ BEGIN
 	LOCAL_SPRINT 	filespec $UIMenuIF("Filespec")
 	LOCAL_SPRINT 	adder ~~
 	LOCAL_SET		found = 0
-	ACTION_IF ($uimenulibglobal("state") = 1) 
+	ACTION_IF ($uimenulibglobal("state") = 1) THEN
 	BEGIN // Open
 
 		// Get the contents of the file and extract comments
@@ -836,7 +839,7 @@ BEGIN
 	LOCAL_SET counter = 0
 	LOCAL_SET found = 0
 
-	ACTION_IF ($uimenulibglobal("state") = 1) 
+	ACTION_IF ($uimenulibglobal("state") = 1) THEN
 	BEGIN // Open
 		OUTER_FOR(; (%found% = 0) AND (%counter% < $uimenulibglobal("luacount")); SET counter += 1) 
 		BEGIN
@@ -853,7 +856,7 @@ BEGIN
 				END
 				~~
 		END
-		ACTION_IF found 
+		ACTION_IF found THEN
 		BEGIN
 			OUTER_SPRINT $UIMenuIF("Body") ~%target%~
 			OUTER_SET $UIMenuIF("Succeeded") = 1
@@ -890,7 +893,7 @@ DEFINE_ACTION_MACRO UIMenuUpdateLuaBlock
 BEGIN
 	LOCAL_SET idval = $UIMenuIF("LuaID")
 	LOCAL_SPRINT keyval ~%INLUABASE%%idval%~
-	ACTION_IF ($uimenulibglobal("state") = 1) 
+	ACTION_IF ($uimenulibglobal("state") = 1) THEN
 	BEGIN // Open
 		ACTION_DEFINE_ASSOCIATIVE_ARRAY uimenulibglobal 
 		BEGIN
@@ -928,9 +931,9 @@ BEGIN
 	LOCAL_SPRINT target ~~
 	LOCAL_SET    found = 0
 
-	ACTION_IF ($uimenulibglobal("state") = 1) 
+	ACTION_IF ($uimenulibglobal("state") = 1) THEN
 	BEGIN // Open
-		ACTION_IF VARIABLE_IS_SET $uimenulibglobal("%namevar%") 
+		ACTION_IF VARIABLE_IS_SET $uimenulibglobal("%namevar%") THEN
 		BEGIN
 			// Get the contents of the file and extract comments
 			COPY - ~%filespec%~ ~$uimenulibglobal("uimenutransientlocal")~
@@ -947,7 +950,7 @@ BEGIN
 					END
 				END
 				~~
-			ACTION_IF %found% 
+			ACTION_IF %found% THEN
 			BEGIN
 				ACTION_DEFINE_ASSOCIATIVE_ARRAY uimenulibglobal 
 				BEGIN

@@ -1,8 +1,81 @@
+`
+function setCurrentPortrait(idx)
+	local portrait = portraitTable[idx]
+	local curPortrait = createCharScreen:GetCurrentPortrait():upper()
+	while portrait ~= curPortrait do
+		createCharScreen:IncCurrentPortrait()
+		curPortrait = createCharScreen:GetCurrentPortrait():upper()
+	end
+end
+function getPortrait(idx)
+	local portrait = portraitTable[idx]
+	if portrait:sub(-1) == 'L' then
+		return portrait:sub(1, -2)
+	end
+	return portrait
+end
+function comparePortrait(portrait, curPortrait)
+	if portrait:sub(-1) == 'L' or portrait:sub(-1) == 'M' then
+		portrait = portrait:sub(1, -2)
+	end
+	if curPortrait:sub(-1) == 'L' or curPortrait:sub(-1) == 'M' then
+		curPortrait = curPortrait:sub(1, -2)
+	end
+	return portrait == curPortrait
+end
+function portraitScroll(top, height, contentHeight)
+	if scrollPortrait ~= nil then
+		top = top - 94 * scrollPortrait
+		top = math.min(top, 0)
+		top = math.max(top, height - contentHeight)
+		scrollPortrait = nil
+		return top
+	end
+	return nil
+end
+`
 menu
 {
 	name 'CHARACTER_PORTRAIT'
 	align center center
+	modal
 	ignoreesc
+	onOpen
+	"
+		portraitTable = {}
+		selPortrait = 1
+		local firstPortrait = createCharScreen:GetCurrentPortrait():upper()
+		local curGender = gender == 1 and 15729749 or 15729635
+		local curPortrait = firstPortrait
+		if CurrentlyInGame() then
+			curGender = characters[currentID].gender
+			curPortrait = characters[currentID].portrait
+		end
+		local portrait = firstPortrait
+		local idx = 1
+		while idx == 1 or portrait ~= firstPortrait do
+			local gender = nil
+			if portrait:find('M#') == 1 then
+				gender = 15729749
+			elseif portrait:find('F#') == 1 then
+				gender = 15729635
+			end
+			if gender == curGender or gender == nil then
+				table.insert(portraitTable, portrait)
+			end
+			if comparePortrait(portrait, curPortrait) then
+				selPortrait = idx
+			end
+			createCharScreen:IncCurrentPortrait()
+			portrait = createCharScreen:GetCurrentPortrait():upper()
+			idx = idx + 1
+		end
+		scrollPortrait = selPortrait - 1
+	"
+	onClose
+	"
+		portraitTable = nil
+	"
 	label
 	{
 		area 0 0 864 710
@@ -14,24 +87,90 @@ menu
 		text "APPEARANCE_TITLE"
 		text style "title"
 	}
-	button
+	list
 	{
-		area 184 284 52 132
-		bam GUIPRC
-		sequence 0
-		action "createCharScreen:DecCurrentPortrait()"
+		column
+		{
+			width 100
+			label
+			{
+				area 0 0 64 90
+				bitmap lua "portraitTable[rowNumber]"
+				glow lua "rowNumber == mouseoverRow"
+			}
+			label
+			{
+				area 70 0 -1 -1
+				text lua "getPortrait(rowNumber)"
+				text style 'label'
+				glow lua "rowNumber == mouseoverRow"
+			}
+			label
+			{
+				enabled "selPortrait ~= rowNumber"
+				area 0 0 378 94
+				rectangle 1
+				rectangle opacity 150
+			}
+		}
+		actionEnter	""
+		actionExit	"mouseoverRow = 0"
+		rowheight 94
+		hidehighlight
+		area 436 130 378 470
+		table "portraitTable"
+		var selPortrait
+		scrollbar 'GUISCRC'
+		scrollbar func "portraitScroll"
 	}
 	button
 	{
-		area 634 284 52 132
-		bam GUIPRC
-		sequence 1
-		action "createCharScreen:IncCurrentPortrait()"
+		on up
+		action
+		"
+			scrollPortrait = -1
+		"
+	}
+	button
+	{
+		on down
+		action
+		"
+			scrollPortrait = 1
+		"
+	}
+	button
+	{
+		on pageup
+		action
+		"
+			scrollPortrait = -5
+		"
+	}
+	button
+	{
+		on pagedown
+		action
+		"
+			scrollPortrait = 5
+		"
 	}
 	label
 	{
-		area 327 190 212 330
-		bitmap lua "createCharScreen:GetCurrentPortrait()"
+		area 107 200 210 330
+		bitmap lua "portraitTable[selPortrait]"
+	}
+	label
+	{
+		enabled "portraitTable[selPortrait]:sub(-1) == 'L'"
+		area 327 303 95 121
+		rectangle 4
+	}
+	label
+	{
+		enabled "portraitTable[selPortrait]:sub(-1) == 'L'"
+		area 342 318 64 90
+		bitmap lua "portraitTable[selPortrait]:sub(1, -2) .. 'M'"
 	}
 	button
 	{
@@ -43,6 +182,7 @@ menu
 		clickable lua "createCharScreen:IsDoneButtonClickable()"
 		action
 		"
+			setCurrentPortrait(selPortrait)
 			Infinity_PopMenu()
 			createCharScreen:OnDoneButtonClick()
 		"
@@ -57,90 +197,28 @@ menu
 		action
 		"
 			Infinity_PopMenu()
-			createCharScreen:OnCancelButtonClick()
+			if CurrentlyInGame() then
+				createCharScreen:OnCancelButtonClick()
+			else
+				createCharScreen:OnDoneButtonClick()
+				createCharScreen:OnMainBackButtonClick()
+			end
 		"
 	}
 }
 menu
 {
 	name 'CHARGEN_PORTRAIT'
-	align center center
-	ignoreesc
 	onOpen
 	"
 		if CurrentlyInGame() then
-			Infinity_PushMenu('CHARACTER_PORTRAIT')
-			Infinity_PopMenu('CHARGEN_PORTRAIT')
+			pushSidebars()
 		end
+		Infinity_PushMenu('CHARACTER_PORTRAIT')
+		Infinity_PopMenu('CHARGEN_PORTRAIT')
 	"
 	label
 	{
-		area 0 92 1024 676
-		mosaic GUIAPB
-	}
-	label
-	{
-		area 28 172 304 44
-		text "APPEARANCE_TITLE"
-		text style "title"
-	}
-	button
-	{
-		area 280 302 52 132
-		bam GUIPRC
-		sequence 0
-		action "createCharScreen:DecCurrentPortrait()"
-	}
-	button
-	{
-		area 692 302 52 132
-		bam GUIPRC
-		sequence 1
-		action "createCharScreen:IncCurrentPortrait()"
-	}
-
-	label
-	{
-		area 406 206 212 330
-		bitmap lua "createCharScreen:GetCurrentPortrait()"
-	}
-	button
-	{
-		area 358 648 300 44
-		bam GUIOSTCL
-		text "CUSTOM_BUTTON"
-		text style "button"
-		action
-		"
-			TEXT_popup_big = 17188
-			Infinity_PushMenu('POPUP_BIG')
-		"
-	}
-	button
-	{
-		on escape
-		area 194 718 234 44
-		text "BACK_BUTTON"
-		text style "button"
-		bam GUIOSTUL
-		action
-		"
-			Infinity_PopMenu()
-			createCharScreen:OnCancelButtonClick()
-		"
-	}
-	button
-	{
-		on return
-		area 438 718 201 44
-		bam GUIOSTUM
-		text "DONE_BUTTON"
-		text style "button"
-		clickable lua "createCharScreen:IsDoneButtonClickable()"
-		action
-		"
-			Infinity_PopMenu()
-			createCharScreen:OnDoneButtonClick()
-		"
+		area 0 0 1 1
 	}
 }

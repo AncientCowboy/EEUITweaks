@@ -12,14 +12,14 @@ function resetStatsDisplay()
 end
 function slotDoubleClick(slotName, force)
 	local slot = characters[id].equipment[slotName]
-	
+
 	if(string.sub(slotName,1,6) == "ground" and force == nil) then
 		--this hack is needed because unlike other slots, ground item add/remove is a message (doesnt get executed immediately)
 		--since the double click removes the item before re-adding it, we need to wait for that re-add to complete before continuing.
 		doubleClickEventScheduled = slotName
 		return
 	end
-	
+
 	if(slot ~= nil) then
 		if(slot.item.isBag ~= 0) then
 			Infinity_OpenInventoryContainer(slot.item.res)
@@ -47,7 +47,7 @@ end
 function getInventoryDamage()
 	local str = characters[id].damage.min .. ' - ' .. characters[id].damage.max
 	if(characters[id].damage.minOffhand and characters[id].damage.maxOffhand) then
-		str = str .. "\n" .. characters[id].damage.minOffhand .. ' - ' .. characters[id].damage.maxOffhand 
+		str = str .. "\n" .. characters[id].damage.minOffhand .. ' - ' .. characters[id].damage.maxOffhand
 	end
 	return str
 end
@@ -94,69 +94,55 @@ function buildInventoryStats()
 	inventoryStats = {}
 
 	if(itemComparison and tempStats[id] ~= nil) then
-		table.insert(inventoryStats, {1,tempStats[id].tempItem})
 		getTempStat(characters[id].AC.current,'AC',t("ARMOR_CLASS_LABEL"),-1)
 		getTempStat(characters[id].HP.max,'maxHP',t("HIT_POINTS_LABEL"),1)
 		getTempStat(characters[id].THAC0.current,'THAC0',t("THAC0_LABEL"),-1)
 		getTempDamage()
-		return inventoryStats
+		if length(inventoryStats) ~= 0 then
+			table.insert(inventoryStats, 1, {1,tempStats[id].tempItem})
+			return inventoryStats
+		end
 	end
 
 	table.insert(inventoryStats, {1,t("ARMOR_CLASS_LABEL"),1})
 	if inventoryShow[1] == 1 then
-		for s in (characters[id].AC.details.."\n"):gmatch("(.-)\n") do
-			table.insert(inventoryStats, {2,s})
-		end
+		table.insert(inventoryStats, {2,characters[id].AC.details})
 	end
 
 	table.insert(inventoryStats, {1,t("HIT_POINTS_LABEL"),2})
 	if inventoryShow[2] == 1 then
-		for s in (characters[id].HP.details.."\n"):gmatch("(.-)\n") do
-			table.insert(inventoryStats, {2,s})
-		end
+		table.insert(inventoryStats, {2,characters[id].HP.details})
 	end
 
 	if (characters[id].THAC0.detailsOffhand ~= nil and characters[id].THAC0.detailsOffhand ~= "") then
 		table.insert(inventoryStats, {1,t("MAIN_HAND_THAC0"),3})
 		if inventoryShow[3] == 1 then
-			for s in (characters[id].THAC0.details.."\n"):gmatch("(.-)\n") do
-				table.insert(inventoryStats, {2,s})
-			end
+			table.insert(inventoryStats, {2,characters[id].THAC0.details})
 		end
 		table.insert(inventoryStats, {1,t("OFF_HAND_THAC0"),4})
 		if inventoryShow[4] == 1 then
-			for s in (characters[id].THAC0.detailsOffhand.."\n"):gmatch("(.-)\n") do
-				table.insert(inventoryStats, {2,s})
-			end
+			table.insert(inventoryStats, {2,characters[id].THAC0.detailsOffhand})
 		end
 	else
 		table.insert(inventoryStats, {1,t("THAC0_LABEL"),3})
 		if inventoryShow[3] == 1 then
-			for s in (characters[id].THAC0.details.."\n"):gmatch("(.-)\n") do
-				table.insert(inventoryStats, {2,s})
-			end
+			table.insert(inventoryStats, {2,characters[id].THAC0.details})
 		end
 	end
 
 	if (characters[id].damage.maxOffhand) then
 		table.insert(inventoryStats, {1,t("MAIN_HAND_DAMAGE"),5})
 		if inventoryShow[5] == 1 then
-			for s in (characters[id].damage.details.."\n"):gmatch("(.-)\n") do
-				table.insert(inventoryStats, {2,s})
-			end
+			table.insert(inventoryStats, {2,characters[id].damage.details})
 		end
 		table.insert(inventoryStats, {1,t("OFF_HAND_DAMAGE"),6})
 		if inventoryShow[6] == 1 then
-			for s in (characters[id].damage.detailsOffhand.."\n"):gmatch("(.-)\n") do
-				table.insert(inventoryStats, {2,s})
-			end
+			table.insert(inventoryStats, {2,characters[id].damage.detailsOffhand})
 		end
 	else
 		table.insert(inventoryStats, {1,t("DAMAGE_LABEL"),5})
 		if inventoryShow[5] == 1 then
-			for s in (characters[id].damage.details.."\n"):gmatch("(.-)\n") do
-				table.insert(inventoryStats, {2,s})
-			end
+			table.insert(inventoryStats, {2,characters[id].damage.details})
 		end
 	end
 	return inventoryStats
@@ -169,9 +155,9 @@ function inventoryScroll(top, height, contentHeight)
 	end
 	return nil
 end
-function groundTable()
+function makeTable(length)
 	local t = {}
-	for i=0,Infinity_GetMaxGroundPage() do
+	for i=0,length do
 		table.insert(t, 1, '')
 	end
 	return t

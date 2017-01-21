@@ -21,13 +21,14 @@ BEGIN
 
 	// Find target, insert code
 	COPY - ~.../CounterInLine~ ~.../CounterInLine~
-		REPLACE_EVALUATE CASE_INSENSITIVE ~\(^[%TAB% ]*button%MWHITE%{%MNOBRACE%+text[%TAB% ]*%MQUOTE%DONE_BUTTON%MQUOTE%%MNOBRACE%+action[%TAB% ]+%MQUOTE%%MNOTQUOTE%+\)\(%MQUOTE%%MWHITE%}.*%MEOL%\)~
+		REPLACE_EVALUATE CASE_INSENSITIVE ~\(^[%TAB% ]*button%MWHITE%{%MNOBRACE%+text[%TAB% ]*%MQUOTE%DONE_BUTTON%MQUOTE%%MNOBRACE%+action%MWHITE%%MDQUOTE%%MNOTDQUOTE%+\)\(%MDQUOTE%%MWHITE%}.*%MEOL%\)~
 		BEGIN
 			SPRINT tempstr ~%MATCH1%%adder%%MATCH2%~
 			SET found = 1
 		END
 		~%tempstr%~
 
+		PATCH_LOG ~Match1 = "%v1%", Match2 = "%v2%"~
 	// Not found, fail
 	ACTION_IF NOT %found% THEN
 	BEGIN
@@ -70,7 +71,7 @@ BEGIN
 
 	// Find target, insert code
 	COPY - ~.../CounterInLine~ ~.../CounterInLine~
-		REPLACE_EVALUATE CASE_INSENSITIVE ~\(^[%TAB% ]*button%MWHITE%{%MNOBRACE%+text[%TAB% ]*%MQUOTE%DONE_BUTTON%MQUOTE%%MNOBRACE%+action[%TAB% ]+%MDQUOTE%%MNOTDQUOTE%+\)\(%MDQUOTE%%MWHITE%}.*%MEOL%\)~
+		REPLACE_EVALUATE CASE_INSENSITIVE ~\(^[%TAB% ]*button%MWHITE%{%MNOBRACE%+text[%TAB% ]*%MQUOTE%DONE_BUTTON%MQUOTE%%MNOBRACE%+action%MWHITE%%MDQUOTE%%MNOTDQUOTE%+\)\(%MDQUOTE%%MWHITE%}.*%MEOL%\)~
 		BEGIN
 			SPRINT tempstr ~%MATCH1%%adder%%MATCH2%~
 			SET found = 1
@@ -163,7 +164,7 @@ OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_ABILITIES~
 
 ACTION_MATCH 1
 WITH
-	%IsSoD% %IsEETSoD%
+	%IsSoD% %IsEETSoD% %IsKRDS%
 	BEGIN
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FaydarkAutoRoll/chargenabilitiesmenu1.menu~
 	END
@@ -171,7 +172,15 @@ WITH
 	BEGIN
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FaydarkAutoRoll/chargenabilitiesmenu2.menu~
 	END
-	
+	%IsBG2% %IsBG2onSoD% %IsEETBG2%
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FaydarkAutoRoll/chargenabilitiesmenu3.menu~
+	END		
+	%IsLeUIBG2% %IsLeUISOD% %IsLeUIBG1% %IsEETLeUI%
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FaydarkAutoRoll/chargenabilitiesmenu4.menu~
+	END
+		
 	DEFAULT
 		FAIL @15
 END
@@ -189,6 +198,20 @@ LAUNCH_ACTION_MACRO UIMenuClose
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
 	FAIL @21
+END
+
+// Copying ui specific files
+PRINT @17
+SILENT
+ACTION_MATCH 1
+WITH
+	%IsLeUISOD% %IsLeUIBG1%
+	BEGIN
+		COPY ~%PKGNAME%/copy/FayDarkAutoRoll~ ~override~
+	END
+
+	DEFAULT
+
 END
 
 

@@ -728,5 +728,9 @@ function progBarSavePortraitOption()
 	Infinity_SetINIValue('Progress Bar', 'IniOptionsSet', 1)
 end
 
+function getPercent(first, second)
+	tempNumber = ( first/second ) *100
+	return tempNumber
+end
 
 

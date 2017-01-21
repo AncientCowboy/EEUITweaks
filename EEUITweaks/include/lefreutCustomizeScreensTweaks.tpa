@@ -91,6 +91,7 @@ BEGIN
 	BEGIN
 		FAIL @302816
 	END
+	COPY ~%PKGNAME%/copy/lefreutCustomizeScreensTweaks~ ~override~
 END
 
 // Close UI.MENU

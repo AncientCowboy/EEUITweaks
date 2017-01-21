@@ -180,7 +180,7 @@ menu
 	label
 	{
 		area 0 0 864 710
-		mosaic LEFREC2
+		mosaic GUIREC2
 	}
 	label
 	{

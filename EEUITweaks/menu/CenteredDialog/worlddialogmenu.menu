@@ -5,16 +5,12 @@ menu
 	ignoreEsc
 	onOpen
 	"	
-		local x,y,w,h = Infinity_GetArea('worldDialogBackground')
 		Infinity_PushMenu('WORLD_MESSAGES')
 		Infinity_PushMenu('WORLD_DIALOG_CONFIRM')
 		greySidebars()
 	"
 	onClose
 	"
-		
-		local x,y,w,h = Infinity_GetArea('worldDialogBackground')
-		resizeDialogContent(h - 253)
 		Infinity_PopMenu('WORLD_DIALOG_CONFIRM')
 		Infinity_PopMenu('WORLD_MESSAGES')
 		ungreySidebars()
@@ -38,26 +34,6 @@ menu
 		text lua "worldNPCDialogText"
 		text style "gamelog"
 		scrollbar	'GUISCRC'
-	}
-	text
-	{
-		name "worldDialogMessageBox"
-		enabled "showWorldMessages"
-	}
-	handle
-	{
-		enabled "showWorldMessages"
-		name "dialogHandleY"
-	}
-	text
-	{
-		name "worldDialogShowMessagesButton"
-		enabled "showWorldMessages"
-	}
-	text
-	{
-		name "worldDialogMessageDivider"
-		enabled "showWorldMessages"
 	}
 	list
 	{

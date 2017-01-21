@@ -23,7 +23,7 @@ BEGIN
 END
 ACTION_MATCH 1
 WITH
-	%IsSoD% %IsEETSoD%
+	%IsSoD% %IsEETSoD% %IsKRDS%
 	BEGIN
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ActionBarButton1.menu~
 	END

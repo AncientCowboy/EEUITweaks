@@ -22,7 +22,7 @@ BEGIN
 END
 ACTION_MATCH 1
 WITH
-	%IsSoD% %IsEETSoD% %IsSoDOverhaul%
+	%IsSoD% %IsEETSoD% %IsSoDOverhaul% %IsKRDS%
 	BEGIN
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutImprovedInventory/inventorymenu1.menu~
 	END
@@ -58,7 +58,7 @@ END
 
 ACTION_MATCH 1
 WITH
-	%IsSoD% %IsEETSoD% %IsSoDOverhaul%
+	%IsSoD% %IsEETSoD% %IsSoDOverhaul% %IsKRDS%
 	BEGIN
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/lefreutImprovedInventory/inventorycode1.lua~
 	END
@@ -89,12 +89,17 @@ BEGIN
 	FAIL @21
 END
 
+ACTION_IF %IsSoDOverhaul% THEN
+BEGIN
+	DELETE ~override/inventor.png~
+END
+
 // Copying ui specific files
 PRINT @17
 SILENT
 ACTION_MATCH 1
 WITH
-	%IsSoD% %IsEETSoD% %IsSoDOverhaul%
+	%IsSoD% %IsEETSoD% %IsSoDOverhaul% %IsKRDS%
 	BEGIN
 		COPY ~%PKGNAME%/copy/lefreutImprovedInventory/SOD~ ~override~
 	END

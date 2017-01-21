@@ -21,7 +21,7 @@ BEGIN
 
 	// Patch
 	COPY - ~.../CounterInLine~ ~.../CounterInLine~
-		REPLACE_EVALUATE CASE_INSENSITIVE ~^[%TAB% ]*align[%TAB% ]+center[%TAB% ]+bottom.*%MEOL%~
+		REPLACE_EVALUATE CASE_INSENSITIVE ~^[%TAB% ]*align[%TAB% ]+center[%TAB% ]+bottom.*%MEOL%\([%TAB% ]*offset[%TAB% ]+[-0-9]+[%TAB% ]+[-0-9]+.*%MEOL%\)?~
 		BEGIN
 			SET found = 1
 		END
@@ -231,6 +231,10 @@ BEGIN // Replace
 		%IsEETSoD%
 		BEGIN
 			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/CenteredDialog/worlddialogmenu3.menu~
+		END
+		%IsKRDS%
+		BEGIN
+			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/CenteredDialog/worlddialogmenu4.menu~
 		END
 		%IsSoD% %IsBG2onSoD%
 		BEGIN

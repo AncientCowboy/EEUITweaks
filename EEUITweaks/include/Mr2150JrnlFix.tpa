@@ -154,6 +154,13 @@ WITH
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/Mr2150JrnlFix/journalmenusod.menu~
 	END
 
+	%IsKRDS%
+	BEGIN
+		PRINT @38
+		SILENT
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/Mr2150JrnlFix/journalmenusod.menu~
+	END
+
 	DEFAULT
 		FAIL @15
 END

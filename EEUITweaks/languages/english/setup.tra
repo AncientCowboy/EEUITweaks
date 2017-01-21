@@ -51,6 +51,7 @@
 @35   = ~Installing for LeUI BG1EE/SoD configuration~
 @36   = ~Installing for LeUI BG1EE configuration~
 @37   = ~Installing for LeUI EET configuration~
+@38   = ~Installing for Kilivit's Revised Dragon Scale UI configuration~
 
 ///////////////////////////////////////////////////////////////////////////////
 // Specific Menu patching/error messages
@@ -185,6 +186,9 @@
 @102002 = ~Incompatible with previously installed Mr2150's Roll First~
 
 @103000 = ~BillyYank's Multi-Portrait Mod~
+@103001 = ~Replacing CHARGEN_GENDER menu~
+@103002 = ~Unable to replace CHARGEN_GENDER menu~
+
 
 @104000 = ~Mr2150's Portrait Picker~
 @104001 = 
@@ -212,7 +216,7 @@ Please enter return or a number between 1 and 4 [1]~
 @106001 = ~Incompatible with previously installed Mr2150's Random PC Generator~
 @106002 = ~Incompatible with previously installed Faydark's Abilities Auto-Roller~
 
-@107000 = ~Faydark's Abilities Auto-Roller~
+@107000 = ~Faydark's Abilities Auto-Roller/GrimLefourbe's BG2 UI~
 @107001 = ~Replacing CHARGEN_ABILITIES~
 @107002 = ~Error encountered replacing CHARGEN_ABILITIES~
 
@@ -289,6 +293,19 @@ Please enter return or a number between 1 and 4 [1]~
 @302001 = ~Replacing Journal Lua functions~
 @302002 = ~Unable to get Journal Lua functions~
 @302003 = ~Encountered error replacing Journal Lua functions~
+@302004	= ~Incompatible with previously installed lefreut's Journal~
+
+@302300 = ~lefreut's Journal~
+@302301 = ~Replacing textflash menu~
+@302302 = ~Unable to replace textflash menu~
+@302303 = ~Replacing Journal Lua code block~
+@302304 = ~Unable to find Journal Lua code block~
+@302305 = ~Unable to replace Journal Lua code block~
+@302306 = ~Replacing JOURNAL menu~
+@302307 = ~Unable to replace JOURNAL menu~
+@302308 = ~Replacing JOURNAL_RECENT_EVENTS with EDIT_JOURNAL~
+@302309 = ~Unable to replace JOURNAL_RECENT_EVENTS menu~
+@302010	= ~Incompatible with previously installed Mr2150's Journal Fixes~
 
 @302800 = ~lefreut's Customize Screens Tweaks~
 @302801 = ~Replacing CHARACTER_CUSTOMIZE menu~

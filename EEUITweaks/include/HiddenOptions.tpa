@@ -18,24 +18,14 @@ WITH
 		COPY ~%PKGNAME%/copy/ModsOptions/M_HideO.lua~ ~override~
 		COPY ~%PKGNAME%/copy/ModsOptions/en_HideO.lua~ ~override~
 
-		// Look for previously installed 	
-		OUTER_SPRINT $UIMenuIF("MenuName") ~OPTIONS_HIDDEN~
-		OUTER_SPRINT $UIMenuIF("Body") ~~
-		LAUNCH_ACTION_MACRO UIMenuGetMenu
+		// Append Hidden Game Options to UI.MENU
+		PRINT @101002
+		SILENT
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/ModsOptions/modohidden3.menu~
+		LAUNCH_ACTION_MACRO UIMenuAppendFile
 		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 		BEGIN
-			PRINT @101002
-			SILENT
-			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/ModsOptions/modohidden3.menu~
-			LAUNCH_ACTION_MACRO UIMenuAppendFile
-			ACTION_IF NOT $UIMenuIF("Succeeded") THEN
-			BEGIN
-				FAIL @101004
-			END
-		END ELSE
-		BEGIN
-			// Already installed
-			PRINT @101003
+			FAIL @101004
 		END
 	END
 
@@ -47,25 +37,16 @@ WITH
 		COPY ~%PKGNAME%/copy/ModsOptions/M_HideO.lua~ ~override~
 		COPY ~%PKGNAME%/copy/ModsOptions/en_HideO.lua~ ~override~
 		COPY ~%PKGNAME%/copy/ModsOptions/modoimg1.bam~ ~override~
+		COPY ~%PKGNAME%/copy/ModsOptions/MOS5020.PVRZ~ ~override~
 
-		// Look for previously installed 	
-		OUTER_SPRINT $UIMenuIF("MenuName") ~OPTIONS_HIDDEN~
-		OUTER_SPRINT $UIMenuIF("Body") ~~
-		LAUNCH_ACTION_MACRO UIMenuGetMenu
+		// Append Hidden Game Options to UI.MENU
+		PRINT @101002
+		SILENT
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/ModsOptions/modohidden3.menu~
+		LAUNCH_ACTION_MACRO UIMenuAppendFile
 		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 		BEGIN
-			PRINT @101002
-			SILENT
-			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/ModsOptions/modohidden3.menu~
-			LAUNCH_ACTION_MACRO UIMenuAppendFile
-			ACTION_IF NOT $UIMenuIF("Succeeded") THEN
-			BEGIN
-				FAIL @101004
-			END
-		END ELSE
-		BEGIN
-			// Already installed
-			PRINT @101003
+			FAIL @101004
 		END
 	END
 
@@ -77,27 +58,18 @@ WITH
 		COPY ~%PKGNAME%/copy/ModsOptions/en_HideO.lua~ ~override~
 		COPY ~%PKGNAME%/copy/ModsOptions/M_HideO.lua~ ~override~
 		COPY ~%PKGNAME%/copy/ModsOptions/GUIMGX.MOS~ ~override~
+		COPY ~%PKGNAME%/copy/ModsOptions/MOS5018.PVRZ~ ~override~
 		COPY ~%PKGNAME%/copy/ModsOptions/MODOPBG2.BAM~ ~override~
+		COPY ~%PKGNAME%/copy/ModsOptions/MOS5022.PVRZ~ ~override~
 
-		// Look for previously installed 	
-		OUTER_SPRINT $UIMenuIF("MenuName") ~OPTIONS_HIDDEN~
-		OUTER_SPRINT $UIMenuIF("Body") ~~
-		LAUNCH_ACTION_MACRO UIMenuGetMenu
+		// Append Hidden Game Options to UI.MENU
+		PRINT @101002
+		SILENT
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/ModsOptions/modohidden2.menu~
+		LAUNCH_ACTION_MACRO UIMenuAppendFile
 		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 		BEGIN
-			// Append Hidden Game Options to UI.MENU
-			PRINT @101002
-			SILENT
-			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/ModsOptions/modohidden2.menu~
-			LAUNCH_ACTION_MACRO UIMenuAppendFile
-			ACTION_IF NOT $UIMenuIF("Succeeded") THEN
-			BEGIN
-				FAIL @101004
-			END
-		END ELSE
-		BEGIN
-			// Already installed
-			PRINT @101003
+			FAIL @101004
 		END
 	END
 
@@ -108,26 +80,16 @@ WITH
 		COPY ~%PKGNAME%/copy/ModsOptions/en_HideO.lua~ ~override~
 		COPY ~%PKGNAME%/copy/ModsOptions/M_HideO.lua~ ~override~
 		COPY ~%PKGNAME%/copy/ModsOptions/MODOPEE.BAM~ ~override~
+		COPY ~%PKGNAME%/copy/ModsOptions/MOS5023.PVRZ~ ~override~
 
-		// Look for previously installed 	
-		OUTER_SPRINT $UIMenuIF("MenuName") ~OPTIONS_HIDDEN~
-		OUTER_SPRINT $UIMenuIF("Body") ~~
-		LAUNCH_ACTION_MACRO UIMenuGetMenu
+		// Append Hidden Game Options to UI.MENU
+		PRINT @101002
+		SILENT
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/ModsOptions/modohidden4.menu~
+		LAUNCH_ACTION_MACRO UIMenuAppendFile
 		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 		BEGIN
-			// Append Hidden Game Options to UI.MENU
-			PRINT @101002
-			SILENT
-			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/ModsOptions/modohidden4.menu~
-			LAUNCH_ACTION_MACRO UIMenuAppendFile
-			ACTION_IF NOT $UIMenuIF("Succeeded") THEN
-			BEGIN
-				FAIL @101004
-			END
-		END ELSE
-		BEGIN
-			// Already installed
-			PRINT @101003
+			FAIL @101004
 		END
 	END
 
@@ -138,52 +100,32 @@ WITH
 		COPY ~%PKGNAME%/copy/ModsOptions/en_HideO.lua~ ~override~
 		COPY ~%PKGNAME%/copy/ModsOptions/M_HideO2.lua~ ~override~
 
-		// Look for previously installed 	
-		OUTER_SPRINT $UIMenuIF("MenuName") ~OPTIONS_HIDDEN~
-		OUTER_SPRINT $UIMenuIF("Body") ~~
-		LAUNCH_ACTION_MACRO UIMenuGetMenu
+		// Append Hidden Game Options to UI.MENU
+		PRINT @101002
+		SILENT
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/ModsOptions/modohidden1.menu~
+		LAUNCH_ACTION_MACRO UIMenuAppendFile
 		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 		BEGIN
-			// Append Hidden Game Options to UI.MENU
-			PRINT @101002
-			SILENT
-			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/ModsOptions/modohidden1.menu~
-			LAUNCH_ACTION_MACRO UIMenuAppendFile
-			ACTION_IF NOT $UIMenuIF("Succeeded") THEN
-			BEGIN
-				FAIL @101004
-			END
-		END ELSE BEGIN
-			// Already installed
-			PRINT @101003
+			FAIL @101004
 		END
 	END
 	
-	%IsEETSoD% %IsSoD%
+	%IsEETSoD% %IsSoD% %IsKRDS%
 	BEGIN
 		PRINT @17
 		SILENT
 		COPY ~%PKGNAME%/copy/ModsOptions/en_HideO.lua~ ~override~
 		COPY ~%PKGNAME%/copy/ModsOptions/M_HideO.lua~ ~override~
 
-		// Look for previously installed 	
-		OUTER_SPRINT $UIMenuIF("MenuName") ~OPTIONS_HIDDEN~
-		OUTER_SPRINT $UIMenuIF("Body") ~~
-		LAUNCH_ACTION_MACRO UIMenuGetMenu
+		// Append Hidden Game Options to UI.MENU
+		PRINT @101002
+		SILENT
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/ModsOptions/modohidden1.menu~
+		LAUNCH_ACTION_MACRO UIMenuAppendFile
 		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 		BEGIN
-			// Append Hidden Game Options to UI.MENU
-			PRINT @101002
-			SILENT
-			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/ModsOptions/modohidden1.menu~
-			LAUNCH_ACTION_MACRO UIMenuAppendFile
-			ACTION_IF NOT $UIMenuIF("Succeeded") THEN
-			BEGIN
-				FAIL @101004
-			END
-		END ELSE BEGIN
-			// Already installed
-			PRINT @101003
+			FAIL @101004
 		END
 	END
 	
