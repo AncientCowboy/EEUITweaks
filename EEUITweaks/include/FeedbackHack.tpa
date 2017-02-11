@@ -1,12 +1,12 @@
 /*******************************************************************************
- * OnOpenPatch
+ * ActionBarPatch1
  *
- * Inserts resizing code in OnOpen section
+ * Replaces contents of ACTION_BAR label
  *
  * Returns $UIMenuIF("Succeeded") 1 => Success, 0 => Failure
  *
  ******************************************************************************/
-DEFINE_ACTION_MACRO FeedbackHack.OnOpenPatch
+DEFINE_ACTION_MACRO FeedbackHack.ActionBarPatch1
 BEGIN
 	LOCAL_SPRINT tempstr $UIMenuIF("Body")
 	LOCAL_SPRINT adder ~~
@@ -24,19 +24,18 @@ BEGIN
 		~%tempstr%~
 	OUTER_SPRINT tempstr ~~
 
-	// Insert code at top of OnOpen
+	// Replace label definition
 	COPY - ~.../CounterInLine~ ~.../CounterInLine~
-		REPLACE_EVALUATE CASE_INSENSITIVE ~^[%TAB% ]*onopen%MWHITE%%MQUOTE%[%TAB% ]*%MEOL%~
+		REPLACE_EVALUATE CASE_INSENSITIVE ~^[%TAB% ]*label%MWHITE%{%MWHITE%area%MNOBRACE%+mosaic%MNOBRACE%+}.*%MEOL%~
 		BEGIN
-			SPRINT tempstr ~%MATCH0%%adder%~
 			SET found = 1
 		END
-		~%tempstr%~
+		~%adder%~
 
 	// Not found - give up
 	ACTION_IF NOT %found% THEN
 	BEGIN
-		LOG ~In FeedbackHack.OnOpenPatch - failed to find OnOpen section~
+		LOG ~In FeedbackHack.ActionBarPatch1 - failed to find label definition~
 		OUTER_SET $UIMenuIF("Succeeded") = 0
 	END ELSE 
 
@@ -54,7 +53,7 @@ END
 /*******************************************************************************
  * Feedback Buttons Hack Installation
  ******************************************************************************/	
-// Copy files
+// Copy common files
 PRINT @24
 SILENT
 COPY ~%PKGNAME%/copy/FeedbackHack/M_FeedHk.lua~ ~override~
@@ -79,60 +78,148 @@ ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
 	FAIL @120
 END
+
+// Patch label
 ACTION_MATCH 1
 WITH
-	%IsSoD% %IsEETSoD%
+	%IsSoD% %IsEETSoD% %IsTIWDonSoD%
 	BEGIN
-		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/newbuttons.menu~
+		ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2070~ THEN
+		BEGIN
+			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ABarLabel1Large.menu~
+		END ELSE
+		BEGIN
+			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/ABarLabel1Small.menu~
+		END
 	END
 	%IsSoDOverhaul%
 	BEGIN
-		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/newbuttons2.menu~
+		ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2070~ THEN
+		BEGIN
+			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ABarLabel2Large.menu~
+		END ELSE
+		BEGIN
+			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/ABarLabel2Small.menu~
+		END
 	END
-	%IsBG2% %IsEETBG2%
+	%IsBG2% %IsEETBG2% %IsTIWDonBG2%
 	BEGIN
-		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/newbuttons3.menu~
+		ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2070~ THEN
+		BEGIN
+			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ABarLabel3Large.menu~
+		END ELSE
+		BEGIN
+			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/ABarLabel3Small.menu~
+		END
 	END
 	%IsBGEE%
 	BEGIN
-		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/newbuttons4.menu~
+		ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2070~ THEN
+		BEGIN
+			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ABarLabel4Large.menu~
+		END ELSE
+		BEGIN
+			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/ABarLabel4Small.menu~
+		END
 	END
 	%IsLeUIBG2% %IsLeUISOD% %IsLeUIBG1% %IsEETLeUI%
 	BEGIN
-		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/newbuttons5.menu~
+		ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2070~ THEN
+		BEGIN
+			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ABarLabel6Large.menu~
+		END ELSE
+		BEGIN
+			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/ABarLabel6Small.menu~
+		END
+	END
+	%IsKRDS%
+	BEGIN
+		ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2070~ THEN
+		BEGIN
+			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ABarLabel7Large.menu~
+		END ELSE
+		BEGIN
+			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/ABarLabel7Small.menu~
+		END
+	END
+
+	DEFAULT
+		FAIL @15
+END
+LAUNCH_ACTION_MACRO FeedbackHack.ActionBarPatch1
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @121
+END
+
+// Add buttons
+ACTION_MATCH 1
+WITH
+	%IsSoD% %IsEETSoD% %IsTIWDonSoD%
+	BEGIN
+		ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2070~ THEN
+		BEGIN
+			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/newbuttons1Large.menu~
+		END ELSE
+		BEGIN
+			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/newbuttons1Small.menu~
+		END
+	END
+	%IsSoDOverhaul%
+	BEGIN
+		ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2070~ THEN
+		BEGIN
+			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/newbuttons2Large.menu~
+		END ELSE
+		BEGIN
+			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/newbuttons2Small.menu~
+		END
+	END
+	%IsBG2% %IsEETBG2% %IsTIWDonBG2%
+	BEGIN
+		ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2070~ THEN
+		BEGIN
+			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/newbuttons3Large.menu~
+		END ELSE
+		BEGIN
+			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/newbuttons3Small.menu~
+		END
+	END
+	%IsBGEE%
+	BEGIN
+		ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2070~ THEN
+		BEGIN
+			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/newbuttons4Large.menu~
+		END ELSE
+		BEGIN
+			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/newbuttons4Small.menu~
+		END
+	END
+	%IsLeUIBG2% %IsLeUISOD% %IsLeUIBG1% %IsEETLeUI%
+	BEGIN
+		ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2070~ THEN
+		BEGIN
+			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/newbuttons6Large.menu~
+		END ELSE
+		BEGIN
+			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/newbuttons6Small.menu~
+		END
+	END
+	%IsKRDS%
+	BEGIN
+		ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2070~ THEN
+		BEGIN
+			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/newbuttons7Large.menu~
+		END ELSE
+		BEGIN
+			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/newbuttons7Small.menu~
+		END
 	END
 
 	DEFAULT
 		FAIL @15
 END
 LAUNCH_ACTION_MACRO UIMenuAppendMenuElements
-ACTION_IF NOT $UIMenuIF("Succeeded") THEN
-BEGIN
-	FAIL @121
-END
-ACTION_MATCH 1
-WITH
-	%IsSoD% %IsEETSoD%
-	BEGIN
-		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/FeedbackHack/onopeninsert.lua~
-	END
-	%IsSoDOverhaul%
-	BEGIN
-		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/FeedbackHack/onopeninsert3.lua~
-	END
-	%IsBG2% %IsEETBG2% %IsLeUIBG2% %IsLeUISOD% %IsLeUIBG1% %IsEETLeUI%
-	BEGIN
-		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/FeedbackHack/onopeninsert2.lua~
-	END
-	%IsBGEE%
-	BEGIN
-		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/FeedbackHack/onopeninsert2.lua~
-	END
-
-	DEFAULT
-		FAIL @15
-END
-LAUNCH_ACTION_MACRO FeedbackHack.OnOpenPatch
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
 	FAIL @121
@@ -152,3 +239,91 @@ BEGIN
 	FAIL @21
 END
 
+// Copy configuration specific ACTION_BAR resources
+ACTION_MATCH 1
+WITH
+	%IsSoD% %IsEETSoD% %IsTIWDonSoD%
+	BEGIN
+		COPY ~%PKGNAME%/copy/FeedbackHack/SOD/GMSGSCRL.BAM~ ~override~
+		COPY ~%PKGNAME%/copy/FeedbackHack/SOD/MOS5055.PVRZ~ ~override~
+		ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2070~ THEN
+		BEGIN
+			COPY ~%PKGNAME%/copy/CommonActionBars/SOD/ABSODL.MOS~ ~override/GUWBTP10.MOS~
+			COPY ~%PKGNAME%/copy/CommonActionBars/SOD/MOS5042.PVRZ~ ~override~
+		END ELSE
+		BEGIN
+			COPY ~%PKGNAME%/copy/CommonActionBars/SOD/ABSODS.MOS~ ~override/GUWBTP10.MOS~
+			COPY ~%PKGNAME%/copy/CommonActionBars/SOD/MOS5040.PVRZ~ ~override~
+		END
+	END
+	%IsSoDOverhaul%
+	BEGIN
+		COPY ~%PKGNAME%/copy/FeedbackHack/DSP/GMSGSCRL.BAM~ ~override~
+		COPY ~%PKGNAME%/copy/FeedbackHack/DSP/MOS5056.PVRZ~ ~override~
+		ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2070~ THEN
+		BEGIN
+			COPY ~%PKGNAME%/copy/CommonActionBars/DSP/ABDSPL.MOS~ ~override/GUWBTP10.MOS~
+			COPY ~%PKGNAME%/copy/CommonActionBars/DSP/MOS5045.PVRZ~ ~override~
+		END ELSE
+		BEGIN
+			COPY ~%PKGNAME%/copy/CommonActionBars/DSP/ABDSPS.MOS~ ~override/GUWBTP10.MOS~
+			COPY ~%PKGNAME%/copy/CommonActionBars/DSP/MOS5043.PVRZ~ ~override~
+		END
+		DELETE ~override/GUWBTP10.png~
+	END
+	%IsBG2% %IsEETBG2% %IsTIWDonBG2%
+	BEGIN
+		COPY ~%PKGNAME%/copy/FeedbackHack/BG2/GMSGSCRL.BAM~ ~override~
+		COPY ~%PKGNAME%/copy/FeedbackHack/BG2/MOS5054.PVRZ~ ~override~
+		ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2070~ THEN
+		BEGIN
+			COPY ~%PKGNAME%/copy/CommonActionBars/BG2/ABBG2L.MOS~ ~override/GUWBTP10.MOS~
+			COPY ~%PKGNAME%/copy/CommonActionBars/BG2/MOS5039.PVRZ~ ~override~
+		END ELSE
+		BEGIN
+			COPY ~%PKGNAME%/copy/CommonActionBars/BG2/ABBG2S.MOS~ ~override/GUWBTP10.MOS~
+			COPY ~%PKGNAME%/copy/CommonActionBars/BG2/MOS5038.PVRZ~ ~override~
+		END
+	END
+	%IsBGEE%
+	BEGIN
+		COPY ~%PKGNAME%/copy/FeedbackHack/BG1/GMSGSCRL.BAM~ ~override~
+		COPY ~%PKGNAME%/copy/FeedbackHack/BG1/MOS5057.PVRZ~ ~override~
+		ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2070~ THEN
+		BEGIN
+			COPY ~%PKGNAME%/copy/CommonActionBars/BG1/ABBG1L.MOS~ ~override/GUWBTP10.MOS~
+			COPY ~%PKGNAME%/copy/CommonActionBars/BG1/MOS5048.PVRZ~ ~override~
+		END ELSE
+		BEGIN
+			COPY ~%PKGNAME%/copy/CommonActionBars/BG1/ABBG1S.MOS~ ~override/GUWBTP10.MOS~
+			COPY ~%PKGNAME%/copy/CommonActionBars/BG1/MOS5046.PVRZ~ ~override~
+		END
+	END
+	%IsLeUIBG2% %IsLeUISOD% %IsLeUIBG1% %IsEETLeUI%
+	BEGIN
+		COPY ~%PKGNAME%/copy/FeedbackHack/LUI/GMSGSCRL.BAM~ ~override~
+		COPY ~%PKGNAME%/copy/FeedbackHack/LUI/MOS5059.PVRZ~ ~override~
+		ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2070~ THEN
+		BEGIN
+			COPY ~%PKGNAME%/copy/CommonActionBars/LUI/ABLUIL.MOS~ ~override/GUIBAR.MOS~
+			COPY ~%PKGNAME%/copy/CommonActionBars/LUI/MOS5052.PVRZ~ ~override~
+		END ELSE
+		BEGIN
+			COPY ~%PKGNAME%/copy/CommonActionBars/LUI/ABLUIS.MOS~ ~override/GUIBAR.MOS~
+			COPY ~%PKGNAME%/copy/CommonActionBars/LUI/MOS5050.PVRZ~ ~override~
+		END
+	END
+	%IsKRDS%
+	BEGIN
+		COPY ~%PKGNAME%/copy/FeedbackHack/SOD/GMSGSCRL.BAM~ ~override~
+		COPY ~%PKGNAME%/copy/FeedbackHack/SOD/MOS5055.PVRZ~ ~override~
+		ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2070~ THEN
+		BEGIN
+			COPY ~%PKGNAME%/copy/CommonActionBars/KDS/ABKDSL.MOS~ ~override/GUWBTP10.MOS~
+			COPY ~%PKGNAME%/copy/CommonActionBars/KDS/MOS5053.PVRZ~ ~override~
+		END
+	END
+
+	DEFAULT
+		FAIL @15
+END

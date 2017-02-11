@@ -21,7 +21,7 @@ BEGIN
 	LOCAL_SET		lvllimit = 0
 
 // Build the 3 arrays we need to correlate base class names and class IDs
-	ACTION_IF %IsBG2% OR %IsEETBG2% OR %IsEETSoD% OR %IsLeUIBG2% OR %IsEETLeUI% THEN
+	ACTION_IF %IsBG2% OR %IsEETBG2% OR %IsEETSoD% OR %IsLeUIBG2% OR %IsEETLeUI% OR %IsTIWDonBG2% THEN
 	BEGIN
 		OUTER_SPRINT target2da ~clastext.2DA~
 		OUTER_SET clasmincol = 10
@@ -437,6 +437,13 @@ BEGIN
 			OUTER_SET Y1 = 1
 			OUTER_SET W1 = (0 - 3)
 			OUTER_SET H1 = (0 - 2)
+		END
+		%IsTIWDonBG2% %IsTIWDonSoD%
+		BEGIN
+			OUTER_SET X1 = 3
+			OUTER_SET Y1 = 0
+			OUTER_SET W1 = (0 - 1)
+			OUTER_SET H1 = (0 - 3)
 		END
 		DEFAULT
 			LOG ~No platform match~

@@ -27,7 +27,7 @@ WITH
 	BEGIN
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/AdulsResizeButtons/msgbuttonssod.menu~
 	END
-	%IsBG2% %IsEETBG2%
+	%IsBG2% %IsEETBG2% %IsTIWDonBG2% %IsTIWDonSoD%
 	BEGIN
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/AdulsResizeButtons/msgbuttonsbg2.menu~
 	END

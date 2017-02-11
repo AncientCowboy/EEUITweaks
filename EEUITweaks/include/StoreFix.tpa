@@ -92,6 +92,53 @@ BEGIN
 	COPY - ~EmptyInlineTemplate~ ~.../CounterInline~
 END
 
+/*******************************************************************************
+ * PatchLowerPanel2
+ * Replaces align and optional offset lines with 'align center center' and
+ * 'offset 0 580'
+ *
+ * On return $UIMenuIF("Succeeded") is 1 on success, 0 on error
+ *
+ ******************************************************************************/
+DEFINE_ACTION_MACRO StoreFix.PatchLowerPanel2
+BEGIN
+	LOCAL_SPRINT tempstr $UIMenuIF("Body")
+	LOCAL_SPRINT adder ~align center center%LE%%TAB%offset 0 580%LE%~
+	LOCAL_SET found = 0
+
+	// Put current menubody into inline file
+	COPY - ~ToInlineTemplate~ ~.../CounterInLine~
+		REPLACE_EVALUATE ~dummy~ BEGIN END
+		~%tempstr%~
+	OUTER_SPRINT tempstr ~~
+
+	// Search and replace
+	COPY - ~.../CounterInLine~ ~.../CounterInLine~
+		REPLACE_EVALUATE ~\(menu%MWHITE%{%MNOBRACE%+\)align.+%MEOL%\(%MWHITE%offset.+%MEOL%\)?~
+		BEGIN
+			SET found = 1
+		END
+		~%MATCH1%%adder%~
+
+	// Not found - give up
+	ACTION_IF NOT %found% THEN
+	BEGIN
+		LOG ~In StoreFix.PatchUpperPanel2 - failed to find align parameter. UI.MENU too unusual to handle - bailing out~
+		OUTER_SET $UIMenuIF("Succeeded") = 0
+	END ELSE 
+
+	// Success - copy .../CounterInLine to $UIMenuIF("Body")
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Body") ~~
+		OUTER_SET found = SIZE_OF_FILE ~.../CounterInLine~
+		COPY - ~.../CounterInLine~ ~.../CounterInLine~
+			READ_ASCII 0 $UIMenuIF("Body") (%found%-1)
+		
+		OUTER_SET $UIMenuIF("Succeeded") = 1
+	END
+	COPY - ~EmptyInlineTemplate~ ~.../CounterInline~
+END
+
 
 /*******************************************************************************
  * Store Screens Installation
@@ -242,10 +289,20 @@ ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
 	FAIL @141
 END
-LAUNCH_ACTION_MACRO StoreFix.PatchLowerPanel
-ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+ACTION_IF (IsTIWDonBG2 OR IsTIWDonSoD) THEN
 BEGIN
-	FAIL @142
+	LAUNCH_ACTION_MACRO StoreFix.PatchLowerPanel2
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @142
+	END
+END ELSE
+BEGIN
+	LAUNCH_ACTION_MACRO StoreFix.PatchLowerPanel
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @142
+	END
 END
 LAUNCH_ACTION_MACRO UIMenuUpdateMenu
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN

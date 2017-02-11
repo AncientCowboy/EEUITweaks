@@ -84,7 +84,7 @@ BEGIN
 	// Not found - fail
 	ACTION_IF NOT %found% THEN
 	BEGIN
-		LOG ~In CenteredDialog.WorldDialogConfirmPatch1 - failed to find alignment clause~
+		LOG ~In CenteredDialog.WorldDialogConfirmPatch2 - failed to find alignment clause~
 		OUTER_SET $UIMenuIF("Succeeded") = 0
 	END ELSE 
 
@@ -239,6 +239,14 @@ BEGIN // Replace
 		%IsSoD% %IsBG2onSoD%
 		BEGIN
 			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/CenteredDialog/worlddialogmenu.menu~
+		END
+		%IsTIWDonBG2%
+		BEGIN
+			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/CenteredDialog/worlddialogmenu5.menu~
+		END
+		%IsTIWDonSoD%
+		BEGIN
+			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/CenteredDialog/worlddialogmenu6.menu~
 		END
 		DEFAULT // Nothing left except Fail
 			FAIL @33

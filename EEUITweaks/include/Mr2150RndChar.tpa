@@ -103,6 +103,11 @@ BEGIN
 			OUTER_SPRINT fname ~%PKGNAME%/menu/Mr2150RndChar/chargenbuttonkrds.menu~
 		END
 
+		%IsTIWDonBG2% %IsTIWDonSoD%
+		BEGIN
+			OUTER_SPRINT fname ~%PKGNAME%/menu/Mr2150RndChar/chargenbuttoniwd.menu~
+		END
+
 		DEFAULT
 			OUTER_SET found = 0
 	END

@@ -1,0 +1,16 @@
+	button
+	{
+		area 804 5 25 25
+		bam GUISCRCW
+		sequence 1
+		frame 0
+		action "dragMessagesY(-100)"
+	}
+	button
+	{
+		area 804 25 25 25
+		bam GUISCRCW
+		sequence 1
+		frame 2
+		action "dragMessagesY(100)"
+	}

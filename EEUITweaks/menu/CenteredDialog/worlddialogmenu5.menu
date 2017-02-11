@@ -1,0 +1,85 @@
+menu
+{
+	name 'WORLD_DIALOG'
+	offset 0 -65
+	align center center
+	ignoreEsc
+	onOpen
+	"	
+		Infinity_PushMenu('WORLD_MESSAGES')
+		Infinity_PushMenu('WORLD_DIALOG_CONFIRM')
+		greySidebars()
+	"
+	onClose
+	"
+		Infinity_PopMenu('WORLD_DIALOG_CONFIRM')
+		Infinity_PopMenu('WORLD_DIALOG_CONFIRM')
+		ungreySidebars()
+	"
+	label
+	{
+		name "worldDialogBackground"
+		area -52 78 1044 253
+		rectangle 4
+	}
+	label
+	{
+		name "worldDialogPortraitArea"
+		area -32 96 110 171
+		bitmap lua "worldNPCDialogPortrait"
+	}
+	text
+	{
+		name "worldNPCDialog"
+		area 86 102 892 60
+		text lua "worldNPCDialogText"
+		text style "normal"
+		scrollbar	'GUISCRC'
+	}
+	list
+	{
+		column
+		{
+			width 100
+			label
+			{
+				area 0 0 -1 -1
+				enabled "dialogEntryGreyed()"
+				rectangle 1
+				rectangle opacity 100
+			}
+			text
+			{
+				area 0 0 -1 -1
+				text lua "getDialogEntryText(rowNumber)"
+				text style "normal"
+			}
+		}
+		name "worldPlayerDialogChoicesList"
+		area 86 170 798 264
+		rowheight dynamic
+		hideHighlight
+		table "worldPlayerDialogChoices"
+		var "worldPlayerDialogSelection"
+		scrollbar	'GUISCRC'
+		actionEnter
+		"
+			if(gameOptions.m_bConfirmDialog == true) then return end
+			glowTest = mouseoverRow
+			worldPlayerDialogSelection = mouseoverRow
+		"
+		actionExit
+		"
+			if(gameOptions.m_bConfirmDialog == true) then return end
+			glowTest = nil
+			worldPlayerDialogSelection = 0
+		"
+		action
+		"
+			--In confirm mode, just highlight the choice.
+			if(gameOptions.m_bConfirmDialog == true) then return end
+			worldScreen:OnDialogReplyClick(worldPlayerDialogChoices[worldPlayerDialogSelection].marker)
+			worldPlayerDialogSelection = 0
+		"
+	}
+}

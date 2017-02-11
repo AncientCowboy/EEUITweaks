@@ -16,6 +16,8 @@
  * IsLeUIBG1 - Lefreut's UI on BGEE no SoD
  * IsEETLeUI - EET with Lefreut's UI
  * IsKRDS - Kilivitz's Revised Dragon Scale UI on SoD
+ * IsTIWDonBG2 - trinit's IWD GUI on BG2
+ * IsTIWDonSoD - trinit's IWD GUI on SoD
  ******************************************************************************/
 DEFINE_ACTION_MACRO EEUIGetMenuEnv
 BEGIN
@@ -31,6 +33,8 @@ BEGIN
 	OUTER_SET IsLeUIBG1 = 0
 	OUTER_SET IsEETLeUI = 0
 	OUTER_SET IsKRDS = 0
+	OUTER_SET IsTIWDonBG2 = 0
+	OUTER_SET IsTIWDonSoD = 0
 
 	ACTION_IF GAME_IS ~eet~ THEN
 	BEGIN
@@ -57,9 +61,17 @@ BEGIN
 		BEGIN
 			OUTER_SET IsLeUIBG2 = 1
 			LOG ~IsLeUIBG2~
-		END ELSE BEGIN
-			OUTER_SET IsBG2 = 1
-			LOG ~IsBG2~
+		END ELSE
+		BEGIN
+			ACTION_IF FILE_EXISTS ~override/guiweidufile.png~ THEN
+			BEGIN
+				OUTER_SET IsTIWDonBG2 = 1
+				LOG ~IsTIWDonBG2~
+			END ELSE
+			BEGIN
+				OUTER_SET IsBG2 = 1
+				LOG ~IsBG2~
+			END
 		END
 	END
 
@@ -102,8 +114,15 @@ BEGIN
 							LOG ~IsKRDS~
 						END ELSE
 						BEGIN
-							OUTER_SET IsSoD = 1
-							LOG ~IsSoD~
+							ACTION_IF FILE_EXISTS ~override/guiweidufile.png~ THEN
+							BEGIN
+								OUTER_SET IsTIWDonSoD = 1
+								LOG ~IsTIWDonSoD~
+							END ELSE
+							BEGIN
+								OUTER_SET IsSoD = 1
+								LOG ~IsSoD~
+							END
 						END
 					END
 				END

@@ -161,6 +161,13 @@ WITH
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/Mr2150JrnlFix/journalmenusod.menu~
 	END
 
+	%IsTIWDonBG2% %IsTIWDonSoD%
+	BEGIN
+		PRINT @40
+		SILENT
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/Mr2150JrnlFix/journalmenubg2.menu~
+	END
+
 	DEFAULT
 		FAIL @15
 END

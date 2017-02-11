@@ -52,6 +52,8 @@
 @36   = ~Installing for LeUI BG1EE configuration~
 @37   = ~Installing for LeUI EET configuration~
 @38   = ~Installing for Kilivit's Revised Dragon Scale UI configuration~
+@39   = ~None of the possible options of this group are supported for your game configuration~
+@40   = ~Installing for trinit's IWD GUI for BG2EE/BG1EE with DJKajuru's Enhancement~
 
 ///////////////////////////////////////////////////////////////////////////////
 // Specific Menu patching/error messages
@@ -160,6 +162,7 @@
 @510  = ~Portrait Selectors~
 @520  = ~lefreut's Better Level Up Indicators~
 @530  = ~Mr2150's Auto-Identify Items~
+@540  = ~Journal Fixes and Tweaks~
 
 ///////////////////////////////////////////////////////////////////////////////
 // Component specific strings
@@ -380,6 +383,24 @@ Please enter return or a number between 1 and 4 [1]~
 
 @402000 = ~Adul's Improved Store Usability~
 @402001 = ~Incompatible with previously installed lefreut's BG2 Store Screen Tweaks~
+
+@403000 = ~lefleut's Inscribed Arcana~
+@403001 = ~Replacing Mage Book Lua code block~
+@403002 = ~Unable to find Mage Book Lua code block~
+@403003 = ~Unable to replace Mage Book Lua code block~
+@403004 = ~Replacing MAGE menu~
+@403005 = ~Unable to replace MAGE menu~
+@403006 = ~Unable to find Mage Contingency Lua code block~
+@403007 = ~Unable to replace Mage Contingency Lua code block~
+@403008 = ~Replacing MAGE_CONTINGENCY menu~
+@403009 = ~Unable to replace MAGE_CONTINGENCY menu~
+@403010 = ~Replacing POPUP_DETAILS menu~
+@403011 = ~Unable to replace POPUP_DETAILS menu~
+@403012 = ~Replacing Priest Scrolls Lua code block~
+@403013 = ~Unable to find Priest Scrolls Lua code block~
+@403014 = ~Unable to replace Priest Scrolls Lua code block~
+@403015 = ~Replacing PRIEST menu~
+@403016 = ~Unable to replace PRIEST menu~
 
 ///////////////////////////////////////////////////////////////////////////////
 // Multiplayer/General/Other Group

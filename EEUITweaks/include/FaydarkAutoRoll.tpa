@@ -172,7 +172,7 @@ WITH
 	BEGIN
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FaydarkAutoRoll/chargenabilitiesmenu2.menu~
 	END
-	%IsBG2% %IsBG2onSoD% %IsEETBG2%
+	%IsBG2% %IsBG2onSoD% %IsEETBG2% %IsTIWDonBG2% %IsTIWDonSoD%
 	BEGIN
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FaydarkAutoRoll/chargenabilitiesmenu3.menu~
 	END		

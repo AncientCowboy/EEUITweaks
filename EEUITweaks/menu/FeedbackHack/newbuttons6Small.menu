@@ -1,14 +1,8 @@
-	label
-	{
-		name "HackBack"
-		area 648 0 84 42
-		fill 0 0 0 150
-	}
 	button
 	{
 		name "FBHackUp"
-		area 648 2 43 40
-		bam GUIOSW
+		area 703 1 24 24
+		bam GMSGSCRL
 		sequence 0
 		frame 0
 		tooltip lua "t('FEEDBACK_HACK_EXPAND_TT')"
@@ -19,10 +13,10 @@
 	button
 	{
 		name "FBHackDown"
-		area 689 2 43 40
-		bam GUIOSW
-		sequence 1
-		frame 0
+		area 703 25 24 24
+		bam GMSGSCRL
+		sequence 0
+		frame 2
 		tooltip lua "t('FEEDBACK_HACK_SHRINK_TT')"
 		action "dragMessagesY(20)"
 		actionHold "dragMessagesY(10)"
