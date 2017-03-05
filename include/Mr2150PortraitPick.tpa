@@ -1,0 +1,225 @@
+/*******************************************************************************
+ * Mr2150's Portrait Picker Installation
+ ******************************************************************************/
+ACTION_IF %IsSoD% OR %IsEETSoD% THEN
+BEGIN // Find out about Scale UI
+	OUTER_SPRINT mrportraitpickscaleui ~~
+	OUTER_WHILE (NOT IS_AN_INT %mrportraitpickscaleui%) || (%mrportraitpickscaleui% < 1 ) || (%mrportraitpickscaleui% > 4)
+	BEGIN
+		PRINT @104001
+		ACTION_READLN mrportraitpickscaleui
+		ACTION_IF ~%mrportraitpickscaleui%~ STRING_EQUAL ~~
+		BEGIN
+			OUTER_SET mrportraitpickscaleui = 1
+		END
+	END
+END
+
+// Open UI.MENU
+PRINT @12
+SILENT
+LAUNCH_ACTION_MACRO UIMenuOpen
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @20
+END
+
+// Patch CHARGEN_PORTRAIT menu
+PRINT @158
+SILENT
+
+OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_PORTRAIT~
+ACTION_MATCH 1
+WITH
+	%IsSoD%
+	BEGIN		
+		PRINT @19
+		SILENT
+		ACTION_IF %mrportraitpickscaleui% = 1 THEN
+		BEGIN
+			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/Mr2150PortPicker/charportnonscalesod.menu~
+		END ELSE
+		BEGIN
+			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/Mr2150PortPicker/charportscaledsod.menu~
+		END
+	END
+
+	%IsEETSoD%
+	BEGIN		
+		PRINT @32
+		SILENT
+		ACTION_IF %mrportraitpickscaleui% = 1 THEN
+		BEGIN
+			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/Mr2150PortPicker/charportnonscalesod.menu~
+		END ELSE
+		BEGIN
+			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/Mr2150PortPicker/charportscaledsod.menu~
+		END
+	END
+
+	%IsKRDS%
+	BEGIN		
+		PRINT @38
+		SILENT
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/Mr2150PortPicker/charportscaledsod.menu~
+	END
+
+	%IsBG2onSoD%
+	BEGIN
+		PRINT @16
+		SILENT
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/Mr2150PortPicker/charportbg2.menu~
+	END
+
+	%IsBG2% 
+	BEGIN
+		PRINT @28
+		SILENT
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/Mr2150PortPicker/charportbg2.menu~
+	END
+
+	%IsEETBG2% 
+	BEGIN
+		PRINT @31
+		SILENT
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/Mr2150PortPicker/charportbg2.menu~
+	END
+
+	%IsLeUIBG2% 
+	BEGIN
+		PRINT @34
+		SILENT
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/Mr2150PortPicker/charportbg2.menu~
+	END
+
+	%IsLeUISOD% 
+	BEGIN
+		PRINT @35
+		SILENT
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/Mr2150PortPicker/charportbg2.menu~
+	END
+
+	%IsLeUIBG1% 
+	BEGIN
+		PRINT @36
+		SILENT
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/Mr2150PortPicker/charportbg2.menu~
+	END
+
+	%IsEETLeUI% 
+	BEGIN
+		PRINT @37
+		SILENT
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/Mr2150PortPicker/charportbg2.menu~
+	END
+
+	DEFAULT
+		FAIL @15
+END
+
+LAUNCH_ACTION_MACRO UIMenuReplaceMenuMixed
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @160
+END
+
+ACTION_IF %IsLeUIBG2% OR %IsLeUISOD% OR %IsLeUIBG1% OR %IsEETLeUI% THEN
+BEGIN
+	PRINT @103001
+	SILENT
+	OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_GENDER~
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/BillyYankMultiPort/genderLeUI1.menu~
+	LAUNCH_ACTION_MACRO UIMenuReplaceMenu
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @103002
+	END
+END
+
+// Close up
+PRINT @13
+SILENT
+LAUNCH_ACTION_MACRO UIMenuClose
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @21
+END
+
+// Copying language specific files
+PRINT @30
+PRINT ~%EE_LANGUAGE%~
+SILENT
+ACTION_MATCH ~%EE_LANGUAGE%~
+WITH
+	~cs_CZ~
+	BEGIN
+		COPY ~%PKGNAME%/copy/Mr2150PortPicker/M_PPcsCZ.lua~ ~override~
+	END
+
+	~de_DE~
+	BEGIN
+		COPY ~%PKGNAME%/copy/Mr2150PortPicker/M_PPdeDE.lua~ ~override~
+	END
+	
+	~fr_FR~
+	BEGIN
+		COPY ~%PKGNAME%/copy/Mr2150PortPicker/M_PPfrFR.lua~ ~override~
+	END
+	
+	~it_IT~
+	BEGIN
+		COPY ~%PKGNAME%/copy/Mr2150PortPicker/M_PPitIT.lua~ ~override~
+	END
+	
+	~pl_PL~
+	BEGIN
+		COPY ~%PKGNAME%/copy/Mr2150PortPicker/M_PPplPL.lua~ ~override~
+	END
+	
+	~pt_BR~
+	BEGIN
+		COPY ~%PKGNAME%/copy/Mr2150PortPicker/M_PPptBR.lua~ ~override~
+	END
+	
+	DEFAULT
+		COPY ~%PKGNAME%/copy/Mr2150PortPicker/M_PPusEN.lua~ ~override~
+
+END
+
+// Copying ui specific files
+PRINT @17
+SILENT
+ACTION_MATCH 1
+WITH
+	%IsSoD% %IsEETSoD% %IsKRDS%
+	BEGIN
+		COPY ~%PKGNAME%/copy/Mr2150PortPicker/M_nicks.lua~ ~override~
+		COPY ~%PKGNAME%/copy/Mr2150PortPicker/NOPORTMD.BMP~ ~override~
+	END
+
+	%IsBG2% %IsBG2onSoD% %IsEETBG2% %IsLeUIBG2% %IsEETLeUI%
+	BEGIN
+		COPY ~%PKGNAME%/copy/Mr2150PortPicker/M_nicks.lua~ ~override~
+		COPY ~%PKGNAME%/copy/Mr2150PortPicker/NOPORTMD.BMP~ ~override~
+		COPY ~%PKGNAME%/copy/Mr2150PortPicker/BG2~ ~override~
+	END
+
+	%IsLeUISOD% %IsLeUIBG1%
+	BEGIN
+		COPY ~%PKGNAME%/copy/Mr2150PortPicker/M_nicks.lua~ ~override~
+		COPY ~%PKGNAME%/copy/Mr2150PortPicker/NOPORTMD.BMP~ ~override~
+		COPY ~%PKGNAME%/copy/Mr2150PortPicker/BG2~ ~override~
+		COPY ~%PKGNAME%/copy/BillyYankMultiPort/GENDER~ ~override~
+	END
+
+	DEFAULT
+		FAIL @15
+END
+
+// Create default M_BG.lua if one doesn't already exist
+ACTION_IF (NOT FILE_EXISTS_IN_GAME ~M_BG.lua~) BEGIN
+	COPY ~%PKGNAME%/copy/Mr2150PortPicker/M_BG.lua~ ~override~
+END
+
+
+

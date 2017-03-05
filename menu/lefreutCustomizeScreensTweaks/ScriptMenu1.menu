@@ -1,0 +1,203 @@
+menu
+{
+	name 'CHARACTER_SCRIPT'
+	align center center
+	ignoreesc
+	onOpen
+	"
+		currentPanelID = const.SCRIPT_ID
+		Infinity_OnScriptItemSelect(scriptList_idx - 1)
+		showingSmartOptions = (scriptList_idx == 2)
+		scriptList_savedIdx = scriptList_idx
+
+		for index, var in pairs(scriptOptions) do
+			var[5] = characterScreen:GetTempSmartScriptLocal(var[3])
+			if var[5] == false then
+				var[4] = 0
+			else
+				var[4] = 2
+			end
+		end
+	"
+	label
+	{
+		area 0 0 864 710
+		mosaic LUICHISD
+	}
+	label
+	{
+		area 82 12 700 40
+		text "SCRIPT_TITLE"
+		text style 'title'
+	}
+	label
+	{
+		area 36 120 788 44
+		text	"CURRENT_SCRIPT_LABEL"
+		text style	'label'
+	}
+	text
+	{
+		area 450 528 366 80
+		text lua "scriptDescription"
+		scrollbar 'LUISCRC'
+		text style	normal
+		enabled "showingSmartOptions == true"
+	}
+	text
+	{
+		area 450 198 366 410
+		text lua "scriptDescription"
+		scrollbar 'LUISCRC'
+		text style	normal
+		text color D
+		enabled "showingSmartOptions == false"
+	}
+
+	list
+	{
+		column
+		{
+			width 100
+			label
+			{
+				enabled "rowNumber ~= scriptList_idx and rowNumber ~= scriptList_hover"
+				area 0 0 -1 -1
+				text lua "formatScriptName(scriptList[rowNumber])"
+				text style	"normal"
+				text color D
+			}
+			label
+			{
+				enabled "rowNumber == scriptList_idx and rowNumber ~= scriptList_hover"
+				area 0 0 -1 -1
+				text lua "formatScriptName(scriptList[rowNumber])"
+				text style	"normal"
+				text color S
+			}
+			label
+			{
+				enabled "rowNumber == scriptList_hover"
+				area 0 0 -1 -1
+				text lua "formatScriptName(scriptList[rowNumber])"
+				text style	"normal"
+				text color H
+			}
+		}
+		area 46 198 354 410
+		rowheight	dynamic
+		hidehighlight
+		table		"scriptList"
+		var			"scriptList_idx"
+		scrollbar	'LUISCRC'
+		action
+		"
+			if scriptList[scriptList_idx] == ' ' or scriptList_idx == -1 then
+				scriptList_idx = scriptList_savedIdx
+			end
+
+			Infinity_OnScriptItemSelect(scriptList_idx - 1)
+			showingSmartOptions = (scriptList_idx == 2)
+			scriptList_savedIdx = scriptList_idx
+		"
+		actionEnter	"scriptList_hover = mouseoverRow"
+		actionExit	"scriptList_hover = 0"
+	}
+
+	list
+	{
+		column
+		{
+			width 80
+			label
+			{
+				enabled "rowNumber ~= selScriptOpt and rowNumber ~= hoverScriptOpt"
+				area 0 0 -1 -1
+				text lua "t(scriptOptions[rowNumber][1])"
+				text style	"normal"
+				text align right center
+				text color D
+			}
+			label
+			{
+				enabled "rowNumber == selScriptOpt and rowNumber ~= hoverScriptOpt"
+				area 0 0 -1 -1
+				text lua "t(scriptOptions[rowNumber][1])"
+				text style	"normal"
+				text align right center
+				text color S
+			}
+			label
+			{
+				enabled "rowNumber == hoverScriptOpt"
+				area 0 0 -1 -1
+				text lua "t(scriptOptions[rowNumber][1])"
+				text style	"normal"
+				text align right center
+				text color H
+			}
+		}
+		column
+		{
+			width 20
+			label
+			{
+				area	20 4 -1 -1
+				bam		ROUNDBUT
+				align	left center
+				frame	lua "scriptOptions[rowNumber][4]"
+			}
+		}
+		area 450 198 366 310
+		rowheight	50
+		hidehighlight
+		table		"scriptOptions"
+		var			selScriptOpt
+		scrollbar	'LUISCRC'
+		enabled 	"showingSmartOptions == true"
+		action
+		"
+			scriptDescription = t(scriptOptions[selScriptOpt][2])
+			if(cellNumber == 2) then
+				Infinity_PlaySound('GAM_09')
+				handleScriptOptionChange(selScriptOpt)
+			end
+		"
+		actionEnter	"hoverScriptOpt = mouseoverRow"
+		actionExit	"hoverScriptOpt = 0"
+	}
+
+	button
+	{
+		bam LUIOSTUL
+		area 210 653 234 44
+		text style "button"
+		text "DONE_BUTTON"
+		action
+		"
+			if showingSmartOptions == true then
+				for index, var in pairs(scriptOptions) do
+					characterScreen:SetTempSmartScriptLocal(var[3], var[5])
+				end
+			end
+
+			characterScreen:OnDoneButtonClick()
+			Infinity_PopMenu()
+			currentPanelID = 17
+		"
+	}
+	button
+	{
+		on escape
+		bam LUIOSTUR
+		area 464 653 234 44
+		text style "button"
+		text "CANCEL_BUTTON"
+		action
+		"
+			characterScreen:OnCancelButtonClick()
+			Infinity_PopMenu()
+			currentPanelID = 17
+		"
+	}
+}

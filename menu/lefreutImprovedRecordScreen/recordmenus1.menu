@@ -1,0 +1,655 @@
+`
+-- Override
+function updateAttrTable()
+	if (characters[currentID] ~= nil) then
+		attributeItems = {
+			{ characters[currentID].attr.str, 9582 },
+			{ characters[currentID].attr.dex, 9584 },
+			{ characters[currentID].attr.con, 9583 },
+			{ characters[currentID].attr.int, 9585 },
+			{ characters[currentID].attr.wis, 9586 },
+			{ characters[currentID].attr.cha, 9587 }
+		}
+	end
+end
+-- Override
+function characterDescString(char)
+	return Infinity_FetchString(char.gender) .. "\n" .. Infinity_FetchString(char.race) .. "\n" .. char.class .. "\n" .. Infinity_FetchString(char.alignment)
+end
+-- Override
+function displaySTR()
+	local txt = characters[currentID].attr.str.current
+
+	if (characters[currentID].attr.str.current == 18 and characters[currentID].attr.str.extra ~= 0) then
+		txt = txt .. '/' .. string.format('%02d', characters[currentID].attr.str.extra % 100)
+	end
+	if (characters[currentID].attr.str.current > characters[currentID].attr.str.base or characters[currentID].attr.str.extra > characters[currentID].attr.str.extraBase) then
+		txt = '^G' .. txt .. '^-'
+	end
+	if (characters[currentID].attr.str.current < characters[currentID].attr.str.base or characters[currentID].attr.str.extra < characters[currentID].attr.str.extraBase) then
+		txt = '^R' .. txt .. '^-'
+	end
+	return txt
+end
+-- Override
+function displayBuff(current, base)
+	if(current > base) then
+		return '^G' .. current .. '^-'
+	elseif (current < base) then
+		return '^R' .. current .. '^-'
+	end
+	return current
+end
+-- Override
+function displayAttr(index)
+	if (index == 1) then
+		return displaySTR()
+	else
+		return displayBuff(attributeItems[index][1].current, attributeItems[index][1].base)
+	end
+end
+-- Override
+function CurrentlyInGame()
+	return characterScreen:IsInGame()
+end
+
+function buildRecordStats()
+	recordStats = {}
+
+	table.insert(recordStats, {1,t("ABILITIES_TITLE")})
+	for i=1,6 do
+		table.insert(recordStats, {2,Infinity_FetchString(attributeItems[i][1].strRef),displayAttr(i)})
+	end
+
+	table.insert(recordStats, {1,t("COMBAT_STATS_LABEL")})
+	table.insert(recordStats, {2,t("ARMOR_CLASS_LABEL"),characters[currentID].AC.current})
+	table.insert(recordStats, {2,t("HIT_POINTS_LABEL"),characters[currentID].HP.current .. ' / ' .. characters[currentID].HP.max})
+	table.insert(recordStats, {2,t("THAC0_LABEL"),characters[currentID].THAC0.current})
+	if characters[currentID].THAC0.offhand then
+		table.insert(recordStats, {2,t("OFF_HAND_THAC0"),characters[currentID].THAC0.offhand})
+	else
+		table.insert(recordStats, {2,t("OFF_HAND_THAC0"),'-'})
+	end
+	table.insert(recordStats, {2,t("DAMAGE_LABEL"),characters[currentID].damage.min .. ' - ' .. characters[currentID].damage.max})
+	if characters[currentID].damage.minOffhand and characters[currentID].damage.maxOffhand then
+		table.insert(recordStats, {2,t("OFF_HAND_DAMAGE"),characters[currentID].damage.minOffhand .. ' - ' .. characters[currentID].damage.maxOffhand})
+	else
+		table.insert(recordStats, {2,t("OFF_HAND_DAMAGE"),'-'})
+	end
+	table.insert(recordStats, {2,t("NUM_ATTACKS_LABEL"),characters[currentID].proficiencies.numAttacks.current})
+
+	table.insert(recordStats, {1,t("SAVING_THROWS_LABEL")})
+	for s in (characters[currentID].proficiencies.savingThrows.."\n"):gmatch("(.-)\n") do
+		local pos = s:find(":", 1)
+		table.insert(recordStats, {2,s:sub(1, pos - 1),s:sub(pos + 2)})
+	end
+
+	return recordStats
+end
+function empty(t)
+	if next(t) == nil then
+		return true
+	end
+	return false
+end
+function buildRecordInfos()
+	recordInfos = {}
+
+	if characters[currentID].classlevel.second then
+		local strRef = characters[currentID].classlevel.second.active and 19721 or 19722
+		table.insert(recordInfos, {1,Infinity_FetchString(strRef)})
+		table.insert(recordInfos, {1,""})
+	end
+	table.insert(recordInfos, {1,characters[currentID].classlevel.first.details})
+	if characters[currentID].classlevel.second then
+		table.insert(recordInfos, {1,""})
+		table.insert(recordInfos, {1,characters[currentID].classlevel.second.details})
+	end
+	if characters[currentID].classlevel.third then
+		table.insert(recordInfos, {1,""})
+		table.insert(recordInfos, {1,characters[currentID].classlevel.third.details})
+	end
+
+	if not empty(characters[currentID].statusEffects) then
+		table.insert(recordInfos, {1,""})
+		for k, v in pairs(characters[currentID].statusEffects) do
+			table.insert(recordInfos, {2,v})
+		end
+	end
+
+	table.insert(recordInfos, {1,""})
+	table.insert(recordInfos, {1,t("PROFICIENCIES_LABEL")})
+	local lore = Infinity_FetchString(characters[currentID].proficiencies.lore.strRef) .. ": " ..  characters[currentID].proficiencies.lore.current
+	table.insert(recordInfos, {1,lore})
+	local reputation = Infinity_FetchString(characters[currentID].proficiencies.reputation.strRef) .. ": " ..  characters[currentID].proficiencies.reputation.current
+	table.insert(recordInfos, {1,reputation})
+	local script = t("CURRENT_SCRIPT_LABEL") .. ": " ..  characters[currentID].proficiencies.currentScript
+	table.insert(recordInfos, {1,script})
+
+	if not empty(characters[currentID].proficiencies.class_skills) then
+		table.insert(recordInfos, {1,""})
+		table.insert(recordInfos, {1,t("SKILLS_LABEL")})
+		for k, v in ipairs(characters[currentID].proficiencies.class_skills) do
+			local skills = Infinity_FetchString(v.strRef) .. ": " .. v.current
+			table.insert(recordInfos, {1,skills})
+		end
+	end
+
+	table.insert(recordInfos, {1,""})
+	table.insert(recordInfos, {1,t("FIGHTING_STYLES_LABEL")})
+	table.insert(recordInfos, {1,characters[currentID].proficiencies.weapons.current})
+	if characters[currentID].proficiencies.fightingstyles.current ~= "" then
+		table.insert(recordInfos, {1,characters[currentID].proficiencies.fightingstyles.current})
+	end
+
+	table.insert(recordInfos, {1,""})
+	table.insert(recordInfos, {1,t("ABILITIES_TITLE")})
+	for k, v in ipairs(characters[currentID].proficiencies.ability) do
+		table.insert(recordInfos, {1,v.current})
+	end
+
+	table.insert(recordInfos, {1,""})
+	table.insert(recordInfos, {1,t("RESISTANCES_LABEL")})
+	table.insert(recordInfos, {1,characters[currentID].proficiencies.resistances})
+
+	return recordInfos
+end
+`
+menu
+{
+	name 'CHARACTER'
+	modal lua "not CurrentlyInGame()"
+	align center center
+	ignoreEsc
+	onopen
+	"
+		if(CurrentlyInGame()) then
+			pushSidebars()
+		end
+		updateAttrTable()
+	"
+	onclose
+	"
+		popSidebars()
+	"
+
+	label
+	{
+		area 0 0 864 710
+		mosaic LUIREC2
+	}
+	label
+	{
+		area 82 0 700 42
+		text "CHARACTER_SHEET_LABEL"
+		text style "title"
+	}
+	label
+	{
+		area 318 44 230 32
+		text lua "characters[currentID].name"
+		text style "label"
+	}
+	label
+	{
+		area 332 108 200 314
+		bitmap lua "characters[currentID].portrait"
+	}
+
+	list
+	{
+		column
+		{
+			width 100
+			label
+			{
+				area		0 0 280 30
+				mosaic		INVSEP2
+				respectClipping
+				enabled		"recordStats[rowNumber][1] == 1"
+				text		lua "recordStats[rowNumber][2]"
+				text style  'normal'
+				text color 	'D'
+				text point 10
+				text align	left bottom
+				text useFontZoom 0
+				pad 10 0 0 2
+			}
+			label
+			{
+				area		0 0 205 23
+				enabled		"recordStats[rowNumber][1] == 2"
+				text		lua "recordStats[rowNumber][2]"
+				text style 'normal'
+				text align	right center
+			}
+			label
+			{
+				area		220 0 70 23
+				enabled		"recordStats[rowNumber][1] == 2"
+				text		lua "recordStats[rowNumber][3]"
+				text style 'normal'
+				text align left center
+			}
+		}
+		area 28 78 296 510
+		rowheight dynamic
+		table "buildRecordStats()"
+		hidehighlight
+	}
+	list
+	{
+		column
+		{
+			width 100
+			label
+			{
+				area		0 0 -1 -1
+				enabled		"recordInfos[rowNumber][1] == 1"
+				text		lua "recordInfos[rowNumber][2]"
+				text style 'parchment'
+				text align	left center
+				text color D
+			}
+			label
+			{
+				area		0 2 22 -1
+				enabled		"recordInfos[rowNumber][1] == 2"
+				bam			lua "recordInfos[rowNumber][2].bam"
+				sequence	lua "recordInfos[rowNumber][2].current"
+				text align	left center
+			}
+			label
+			{
+				area		22 0 -1 -1
+				text		lua "Infinity_FetchString(recordInfos[rowNumber][2].strRef)"
+				text style  'parchment'
+				text align	left center
+				text color D
+			}
+		}
+		area 548 84 296 502
+		rowheight dynamic
+		table "buildRecordInfos()"
+		hidehighlight
+		scrollbar 'LUISCRC'
+	}
+	label
+	{
+		area 332 440 200 96
+		text lua "characterDescString(characters[currentID])"
+		text style 'normal'
+		text align center center
+	}
+	button
+	{
+		clickable lua "CurrentlyInGame() and characterScreen:IsLevelUpButtonClickable()"
+		area 331 546 201 44
+		bam LUIOSTUM
+		text 'LEVEL_UP_BUTTON'
+		text style "button"
+		action
+		"
+			characterScreen:OnLevelUpButtonClick()
+		"
+	}
+	button
+	{
+		enabled "not CurrentlyInGame()"
+		area 331 546 201 44
+		bam LUIOSTUM
+		text 'DONE_BUTTON'
+		text style "button"
+		action
+		"
+			Infinity_PopMenu()
+		"
+	}
+	button
+	{
+		area 36 610 234 44
+		bam LUIOSTUL
+		text 'INFORMATION_BUTTON'
+		text style "button"
+		action
+		"
+			Infinity_PushMenu('CHARACTER_INFORMATION')
+		"
+	}
+	button
+	{
+		clickable lua "CurrentlyInGame() and characterScreen:IsReformPartyButtonClickable()"
+		area 36 654 234 44
+		bam LUIOSTLL
+		text 'REFORM_PARTY_BUTTON'
+		text style "button"
+		action
+		"
+			characterScreen:OnReformPartyButtonClick()
+		"
+	}
+	button
+	{
+		clickable lua "CurrentlyInGame() and characterScreen:IsDualClassButtonClickable()"
+		area 331 610 201 44
+		bam LUIOSTUM
+		text 'DUAL_CLASS_BUTTON'
+		text style "button"
+		action
+		"
+			characterScreen:OnDualClassButtonClick()
+		"
+	}
+	button
+	{
+		area 331 654 201 44
+		bam LUIOSTLM
+		text 'KIT_DESC_LABEL'
+		text style "button"
+		action
+		"
+			Infinity_PushMenu('CHARACTER_KIT')
+		"
+	}
+	button
+	{
+		clickable lua "CurrentlyInGame()"
+		area 598 610 234 44
+		bam LUIOSTUR
+		text 'CUSTOMIZE_BUTTON'
+		text style "button"
+		action
+		"
+			characterScreen:OnCustomizeButtonClick()
+		"
+	}
+	button
+	{
+		clickable lua "CurrentlyInGame() and characters[currentID].PC == 1"
+		area 598 654 234 44
+		bam LUIOSTLR
+		text 'EXPORT_BUTTON'
+		text style "button"
+		action
+		"
+			characterScreen:OnExportButtonClick()
+		"
+	}
+}
+menu
+{
+	name 'CHARACTER_INFORMATION'
+	align center center
+	modal
+	ignoreesc
+	label
+	{
+		area 0 0 864 710
+		mosaic LUISTATS
+	}
+	label
+	{
+		area 82 12 700 40
+		text lua "Infinity_FetchString(13707)"
+		text style 'title'
+	}
+	label
+	{
+		area 36 388 100 30
+		text "CHAPTER_LABEL"
+		text style 'label'
+		text align center center
+	}
+	label
+	{
+		area 724 388 100 30
+		text "GAME_LABEL"
+		text style 'label'
+		text align center center
+	}
+
+	label
+	{
+		area 36 116 418 63
+		text lua "Infinity_FetchString(characters[currentID].Stats.bestenemy.strRef)"
+		text style 'label'
+		text align center center
+	}
+	label
+	{
+		area 488 116 336 63
+		text lua "characters[currentID].Stats.bestenemy.current"
+		text style 'normal'
+		text align center center
+	}
+	label
+	{
+		area 36 179 418 63
+		text lua "Infinity_FetchString(characters[currentID].Stats.timespent.strRef)"
+		text style 'label'
+		text align center center
+	}
+	label
+	{
+		area 488 179 336 63
+		text lua "characters[currentID].Stats.timespent.current"
+		text style 'normal'
+		text align center center
+	}
+	label
+	{
+		area 36 242 418 63
+		text lua "Infinity_FetchString(characters[currentID].Stats.favspell.strRef)"
+		text style 'label'
+		text align center center
+	}
+	label
+	{
+		area 488 242 336 63
+		text lua "characters[currentID].Stats.favspell.current"
+		text style 'normal'
+		text align center center
+	}
+	label
+	{
+		area 36 305 418 63
+		text lua "Infinity_FetchString(characters[currentID].Stats.favweapon.strRef)"
+		text style 'label'
+		text align center center
+	}
+	label
+	{
+		area 488 305 336 63
+		text lua "characters[currentID].Stats.favweapon.current"
+		text style 'normal'
+		text align center center
+	}
+
+	label
+	{
+		area 36 440 100 43
+		text lua "characters[currentID].Stats.partychapxp.current .. '%'"
+		text style 'normal'
+		text align center center
+	}
+	label
+	{
+		area 172 440 518 43
+		text lua "Infinity_FetchString(characters[currentID].Stats.partychapxp.strRef)"
+		text style 'label'
+		text align center center
+	}
+	label
+	{
+		area 724 440 100 43
+		text lua "characters[currentID].Stats.partygamexp.current .. '%'"
+		text style 'normal'
+		text align center center
+	}
+
+	label
+	{
+		area 36 483 100 43
+		text lua "characters[currentID].Stats.partychapkills.current .. '%'"
+		text style 'normal'
+		text align center center
+	}
+	label
+	{
+		area 172 483 518 43
+		text lua "Infinity_FetchString(characters[currentID].Stats.partychapkills.strRef)"
+		text style 'label'
+		text align center center
+	}
+	label
+	{
+		area 724 483 100 43
+		text lua "characters[currentID].Stats.partygamekills.current .. '%'"
+		text style 'normal'
+		text align center center
+	}
+
+	label
+	{
+		area 36 526 100 43
+		text lua "characters[currentID].Stats.chapxpvalue.current"
+		text style 'normal'
+		text align center center
+	}
+	label
+	{
+		area 172 526 518 43
+		text lua "Infinity_FetchString(characters[currentID].Stats.chapxpvalue.strRef)"
+		text style 'label'
+		text align center center
+	}
+	label
+	{
+		area 724 526 100 43
+		text lua "characters[currentID].Stats.gamexpvalue.current"
+		text style 'normal'
+		text align center center
+	}
+
+	label
+	{
+		area 36 569 100 43
+		text lua "characters[currentID].Stats.chapkills.current"
+		text style 'normal'
+		text align center center
+	}
+	label
+	{
+		area 172 569 518 43
+		text lua "Infinity_FetchString(characters[currentID].Stats.chapkills.strRef)"
+		text style 'label'
+		text align center center
+	}
+	label
+	{
+		area 724 569 100 43
+		text lua "characters[currentID].Stats.gamekills.current"
+		text style 'normal'
+		text align center center
+	}
+
+	button
+	{
+		on escape
+		bam LUIOSTUL
+		area 210 653 234 44
+		text style "button"
+		text "DONE_BUTTON"
+		action
+		"
+			Infinity_PopMenu()
+		"
+	}
+	button
+	{
+		bam LUIOSTUR
+		area 464 653 234 44
+		text style "button"
+		text "BIOGRAPHY_BUTTON"
+		action
+		"
+			Infinity_PushMenu('CHARACTER_BIO')
+		"
+	}
+}
+
+menu
+{
+	name 'CHARACTER_BIO'
+	align center center
+	ignoreesc
+	label
+	{
+		area 0 0 864 710
+		mosaic LUICHISE
+	}
+	label
+	{
+		area 82 12 700 40
+		text "BIOGRAPHY_TITLE"
+		text style 'title'
+	}
+	text
+	{
+		area 44 198 768 410
+		text lua "Infinity_FetchString(characters[currentID].biography)"
+		scrollbar 'LUISCRC'
+		text style parchment
+		text color D
+	}
+	button
+	{
+		on escape
+		bam LUIOSTCL
+		area 308 653 300 44
+		text style "button"
+		text "DONE_BUTTON"
+		action
+		"
+			Infinity_PopMenu()
+		"
+	}
+}
+menu
+{
+	name 'CHARACTER_KIT'
+	align center center
+	modal
+	ignoreesc
+	label
+	{
+		area 0 0 864 710
+		mosaic LUICHISE
+	}
+	label
+	{
+		area 82 12 700 40
+		text "KIT_DESC_LABEL"
+		text style 'title'
+	}
+	text
+	{
+		area 44 198 768 410
+		text lua "characters[currentID].kitDesc"
+		scrollbar 'LUISCRC'
+		text style parchment
+		text color D
+	}
+	button
+	{
+		on escape
+		bam LUIOSTCL
+		area 308 653 300 44
+		text style "button"
+		text "DONE_BUTTON"
+		action
+		"
+			Infinity_PopMenu()
+		"
+	}
+}

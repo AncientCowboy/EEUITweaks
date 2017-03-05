@@ -1,0 +1,419 @@
+`
+portraitArray = {}
+
+function ZeroToggleArray() 
+	togglePort1 = 0 
+	togglePort2 = 0 
+	togglePort3 = 0 
+	togglePort4 = 0 
+	togglePort5 = 0 
+	togglePort6 = 0 
+	togglePort7 = 0 
+	togglePort8 = 0 
+	togglePort9 = 0 
+	togglePort10 = 0  
+end
+
+function togglePortrait1() 
+	tempTog = togglePort1
+	ZeroToggleArray()
+	togglePort1 = tempTog
+end
+
+function togglePortrait2()  
+	tempTog = togglePort2
+	ZeroToggleArray()
+	togglePort2 = tempTog
+end
+
+function togglePortrait3() 
+	tempTog = togglePort3
+	ZeroToggleArray()
+	togglePort3 = tempTog
+end
+
+function togglePortrait4() 
+	tempTog = togglePort4
+	ZeroToggleArray()
+	togglePort4 = tempTog
+end
+
+function togglePortrait5() 
+	tempTog = togglePort5
+	ZeroToggleArray()
+	togglePort5 = tempTog
+end
+
+function togglePortrait6() 
+	tempTog = togglePort6
+	ZeroToggleArray()
+	togglePort6 = tempTog
+end
+
+function togglePortrait7() 
+	tempTog = togglePort7
+	ZeroToggleArray()
+	togglePort7 = tempTog
+end
+
+function togglePortrait8() 
+	tempTog = togglePort8
+	ZeroToggleArray()
+	togglePort8 = tempTog
+end
+
+function togglePortrait9() 
+	tempTog = togglePort9
+	ZeroToggleArray()
+	togglePort9 = tempTog
+end
+
+function togglePortrait10() 
+	tempTog = togglePort10
+	ZeroToggleArray()
+	togglePort10 = tempTog
+end
+
+function OnPortraitArrayClick(thisOne)
+	if portraitChoice == thisOne then
+		portraitChoice = -1
+	else 
+		portraitChoice = thisOne
+	end
+end
+
+function IncPortraitArray()
+	for index = 1, 10, 1 do
+		portraitArray[index] = createCharScreen:GetCurrentPortrait()
+		createCharScreen:IncCurrentPortrait()
+	end
+	ZeroToggleArray()
+	portraitChoice = -1
+end
+
+function DecPortraitArray()
+	for index = 1, 20, 1 do
+		createCharScreen:DecCurrentPortrait()
+	end
+	IncPortraitArray()
+	ZeroToggleArray()
+	portraitChoice = -1
+end
+
+function GetPortrait(portraitIndex)
+	return portraitArray[portraitIndex]
+end
+
+function IncFiftyPortraits()
+	for index = 1, 40, 1 do
+		createCharScreen:IncCurrentPortrait()
+	end
+	IncPortraitArray()
+	ZeroToggleArray()
+	portraitChoice = -1
+end
+
+function DecFiftyPortraits()
+	for index = 1, 60, 1 do
+		createCharScreen:DecCurrentPortrait()
+	end
+	IncPortraitArray()
+	ZeroToggleArray()
+	portraitChoice = -1
+end
+
+function ChoosePortrait()
+	if portraitChoice == -1 then
+		Infinity_PopMenu()
+		createCharScreen:OnCancelButtonClick()
+	else
+		for index = 11, portraitChoice+1, -1 do
+			createCharScreen:DecCurrentPortrait()
+		end
+	end
+end
+
+function IsPortraitChosen()
+	if portraitChoice == -1 then
+		return 0
+	else
+		return 1
+	end
+end
+
+`
+
+menu
+{
+	name 'CHARGEN_PORTRAIT'
+	modal
+	align center center
+	ignoreesc
+	onOpen "IncPortraitArray()"
+	
+	label
+	{
+		area 0 0 923 579
+		mosaic 'BYGUIAPB'
+	}
+	
+	button
+	{
+		area 48 61 26 66
+		bam BYGUIPRC
+		sequence 0
+		action "DecPortraitArray()"
+	}
+	button
+	{
+		area 18 199 52 132
+		bam GUIPRC
+		sequence 0
+		action "DecFiftyPortraits()"
+	}
+	button
+	{
+		area 851 61 26 66
+		bam BYGUIPRC
+		sequence 1
+		action "IncPortraitArray()"
+	}
+	button
+	{
+		area 852 199 52 132
+		bam GUIPRC
+		sequence 1
+		action "IncFiftyPortraits()"
+	}
+
+	label
+	{
+		area 114 39 105 168
+		bitmap lua "GetPortrait(1)"
+	}
+	button
+	{
+		area 114 39 105 168
+		toggle togglePort1
+		action "togglePortrait1(); OnPortraitArrayClick(1)"
+	}
+	button 
+	{
+		area 114 220 105 31
+		bam BYOSTSM
+		text lua "GetPortrait(1)"
+		text style "label_port"
+		toggle togglePort1
+		action "togglePortrait1(); OnPortraitArrayClick(1)"
+	}
+	
+	label
+	{
+		area 261 39 105 168
+		bitmap lua "GetPortrait(2)"
+	}
+	button
+	{
+		area 261 39 105 168
+		toggle togglePort2
+		action "togglePortrait2(); OnPortraitArrayClick(2)"
+	}
+	button 
+	{
+		area 261 220 105 31
+		bam BYOSTSM
+		text lua "GetPortrait(2)"
+		text style "label_port"
+		toggle togglePort2
+		action "togglePortrait2(); OnPortraitArrayClick(2)"
+	}
+	
+	label
+	{
+		area 408 39 105 168
+		bitmap lua "GetPortrait(3)"
+	}
+	button
+	{
+		area 408 39 105 168
+		toggle togglePort3
+		action "togglePortrait3(); OnPortraitArrayClick(3)"
+	}
+	button 
+	{
+		area 408 220 105 31
+		bam BYOSTSM
+		text lua "GetPortrait(3)"
+		text style "label_port"
+		toggle togglePort3
+		action "togglePortrait3(); OnPortraitArrayClick(3)"
+	}
+	
+	label
+	{
+		area 555 39 105 168
+		bitmap lua "GetPortrait(4)"
+	}
+	button
+	{
+		area 555 39 105 168
+		toggle togglePort4
+		action "togglePortrait4(); OnPortraitArrayClick(4)"
+	}
+	button 
+	{
+		area 555 220 105 31
+		bam BYOSTSM
+		text lua "GetPortrait(4)"
+		text style "label_port"
+		toggle togglePort4
+		action "togglePortrait4(); OnPortraitArrayClick(4)"
+	}
+	
+	label
+	{
+		area 702 39 105 168
+		bitmap lua "GetPortrait(5)"
+	}
+	button
+	{
+		area 702 39 105 168
+		toggle togglePort5
+		action "togglePortrait5(); OnPortraitArrayClick(5)"
+	}
+	button 
+	{
+		area 702 220 105 31
+		bam BYOSTSM
+		text lua "GetPortrait(5)"
+		text style "label_port"
+		toggle togglePort5
+		action "togglePortrait5(); OnPortraitArrayClick(5)"
+	}
+	
+	label
+	{
+		area 114 278 105 168
+		bitmap lua "GetPortrait(6)"
+	}
+	button
+	{
+		area 114 278 105 168
+		toggle togglePort6
+		action "togglePortrait6(); OnPortraitArrayClick(6)"
+	}
+	button 
+	{
+		area 114 459 105 31
+		bam BYOSTSM
+		text lua "GetPortrait(6)"
+		text style "label_port"
+		toggle togglePort6
+		action "togglePortrait6(); OnPortraitArrayClick(6)"
+	}
+	
+	label
+	{
+		area 261 278 105 168
+		bitmap lua "GetPortrait(7)"
+	}
+	button
+	{
+		area 261 278 105 168
+		toggle togglePort7
+		action "togglePortrait7(); OnPortraitArrayClick(7)"
+	}
+	button 
+	{
+		area 261 459 105 31
+		bam BYOSTSM
+		text lua "GetPortrait(7)"
+		text style "label_port"
+		toggle togglePort7
+		action "togglePortrait7(); OnPortraitArrayClick(7)"
+	}
+	
+	label
+	{
+		area 408 278 105 168
+		bitmap lua "GetPortrait(8)"
+	}
+	button
+	{
+		area 408 278 105 168
+		toggle togglePort8
+		action "togglePortrait8(); OnPortraitArrayClick(8)"
+	}
+	button 
+	{
+		area 408 459 105 31
+		bam BYOSTSM
+		text lua "GetPortrait(8)"
+		text style "label_port"
+		toggle togglePort8
+		action "togglePortrait8(); OnPortraitArrayClick(8)"
+	}
+	
+	label
+	{
+		area 555 278 105 168
+		bitmap lua "GetPortrait(9)"
+	}
+	button
+	{
+		area 555 278 105 168
+		toggle togglePort9
+		action "togglePortrait9(); OnPortraitArrayClick(9)"
+	}
+	button 
+	{
+		area 555 459 105 31
+		bam BYOSTSM
+		text lua "GetPortrait(9)"
+		text style "label_port"
+		toggle togglePort9
+		action "togglePortrait9(); OnPortraitArrayClick(9)"
+	}
+	
+	label
+	{
+		area 702 278 105 168
+		bitmap lua "GetPortrait(10)"
+	}
+	button
+	{
+		area 702 278 105 168
+		toggle togglePort10
+		action "togglePortrait10(); OnPortraitArrayClick(10)"
+	}
+	button 
+	{
+		area 702 459 105 31
+		bam BYOSTSM
+		text lua "GetPortrait(10)"
+		text style "label_port"
+		toggle togglePort10
+		action "togglePortrait10(); OnPortraitArrayClick(10)"
+	}
+	
+	button
+	{
+		on escape
+		area 142 520 232 44
+		bam GUIOSTUL
+		text "BACK_BUTTON"
+		text style "button"
+		action "Infinity_PopMenu(); createCharScreen:OnCancelButtonClick()"
+	}
+	button
+	{
+		on return
+		area 386 520 206 44
+		bam GUIOSTUM
+		text "DONE_BUTTON"
+		text style "button"
+		clickable lua "IsPortraitChosen()"
+		action "ChoosePortrait(); Infinity_PopMenu(); createCharScreen:OnDoneButtonClick()"
+	}
+
+}

@@ -1,0 +1,96 @@
+menu
+{
+	name 'WORLD_LEVEL_UP_BUTTONS'
+	align right top
+	ignoreesc
+	button
+	{
+		enabled "Infinity_CanLevelUp(0)"
+		area 11 14 64 90
+		sequence 0
+		action "Infinity_OnPortraitLClick(0)"
+		actionAlt "Infinity_OnPortraitRClick(0)"
+		actionDbl "Infinity_OnPortraitDblClick(0)"
+		actiondrag "Infinity_SwapWithPortrait(0)"
+		actionEnter "mouseOverPortrait = 0"
+		actionExit "mouseOverPortrait = -1"
+		actionSimpleDrag "draggedPortrait = 0"
+		actionSimpleDrop "swapPortraits(0)"
+		pulse 1
+	}
+	button
+	{
+		enabled "Infinity_CanLevelUp(1)"
+		area 11 106 64 90
+		sequence 0
+		action "Infinity_OnPortraitLClick(1)"
+		actionAlt "Infinity_OnPortraitRClick(1)"
+		actionDbl "Infinity_OnPortraitDblClick(1)"
+		actiondrag "Infinity_SwapWithPortrait(1)"
+		actionEnter "mouseOverPortrait = 1"
+		actionExit "mouseOverPortrait = -1"
+		actionSimpleDrag "draggedPortrait = 1"
+		actionSimpleDrop "swapPortraits(1)"
+		pulse 1
+	}
+	button
+	{
+		enabled "Infinity_CanLevelUp(2)"
+		area 11 198 64 90
+		sequence 0
+		action "Infinity_OnPortraitLClick(2)"
+		actionAlt "Infinity_OnPortraitRClick(2)"
+		actionDbl "Infinity_OnPortraitDblClick(2)"
+		actiondrag "Infinity_SwapWithPortrait(2)"
+		actionEnter "mouseOverPortrait = 2"
+		actionExit "mouseOverPortrait = -1"
+		actionSimpleDrag "draggedPortrait = 2"
+		actionSimpleDrop "swapPortraits(2)"
+		pulse 1
+	}
+	button
+	{
+		enabled "Infinity_CanLevelUp(3)"
+		area 11 290 64 90
+		sequence 0
+		action "Infinity_OnPortraitLClick(3)"
+		actionAlt "Infinity_OnPortraitRClick(3)"
+		actionDbl "Infinity_OnPortraitDblClick(3)"
+		actiondrag "Infinity_SwapWithPortrait(3)"
+		actionEnter "mouseOverPortrait = 3"
+		actionExit "mouseOverPortrait = -1"
+		actionSimpleDrag "draggedPortrait = 3"
+		actionSimpleDrop "swapPortraits(3)"
+		pulse 1
+	}
+	button
+	{
+		enabled "Infinity_CanLevelUp(4)"
+		area 11 382 64 90
+		sequence 0
+		action "Infinity_OnPortraitLClick(4)"
+		actionAlt "Infinity_OnPortraitRClick(4)"
+		actionDbl "Infinity_OnPortraitDblClick(4)"
+		actiondrag "Infinity_SwapWithPortrait(4)"
+		actionEnter "mouseOverPortrait = 4"
+		actionExit "mouseOverPortrait = -1"
+		actionSimpleDrag "draggedPortrait = 4"
+		actionSimpleDrop "swapPortraits(4)"
+		pulse 1
+	}
+	button
+	{
+		enabled "Infinity_CanLevelUp(5)"
+		area 11 474 64 90
+		sequence 0
+		action "Infinity_OnPortraitLClick(5)"
+		actionAlt "Infinity_OnPortraitRClick(5)"
+		actionDbl "Infinity_OnPortraitDblClick(5)"
+		actiondrag "Infinity_SwapWithPortrait(5)"
+		actionEnter "mouseOverPortrait = 5"
+		actionExit "mouseOverPortrait = -1"
+		actionSimpleDrag "draggedPortrait = 5"
+		actionSimpleDrop "swapPortraits(5)"
+		pulse 1
+	}
+}

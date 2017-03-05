@@ -1,0 +1,24 @@
+	button
+	{
+		name "FBHackUp"
+		area 743 2 26 26
+		bam GMSGSCRL
+		sequence 0
+		frame 0
+		tooltip lua "t('FEEDBACK_HACK_EXPAND_TT')"
+		action "dragMessagesY(-20)"
+		actionHold "dragMessagesY(-10)"
+		actionAlt "dragMessagesY(-200)"
+	}
+	button
+	{
+		name "FBHackDown"
+		area 743 27 26 26
+		bam GMSGSCRL
+		sequence 0
+		frame 2
+		tooltip lua "t('FEEDBACK_HACK_SHRINK_TT')"
+		action "dragMessagesY(20)"
+		actionHold "dragMessagesY(10)"
+		actionAlt "dragMessagesY(200)"
+	}

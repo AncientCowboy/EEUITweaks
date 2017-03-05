@@ -1,0 +1,112 @@
+menu
+{
+	name	'OPTIONS_MODS'
+	modal
+	align center center
+	onOpen
+	"
+		modOptionsIdx = 0
+		modOptionsInfo = 'MODOPT_INFO'
+		modOptionsFilterRegistrations()
+		modOptionsRememberLogo(logoFrame)
+	"
+
+	button
+	{
+		area 0 0 864 710
+		mosaic	GUIDCB
+		action
+		"
+			modOptionsIdx = 0
+			modOptionsInfo = 'MODOPT_INFO'
+		"
+	}
+
+	label
+	{
+		area		207 15 481 44
+		text 		'MODOPT_TITLE'
+		text style	title
+	}
+	list
+	{
+		column
+		{
+			width 100
+			label
+			{
+				area 0 0 -1 -1
+				text lua "t(modOptionsRegistrations[rowNumber].name)"
+				text style "normal"
+				pad 8 0 0 0
+				text align left center
+				text highlight lua "modOptionsIdx == rowNumber"
+			}
+		}
+		area 		472 188 353 423
+		rowheight 	46
+		table		"modOptionsRegistrations"
+		var			modOptionsIdx
+		scrollbar	'GUISCRC'
+		hidehighlight
+		actionUpdate
+		"
+		
+			if(modOptionsIdx == 0) then
+				modOptionsInfo = 'MODOPT_INFO'
+			else
+				modOptionsInfo = modOptionsRegistrations[modOptionsIdx].description
+			end
+		"
+	}
+
+	text
+	{
+		area		36 478 399 133
+		pad			4 4 4 4
+		fill		0 0 0 128
+		text		lua "t(modOptionsInfo)"
+		text style	normal
+		scrollbar	'GUISCRC'
+	}
+	label
+	{
+		area		120 182 207 230
+		bam			MODOIMG1
+		sequence lua 'modOptionsRecallLogo()'
+		frame		0
+		align		top center
+	}
+	label
+	{
+		area 120 412 207 30
+		text lua "CBaldurChitin:GetVersionString()"
+		text style "normal"
+		text align center center
+	}
+	button
+	{
+		area		463 652 233 51
+		bam			GUIOSTUR
+		sequence	2
+		text		"DONE_BUTTON"
+		text style	"button"
+		action
+		"
+			Infinity_PopMenu()
+		"
+	}
+	button
+	{
+		area		211 652 233 51
+		bam			GUIOSTUL
+		sequence	2
+		text 		"MODOPT_CHANGE_BUTTON"
+		text style	"button"
+		clickable lua "modOptionsValidSelection()"
+		action
+		"
+			Infinity_PushMenu(modOptionsRegistrations[modOptionsIdx].menuid)
+		"
+	}
+}

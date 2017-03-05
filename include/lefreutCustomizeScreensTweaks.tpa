@@ -1,0 +1,134 @@
+/******************************************************************************
+ * lefreut's Customize Screens Tweaks Installation
+ *****************************************************************************/
+// Uninstall Customize All Characters if it has been installed
+ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~3030~ THEN
+BEGIN
+	PRINT @302814
+	SILENT
+	UNINSTALL ~EEUITweaks.tp2~ ~3030~
+END
+
+// Open UI.MENU
+PRINT @12
+SILENT
+LAUNCH_ACTION_MACRO UIMenuOpen
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @20
+END
+
+// Replace CHARACTER_CUSTOMIZE menu
+PRINT @302801
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~CHARACTER_CUSTOMIZE~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCustomizeScreensTweaks/CustomizeMenu1.menu~
+LAUNCH_ACTION_MACRO UIMenuReplaceMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @302802
+END
+
+// Replace CHARACTER_BIOGRAPHY menu
+PRINT @302803
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~CHARACTER_BIOGRAPHY~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCustomizeScreensTweaks/BiographyMenu1.menu~
+LAUNCH_ACTION_MACRO UIMenuReplaceMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @302804
+END
+
+// Replace CHARACTER_SCRIPT Lua code block
+PRINT @302817
+SILENT
+OUTER_SPRINT $UIMenuIF("LuaRegex") ~scriptList_idx[%TAB% ]*=[%TAB% ]*0~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+LAUNCH_ACTION_MACRO UIMenuGetMatchingLuaBlock
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @302818
+END
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/lefreutCustomizeScreensTweaks/ScriptCode1.lua~
+LAUNCH_ACTION_MACRO UIMenuReplaceLuaBlock
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @302819
+END
+
+// Replace CHARACTER_SCRIPT
+PRINT @302808
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~CHARACTER_SCRIPT~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCustomizeScreensTweaks/ScriptMenu1.menu~
+LAUNCH_ACTION_MACRO UIMenuReplaceMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @302809
+END
+
+// Replace CHARACTER_COLOR menu
+PRINT @302810
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~CHARACTER_COLOR~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCustomizeScreensTweaks/ColorMenu1.menu~
+LAUNCH_ACTION_MACRO UIMenuReplaceMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @302811
+END
+
+// Replace CHARACTER_SOUND menu
+PRINT @302812
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~CHARACTER_SOUND~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCustomizeScreensTweaks/SoundMenu1.menu~
+LAUNCH_ACTION_MACRO UIMenuReplaceMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @302813
+END
+
+// Close UI.MENU
+PRINT @13
+SILENT
+LAUNCH_ACTION_MACRO UIMenuClose
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @21
+END
+
+// Copy common UI resources
+PRINT @17
+SILENT
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUISCRC.BAM~ ~override~
+
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LLDRSTAR.BAM~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4006.PVRZ~ ~override~
+
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUICHLNG.BAM~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4009.PVRZ~ ~override~
+
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUIOSTUL.BAM~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUIOSTUM.BAM~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUIOSTUR.BAM~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4004.PVRZ~ ~override~
+
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUICHISD.MOS~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4253.PVRZ~ ~override~
+
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUICHISE.MOS~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4254.PVRZ~ ~override~
+
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUICUSTB.MOS~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4258.PVRZ~ ~override~
+
+
+
+

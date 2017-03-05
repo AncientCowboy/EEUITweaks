@@ -1,0 +1,79 @@
+
+/*******************************************************************************
+ * Mr2150's Update Portraits
+ ******************************************************************************/
+SILENT
+OUTER_SPRINT mrportraitpickPortraitDirectory ~%USER_DIRECTORY%/portraits~
+OUTER_SET mrportraitpickUpdateCancel = 0
+OUTER_SPRINT mrportraitpickPreprompt @104401
+OUTER_SPRINT mrportraitpickPostprompt @104402
+PRINT ~%mrportraitpickPortraitDirectory%~
+OUTER_WHILE (NOT %mrportraitpickUpdateCancel%) AND (NOT DIRECTORY_EXISTS ~%mrportraitpickPortraitDirectory%~ )
+BEGIN
+	PRINT ~%mrportraitpickPreprompt%%mrportraitpickPortraitDirectory%%mrportraitpickPostprompt%~
+	PRINT @104403 
+	ACTION_READLN mrportraitpickInput
+	ACTION_IF ~%mrportraitpickInput%~ STRING_EQUAL ~~
+	BEGIN
+		OUTER_SET mrportraitpickUpdateCancel = 1
+	END ELSE
+	BEGIN
+		OUTER_SPRINT mrportraitpickPortraitDirectory ~%mrportraitpickInput%~
+	END
+END
+
+SILENT
+ACTION_IF NOT %mrportraitpickUpdateCancel%
+BEGIN
+	ACTION_IF (NOT FILE_EXISTS_IN_GAME ~M_BG.lua~) 
+	BEGIN
+		PRINT @104404
+		SILENT
+<<<<<<<< .../M_BG.lua
+BGImages = {
+{"NO PORTRAIT","Z","NOPORTM"}
+}
+>>>>>>>>
+		COPY + ~.../M_BG.lua~ ~override~
+	END ELSE
+	BEGIN // Remove entries in M_BG.lua that no longer exist
+		PRINT @104405
+		SILENT
+		COPY_EXISTING + ~M_BG.lua~ ~override~
+			REPLACE_EVALUATE CASE_INSENSITIVE ~\({[%TAB% ]*"[^"]+"[%TAB% ]*,[%TAB% ]*"[MFD]"[%TAB% ]*,[%TAB% ]*"\)\([^"]+\)\("[%TAB% ]*},?[%WNL%%LNL%%MNL%%TAB% ]*\)~ 
+			BEGIN
+				PATCH_IF (NOT FILE_EXISTS ~%mrportraitpickPortraitDirectory%/%MATCH2%.bmp~) 
+				BEGIN
+					SPRINT MATCH1 ~~
+					SPRINT MATCH2 ~~
+					SPRINT MATCH3 ~~
+				END
+			END
+			~%MATCH1%%MATCH2%%MATCH3%~
+		BUT_ONLY
+	END
+
+	PRINT @104406
+	SILENT
+	COPY_EXISTING + ~M_BG.lua~ ~override~ // Add new entries for portraits that match the criteria
+		PATCH_BASH_FOR ~%mrportraitpickPortraitDirectory%~ ~^.+bmp$~ 
+		BEGIN
+			PATCH_IF (STRING_LENGTH ~%BASH_FOR_RES%~ < 8) AND (NOT FILE_CONTAINS_EVALUATED (~M_BG.lua~ ~"%BASH_FOR_RES%"~)) 
+			BEGIN
+				PATCH_IF ((~%BASH_FOR_RES%~ STRING_CONTAINS_REGEXP ~^[Mm]#~)=0) 
+				BEGIN
+					SPRINT gender ~M~
+				END ELSE PATCH_IF ((~%BASH_FOR_RES%~ STRING_CONTAINS_REGEXP ~^[Ff]#~)=0) 
+				BEGIN
+					SPRINT gender ~F~
+				END ELSE 
+				BEGIN
+					SPRINT gender ~D~
+				END
+				REPLACE_TEXTUALLY ~\({[%TAB% ]*"[^"]+"[%TAB% ]*,[%TAB% ]*"[MFDZ]+"[%TAB% ]*,[%TAB% ]*"[^"]+"[%TAB% ]*}\),?[%WNL%%LNL%%MNL%%TAB% ]*}~~\1,
+{"%BASH_FOR_RES%","%gender%","%BASH_FOR_RES%"},
+}~
+			END
+		END
+
+END // Not canceled

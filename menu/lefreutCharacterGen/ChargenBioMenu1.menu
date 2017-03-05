@@ -1,0 +1,77 @@
+menu
+{
+	name 'CHARGEN_BIO'
+	align center center
+	modal
+	ignoreesc
+	onOpen
+	"
+		generateBioText()
+		createBioEditBackup = createBioEdit
+	"
+	label
+	{
+		area 0 0 864 710
+		mosaic LUICUSTB
+	}
+	label
+	{
+		area 82 12 700 40
+		text "BIOGRAPHY_TITLE"
+		text style 'title'
+	}
+	edit
+	{
+		name		"createBioEditArea"
+		area		436 128 382 478
+		var			createBioEdit
+		scrollbar	'LUISCRC'
+		text style	"edit"
+	}
+
+	button
+	{
+		bam LUICHLNG
+		area 42 192 340 32
+		text style "button"
+		text	"CLEAR_BUTTON"
+		action
+		"
+			createBioEdit = ''
+		"
+	}
+	button
+	{
+		bam LUICHLNG
+		area 42 228 340 32
+		text style "button"
+		text "REVERT_BUTTON"
+		action
+		"
+			createBioEdit = createBioEditBackup
+		"
+	}
+	button
+	{
+		bam LUIOSTUL
+		area 210 653 234 44
+		text style "button"
+		text "DONE_BUTTON"
+		action
+		"
+			createCharScreen:OnDoneButtonClick()
+		"
+	}
+	button
+	{
+		on escape
+		bam LUIOSTUR
+		area 464 653 234 44
+		text style "button"
+		text "CANCEL_BUTTON"
+		action
+		"
+			createCharScreen:OnCancelButtonClick()
+		"
+	}
+}

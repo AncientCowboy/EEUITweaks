@@ -1,0 +1,14 @@
+menu
+{
+	name 'CHARGEN_GENDER'
+	onOpen
+	"
+		createCharScreen:OnGenderSelectButtonClick(gender)
+		Infinity_PopMenu()
+		createCharScreen:OnDoneButtonClick()
+	"
+	label
+	{
+		area 0 0 1 1
+	}
+}

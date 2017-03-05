@@ -1,0 +1,105 @@
+/******************************************************************************
+ * lefreut's Journal Installation
+ *****************************************************************************/
+// Open UI.MENU
+PRINT @12
+SILENT
+LAUNCH_ACTION_MACRO UIMenuOpen
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @20
+END
+
+// Replace textflash menu
+PRINT @302301
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~textflash~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutJournal/textflashmenu1.menu~
+LAUNCH_ACTION_MACRO UIMenuReplaceMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @302302
+END
+
+// Replace Journal Lua code
+PRINT @302303
+SILENT
+OUTER_SPRINT $UIMenuIF("LuaRegex") ~function[%TAB% ]+initQuests[%TAB% ]*([%TAB% ]*)~
+LAUNCH_ACTION_MACRO UIMenuGetMatchingLuaBlock
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @302304
+END
+
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/lefreutJournal/journalcode1.lua~
+LAUNCH_ACTION_MACRO UIMenuReplaceLuaBlock
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @302305
+END
+
+// Replace JOURNAL menu
+PRINT @302306
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~JOURNAL~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutJournal/journalmenu1.menu~
+LAUNCH_ACTION_MACRO UIMenuReplaceMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @302307
+END
+
+// Replace JOURNAL_RECENT_EVENTS menu with EDIT_JOURNAL menu
+PRINT @302308
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~JOURNAL_RECENT_EVENTS~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutJournal/editjournalmenu1.menu~
+LAUNCH_ACTION_MACRO UIMenuReplaceMenuMixed
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @302309
+END
+
+// Close UI.MENU
+PRINT @13
+SILENT
+LAUNCH_ACTION_MACRO UIMenuClose
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @21
+END
+
+// Copy files
+PRINT @24
+SILENT
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUISCRC.BAM~ ~override~
+
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUISBR.BAM~ ~override~
+
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUILS10.BAM~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4003.PVRZ~ ~override~
+
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUIOSTLL.BAM~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUIOSTLM.BAM~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUIOSTLR.BAM~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUIOSTUL.BAM~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUIOSTUR.BAM~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4004.PVRZ~ ~override~
+
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUIPRC.BAM~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4010.PVRZ~ ~override~
+
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUIOSW.BAM~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4015.PVRZ~ ~override~
+
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUIJRNL.MOS~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4268.PVRZ~ ~override~
+
+
+
+
+
+

@@ -1,0 +1,101 @@
+menu
+{
+	name 'CHARGEN_IMPORT'
+	align center center
+	modal
+	ignoreesc
+	onOpen
+	"
+		list_GUICG_20_2_idx = 0
+	"
+	label
+	{
+		area 0 0 864 710
+		mosaic LUICHISD
+	}
+	label
+	{
+		area 82 12 700 40
+		text "IMPORT_TITLE"
+		text style title
+	}
+	list
+	{
+		column
+		{
+			width 100
+			label
+			{
+				enabled "rowNumber ~= list_GUICG_20_2_idx and rowNumber ~= list_GUICG_20_2_hover"
+				area 0 0 -1 -1
+				text lua "list_GUICG_20_2[rowNumber]"
+				text style "normal"
+				text color D
+			}
+			label
+			{
+				enabled "rowNumber == list_GUICG_20_2_idx and rowNumber ~= list_GUICG_20_2_hover"
+				area 0 0 -1 -1
+				text lua "list_GUICG_20_2[rowNumber]"
+				text style "normal"
+				text color S
+			}
+			label
+			{
+				enabled "rowNumber == list_GUICG_20_2_hover"
+				area 0 0 -1 -1
+				text lua "list_GUICG_20_2[rowNumber]"
+				text style "normal"
+				text color H
+			}
+		}
+		area 46 198 356 410
+		rowheight	dynamic
+		hidehighlight
+		table		"list_GUICG_20_2"
+		var			"list_GUICG_20_2_idx"
+		scrollbar	'LUISCRC'
+		action
+		"
+			Infinity_OnCharacterImportItemSelect(list_GUICG_20_2_idx - 1)
+		"
+		actionEnter	"list_GUICG_20_2_hover = mouseoverRow"
+		actionExit	"list_GUICG_20_2_hover = 0"
+	}
+
+	text
+	{
+		area 450 198 362 410
+		text 10963
+		scrollbar 'LUISCRC'
+		text style normal
+		text color D
+	}
+	button
+	{
+		on return
+		bam LUIOSTUL
+		area 210 653 234 44
+		text style "button"
+		text lua "NextOrDone()"
+		clickable lua "list_GUICG_20_2_idx > 0"
+		action
+		"
+			Infinity_PopMenu('CHARGEN_IMPORT')
+			createCharScreen:OnDoneButtonClick()
+		"
+	}
+	button
+	{
+		on escape
+		bam LUIOSTUR
+		area 464 653 234 44
+		text style "button"
+		text "CANCEL_BUTTON"
+		action
+		"
+			Infinity_PopMenu('CHARGEN_IMPORT')
+			createCharScreen:OnCancelButtonClick()
+		"
+	}
+}

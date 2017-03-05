@@ -1,0 +1,97 @@
+menu
+{
+	name 'WORLD_DIALOG'
+	offset 0 -54
+	align center bottom
+	ignoreEsc
+	onOpen
+	"
+		Infinity_PushMenu('WORLD_DIALOG_CONFIRM')
+		greySidebars()
+		previousTop = nil
+		scrolled = false
+	"
+	onClose
+	"
+		Infinity_PopMenu('WORLD_DIALOG_CONFIRM')
+		ungreySidebars()
+	"
+	label
+	{
+		name "worldDialogBackground"
+		area 0 0 863 210
+		rectangle 4
+	}
+	label
+	{
+		name "worldDialogPortraitArea"
+		area 24 20 54 84
+		bitmap lua "worldNPCDialogPortrait"
+	}
+	list
+	{
+		column
+		{
+			width 100
+			label
+			{
+				area 0 0 -1 0
+				enabled "rowNumber == 1 and not scrolled"
+			}
+			text
+			{
+				area 0 0 -1 -1
+				pad 0 0 0 12
+				enabled "rowNumber == 2 and scrolled"
+				text lua "worldMessageBoxText"
+				text style "normal"
+			}
+			text
+			{
+				area 0 0 -1 -1
+				pad 0 0 0 12
+				enabled "rowNumber == 2 and not scrolled"
+				text lua "worldNPCDialogText:gsub('\n', ': ', 1)"
+				text style "normal"
+			}
+			label
+			{
+				area 0 0 -1 -1
+				pad 12 0 0 0
+				enabled "rowNumber > 2 and dialogEntryGreyed()"
+				rectangle 1
+				rectangle opacity 100
+			}
+			text
+			{
+				area 0 0 -1 -1
+				pad 12 0 0 0
+				enabled "rowNumber > 2"
+				text lua "getDialogEntryText(rowNumber)"
+				text style "normal"
+			}
+		}
+		name "worldPlayerDialogChoicesList"
+		area 88 20 756 170
+		rowheight dynamic
+		hideHighlight
+		table "mergeDialog(worldPlayerDialogChoices)"
+		var "worldPlayerDialogSelection"
+		scrollbar 'GUISCRC'
+		scrollbar func "dialogScroll"
+		actionEnter
+		"
+			worldPlayerDialogSelection = mouseoverRow
+		"
+		actionExit
+		"
+			worldPlayerDialogSelection = 0
+		"
+		action
+		"
+			if (worldPlayerDialogChoices[worldPlayerDialogSelection - 2] == nil) then return end
+			worldScreen:OnDialogReplyClick(worldPlayerDialogChoices[worldPlayerDialogSelection - 2].marker)
+			worldPlayerDialogSelection = 0
+		"
+	}
+}

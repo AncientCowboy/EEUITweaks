@@ -1,0 +1,358 @@
+`
+--auto-roller version 2.1.63.2.0006
+raceHasExceptionalStr = { 
+	true, -- Human
+	true, -- Elf
+	true, -- Half-Elf
+	true, -- Dwarf
+	false, -- Halfling
+	true, -- Gnome
+	true -- Half-Orc
+	}
+classHasExceptionalStr = { 
+	false, -- Mage
+	true, -- Fighter
+	false, -- Cleric
+	false, -- Thief
+	false, -- Bard
+	true, -- Paladin
+	true, -- Fighter / Mage
+	true, -- Fighter / Cleric
+	true, -- Fighter / Thief
+	true, -- Fighter / Mage / Thief
+	false, -- Druid
+	true, -- Ranger
+	false, -- Mage / Thief
+	false, -- Cleric / Mage
+	false, -- Cleric / Thief
+	true, -- Fighter / Druid
+	true, -- Fighter / Mage / Cleric
+	true, -- Cleric / Ranger
+	false, -- Sorcerer
+	false, -- Monk
+	false -- Shaman
+ }
+function HasExceptionalStrength( )
+  return raceHasExceptionalStr[ chargen.selectedRace ] and classHasExceptionalStr[ chargen.selectedClass ]
+end
+
+function ShowExceptionalStrength( )
+	local strength = tonumber( string.sub( chargen.ability[ 1 ].roll, 1, 2 ) )
+	local abilityToDec = 2
+	if strength ~= nil then
+		while ( strength ~= nil ) and ( strength < 18 ) do
+			createCharScreen:OnAbilityPlusMinusButtonClick( abilityToDec, false )
+			abilityToDec = abilityToDec + 1
+			if( abilityToDec == 7 ) then
+				abilityToDec = 2
+			end
+			createCharScreen:OnAbilityPlusMinusButtonClick( 1, true )
+			strength = tonumber( string.sub( chargen.ability[ 1 ].roll, 1, 2 ) )
+		end
+	end
+end
+
+function AutoRoll( )
+	createCharScreen:OnAbilityReRollButtonClick()
+	
+	local exceptionalStrength = 0
+	if( HasExceptionalStrength() ) then
+		ShowExceptionalStrength( )
+		exceptionalStrength = tonumber( string.sub( chargen.ability[ 1 ].roll, 4 ) )
+		if exceptionalStrength ~= nil then
+			if exceptionalStrength == 0 then
+				exceptionalStrength = 100
+			end	
+		else
+			exceptionalStrength = 0
+		end
+	end
+	
+	if ( ( storedTotalRoll == chargen.totalRoll ) and ( chargen.ability[ 1 ].exceptional < exceptionalStrength ) ) or
+		 ( storedTotalRoll < chargen.totalRoll ) then
+		storedTotalRoll = chargen.totalRoll
+		chargen.ability[ 1 ].exceptional = exceptionalStrength
+		chargen.ability[ 1 ].storedRoll = chargen.ability[ 1 ].roll
+		chargen.ability[ 2 ].storedRoll = chargen.ability[ 2 ].roll
+		chargen.ability[ 3 ].storedRoll = chargen.ability[ 3 ].roll
+		chargen.ability[ 4 ].storedRoll = chargen.ability[ 4 ].roll
+		chargen.ability[ 5 ].storedRoll = chargen.ability[ 5 ].roll
+		chargen.ability[ 6 ].storedRoll = chargen.ability[ 6 ].roll
+		createCharScreen:OnAbilityStoreButtonClick()
+	end
+end
+
+RerollFrame = 0
+storedTotalRoll = 0
+function UpdateAutoRoll()
+	if rolling == 1 then
+		RerollFrame = RerollFrame + 1
+		if RerollFrame > 1 then
+			RerollFrame = 0
+		end
+	
+		if RerollFrame == 0 then
+		  local index = 1
+			for index = 1, 1000, 1 do
+				AutoRoll( )
+			end
+		end
+	end
+end
+`
+
+menu
+{
+	name 'CHARGEN_ABILITIES'
+	modal
+	align center center
+	ignoreesc
+	onopen "ticksPassed = 0; ticksStarting = 0"
+	label
+	{
+		area 0 0 864 710
+		mosaic GUICGROL
+	}
+	label
+	{
+		area 220 22 426 44
+		text "ABILITIES_TITLE"
+		text style "title"
+	}
+	list
+	{
+		column
+		{
+			width 34
+			label
+			{
+				area 0 0 100 55
+				text lua "t(chargen.ability[rowNumber].name)"
+				text style "normal"
+				align right center
+				
+			}
+		}
+		column
+		{
+			width 18
+			label
+			{
+				area 0 0 50 55
+				text lua "chargen.ability[rowNumber].storedRoll"
+				text style "normal"
+				align center center
+			}
+		}
+		column
+		{
+			width 13
+			label
+			{
+				area 0 0 50 55
+				text lua "chargen.ability[rowNumber].roll"
+				text style "normal"
+				align center center
+			}
+		}
+		column
+		{
+			width 22
+			label
+			{
+				area 36 6 45 42
+				bam GUIOSW
+				frame lua "currentCellCheck(4)"
+				sequence 0
+			}
+		}
+		column
+		{
+			width 15
+			label
+			{
+				area 0 6 45 42
+				bam GUIOSW
+				frame lua "currentCellCheck(5)"
+				sequence 1
+
+			}
+		}
+		action 
+		"
+			if ticksStarting < 10 then 
+				if cellNumber == 4 then
+					createCharScreen:OnAbilityPlusMinusButtonClick(currentChargenAbility, true)
+				elseif cellNumber == 5 then
+					createCharScreen:OnAbilityPlusMinusButtonClick(currentChargenAbility, false)
+				end
+			end
+			cellNumber = nil
+			ticksPassed = 0
+			ticksStarting = 0
+		"
+		actionUpdate 
+		"
+			ticksStarting = ticksStarting + 1
+			if ticksStarting > 10 then
+				ticksPassed = ticksPassed + 1
+				if ticksPassed > 2 then
+					if cellNumber == 4 then
+						createCharScreen:OnAbilityPlusMinusButtonClick(currentChargenAbility, true)
+					elseif cellNumber == 5 then
+						createCharScreen:OnAbilityPlusMinusButtonClick(currentChargenAbility, false)
+					end
+					ticksPassed = 0
+				end
+			end
+		"
+
+		rowheight 54
+		hidehighlight
+		area 34 85 386 325
+		table "chargen.ability"
+		var currentChargenAbility
+	}
+	label
+	{
+		area 34 410 100 54
+		text "TOTAL_ROLL_NORMAL"
+		text style "normal"
+		text align right center
+	}
+	label
+	{
+		area 164 410 50 54
+		text lua "storedTotalRoll"
+		text style "normal"
+		text align center center
+	}
+	label
+	{
+		area 233 410 50 54
+		text lua "chargen.totalRoll"
+		text style "normal"
+		text align center center
+	}
+	label
+	{
+		area 322 410 94 54
+		text lua "chargen.extraAbilityPoints"
+		text style "normal"
+		text align center center
+	}
+
+
+	text
+	{
+		area 442 91 394 505
+		text lua "abilityOrGeneralHelp()"
+		text style "normal"
+		scrollbar	'GUISCRC'
+	}
+
+	button
+	{
+		area 230 480 200 44
+		bam GUIBUTNT
+		sequence 0
+		text "AUTO-REROLL"
+		text style "button"
+		action "
+			if rolling == 1 then
+				rolling = 0
+				createCharScreen:OnAbilityRecallButtonClick()
+			else
+				chargen.ability[ 1 ].exceptional = tonumber( string.sub( chargen.ability[ 1 ].roll, 4 ) )
+				if chargen.ability[ 1 ].exceptional ~= nil then
+					if chargen.ability[ 1 ].exceptional == 0 then
+						chargen.ability[ 1 ].exceptional = 100
+					end	
+				else
+					chargen.ability[ 1 ].exceptional = 0
+				end
+				storedTotalRoll = chargen.totalRoll
+				rolling = 1
+			end"
+	}
+	button
+	{
+		mosaic lua "UpdateAutoRoll()"
+		area 1 1 1 1
+	}
+	button
+	{
+		area 26 480 200 44
+		bam GUIBUTNT
+		sequence 0
+		text "REROLL_BUTTON"
+		text style "button"
+		action "createCharScreen:OnAbilityReRollButtonClick()"
+	}
+	button
+	{
+		area 26 531 200 44
+		bam GUIBUTNT
+		sequence 0
+		text "STORE_BUTTON"
+		text style "button"
+		action "
+				local exceptionalStrength = tonumber( string.sub( chargen.ability[ 1 ].roll, 4 ) )
+				if exceptionalStrength ~= nil then
+					if exceptionalStrength == 0 then
+						exceptionalStrength = 100
+					end	
+				else
+					exceptionalStrength = 0
+				end
+				storedTotalRoll = chargen.totalRoll
+				chargen.ability[ 1 ].exceptional = exceptionalStrength
+				chargen.ability[ 1 ].storedRoll = chargen.ability[ 1 ].roll
+				chargen.ability[ 2 ].storedRoll = chargen.ability[ 2 ].roll
+				chargen.ability[ 3 ].storedRoll = chargen.ability[ 3 ].roll
+				chargen.ability[ 4 ].storedRoll = chargen.ability[ 4 ].roll
+				chargen.ability[ 5 ].storedRoll = chargen.ability[ 5 ].roll
+				chargen.ability[ 6 ].storedRoll = chargen.ability[ 6 ].roll
+				createCharScreen:OnAbilityStoreButtonClick()
+				"
+	}
+	button
+	{
+		area 26 582 200 44
+		bam GUIBUTNT
+		sequence 0
+		text "RECALL_BUTTON"
+		text style "button"
+		clickable lua "createCharScreen:IsAbilityRecallButtonClickable()"
+		action "createCharScreen:OnAbilityRecallButtonClick()"
+	}
+
+	button
+	{
+		on '8'
+		action "createCharScreen:OnCheatyMcCheaterson()"
+		
+		
+	}
+
+	button
+	{
+		on escape
+		area 196 653 230 44
+		bam GUIBUTMT
+		text "BACK_BUTTON"
+		text style "button"
+		action "Infinity_PopMenu(); createCharScreen:OnCancelButtonClick()"
+	}
+	button
+	{
+		on return
+		area 438 653 230 44
+		bam GUIBUTMT
+		text "DONE_BUTTON"
+		text style "button"
+		clickable lua "createCharScreen:IsDoneButtonClickable()"
+		action "Infinity_PopMenu(); createCharScreen:OnDoneButtonClick()"
+	}
+
+}

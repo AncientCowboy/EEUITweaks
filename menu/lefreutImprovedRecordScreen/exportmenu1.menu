@@ -1,0 +1,130 @@
+`
+fontcolors['D'] = 'FFA9D4FF'
+fontcolors['S'] = 'FF0066FF'
+fontcolors['H'] = 'FF00B7FF'
+`
+menu
+{
+	name 'CHARACTER_EXPORT'
+	align center center
+	modal
+	ignoreEsc
+	onOpen
+	"
+		currentPanelID = const.EXPORT_ID
+		characterExportCharacterEdit = characters[currentID].name
+		Infinity_FocusTextEdit('characterExportCharacterEditArea')
+	"
+	label
+	{
+		area 0 0 864 710
+		mosaic LUICHISD
+	}
+	label
+	{
+		area 82 12 700 40
+		text "EXPORT_TITLE"
+		text style title
+	}
+
+	list
+	{
+		column
+		{
+			width 100
+			label
+			{
+				enabled "rowNumber ~= list_GUIREC_13_0_idx and rowNumber ~= list_GUIREC_13_0_hover"
+				area 0 0 -1 -1
+				text lua "list_GUIREC_13_0[rowNumber]"
+				text style "normal"
+				text color D
+			}
+			label
+			{
+				enabled "rowNumber == list_GUIREC_13_0_idx and rowNumber ~= list_GUIREC_13_0_hover"
+				area 0 0 -1 -1
+				text lua "list_GUIREC_13_0[rowNumber]"
+				text style "normal"
+				text color S
+			}
+			label
+			{
+				enabled "rowNumber == list_GUIREC_13_0_hover"
+				area 0 0 -1 -1
+				text lua "list_GUIREC_13_0[rowNumber]"
+				text style "normal"
+				text color H
+			}
+		}
+		area 46 198 356 410
+		rowheight	dynamic
+		hidehighlight
+		table		"list_GUIREC_13_0"
+		var			"list_GUIREC_13_0_idx"
+		scrollbar	'LUISCRC'
+		action
+		"
+			Infinity_OnCharacterItemSelect(list_GUIREC_13_0_idx - 1)
+		"
+		actionEnter	"list_GUIREC_13_0_hover = mouseoverRow"
+		actionExit	"list_GUIREC_13_0_hover = 0"
+	}
+	label
+	{
+		area 46 120 390 44
+		text "EXPORT_FILENAME_LABEL"
+		text style "label"
+		text align right center
+	}
+	edit
+	{
+		name		"characterExportCharacterEditArea"
+		area		440 132 200 32
+		var			characterExportCharacterEdit
+		text style	"edit"
+		maxlines	1
+		action
+		"
+			if(characterExportCharacterEdit:len() > 7 and key_pressed ~= 8) then
+				return 0
+			end
+			Infinity_UpdateCharacterRecordExportPanel()
+			return 1
+		"
+	}
+	text
+	{
+		area 450 198 362 410
+		text 10962
+		scrollbar 'LUISCRC'
+		text style normal
+		text color D
+	}
+	button
+	{
+		clickable	lua "characterScreen:IsDoneButtonClickable(currentID)"
+		bam LUIOSTUL
+		area 210 653 234 44
+		text style "button"
+		text "DONE_BUTTON"
+		action
+		"
+			characterScreen:OnDoneButtonClick()
+		"
+	}
+	button
+	{
+		on escape
+		bam LUIOSTUR
+		area 464 653 234 44
+		text style "button"
+		text "CANCEL_BUTTON"
+		action
+		"
+			characterScreen:OnCancelButtonClick()
+			Infinity_PopMenu('CHARACTER_EXPORT')
+			currentPanelID = 0
+		"
+	}
+}

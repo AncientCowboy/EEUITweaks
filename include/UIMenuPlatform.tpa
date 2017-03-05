@@ -1,0 +1,141 @@
+
+/*******************************************************************************
+ * EEUIGetMenuEnv
+ * Sets global variables representing current UI.MENU configuration. Currently
+ * defined variables are:
+ * 
+ * IsBG2 - BG2EE generic.
+ * IsBGEE - Base BGEE, no SOD
+ * IsSoD  - Base BGEESoD
+ * IsBG2onSoD - Kerozevok's BG2EE To BGEE Mod
+ * IsSoDOverhaul - Pecca's Dragonspear UI++
+ * IsEETBG2  - EET with default BG2 GUI
+ * IsEETSoD  - EET with SoD GUI Option
+ * IsLeUIBG2 - Lefreut's UI on BG2EE
+ * IsLeUISOD - Lefreut's UI on BGEESoD
+ * IsLeUIBG1 - Lefreut's UI on BGEE no SoD
+ * IsEETLeUI - EET with Lefreut's UI
+ * IsKRDS - Kilivitz's Revised Dragon Scale UI on SoD
+ * IsTIWDonBG2 - trinit's IWD GUI on BG2
+ * IsTIWDonSoD - trinit's IWD GUI on SoD
+ * IsTIWD2onBG2 - trinit's IWD2 GUI on BG2EE
+ ******************************************************************************/
+DEFINE_ACTION_MACRO EEUIGetMenuEnv
+BEGIN
+	OUTER_SET IsBG2 = 0
+	OUTER_SET IsBGEE = 0
+	OUTER_SET IsSoD = 0
+	OUTER_SET IsBG2onSoD = 0
+	OUTER_SET IsSoDOverhaul = 0
+	OUTER_SET IsEETBG2 = 0
+	OUTER_SET IsEETSoD = 0
+	OUTER_SET IsLeUIBG2 = 0
+	OUTER_SET IsLeUISOD = 0
+	OUTER_SET IsLeUIBG1 = 0
+	OUTER_SET IsEETLeUI = 0
+	OUTER_SET IsKRDS = 0
+	OUTER_SET IsTIWDonBG2 = 0
+	OUTER_SET IsTIWDonSoD = 0
+	OUTER_SET IsTIWD2onBG2 = 0
+
+	ACTION_IF GAME_IS ~eet~ THEN
+	BEGIN
+		ACTION_IF MOD_IS_INSTALLED ~setup-EET_gui.tp2~ ~0~ THEN
+		BEGIN
+			OUTER_SET IsEETSoD = 1
+			LOG ~IsEETSoD~
+		END ELSE
+		BEGIN
+			ACTION_IF MOD_IS_INSTALLED ~LeUI.tp2~ ~0~ THEN
+			BEGIN
+				OUTER_SET IsEETLeUI = 1
+				LOG ~IsEETLeUI~
+			END ELSE BEGIN
+				OUTER_SET IsEETBG2 = 1
+				LOG ~IsEETBG2~
+			END
+		END
+	END
+
+	ACTION_IF GAME_IS ~bg2ee~ THEN
+	BEGIN
+		ACTION_IF MOD_IS_INSTALLED ~LeUI.tp2~ ~0~ THEN
+		BEGIN
+			OUTER_SET IsLeUIBG2 = 1
+			LOG ~IsLeUIBG2~
+		END ELSE
+		BEGIN
+			ACTION_IF FILE_EXISTS ~override/guiweidufile.png~ THEN
+			BEGIN
+				OUTER_SET IsTIWDonBG2 = 1
+				LOG ~IsTIWDonBG2~
+			END ELSE
+			BEGIN
+				ACTION_IF FILE_EXISTS ~override/guiiwd2dummy.png~ THEN
+				BEGIN
+					OUTER_SET IsTIWD2onBG2 = 1
+					LOG ~IsTIWD2onBG2~
+				END ELSE
+				BEGIN
+					OUTER_SET IsBG2 = 1
+					LOG ~IsBG2~
+				END
+			END
+		END
+	END
+
+	ACTION_IF GAME_IS ~bgee~ THEN
+	BEGIN
+		ACTION_IF NOT FILE_EXISTS_IN_GAME ~BD0010.ARE~ THEN
+		BEGIN // Non-SoD
+			ACTION_IF MOD_IS_INSTALLED ~LeUI.tp2~ ~0~ THEN
+			BEGIN
+				OUTER_SET IsLeUIBG1 = 1
+				LOG ~IsLeUIBG1~
+			END ELSE
+			BEGIN
+				OUTER_SET IsBGEE = 1
+				LOG ~IsBGEE~
+			END
+		END ELSE
+		BEGIN // SoD
+			ACTION_IF MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~ THEN
+			BEGIN
+				OUTER_SET IsSoDOverhaul = 1
+				LOG ~IsSoDOverhaul~
+			END ELSE
+			BEGIN
+				ACTION_IF MOD_IS_INSTALLED ~LeUI.tp2~ ~0~ THEN
+				BEGIN
+					OUTER_SET IsLeUISOD = 1
+					LOG ~IsLeUISOD~
+				END ELSE
+				BEGIN
+					ACTION_IF FILE_EXISTS ~override/ULGOTHST.MOS~ THEN
+					BEGIN
+						OUTER_SET IsBG2onSoD = 1
+						LOG ~IsBG2onSoD~
+					END ELSE
+					BEGIN
+						ACTION_IF FILE_EXISTS ~override/M_CKUI.LUA~ THEN
+						BEGIN
+							OUTER_SET IsKRDS = 1
+							LOG ~IsKRDS~
+						END ELSE
+						BEGIN
+							ACTION_IF FILE_EXISTS ~override/guiweidufile.png~ THEN
+							BEGIN
+								OUTER_SET IsTIWDonSoD = 1
+								LOG ~IsTIWDonSoD~
+							END ELSE
+							BEGIN
+								OUTER_SET IsSoD = 1
+								LOG ~IsSoD~
+							END
+						END
+					END
+				END
+			END
+		END
+	END
+END

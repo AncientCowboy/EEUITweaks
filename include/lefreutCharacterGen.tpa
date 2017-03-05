@@ -1,0 +1,492 @@
+/******************************************************************************
+ * lefreut's Character Creation Screens Installation
+ *****************************************************************************/
+// Open UI.MENU
+PRINT @12
+SILENT
+LAUNCH_ACTION_MACRO UIMenuOpen
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @20
+END
+
+// Replace CHARGEN menu
+PRINT @109001
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenMixed1.menu~
+LAUNCH_ACTION_MACRO UIMenuReplaceMenuMixed
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @109002
+END
+
+
+// Replace CHARGEN_RACE menu
+PRINT @109003
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_RACE~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenRaceMenu1.menu~
+LAUNCH_ACTION_MACRO UIMenuReplaceMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @109004
+END
+
+
+// Replace CHARGEN_CLASS menu
+PRINT @109005
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_CLASS~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenClassMenu1.menu~
+LAUNCH_ACTION_MACRO UIMenuReplaceMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @109006
+END
+
+// Replace CHARGEN_KIT menu
+PRINT @109007
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_KIT~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenKitMenu1.menu~
+LAUNCH_ACTION_MACRO UIMenuReplaceMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @109008
+END
+
+// Replace CHARGEN_ALIGNMENT menu
+PRINT @109009
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_ALIGNMENT~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenAlignmentMenu1.menu~
+LAUNCH_ACTION_MACRO UIMenuReplaceMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @109010
+END
+
+// Replace CHARGEN_ABILITIES menu
+PRINT @109011
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_ABILITIES~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenAbilitiesMenu1.menu~
+LAUNCH_ACTION_MACRO UIMenuReplaceMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @109012
+END
+
+// Replace CHARGEN_PROFICIENCIES menu
+PRINT @109013
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_PROFICIENCIES~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenProficienciesMenu1.menu~
+LAUNCH_ACTION_MACRO UIMenuReplaceMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @109014
+END
+
+// Replace CHARACTER_COLOR menu
+PRINT @302810
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~CHARACTER_COLOR~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCustomizeScreensTweaks/ColorMenu1.menu~
+LAUNCH_ACTION_MACRO UIMenuReplaceMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @302811
+END
+
+// Replace CHARGEN_CUSTOMSOUNDS menu
+PRINT @109015
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_CUSTOMSOUNDS~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenCustomSoundsMenu1.menu~
+LAUNCH_ACTION_MACRO UIMenuReplaceMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @109016
+END
+
+// Replace CHARGEN_HATEDRACE menu
+PRINT @109017
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_HATEDRACE~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenHatedRaceMenu1.menu~
+LAUNCH_ACTION_MACRO UIMenuReplaceMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @109018
+END
+
+// Replace CHARGEN_NAME menu
+PRINT @109019
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_NAME~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenNameMenu1.menu~
+LAUNCH_ACTION_MACRO UIMenuReplaceMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @109020
+END
+
+// Replace CHARGEN_BIO Lua code block
+PRINT @109050
+SILENT
+OUTER_SPRINT $UIMenuIF("LuaRegex") ~createBioEdit[%TAB% ]*=[%TAB% ]*""~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+LAUNCH_ACTION_MACRO UIMenuGetMatchingLuaBlock
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @109052
+END
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/lefreutCharacterGen/ChargenBioCode1.lua~
+LAUNCH_ACTION_MACRO UIMenuReplaceLuaBlock
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @109049
+END
+
+// Replace CHARGEN_BIO menu
+PRINT @109021
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_BIO~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenBioMenu1.menu~
+LAUNCH_ACTION_MACRO UIMenuReplaceMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @109022
+END
+
+// Replace CHARGEN_IMPORT menu
+PRINT @109023
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_IMPORT~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenImportMenu1.menu~
+LAUNCH_ACTION_MACRO UIMenuReplaceMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @109024
+END
+
+// Replace POPUP_THREEBUTTON menu
+PRINT @109025
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~POPUP_THREEBUTTON~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/PopupThreebuttonMenu1.menu~
+LAUNCH_ACTION_MACRO UIMenuReplaceMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @109026
+END
+
+// Replace LOAD Lua code block
+PRINT @109056
+SILENT
+OUTER_SPRINT $UIMenuIF("LuaRegex") ~function[%TAB% ]+getSaveBackground[%TAB% ]*([%TAB% ]*[a-zA-Z0-9]+[%TAB% ]*)~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+LAUNCH_ACTION_MACRO UIMenuGetMatchingLuaBlock
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @109057
+END
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/lefreutCharacterGen/LoadCode1.lua~
+LAUNCH_ACTION_MACRO UIMenuReplaceLuaBlock
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @109058
+END
+
+// Replace LOAD menu
+PRINT @109027
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~LOAD~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/LoadMenu1.menu~
+LAUNCH_ACTION_MACRO UIMenuReplaceMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @109028
+END
+
+// Replace CHARACTER_SELECT menu
+PRINT @109029
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~CHARACTER_SELECT~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/CharacterSelectMenu1.menu~
+LAUNCH_ACTION_MACRO UIMenuReplaceMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @109030
+END
+
+// Replace IMPORTPARTY menu
+PRINT @109031
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~IMPORTPARTY~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ImportPartyMenu1.menu~
+LAUNCH_ACTION_MACRO UIMenuReplaceMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @109032
+END
+
+// Replace CHARGEN_DIFFICULTY menu
+PRINT @109033
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_DIFFICULTY~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenDifficultyMenu1.menu~
+LAUNCH_ACTION_MACRO UIMenuReplaceMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @109034
+END
+
+// Replace CHARGEN_CHOOSE_SPELLS Lua code block
+PRINT @109053
+SILENT
+OUTER_SPRINT $UIMenuIF("LuaRegex") ~function[%TAB% ]+specialistFrame[%TAB% ]*([%TAB% ]*[a-zA-Z0-9]+[%TAB% ]*)~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+LAUNCH_ACTION_MACRO UIMenuGetMatchingLuaBlock
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @109054
+END
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/lefreutCharacterGen/ChargenChooseSpellsCode1.lua~
+LAUNCH_ACTION_MACRO UIMenuReplaceLuaBlock
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @109055
+END
+
+// Replace CHARGEN_CHOOSE_SPELLS menu
+PRINT @109035
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_CHOOSE_SPELLS~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenChooseSpellsMenu1.menu~
+LAUNCH_ACTION_MACRO UIMenuReplaceMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @109036
+END
+
+// Replace CHARGEN_MEMORIZE_MAGE Lua code block
+PRINT @109059
+SILENT
+OUTER_SPRINT $UIMenuIF("LuaRegex") ~function[%TAB% ]+mageMemorizeSpellOrGeneralHelp[%TAB% ]*([%TAB% ]*)~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+LAUNCH_ACTION_MACRO UIMenuGetMatchingLuaBlock
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @109060
+END
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/lefreutCharacterGen/ChargenMemorizeMageCode1.lua~
+LAUNCH_ACTION_MACRO UIMenuReplaceLuaBlock
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @109061
+END
+
+// Replace CHARGEN_MEMORIZE_MAGE menu
+PRINT @109037
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_MEMORIZE_MAGE~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenMemorizeMageMenu1.menu~
+LAUNCH_ACTION_MACRO UIMenuReplaceMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @109038
+END
+
+// Replace CHARGEN_MEMORIZE_PRIEST Lua code block
+PRINT @109062
+SILENT
+OUTER_SPRINT $UIMenuIF("LuaRegex") ~function[%TAB% ]+priestMemorizeSpellOrGeneralHelp[%TAB% ]*([%TAB% ]*)~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+LAUNCH_ACTION_MACRO UIMenuGetMatchingLuaBlock
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @109063
+END
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/lefreutCharacterGen/ChargenMemorizePriestCode1.lua~
+LAUNCH_ACTION_MACRO UIMenuReplaceLuaBlock
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @109064
+END
+
+// Replace CHARGEN_MEMORIZE_PRIEST menu
+PRINT @109039
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_MEMORIZE_PRIEST~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenMemorizePriestMenu1.menu~
+LAUNCH_ACTION_MACRO UIMenuReplaceMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @109040
+END
+
+// Replace CHARGEN_EXPORT menu
+PRINT @109041
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_EXPORT~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenExportMenu1.menu~
+LAUNCH_ACTION_MACRO UIMenuReplaceMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @109042
+END
+
+// Replace CHARGEN_DUALCLASS menu
+PRINT @109043
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_DUALCLASS~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenDualClassMenu1.menu~
+LAUNCH_ACTION_MACRO UIMenuReplaceMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @109044
+END
+
+ACTION_IF NOT(IsBG2onSoD) THEN
+BEGIN
+	// Replace CHARGEN_HIGH_LEVEL_ABILITIES Lua code block
+	PRINT @109047
+	SILENT
+	OUTER_SPRINT $UIMenuIF("LuaRegex") ~function[%TAB% ]+chargenHLADescription[%TAB% ]*([%TAB% ]*)~
+	OUTER_SPRINT $UIMenuIF("Body") ~~
+	LAUNCH_ACTION_MACRO UIMenuGetMatchingLuaBlock
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @109048
+	END
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/lefreutCharacterGen/ChargenHighLevelAbilitiesCode1.lua~
+	LAUNCH_ACTION_MACRO UIMenuReplaceLuaBlock
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @109049
+	END
+	
+	// Replace CHARGEN_HIGH_LEVEL_ABILITIES menu
+	PRINT @109045
+	SILENT
+	OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_HIGH_LEVEL_ABILITIES~
+	OUTER_SPRINT $UIMenuIF("Body") ~~
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenHighLevelAbilitiesMenu1.menu~
+	LAUNCH_ACTION_MACRO UIMenuReplaceMenu
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @109046
+	END
+END
+
+// Close UI.MENU
+PRINT @13
+SILENT
+LAUNCH_ACTION_MACRO UIMenuClose
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @21
+END
+
+// Copy common UI resources
+PRINT @17
+SILENT
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUISCRC.BAM~ ~override~
+
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUIOSTUM.BAM~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUIOSTLM.BAM~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUIOSTUL.BAM~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUIOSTUM.BAM~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUIOSTUR.BAM~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUIOSTLR.BAM~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUIOSTCL.BAM~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4004.PVRZ~ ~override~
+
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LLDRSTAR.BAM~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4006.PVRZ~ ~override~
+
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUIDIFFS.BAM~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4008.PVRZ~ ~override~
+
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUICHLNG.BAM~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4009.PVRZ~ ~override~
+
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUIRSP10.BAM~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4010.PVRZ~ ~override~
+
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUIOSW.BAM~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4015.PVRZ~ ~override~
+
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUIBTBUT.BAM~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4016.PVRZ~ ~override~
+
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LOPSNDSB.MOS~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4248.PVRZ~ ~override~
+
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUICGB.MOS~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4251.PVRZ~ ~override~
+
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUICGPR.MOS~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4252.PVRZ~ ~override~
+
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUICHISD.MOS~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4253.PVRZ~ ~override~
+
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUICHISE.MOS~ ~override~ // CHARACTER_COLOR
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4254.PVRZ~ ~override~
+
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUICREDT.MOS~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4257.PVRZ~ ~override~
+
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUICUSTB.MOS~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4258.PVRZ~ ~override~
+
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUIDCX.MOS~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4259.PVRZ~ ~override~
+
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUIERR.MOS~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4260.PVRZ~ ~override~
+
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUIERR2.MOS~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4261.PVRZ~ ~override~
+
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUISRSVB.MOS~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4297.PVRZ~ ~override~
+
+
+
+
+
+
+
+
+
+
+
+

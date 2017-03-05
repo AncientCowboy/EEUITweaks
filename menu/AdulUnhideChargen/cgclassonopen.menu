@@ -1,0 +1,9 @@
+	onopen
+	"
+		lastChargenClass = nil
+		currentChargenClass = nil  currentChargenKit = nil
+		if (createCharScreen:GetCurrentStep() == const.STEP_DUALCLASS_CLASS) then
+			allChargenClasses = chargen.class
+			allChargenOptionsGenerated = false
+		end
+	"

@@ -1,0 +1,405 @@
+
+/*******************************************************************************
+ * ActionBarPatch1
+ *
+ * Replaces contents of ACTION_BAR label
+ *
+ * Returns $UIMenuIF("Succeeded") 1 => Success, 0 => Failure
+ *
+ ******************************************************************************/
+DEFINE_ACTION_MACRO DeesPermanent.ActionBarPatch1
+BEGIN
+	LOCAL_SPRINT tempstr $UIMenuIF("Body")
+	LOCAL_SPRINT adder ~~
+	LOCAL_SPRINT filestr $UIMenuIF("Filespec")
+
+	// Read patch insertion from onopeninsert.lua
+	LOCAL_SET found = SIZE_OF_FILE ~%filestr%~
+	COPY - ~%filestr%~ ~.../CounterInLine~
+		READ_ASCII 0 adder (%found%)
+	OUTER_SET found = 0 
+
+	// Put code block into inline file
+	COPY - ~ToInlineTemplate~ ~.../CounterInLine~
+		REPLACE_EVALUATE ~dummy~ BEGIN END
+		~%tempstr%~
+	OUTER_SPRINT tempstr ~~
+
+	// Replace label definition
+	COPY - ~.../CounterInLine~ ~.../CounterInLine~
+		REPLACE_EVALUATE CASE_INSENSITIVE ~^[%TAB% ]*label%MWHITE%{%MWHITE%area%MNOBRACE%+mosaic%MNOBRACE%+}.*%MEOL%~
+		BEGIN
+			SET found = 1
+		END
+		~%adder%~
+
+	// Not found - give up
+	ACTION_IF NOT %found% THEN
+	BEGIN
+		LOG ~In DeesPermanent.ActionBarPatch1 - failed to find label definition~
+		OUTER_SET $UIMenuIF("Succeeded") = 0
+	END ELSE 
+
+	// Success somewhere - copy .../CounterInLine to $UIMenuIF("Body")
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Body") ~~
+		OUTER_SET found = SIZE_OF_FILE ~.../CounterInLine~
+		COPY - ~.../CounterInLine~ ~.../CounterInLine~
+			READ_ASCII 0 $UIMenuIF("Body") (%found%-1)
+		OUTER_SET $UIMenuIF("Succeeded") = 1
+	END
+	COPY - ~EmptyInlineTemplate~ ~.../CounterInline~
+END
+
+/*******************************************************************************
+ * ActionBarPatch2
+ *
+ * Replaces existing ACTION_BAR Message scroll buttons
+ *
+ * Returns $UIMenuIF("Succeeded") 1 => Success, 0 => Failure
+ *
+ ******************************************************************************/
+DEFINE_ACTION_MACRO DeesPermanent.ActionBarPatch2
+BEGIN
+	LOCAL_SPRINT tempstr $UIMenuIF("Body")
+	LOCAL_SPRINT adder ~~
+	LOCAL_SPRINT filestr $UIMenuIF("Filespec")
+
+	// Read patch insertion from onopeninsert.lua
+	LOCAL_SET found = SIZE_OF_FILE ~%filestr%~
+	COPY - ~%filestr%~ ~.../CounterInLine~
+		READ_ASCII 0 adder (%found%)
+	OUTER_SET found = 0 
+
+	// Put code block into inline file
+	COPY - ~ToInlineTemplate~ ~.../CounterInLine~
+		REPLACE_EVALUATE ~dummy~ BEGIN END
+		~%tempstr%~
+	OUTER_SPRINT tempstr ~~
+
+	// Replace scroll button definitions
+	COPY - ~.../CounterInLine~ ~.../CounterInLine~
+		REPLACE_EVALUATE CASE_INSENSITIVE ~^[%TAB% ]*button%MWHITE%{%MNOBRACE%+dragMessages%MNOBRACE%+}%MWHITE%button%MWHITE%{%MNOBRACE%+dragMessages%MNOBRACE%+}.*%MEOL%~
+		BEGIN
+			SET found = 1
+		END
+		~%adder%~
+
+	// Not found - give up
+	ACTION_IF NOT %found% THEN
+	BEGIN
+		LOG ~In DeesPermanent.ActionBarPatch2 - failed to find scroll buttons~
+		OUTER_SET $UIMenuIF("Succeeded") = 0
+	END ELSE 
+
+	// Success somewhere - copy .../CounterInLine to $UIMenuIF("Body")
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Body") ~~
+		OUTER_SET found = SIZE_OF_FILE ~.../CounterInLine~
+		COPY - ~.../CounterInLine~ ~.../CounterInLine~
+			READ_ASCII 0 $UIMenuIF("Body") (%found%-1)
+		OUTER_SET $UIMenuIF("Succeeded") = 1
+	END
+	COPY - ~EmptyInlineTemplate~ ~.../CounterInline~
+END
+
+/*******************************************************************************
+ * Dee's Permanent Thieving Button Installation
+ ******************************************************************************/	
+// Copy common files
+PRINT @24
+SILENT
+COPY ~%PKGNAME%/copy/DeePermanentThieving/DIMSTEAL.BAM~ ~override~
+COPY ~%PKGNAME%/copy/DeePermanentThieving/MOS5058.PVRZ~ ~override~
+
+// Open UI.MENU
+PRINT @12
+SILENT
+LAUNCH_ACTION_MACRO UIMenuOpen
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @20
+END
+
+// Patch WORLD_ACTIONBAR
+PRINT @119
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~WORLD_ACTIONBAR~
+
+// For Kilivitz's Revised Dragon Scale this is a menu replacement rather than patch
+ACTION_IF IsKRDS THEN
+BEGIN
+	ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2010~ THEN
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ABarFull7Large.menu~
+	END ELSE
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ABarFull7Medium.menu~
+	END
+
+	LAUNCH_ACTION_MACRO UIMenuReplaceMenu
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @121
+	END
+
+END ELSE
+
+// Everyone else
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Body") ~~
+	LAUNCH_ACTION_MACRO UIMenuGetMenu
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @120
+	END
+	ACTION_MATCH 1
+	WITH
+		%IsSoD% %IsEETSoD% %IsTIWDonSoD%
+		BEGIN
+			ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2010~ THEN
+			BEGIN
+				OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ABarLabel1Large.menu~
+			END ELSE
+			BEGIN
+				OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ABarLabel1Medium.menu~
+			END
+		END
+		%IsSoDOverhaul%
+		BEGIN
+			ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2010~ THEN
+			BEGIN
+				OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ABarLabel2Large.menu~
+			END ELSE
+			BEGIN
+				OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ABarLabel2Medium.menu~
+			END
+		END
+		%IsBG2% %IsEETBG2% %IsTIWDonBG2% %IsTIWD2onBG2%
+		BEGIN
+			ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2010~ THEN
+			BEGIN
+				OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ABarLabel3Large.menu~
+			END ELSE
+			BEGIN
+				OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ABarLabel3Medium.menu~
+			END
+		END
+		%IsBGEE%
+		BEGIN
+			ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2010~ THEN
+			BEGIN
+				OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ABarLabel4Large.menu~
+			END ELSE
+			BEGIN
+				OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ABarLabel4Medium.menu~
+			END
+		END
+		%IsBG2onSoD%
+		BEGIN
+			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ABarLabel5Medium.menu~
+		END
+		%IsLeUIBG2% %IsLeUISOD% %IsLeUIBG1% %IsEETLeUI%
+		BEGIN
+			ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2010~ THEN
+			BEGIN
+				OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ABarLabel6Large.menu~
+			END ELSE
+			BEGIN
+				OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ABarLabel6Medium.menu~
+			END
+		END
+	
+		DEFAULT
+			FAIL @15
+	END
+	LAUNCH_ACTION_MACRO DeesPermanent.ActionBarPatch1
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @121
+	END
+	LAUNCH_ACTION_MACRO UIMenuUpdateMenu
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @103
+	END
+	
+	ACTION_MATCH 1
+	WITH
+		%IsSoD% %IsEETSoD% %IsTIWDonSoD%
+		BEGIN
+			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ActionBarButton1.menu~
+		END
+		%IsSoDOverhaul%
+		BEGIN
+			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ActionBarButton2.menu~
+		END
+		%IsBG2% %IsEETBG2% %IsTIWDonBG2% %IsTIWD2onBG2%
+		BEGIN
+			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ActionBarButton3.menu~
+		END
+		%IsBGEE%
+		BEGIN
+			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ActionBarButton4.menu~
+		END
+		%IsBG2onSoD%
+		BEGIN
+			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ActionBarButton5.menu~
+		END
+		%IsLeUIBG2% %IsLeUISOD% %IsLeUIBG1% %IsEETLeUI%
+		BEGIN
+			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ActionBarButton6.menu~
+		END
+	
+		DEFAULT
+			FAIL @15
+	END
+	LAUNCH_ACTION_MACRO UIMenuAppendMenuElements
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @121
+	END
+	LAUNCH_ACTION_MACRO UIMenuUpdateMenu
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @103
+	END
+			
+	 // Patch location of existing Message Scrolls
+	ACTION_IF (IsBG2onSoD) OR (MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2010~) THEN
+	BEGIN
+		ACTION_MATCH 1
+		WITH
+			%IsSoD% %IsEETSoD% %IsTIWDonSoD%
+			BEGIN
+				OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/newbuttons1Large.menu~
+			END
+			%IsSoDOverhaul%
+			BEGIN
+				OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/newbuttons2Large.menu~
+			END
+			%IsBG2% %IsEETBG2% %IsTIWDonBG2% %IsTIWD2onBG2%
+			BEGIN
+				OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/newbuttons3Large.menu~
+			END
+			%IsBGEE%
+			BEGIN
+				OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/newbuttons4Large.menu~
+			END
+			%IsBG2onSoD%
+			BEGIN
+				OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ABarScrBtns5.menu~
+			END
+			%IsLeUIBG2% %IsLeUISOD% %IsLeUIBG1% %IsEETLeUI%
+			BEGIN
+				OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/newbuttons6Large.menu~
+			END
+	
+			DEFAULT
+				FAIL @15
+		END
+	
+		LAUNCH_ACTION_MACRO DeesPermanent.ActionBarPatch2
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @121
+		END
+		LAUNCH_ACTION_MACRO UIMenuUpdateMenu
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @103
+		END
+	END
+END // Not IsKRDS
+
+// Close UI.MENU
+PRINT @13
+SILENT
+LAUNCH_ACTION_MACRO UIMenuClose
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @21
+END
+
+// Copy configuration specific ACTION_BAR resources
+ACTION_MATCH 1
+WITH
+	%IsSoD% %IsEETSoD% %IsTIWDonSoD%
+	BEGIN
+		ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2010~ THEN
+		BEGIN
+			COPY ~%PKGNAME%/copy/CommonActionBars/SOD/ABSODL.MOS~ ~override/GUWBTP10.MOS~
+			COPY ~%PKGNAME%/copy/CommonActionBars/SOD/MOS5042.PVRZ~ ~override~
+		END ELSE
+		BEGIN
+			COPY ~%PKGNAME%/copy/CommonActionBars/SOD/ABSODM.MOS~ ~override/GUWBTP10.MOS~
+			COPY ~%PKGNAME%/copy/CommonActionBars/SOD/MOS5041.PVRZ~ ~override~
+		END
+	END
+	%IsSoDOverhaul%
+	BEGIN
+		ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2010~ THEN
+		BEGIN
+			COPY ~%PKGNAME%/copy/CommonActionBars/DSP/ABDSPL.MOS~ ~override/GUWBTP10.MOS~
+			COPY ~%PKGNAME%/copy/CommonActionBars/DSP/MOS5045.PVRZ~ ~override~
+		END ELSE
+		BEGIN
+			COPY ~%PKGNAME%/copy/CommonActionBars/DSP/ABDSPM.MOS~ ~override/GUWBTP10.MOS~
+			COPY ~%PKGNAME%/copy/CommonActionBars/DSP/MOS5044.PVRZ~ ~override~
+		END
+		DELETE ~override/GUWBTP10.png~
+	END
+	%IsBG2% %IsEETBG2% %IsTIWDonBG2% %IsTIWD2onBG2%
+	BEGIN
+		ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2010~ THEN
+		BEGIN
+			COPY ~%PKGNAME%/copy/CommonActionBars/BG2/ABBG2L.MOS~ ~override/GUWBTP10.MOS~
+			COPY ~%PKGNAME%/copy/CommonActionBars/BG2/MOS5039.PVRZ~ ~override~
+		END ELSE
+		BEGIN
+			COPY ~%PKGNAME%/copy/CommonActionBars/BG2/ABBG2M.MOS~ ~override/GUWBTP10.MOS~
+			COPY ~%PKGNAME%/copy/CommonActionBars/BG2/MOS5037.PVRZ~ ~override~
+		END
+	END
+	%IsBGEE%
+	BEGIN
+		ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2010~ THEN
+		BEGIN
+			COPY ~%PKGNAME%/copy/CommonActionBars/BG1/ABBG1L.MOS~ ~override/GUWBTP10.MOS~
+			COPY ~%PKGNAME%/copy/CommonActionBars/BG1/MOS5048.PVRZ~ ~override~
+		END ELSE
+		BEGIN
+			COPY ~%PKGNAME%/copy/CommonActionBars/BG1/ABBG1M.MOS~ ~override/GUWBTP10.MOS~
+			COPY ~%PKGNAME%/copy/CommonActionBars/BG1/MOS5047.PVRZ~ ~override~
+		END
+	END
+	%IsBG2onSoD%
+	BEGIN
+		COPY ~%PKGNAME%/copy/CommonActionBars/2SD/AB2SDM.MOS~ ~override/GUWBTP10.MOS~
+		COPY ~%PKGNAME%/copy/CommonActionBars/2SD/MOS5049.PVRZ~ ~override~
+	END
+	%IsLeUIBG2% %IsLeUISOD% %IsLeUIBG1% %IsEETLeUI%
+	BEGIN
+		ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2010~ THEN
+		BEGIN
+			COPY ~%PKGNAME%/copy/CommonActionBars/LUI/ABLUIL.MOS~ ~override/GUIBAR.MOS~
+			COPY ~%PKGNAME%/copy/CommonActionBars/LUI/MOS5052.PVRZ~ ~override~
+		END ELSE
+		BEGIN
+			COPY ~%PKGNAME%/copy/CommonActionBars/LUI/ABLUIM.MOS~ ~override/GUIBAR.MOS~
+			COPY ~%PKGNAME%/copy/CommonActionBars/LUI/MOS5051.PVRZ~ ~override~
+		END
+	END
+	%IsKRDS%
+	BEGIN
+//		ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2010~ THEN
+//		BEGIN
+//			COPY ~%PKGNAME%/copy/CommonActionBars/KDS/ABKDSL.MOS~ ~override/GUWBTP10.MOS~
+//			COPY ~%PKGNAME%/copy/CommonActionBars/KDS/MOS5053.PVRZ~ ~override~
+//		END
+	END
+
+	DEFAULT
+		FAIL @15
+END
+

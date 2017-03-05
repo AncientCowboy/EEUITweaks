@@ -1,0 +1,275 @@
+-- BEGIN BETTER QUICK LOOT MAIN 1.6
+menu
+{
+	name 'WORLD_QUICKLOOT'
+	align center center
+	ignoreEsc
+	onClose
+	"
+		mouseOverQuicklootContainer = nil
+	"
+	label
+	{
+		area 0 0 422 132
+		rectangle 0
+		actionScroll "scrollQuickLootItems()"
+	}
+	label
+	{
+		area 341 16 68 100
+		encumbrance
+		actionScroll "scrollQuickLootItems()"
+	}
+	label
+	{
+		area 330 53 37 27
+		mosaic A0BQAR
+		opacity 220
+		actionScroll "scrollQuickLootItems()"
+	}
+	label
+	{
+		area 273 54 65 24
+		text lua "getQuickLootPageText()"
+		text style "label"
+		align center center
+		actionScroll "scrollQuickLootItems()"
+	}
+	label
+	{
+		area 283 8 45 48
+		bam A0BQSV10
+		sequence 0
+		frame 1
+		opacity 180
+		actionScroll "scrollQuickLootItems()"
+	}
+	label
+	{
+		area 283 76 45 48
+		bam A0BQSV10
+		sequence 1
+		frame 1
+		opacity 180
+		actionScroll "scrollQuickLootItems()"
+	}
+	button
+	{
+		area 283 8 45 48
+		bam A0BQSV10
+		sequence 0
+		enabled "worldScreen:GroundScrollEnabled(-1)"
+		action
+		"
+			worldScreen:OnGroundScroll(-1)
+		"
+		actionScroll "scrollQuickLootItems()"
+	}
+	button
+	{
+		area 283 76 45 48
+		bam A0BQSV10
+		sequence 1
+		enabled "worldScreen:GroundScrollEnabled(1)"
+		action
+		"
+			worldScreen:OnGroundScroll(1)
+		"
+		actionScroll "scrollQuickLootItems()"
+	}
+	button
+	{
+		area 13 13 52 52
+		bam STONSLOT
+		tooltip lua	"getGroundItemProperty(0,'name')"
+		tint lua	"getGroundItemProperty(0,'tint')"
+		icon lua	"getGroundItemProperty(0,'icon')"
+		count lua	"getGroundItemProperty(0,'count')"
+		usages lua	"getGroundItemProperty(0,'usages')"
+		action "groundItemClick(0)"
+		actionEnter "mouseOverQuicklootContainer = getSlotContainerId(0,'containerId')"
+		actionExit "mouseOverQuicklootContainer = nil"
+		actionScroll "scrollQuickLootItems()"
+	}
+	button
+	{
+		area 67 13 52 52
+		bam STONSLOT
+		tooltip lua	"getGroundItemProperty(1,'name')"
+		tint lua	"getGroundItemProperty(1,'tint')"
+		icon lua	"getGroundItemProperty(1,'icon')"
+		count lua	"getGroundItemProperty(1,'count')"
+		usages lua	"getGroundItemProperty(1,'usages')"
+		action "groundItemClick(1)"
+		actionEnter "mouseOverQuicklootContainer = getSlotContainerId(1,'containerId')"
+		actionExit "mouseOverQuicklootContainer = nil"
+		actionScroll "scrollQuickLootItems()"
+	}
+	button
+	{
+		area 121 13 52 52
+		bam STONSLOT
+		tooltip lua	"getGroundItemProperty(2,'name')"
+		tint lua	"getGroundItemProperty(2,'tint')"
+		icon lua	"getGroundItemProperty(2,'icon')"
+		count lua	"getGroundItemProperty(2,'count')"
+		usages lua	"getGroundItemProperty(2,'usages')"
+		action "groundItemClick(2)"
+		actionEnter "mouseOverQuicklootContainer = getSlotContainerId(2,'containerId')"
+		actionExit "mouseOverQuicklootContainer = nil"
+		actionScroll "scrollQuickLootItems()"
+	}
+	button
+	{
+		area 175 13 52 52
+		bam STONSLOT
+		tooltip lua	"getGroundItemProperty(3,'name')"
+		tint lua	"getGroundItemProperty(3,'tint')"
+		icon lua	"getGroundItemProperty(3,'icon')"
+		count lua	"getGroundItemProperty(3,'count')"
+		usages lua	"getGroundItemProperty(3,'usages')"
+		action "groundItemClick(3)"
+		actionEnter "mouseOverQuicklootContainer = getSlotContainerId(3,'containerId')"
+		actionExit "mouseOverQuicklootContainer = nil"
+		actionScroll "scrollQuickLootItems()"
+	}
+	button
+	{
+		area 229 13 52 52
+		bam STONSLOT
+		tooltip lua	"getGroundItemProperty(4,'name')"
+		tint lua	"getGroundItemProperty(4,'tint')"
+		icon lua	"getGroundItemProperty(4,'icon')"
+		count lua	"getGroundItemProperty(4,'count')"
+		usages lua	"getGroundItemProperty(4,'usages')"
+		action "groundItemClick(4)"
+		actionEnter "mouseOverQuicklootContainer = getSlotContainerId(4,'containerId')"
+		actionExit "mouseOverQuicklootContainer = nil"
+		actionScroll "scrollQuickLootItems()"
+	}
+	button
+	{
+		area 13 67 52 52
+		bam STONSLOT
+		tooltip lua	"getGroundItemProperty(5,'name')"
+		tint lua	"getGroundItemProperty(5,'tint')"
+		icon lua	"getGroundItemProperty(5,'icon')"
+		count lua	"getGroundItemProperty(5,'count')"
+		usages lua	"getGroundItemProperty(5,'usages')"
+		action "groundItemClick(5)"
+		actionEnter "mouseOverQuicklootContainer = getSlotContainerId(5,'containerId')"
+		actionExit "mouseOverQuicklootContainer = nil"
+		actionScroll "scrollQuickLootItems()"
+	}
+	button
+	{
+		area 67 67 52 52
+		bam STONSLOT
+		tooltip lua	"getGroundItemProperty(6,'name')"
+		tint lua	"getGroundItemProperty(6,'tint')"
+		icon lua	"getGroundItemProperty(6,'icon')"
+		count lua	"getGroundItemProperty(6,'count')"
+		usages lua	"getGroundItemProperty(6,'usages')"
+		action "groundItemClick(6)"
+		actionEnter "mouseOverQuicklootContainer = getSlotContainerId(6,'containerId')"
+		actionExit "mouseOverQuicklootContainer = nil"
+		actionScroll "scrollQuickLootItems()"
+	}
+	button
+	{
+		area 121 67 52 52
+		bam STONSLOT
+		tooltip lua	"getGroundItemProperty(7,'name')"
+		tint lua	"getGroundItemProperty(7,'tint')"
+		icon lua	"getGroundItemProperty(7,'icon')"
+		count lua	"getGroundItemProperty(7,'count')"
+		usages lua	"getGroundItemProperty(7,'usages')"
+		action "groundItemClick(7)"
+		actionEnter "mouseOverQuicklootContainer = getSlotContainerId(7,'containerId')"
+		actionExit "mouseOverQuicklootContainer = nil"
+		actionScroll "scrollQuickLootItems()"
+	}
+	button
+	{
+		area 175 67 52 52
+		bam STONSLOT
+		tooltip lua	"getGroundItemProperty(8,'name')"
+		tint lua	"getGroundItemProperty(8,'tint')"
+		icon lua	"getGroundItemProperty(8,'icon')"
+		count lua	"getGroundItemProperty(8,'count')"
+		usages lua	"getGroundItemProperty(8,'usages')"
+		action "groundItemClick(8)"
+		actionEnter "mouseOverQuicklootContainer = getSlotContainerId(8,'containerId')"
+		actionExit "mouseOverQuicklootContainer = nil"
+		actionScroll "scrollQuickLootItems()"
+	}
+	button
+	{
+		area 229 67 52 52
+		bam STONSLOT
+		tooltip lua	"getGroundItemProperty(9,'name')"
+		tint lua	"getGroundItemProperty(9,'tint')"
+		icon lua	"getGroundItemProperty(9,'icon')"
+		count lua	"getGroundItemProperty(9,'count')"
+		usages lua	"getGroundItemProperty(9,'usages')"
+		action "groundItemClick(9)"
+		actionEnter "mouseOverQuicklootContainer = getSlotContainerId(9,'containerId')"
+		actionExit "mouseOverQuicklootContainer = nil"
+		actionScroll "scrollQuickLootItems()"
+	}
+}
+`
+function setQuickLootPosition(buttonPress)
+	local x,y = Infinity_GetMousePosition()
+	if (buttonPress) then
+		x = x - 39
+	else
+		x = x + 26
+	end
+	y = y - 66
+	local screenWidth,screenHeight = Infinity_GetScreenSize()
+	if (x < (-screenWidth+422)/2 + 10) then
+		x = (-screenWidth+422)/2 + 10
+	else
+		if (x > (screenWidth+422)/2 - 432) then
+			x = (screenWidth+422)/2 - 432
+		end
+	end
+	if (y < (-screenHeight+132)/2 + 10) then
+		y = (-screenHeight+132)/2 + 10
+	else
+		if (y > (screenHeight+132)/2 - 182) then
+			y = (screenHeight+132)/2 - 182
+		end
+	end
+	Infinity_SetOffset('WORLD_QUICKLOOT',x,y)
+	local i = 0
+	while (worldScreen:GroundScrollEnabled(i-1)) do
+		i = i - 1
+	end
+	worldScreen:OnGroundScroll(i)
+end
+function scrollQuickLootItems()
+	if scrollDirection > 0 then
+		if worldScreen:GroundScrollEnabled(-1) then
+			worldScreen:OnGroundScroll(-1)
+		end
+	elseif scrollDirection < 0 then
+		if worldScreen:GroundScrollEnabled(1) then
+			worldScreen:OnGroundScroll(1)
+		end
+	end
+end
+function getQuickLootPageText()
+	local prev = 0
+	while (worldScreen:GroundScrollEnabled(-prev-1)) do
+		prev = prev + 1
+	end
+	local next = 0
+	while (worldScreen:GroundScrollEnabled(next+1)) do
+		next = next + 1
+	end
+	return (prev+1) .. "/" .. (prev+next+1)
+end
+`
+-- END BETTER QUICK LOOT MAIN

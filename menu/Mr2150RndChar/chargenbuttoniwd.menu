@@ -1,0 +1,28 @@
+	button
+	{
+		enabled "createCharScreen:GetCurrentStep() == 0"
+		area 232 726 340 36
+		text "????"
+		text style "button"
+		pad 8 2 8 2
+		bam GUICHLNG
+		action "randChar()"
+	}
+	button
+	{
+		enabled "randomCharacter == 1 and createCharScreen:GetCurrentStep() == 15"
+		area 232 726 340 36
+		text "Again?"
+		text style "button"
+		pad 8 2 8 2
+		bam GUICHLNG
+		action "
+			chargen.information = nil
+			randomCharacter = 0
+			for i=1,5,1 do
+				createCharScreen:OnMainBackButtonClick()
+			end
+			randomCharacter = 1
+			randChar()
+		"
+	}	

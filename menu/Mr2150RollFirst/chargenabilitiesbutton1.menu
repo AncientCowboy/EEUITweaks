@@ -1,0 +1,16 @@
+	button
+	{
+		on escape
+		enabled "rollFirst == 1"
+		area 196 653 230 44
+		bam GUIBUTMT
+		text "BACK_BUTTON"
+		text style "button"
+		action "
+			Infinity_PopMenu()
+			createCharScreen:OnCancelButtonClick()
+			for i=1,5,1 do
+				createCharScreen:OnMainBackButtonClick()
+			end
+		"
+	}

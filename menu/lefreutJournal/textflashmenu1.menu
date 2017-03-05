@@ -1,0 +1,74 @@
+menu
+{
+	name 'textflash'
+	opacity lua 'hoverPopup and 1 or getOpacityForInfoBlock(1000)'
+	enabled 'next(textflashes)'
+	align center top
+	offset 0 10
+
+	label
+	{
+		area 0 0 500 140
+		rectangle 4
+		rectangle opacity 200
+	}
+	label
+	{
+		area 92 12 348 26
+		text lua "getTitleString()"
+		text style "label"
+		text align left center
+		text point 14
+		text color C
+	}
+	text
+	{
+		area 92 36 348 26
+		text lua "getSubtitleString()"
+		text style "label"
+		text align left top
+		text point 14
+		text color D
+		scrollbar 'LUISCRC'
+		scrollbar hide lua "1"
+	}
+	text
+	{
+		area 20 64 468 62
+		text lua "getBodyString()"
+		text style "normal"
+		text align left top
+		scrollbar 'LUISCRC'
+		scrollbar hide lua "1"
+		action
+		"
+			if(sidebarsGreyed ~= 1) then
+				wasPaused = worldScreen:CheckIfPaused()
+				e:GetActiveEngine():OnLeftPanelButtonClick(2)
+			end
+		"
+		actionEnter "hoverPopup = true"
+		actionExit "hoverPopup = false"
+	}
+
+	label
+	{
+		area 14 12 72 55
+		bam LUILS10
+		sequence 2
+		frame 0
+	}
+	button
+	{
+		bam LUIOSW
+		on escape
+		area 440 16 45 42
+		sequence 2
+		action
+		"
+			--end the animation
+			local tf = next(textflashes)
+			textflashes[tf] = nil
+		"
+	}
+}

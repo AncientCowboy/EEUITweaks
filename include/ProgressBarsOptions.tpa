@@ -1,0 +1,156 @@
+
+/*******************************************************************************
+ * Leveling Progress Bars Options Installation
+ ******************************************************************************/
+// Open UI.MENU
+PRINT @12
+SILENT
+LAUNCH_ACTION_MACRO UIMenuOpen
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @20
+END
+
+ACTION_MATCH 1
+WITH
+	%IsBG2% %IsEETBG2% %IsLeUIBG2% %IsEETLeUI% %IsTIWDonBG2% %IsTIWDonSoD%
+	BEGIN
+		// Copy files
+		PRINT @17
+		SILENT
+		COPY ~%PKGNAME%/copy/ProgressBar/BLU2SLDR.MOS~ ~override~
+		COPY ~%PKGNAME%/copy/ProgressBar/MOS5025.PVRZ~ ~override~
+		COPY ~%PKGNAME%/copy/ProgressBar/FIL2SLDR.MOS~ ~override~
+		COPY ~%PKGNAME%/copy/ProgressBar/MOS5028.PVRZ~ ~override~
+		COPY ~%PKGNAME%/copy/ProgressBar/GRN2SLDR.MOS~ ~override~
+		COPY ~%PKGNAME%/copy/ProgressBar/MOS5030.PVRZ~ ~override~
+		COPY ~%PKGNAME%/copy/ProgressBar/RED2SLDR.MOS~ ~override~
+		COPY ~%PKGNAME%/copy/ProgressBar/MOS5034.PVRZ~ ~override~
+
+		// Append OPTIONS_PROGBAR menu
+		PRINT @301002
+		SILENT
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/ProgressBar/progressbaroptions3.menu~
+		LAUNCH_ACTION_MACRO UIMenuAppendFile
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @301004
+		END
+	END
+
+	%IsTIWD2onBG2%
+	BEGIN
+		// Copy files
+		PRINT @17
+		SILENT
+		COPY ~%PKGNAME%/copy/ProgressBar/BLU2SLDR.MOS~ ~override~
+		COPY ~%PKGNAME%/copy/ProgressBar/MOS5025.PVRZ~ ~override~
+		COPY ~%PKGNAME%/copy/ProgressBar/FIL2SLDR.MOS~ ~override~
+		COPY ~%PKGNAME%/copy/ProgressBar/MOS5028.PVRZ~ ~override~
+		COPY ~%PKGNAME%/copy/ProgressBar/GRN2SLDR.MOS~ ~override~
+		COPY ~%PKGNAME%/copy/ProgressBar/MOS5030.PVRZ~ ~override~
+		COPY ~%PKGNAME%/copy/ProgressBar/RED2SLDR.MOS~ ~override~
+		COPY ~%PKGNAME%/copy/ProgressBar/MOS5034.PVRZ~ ~override~
+
+		// Append OPTIONS_PROGBAR menu
+		PRINT @301002
+		SILENT
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/ProgressBar/progressbaroptions5.menu~
+		LAUNCH_ACTION_MACRO UIMenuAppendFile
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @301004
+		END
+	END
+
+	%IsBG2onSoD% %IsLeUISOD% %IsLeUIBG1%
+	BEGIN
+		// Copy files
+		PRINT @17
+		SILENT
+		COPY ~%PKGNAME%/copy/ProgressBar/BLU2SLDR.MOS~ ~override~
+		COPY ~%PKGNAME%/copy/ProgressBar/MOS5025.PVRZ~ ~override~
+		COPY ~%PKGNAME%/copy/ProgressBar/FIL2SLDR.MOS~ ~override~
+		COPY ~%PKGNAME%/copy/ProgressBar/MOS5028.PVRZ~ ~override~
+		COPY ~%PKGNAME%/copy/ProgressBar/GRN2SLDR.MOS~ ~override~
+		COPY ~%PKGNAME%/copy/ProgressBar/MOS5030.PVRZ~ ~override~
+		COPY ~%PKGNAME%/copy/ProgressBar/RED2SLDR.MOS~ ~override~
+		COPY ~%PKGNAME%/copy/ProgressBar/MOS5034.PVRZ~ ~override~
+		COPY ~%PKGNAME%/copy/ProgressBar/GUICUSTX.MOS~ ~override~
+		COPY ~%PKGNAME%/copy/ProgressBar/MOS5033.PVRZ~ ~override~
+
+		// Append OPTIONS_PROGBAR menu
+		PRINT @301002
+		SILENT
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/ProgressBar/progressbaroptions2.menu~
+		LAUNCH_ACTION_MACRO UIMenuAppendFile
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @301004
+		END
+	END
+
+	%IsBGEE%
+	BEGIN
+		// Copy files
+		PRINT @17
+		SILENT
+		COPY ~%PKGNAME%/copy/ProgressBar/BLU3SLDR.MOS~ ~override~
+		COPY ~%PKGNAME%/copy/ProgressBar/MOS5026.PVRZ~ ~override~
+		COPY ~%PKGNAME%/copy/ProgressBar/FIL2SLDR.MOS~ ~override~
+		COPY ~%PKGNAME%/copy/ProgressBar/MOS5028.PVRZ~ ~override~
+		COPY ~%PKGNAME%/copy/ProgressBar/GRN3SLDR.MOS~ ~override~
+		COPY ~%PKGNAME%/copy/ProgressBar/MOS5031.PVRZ~ ~override~
+		COPY ~%PKGNAME%/copy/ProgressBar/RED3SLDR.MOS~ ~override~
+		COPY ~%PKGNAME%/copy/ProgressBar/MOS5035.PVRZ~ ~override~
+
+		// Append OPTIONS_PROGBAR menu
+		PRINT @301002
+		SILENT
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/ProgressBar/progressbaroptions4.menu~
+		LAUNCH_ACTION_MACRO UIMenuAppendFile
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @301004
+		END
+	END
+
+	%IsSoD% %IsSoDOverhaul% %IsEETSoD% %IsKRDS%
+	BEGIN
+		// Copy files
+		PRINT @17
+		SILENT
+		COPY ~%PKGNAME%/copy/ProgressBar/BLUSLDR.MOS~ ~override~
+		COPY ~%PKGNAME%/copy/ProgressBar/MOS5027.PVRZ~ ~override~
+		COPY ~%PKGNAME%/copy/ProgressBar/FILSLDR.MOS~ ~override~
+		COPY ~%PKGNAME%/copy/ProgressBar/MOS5029.PVRZ~ ~override~
+		COPY ~%PKGNAME%/copy/ProgressBar/GRNSLDR.MOS~ ~override~
+		COPY ~%PKGNAME%/copy/ProgressBar/MOS5032.PVRZ~ ~override~
+		COPY ~%PKGNAME%/copy/ProgressBar/REDSLDR.MOS~ ~override~
+		COPY ~%PKGNAME%/copy/ProgressBar/MOS5036.PVRZ~ ~override~
+
+		// Append OPTIONS_PROGBAR menu
+		PRINT @301002
+		SILENT
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/ProgressBar/progressbaroptions.menu~
+		LAUNCH_ACTION_MACRO UIMenuAppendFile
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @301004
+		END
+	END
+
+	DEFAULT
+		FAIL @15
+END
+
+// All done - close up
+PRINT @13
+SILENT
+LAUNCH_ACTION_MACRO UIMenuClose
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @21
+END
+
+
