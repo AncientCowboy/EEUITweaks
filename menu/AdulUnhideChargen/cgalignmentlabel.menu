@@ -1,7 +1,0 @@
-			label
-			{
-				area 0 0 340 32
-				rectangle 1
-				rectangle opacity 180
-				enabled "getAlignmentDisabled(allChargenAlignments[rowNumber].id)"
-			}
