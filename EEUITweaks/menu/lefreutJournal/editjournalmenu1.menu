@@ -14,7 +14,7 @@ menu
 	label
 	{
 		area 0 0 864 710
-		mosaic GUIJRNL
+		mosaic LUIJRNL
 	}
 	label
 	{
@@ -29,13 +29,13 @@ menu
 		area 152 236 582 346
 		text style "edit_parchment"
 		var journalNoteEdit
-		scrollbar 'GUISBR'
+		scrollbar 'LUISBR'
 	}
 
 	button
 	{
 		area 72 94 234 44
-		bam GUIOSTUL
+		bam LUIOSTUL
 		text "DONE_BUTTON"
 		text style "button"
 		action
@@ -51,7 +51,7 @@ menu
 	button
 	{
 		area 556 94 234 44
-		bam GUIOSTUR
+		bam LUIOSTUR
 		text "CANCEL_BUTTON"
 		text style "button"
 		action
@@ -62,7 +62,7 @@ menu
 	button
 	{
 		area 332 610 201 44
-		bam GUIOSTLM
+		bam LUIOSTLM
 		clickable lua "journalNoteEditRef and journalMode == 3"
 		text "DELETE_BUTTON"
 		text style "button"

@@ -22,7 +22,7 @@ menu
 	label
 	{
 		area 0 0 864 96
-		mosaic GUISTBBB
+		mosaic LUISTBBB
 	}
 	label
 	{
@@ -32,7 +32,7 @@ menu
 	button
 	{
 		area 464 38 234 44
-		bam GUIOSTUR
+		bam LUIOSTUR
 		text "DONE_BUTTON"
 		text style "button"
 		on escape
@@ -46,7 +46,7 @@ menu
 		name 'BUTTON_storechooser_0'
 		area 145 22 62 64
 		enabled "storeScreen:GetPanelButtonEnabled(0)"
-		bam GUISTBBC
+		bam LUISTBBC
 		highlightgroup storePanelButtonHighlightGroup
 		sequence lua "storeScreen:GetPanelButtonSequence(0)"
 		tooltip lua "getBuySellTooltip()"
@@ -60,7 +60,7 @@ menu
 		name 'BUTTON_storechooser_1'
 		area 217 22 62 64
 		enabled "storeScreen:GetPanelButtonEnabled(1)"
-		bam GUISTBBC
+		bam LUISTBBC
 		highlightgroup storePanelButtonHighlightGroup
 		sequence lua "storeScreen:GetPanelButtonSequence(1)"
 		tooltip lua "Infinity_FetchString(storeScreen:GetPanelButtonToolTip(1))"
@@ -74,7 +74,7 @@ menu
 		name 'BUTTON_storechooser_2'
 		area 289 22 62 64
 		enabled "storeScreen:GetPanelButtonEnabled(2)"
-		bam GUISTBBC
+		bam LUISTBBC
 		highlightgroup storePanelButtonHighlightGroup
 		sequence lua "storeScreen:GetPanelButtonSequence(2)"
 		tooltip lua "Infinity_FetchString(storeScreen:GetPanelButtonToolTip(2))"
@@ -88,7 +88,7 @@ menu
 		name 'BUTTON_storechooser_3'
 		area 361 22 62 64
 		enabled "storeScreen:GetPanelButtonEnabled(3)"
-		bam GUISTBBC
+		bam LUISTBBC
 		highlightgroup storePanelButtonHighlightGroup
 		sequence lua "storeScreen:GetPanelButtonSequence(3)"
 		tooltip lua "Infinity_FetchString(storeScreen:GetPanelButtonToolTip(3))"

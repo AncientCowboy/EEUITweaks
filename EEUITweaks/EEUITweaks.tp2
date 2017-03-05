@@ -25,7 +25,7 @@ ALWAYS
 	END
 END
 
-VERSION ~2.1~
+VERSION ~2.2~
 
 LANGUAGE 
 	~English~ ~EEUITweaks/languages/english~ ~EEUITweaks/languages/english/setup.tra~
@@ -63,6 +63,37 @@ REQUIRE_COMPONENT ~EEUITweaks/EEUITweaks.tp2~ ~1000~ @26
 INCLUDE ~%PKGNAME%/include/HiddenOptions.tpa~
 
 /******************************************************************************
+ * lefreut's Character Creation Screens
+ *****************************************************************************/
+BEGIN @109000 DESIGNATED 1090
+GROUP @1
+REQUIRE_PREDICATE
+(
+	(
+		(GAME_IS ~bg2ee~) AND
+		(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND
+		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND
+		(NOT(FILE_EXISTS ~override/guiiwd2dummy.png~))
+	) OR 
+	(
+		(GAME_IS ~eet~) AND
+		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND
+		(NOT(MOD_IS_INSTALLED ~setup-EET_gui.tp2~ ~0~))
+
+	) OR
+	(
+		(GAME_IS ~bgee~) AND 
+		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND
+		(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND
+		(FILE_EXISTS ~override/ULGOTHST.MOS~)
+	)
+) @27 // Only BG2 or BG2onSoD or EETBG2
+FORBID_COMPONENT ~EEUITweaks.tp2~ ~1050~ @108005 // Adul's Unhide Chargen Options
+FORBID_COMPONENT ~EEUITweaks.tp2~ ~1020~ @108006 // Mr2150's Random PC Generator
+
+INCLUDE ~%PKGNAME%/include/lefreutCharacterGen.tpa~
+
+/******************************************************************************
  * Mr2150's Random PC Generator
  *****************************************************************************/
 BEGIN @102000 DESIGNATED 1020
@@ -78,11 +109,13 @@ REQUIRE_PREDICATE (
 	) OR
 	(
 		(GAME_IS ~bgee~) AND
-		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND
- 		(NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~))
+ 		(NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~)) AND
+		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~))
 	)
 ) @27 // NOT Dragonspear UI++ nor Lefreut's UI (apparently M_random.lua issue)
-FORBID_COMPONENT ~EEUITweaks.tp2~ ~1060~ @102002
+FORBID_COMPONENT ~EEUITweaks.tp2~ ~1060~ @102002 // Mr2150's Roll First
+FORBID_COMPONENT ~EEUITweaks.tp2~ ~1080~ @102003 // lefreut's Portrait Picker
+FORBID_COMPONENT ~EEUITweaks.tp2~ ~1090~ @102004 // lefreut's Character Creation Screens
 
 INCLUDE ~%PKGNAME%/include/Mr2150RndChar.tpa~
 
@@ -95,14 +128,15 @@ REQUIRE_PREDICATE (
 	(GAME_IS ~eet~) OR
 	(
 		(GAME_IS ~bg2ee~) AND
-		(NOT(FILE_EXISTS ~override/guiweidufile.png~))
+		(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND
+		(NOT(FILE_EXISTS ~override/guiiwd2dummy.png~))
 	) OR
 	(
 		(GAME_IS ~bgee~) AND 
 		(NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~)) AND
 		(NOT(FILE_EXISTS ~override/guiweidufile.png~))
 	)
-) @39 // NOT Dragonspear UI++ nor trinit's IWD GUI common to all subcomponents
+) @39 // NOT Dragonspear UI++ nor trinit's IWD nor IWD2 GUI common to all subcomponents
 SUBCOMPONENT @510 
 
 INCLUDE ~%PKGNAME%/include/BillyYankMultiPort.tpa~
@@ -120,6 +154,37 @@ SUBCOMPONENT @510
 ) // Common limitations + not simple BGEE
 
 INCLUDE ~%PKGNAME%/include/Mr2150PortraitPick.tpa~
+
+/******************************************************************************
+ * lefreut's Portrait Picker
+ *****************************************************************************/
+BEGIN @108000 DESIGNATED 1080
+GROUP @1
+SUBCOMPONENT @510 
+(
+	(
+		(GAME_IS ~bg2ee~) AND
+		(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND
+		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND
+		(NOT(FILE_EXISTS ~override/guiiwd2dummy.png~))
+	) OR 
+	(
+		(GAME_IS ~eet~) AND
+		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND
+		(NOT(MOD_IS_INSTALLED ~setup-EET_gui.tp2~ ~0~))
+
+	) OR
+	(
+		(GAME_IS ~bgee~) AND 
+		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND
+		(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND
+		(FILE_EXISTS ~override/ULGOTHST.MOS~)
+	)
+) // Only BG2 or BG2onSoD or EETBG2
+FORBID_COMPONENT ~EEUITweaks.tp2~ ~1050~ @108005 // Adul's Unhide Chargen Options
+FORBID_COMPONENT ~EEUITweaks.tp2~ ~1020~ @108006 // Mr2150's Random PC Generator
+
+INCLUDE ~%PKGNAME%/include/lefreutPortraitPicker.tpa~
 
 /******************************************************************************
  * Mr2150's Backup M_BG.lua
@@ -160,7 +225,8 @@ REQUIRE_PREDICATE (
  		(NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~))
 	)
 ) @27 // NOT Dragonspear UI++ nor Lefreut's UI (several issues)
-
+FORBID_COMPONENT ~EEUITweaks.tp2~ ~1080~ @105001 // lefreut's Portrait Picker
+FORBID_COMPONENT ~EEUITweaks.tp2~ ~1090~ @102004 // lefreut's Character Creation Screens
 
 INCLUDE ~%PKGNAME%/include/AdulUnhideChargen.tpa~
 
@@ -178,7 +244,7 @@ REQUIRE_PREDICATE (
 		(NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~))
 	)
 ) @27 // NOT Dragonspear UI++
-FORBID_COMPONENT ~EEUITweaks.tp2~ ~1060~ @102002
+FORBID_COMPONENT ~EEUITweaks.tp2~ ~1060~ @102002 // Mr2150's Roll First
 
 INCLUDE ~%PKGNAME%/include/FaydarkAutoRoll.tpa~
 
@@ -202,8 +268,8 @@ REQUIRE_PREDICATE (
 		(NOT(FILE_EXISTS ~override/guiweidufile.png~))
 	)
 ) @27 // SoD/IsEETSoD Only
-FORBID_COMPONENT ~EEUITweaks.tp2~ ~1020~ @106001
-FORBID_COMPONENT ~EEUITweaks.tp2~ ~1070~ @106002
+FORBID_COMPONENT ~EEUITweaks.tp2~ ~1020~ @106001 // Mr2150's Random PC Generator
+FORBID_COMPONENT ~EEUITweaks.tp2~ ~1070~ @106002 // Faydark's Abilities Auto-Roller
 
 INCLUDE ~%PKGNAME%/include/Mr2150RollFirst.tpa~
 
@@ -301,13 +367,14 @@ REQUIRE_PREDICATE (
 	(
 		(GAME_IS ~bg2ee~) AND
 		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND
-		(NOT(FILE_EXISTS ~override/guiweidufile.png~))
+		(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND
+		(NOT(FILE_EXISTS ~override/guiiwd2dummy.png~))
 	) OR 
 	(
 		(GAME_IS ~eet~) AND
 		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~))
 	) 
-) @39 // Not LeUI nor trinit's IWD GUI - Common to all subcomponents
+) @39 // Not LeUI nor trinit's IWD nor IWD2 GUI - Common to all subcomponents
 SUBCOMPONENT @520 
 
 INCLUDE ~%PKGNAME%/include/lefreutLevelUpCommon.tpa~
@@ -407,7 +474,8 @@ REQUIRE_PREDICATE (
 	(
 		(GAME_IS ~bg2ee~) AND
 		(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND
-		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~))
+		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND
+		(NOT(FILE_EXISTS ~override/guiiwd2dummy.png~))
 	) OR 
 	(
 		(GAME_IS ~eet~) AND
@@ -479,7 +547,8 @@ SUBCOMPONENT @540
 (
 	(
 		(GAME_IS ~bg2ee~) AND
-		(NOT(FILE_EXISTS ~override/guiweidufile.png~))
+		(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND
+		(NOT(FILE_EXISTS ~override/guiiwd2dummy.png~))
 	) OR 
 	(
 		(GAME_IS ~eet~) AND
@@ -503,7 +572,8 @@ REQUIRE_PREDICATE (
 	(
 		(GAME_IS ~bg2ee~) AND
 		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND
-		(NOT(FILE_EXISTS ~override/guiweidufile.png~))
+		(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND
+		(NOT(FILE_EXISTS ~override/guiiwd2dummy.png~))
 	) OR 
 	(
 		(GAME_IS ~eet~) AND
@@ -590,8 +660,9 @@ GROUP @3
 REQUIRE_PREDICATE (
 	(GAME_IS ~bgee bg2ee eet~) AND
 	(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND
-	(NOT(FILE_EXISTS ~override/guiweidufile.png~))
-) @27 // Not LeUI nor trinit's IWD GUI
+	(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND
+	(NOT(FILE_EXISTS ~override/guiiwd2dummy.png~))
+) @27 // Not LeUI nor trinit's IWD/IWD2 GUIs
 
 INCLUDE ~%PKGNAME%/include/lefreutImprovedInventory.tpa~
 
@@ -609,7 +680,8 @@ REQUIRE_PREDICATE (
 	(
 		(GAME_IS ~bg2ee~) AND
 		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND
-		(NOT(FILE_EXISTS ~override/guiweidufile.png~))
+		(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND
+		(NOT(FILE_EXISTS ~override/guiiwd2dummy.png~))
 	) OR 
 	(
 		(GAME_IS ~eet~) AND
@@ -718,7 +790,8 @@ REQUIRE_PREDICATE (
 	(
 		(GAME_IS ~bg2ee~) AND
 		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND
-		(NOT(FILE_EXISTS ~override/guiweidufile.png~))
+		(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND
+		(NOT(FILE_EXISTS ~override/guiiwd2dummy.png~))
 	) OR 
 	(
 		(GAME_IS ~eet~) AND
@@ -797,7 +870,8 @@ REQUIRE_PREDICATE (
 	(
 		(GAME_IS ~bg2ee~) AND
 		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND
-		(NOT(FILE_EXISTS ~override/guiweidufile.png~))
+		(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND
+		(NOT(FILE_EXISTS ~override/guiiwd2dummy.png~))
 	) OR 
 	(
 		(GAME_IS ~eet~) AND

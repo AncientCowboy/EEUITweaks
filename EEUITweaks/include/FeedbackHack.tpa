@@ -72,163 +72,166 @@ END
 PRINT @119
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~WORLD_ACTIONBAR~
-OUTER_SPRINT $UIMenuIF("Body") ~~
-LAUNCH_ACTION_MACRO UIMenuGetMenu
-ACTION_IF NOT $UIMenuIF("Succeeded") THEN
-BEGIN
-	FAIL @120
-END
 
-// Patch label
-ACTION_MATCH 1
-WITH
-	%IsSoD% %IsEETSoD% %IsTIWDonSoD%
+// For Kilivitz's Revised Dragon Scale this is a menu replacement rather than patch
+ACTION_IF IsKRDS THEN
+BEGIN
+	ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2070~ THEN
 	BEGIN
-		ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2070~ THEN
-		BEGIN
-			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ABarLabel1Large.menu~
-		END ELSE
-		BEGIN
-			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/ABarLabel1Small.menu~
-		END
-	END
-	%IsSoDOverhaul%
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ABarFull7Large.menu~
+	END ELSE
 	BEGIN
-		ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2070~ THEN
-		BEGIN
-			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ABarLabel2Large.menu~
-		END ELSE
-		BEGIN
-			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/ABarLabel2Small.menu~
-		END
-	END
-	%IsBG2% %IsEETBG2% %IsTIWDonBG2%
-	BEGIN
-		ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2070~ THEN
-		BEGIN
-			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ABarLabel3Large.menu~
-		END ELSE
-		BEGIN
-			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/ABarLabel3Small.menu~
-		END
-	END
-	%IsBGEE%
-	BEGIN
-		ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2070~ THEN
-		BEGIN
-			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ABarLabel4Large.menu~
-		END ELSE
-		BEGIN
-			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/ABarLabel4Small.menu~
-		END
-	END
-	%IsLeUIBG2% %IsLeUISOD% %IsLeUIBG1% %IsEETLeUI%
-	BEGIN
-		ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2070~ THEN
-		BEGIN
-			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ABarLabel6Large.menu~
-		END ELSE
-		BEGIN
-			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/ABarLabel6Small.menu~
-		END
-	END
-	%IsKRDS%
-	BEGIN
-		ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2070~ THEN
-		BEGIN
-			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ABarLabel7Large.menu~
-		END ELSE
-		BEGIN
-			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/ABarLabel7Small.menu~
-		END
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/ABarFull7Small.menu~
 	END
 
-	DEFAULT
-		FAIL @15
-END
-LAUNCH_ACTION_MACRO FeedbackHack.ActionBarPatch1
-ACTION_IF NOT $UIMenuIF("Succeeded") THEN
-BEGIN
-	FAIL @121
-END
-
-// Add buttons
-ACTION_MATCH 1
-WITH
-	%IsSoD% %IsEETSoD% %IsTIWDonSoD%
+	LAUNCH_ACTION_MACRO UIMenuReplaceMenu
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 	BEGIN
-		ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2070~ THEN
-		BEGIN
-			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/newbuttons1Large.menu~
-		END ELSE
-		BEGIN
-			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/newbuttons1Small.menu~
-		END
-	END
-	%IsSoDOverhaul%
-	BEGIN
-		ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2070~ THEN
-		BEGIN
-			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/newbuttons2Large.menu~
-		END ELSE
-		BEGIN
-			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/newbuttons2Small.menu~
-		END
-	END
-	%IsBG2% %IsEETBG2% %IsTIWDonBG2%
-	BEGIN
-		ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2070~ THEN
-		BEGIN
-			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/newbuttons3Large.menu~
-		END ELSE
-		BEGIN
-			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/newbuttons3Small.menu~
-		END
-	END
-	%IsBGEE%
-	BEGIN
-		ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2070~ THEN
-		BEGIN
-			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/newbuttons4Large.menu~
-		END ELSE
-		BEGIN
-			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/newbuttons4Small.menu~
-		END
-	END
-	%IsLeUIBG2% %IsLeUISOD% %IsLeUIBG1% %IsEETLeUI%
-	BEGIN
-		ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2070~ THEN
-		BEGIN
-			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/newbuttons6Large.menu~
-		END ELSE
-		BEGIN
-			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/newbuttons6Small.menu~
-		END
-	END
-	%IsKRDS%
-	BEGIN
-		ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2070~ THEN
-		BEGIN
-			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/newbuttons7Large.menu~
-		END ELSE
-		BEGIN
-			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/newbuttons7Small.menu~
-		END
+		FAIL @121
 	END
 
-	DEFAULT
-		FAIL @15
-END
-LAUNCH_ACTION_MACRO UIMenuAppendMenuElements
-ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+END ELSE
+
+// Everyone else
 BEGIN
-	FAIL @121
-END
-LAUNCH_ACTION_MACRO UIMenuUpdateMenu
-ACTION_IF NOT $UIMenuIF("Succeeded") THEN
-BEGIN
-	FAIL @103
-END
+	OUTER_SPRINT $UIMenuIF("Body") ~~
+	LAUNCH_ACTION_MACRO UIMenuGetMenu
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @120
+	END
+	
+	// Patch label
+	ACTION_MATCH 1
+	WITH
+		%IsSoD% %IsEETSoD% %IsTIWDonSoD%
+		BEGIN
+			ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2070~ THEN
+			BEGIN
+				OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ABarLabel1Large.menu~
+			END ELSE
+			BEGIN
+				OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/ABarLabel1Small.menu~
+			END
+		END
+		%IsSoDOverhaul%
+		BEGIN
+			ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2070~ THEN
+			BEGIN
+				OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ABarLabel2Large.menu~
+			END ELSE
+			BEGIN
+				OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/ABarLabel2Small.menu~
+			END
+		END
+		%IsBG2% %IsEETBG2% %IsTIWDonBG2% %IsTIWD2onBG2%
+		BEGIN
+			ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2070~ THEN
+			BEGIN
+				OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ABarLabel3Large.menu~
+			END ELSE
+			BEGIN
+				OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/ABarLabel3Small.menu~
+			END
+		END
+		%IsBGEE%
+		BEGIN
+			ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2070~ THEN
+			BEGIN
+				OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ABarLabel4Large.menu~
+			END ELSE
+			BEGIN
+				OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/ABarLabel4Small.menu~
+			END
+		END
+		%IsLeUIBG2% %IsLeUISOD% %IsLeUIBG1% %IsEETLeUI%
+		BEGIN
+			ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2070~ THEN
+			BEGIN
+				OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ABarLabel6Large.menu~
+			END ELSE
+			BEGIN
+				OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/ABarLabel6Small.menu~
+			END
+		END
+	
+		DEFAULT
+			FAIL @15
+	END
+	LAUNCH_ACTION_MACRO FeedbackHack.ActionBarPatch1
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @121
+	END
+	
+	// Add buttons
+	ACTION_MATCH 1
+	WITH
+		%IsSoD% %IsEETSoD% %IsTIWDonSoD%
+		BEGIN
+			ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2070~ THEN
+			BEGIN
+				OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/newbuttons1Large.menu~
+			END ELSE
+			BEGIN
+				OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/newbuttons1Small.menu~
+			END
+		END
+		%IsSoDOverhaul%
+		BEGIN
+			ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2070~ THEN
+			BEGIN
+				OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/newbuttons2Large.menu~
+			END ELSE
+			BEGIN
+				OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/newbuttons2Small.menu~
+			END
+		END
+		%IsBG2% %IsEETBG2% %IsTIWDonBG2% %IsTIWD2onBG2%
+		BEGIN
+			ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2070~ THEN
+			BEGIN
+				OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/newbuttons3Large.menu~
+			END ELSE
+			BEGIN
+				OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/newbuttons3Small.menu~
+			END
+		END
+		%IsBGEE%
+		BEGIN
+			ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2070~ THEN
+			BEGIN
+				OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/newbuttons4Large.menu~
+			END ELSE
+			BEGIN
+				OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/newbuttons4Small.menu~
+			END
+		END
+		%IsLeUIBG2% %IsLeUISOD% %IsLeUIBG1% %IsEETLeUI%
+		BEGIN
+			ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2070~ THEN
+			BEGIN
+				OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/newbuttons6Large.menu~
+			END ELSE
+			BEGIN
+				OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/newbuttons6Small.menu~
+			END
+		END
+	
+		DEFAULT
+			FAIL @15
+	END
+	LAUNCH_ACTION_MACRO UIMenuAppendMenuElements
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @121
+	END
+	LAUNCH_ACTION_MACRO UIMenuUpdateMenu
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @103
+	END
+END // Not IsKRDS
 		
 // Close UI.MENU
 PRINT @13
@@ -271,7 +274,7 @@ WITH
 		END
 		DELETE ~override/GUWBTP10.png~
 	END
-	%IsBG2% %IsEETBG2% %IsTIWDonBG2%
+	%IsBG2% %IsEETBG2% %IsTIWDonBG2% %IsTIWD2onBG2%
 	BEGIN
 		COPY ~%PKGNAME%/copy/FeedbackHack/BG2/GMSGSCRL.BAM~ ~override~
 		COPY ~%PKGNAME%/copy/FeedbackHack/BG2/MOS5054.PVRZ~ ~override~
@@ -317,11 +320,6 @@ WITH
 	BEGIN
 		COPY ~%PKGNAME%/copy/FeedbackHack/SOD/GMSGSCRL.BAM~ ~override~
 		COPY ~%PKGNAME%/copy/FeedbackHack/SOD/MOS5055.PVRZ~ ~override~
-		ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2070~ THEN
-		BEGIN
-			COPY ~%PKGNAME%/copy/CommonActionBars/KDS/ABKDSL.MOS~ ~override/GUWBTP10.MOS~
-			COPY ~%PKGNAME%/copy/CommonActionBars/KDS/MOS5053.PVRZ~ ~override~
-		END
 	END
 
 	DEFAULT

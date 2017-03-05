@@ -240,7 +240,7 @@ BEGIN // Replace
 		BEGIN
 			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/CenteredDialog/worlddialogmenu.menu~
 		END
-		%IsTIWDonBG2%
+		%IsTIWDonBG2% %IsTIWD2onBG2%
 		BEGIN
 			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/CenteredDialog/worlddialogmenu5.menu~
 		END

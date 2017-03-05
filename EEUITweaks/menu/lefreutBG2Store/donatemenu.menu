@@ -13,7 +13,7 @@ menu
 	label
 	{
 		area 0 0 864 614
-		mosaic GUISTDOB
+		mosaic LUISTDOB
 	}
 	label
 	{
@@ -30,7 +30,7 @@ menu
 	label
 	{
 		area 73 151 311 267
-		bam DONATE
+		bam LDONATE
 		frame lua "getDonationFrame()"
 	}
 	label
@@ -59,7 +59,7 @@ menu
 	}
 	button
 	{
-		bam GUIOSW
+		bam LUIOSW
 		area 288 482 45 42
 		sequence 0
 		clickable lua "(tonumber(storeDonateAmountEdit) or 0) < game:GetPartyGold()"
@@ -76,7 +76,7 @@ menu
 	}
 	button
 	{
-		bam GUIOSW
+		bam LUIOSW
 		area 244 482 45 42
 		sequence 1
 		clickable lua "(tonumber(storeDonateAmountEdit) or 0) > 0"
@@ -94,7 +94,7 @@ menu
 	button
 	{
 		area 119 537 201 44
-		bam GUIOSTUM
+		bam LUIOSTUM
 		text "DONATE_BUTTON"
 		text style "button"
 		clickable lua "storeScreen:IsDonateButtonClickable()"
@@ -114,6 +114,6 @@ menu
 		area 480 182 313 364
 		text lua "store.donateText"
 		text style "normal_parchment"
-		scrollbar 'GUISBR'
+		scrollbar 'LUISBR'
 	}
 }

@@ -101,17 +101,37 @@ ACTION_MATCH 1
 WITH
 	%IsSoD% %IsEETSoD% %IsSoDOverhaul% %IsKRDS%
 	BEGIN
-		COPY ~%PKGNAME%/copy/lefreutImprovedInventory/SOD~ ~override~
+		COPY ~%PKGNAME%/copy/luicommon/SODTheme/INVENTOR.MOS~ ~override~
+		COPY ~%PKGNAME%/copy/luicommon/SODTheme/INVSEP1.MOS~ ~override~
+		COPY ~%PKGNAME%/copy/luicommon/SODTheme/INVSEP2.MOS~ ~override~
+		COPY ~%PKGNAME%/copy/luicommon/SODTheme/MOS5015.PVRZ~ ~override~
+		COPY ~%PKGNAME%/copy/luicommon/SODTheme/MOS5016.PVRZ~ ~override~
+		COPY ~%PKGNAME%/copy/luicommon/SODTheme/MOS5017.PVRZ~ ~override~
 	END
 
 	%IsBG2% %IsBG2onSoD% %IsEETBG2%
 	BEGIN
-		COPY ~%PKGNAME%/copy/lefreutImprovedInventory/BG2~ ~override~
+		COPY ~%PKGNAME%/copy/luicommon/BG2Theme/INVENTOR.MOS~ ~override~
+		COPY ~%PKGNAME%/copy/luicommon/BG2Theme/INVSEP1.MOS~ ~override~
+		COPY ~%PKGNAME%/copy/luicommon/BG2Theme/INVSEP2.MOS~ ~override~
+		COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4309.PVRZ~ ~override~
+		COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4310.PVRZ~ ~override~
+		COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4311.PVRZ~ ~override~
+		COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUISCRC.BAM~ ~override~
+		COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LTONSLOT.BAM~ ~override~
+		COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4000.PVRZ~ ~override~
+		COPY ~%PKGNAME%/copy/luicommon/BG2Theme/INVBUT.BAM~ ~override~
+		COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4007.PVRZ~ ~override~
 	END
 
 	%IsBGEE%
 	BEGIN
-		COPY ~%PKGNAME%/copy/lefreutImprovedInventory/BGEE~ ~override~
+		COPY ~%PKGNAME%/copy/luicommon/BGEETheme/INVENTOR.MOS~ ~override~
+		COPY ~%PKGNAME%/copy/luicommon/BGEETheme/INVSEP1.MOS~ ~override~
+		COPY ~%PKGNAME%/copy/luicommon/BGEETheme/INVSEP2.MOS~ ~override~
+		COPY ~%PKGNAME%/copy/luicommon/BGEETheme/MOS5012.PVRZ~ ~override~
+		COPY ~%PKGNAME%/copy/luicommon/BGEETheme/MOS5013.PVRZ~ ~override~
+		COPY ~%PKGNAME%/copy/luicommon/BGEETheme/MOS5014.PVRZ~ ~override~
 	END
 
 	DEFAULT

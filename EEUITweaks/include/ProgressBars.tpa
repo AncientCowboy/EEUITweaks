@@ -21,7 +21,7 @@ BEGIN
 	LOCAL_SET		lvllimit = 0
 
 // Build the 3 arrays we need to correlate base class names and class IDs
-	ACTION_IF %IsBG2% OR %IsEETBG2% OR %IsEETSoD% OR %IsLeUIBG2% OR %IsEETLeUI% OR %IsTIWDonBG2% THEN
+	ACTION_IF %IsBG2% OR %IsEETBG2% OR %IsEETSoD% OR %IsLeUIBG2% OR %IsEETLeUI% OR %IsTIWDonBG2% OR %IsTIWD2onBG2% THEN
 	BEGIN
 		OUTER_SPRINT target2da ~clastext.2DA~
 		OUTER_SET clasmincol = 10
@@ -164,7 +164,7 @@ BEGIN
 
 	// First, check to see if the patch has already been manually applied.
 	COPY - ~.../CounterInLine~ ~.../CounterInLine~
-		REPLACE_EVALUATE ~initPgBarMods[$TAB% ]*([%TAB% ]*)%MWHITE%hidePortrait%MWHITE%=%MWHITE%prgBarInitialDisplay[%TAB% ]*([%TAB% ]*hidePortrait[%TAB% ]*)~
+		REPLACE_EVALUATE ~initPgBarMods[%TAB% ]*([%TAB% ]*)%MWHITE%hidePortrait%MWHITE%=%MWHITE%prgBarInitialDisplay[%TAB% ]*([%TAB% ]*hidePortrait[%TAB% ]*)~
 		BEGIN
 			SET found = 1
 		END
@@ -438,7 +438,7 @@ BEGIN
 			OUTER_SET W1 = (0 - 3)
 			OUTER_SET H1 = (0 - 2)
 		END
-		%IsTIWDonBG2% %IsTIWDonSoD%
+		%IsTIWDonBG2% %IsTIWDonSoD% %IsTIWD2onBG2%
 		BEGIN
 			OUTER_SET X1 = 3
 			OUTER_SET Y1 = 0

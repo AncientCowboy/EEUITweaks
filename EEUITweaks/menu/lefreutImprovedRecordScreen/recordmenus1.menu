@@ -1,9 +1,5 @@
 `
-characters = {}
-currentID = 16974083
-currentPanelID = 0
-listMetaInfo = {}
-
+-- Override
 function updateAttrTable()
 	if (characters[currentID] ~= nil) then
 		attributeItems = {
@@ -16,11 +12,11 @@ function updateAttrTable()
 		}
 	end
 end
-
+-- Override
 function characterDescString(char)
 	return Infinity_FetchString(char.gender) .. "\n" .. Infinity_FetchString(char.race) .. "\n" .. char.class .. "\n" .. Infinity_FetchString(char.alignment)
 end
-
+-- Override
 function displaySTR()
 	local txt = characters[currentID].attr.str.current
 
@@ -35,7 +31,7 @@ function displaySTR()
 	end
 	return txt
 end
-
+-- Override
 function displayBuff(current, base)
 	if(current > base) then
 		return '^G' .. current .. '^-'
@@ -44,7 +40,7 @@ function displayBuff(current, base)
 	end
 	return current
 end
-
+-- Override
 function displayAttr(index)
 	if (index == 1) then
 		return displaySTR()
@@ -52,7 +48,7 @@ function displayAttr(index)
 		return displayBuff(attributeItems[index][1].current, attributeItems[index][1].base)
 	end
 end
-
+-- Override
 function CurrentlyInGame()
 	return characterScreen:IsInGame()
 end
@@ -180,7 +176,7 @@ menu
 	label
 	{
 		area 0 0 864 710
-		mosaic GUIREC2
+		mosaic LUIREC2
 	}
 	label
 	{
@@ -276,7 +272,7 @@ menu
 		rowheight dynamic
 		table "buildRecordInfos()"
 		hidehighlight
-		scrollbar 'GUISCRC'
+		scrollbar 'LUISCRC'
 	}
 	label
 	{
@@ -289,7 +285,7 @@ menu
 	{
 		clickable lua "CurrentlyInGame() and characterScreen:IsLevelUpButtonClickable()"
 		area 331 546 201 44
-		bam GUIOSTUM
+		bam LUIOSTUM
 		text 'LEVEL_UP_BUTTON'
 		text style "button"
 		action
@@ -301,7 +297,7 @@ menu
 	{
 		enabled "not CurrentlyInGame()"
 		area 331 546 201 44
-		bam GUIOSTUM
+		bam LUIOSTUM
 		text 'DONE_BUTTON'
 		text style "button"
 		action
@@ -312,7 +308,7 @@ menu
 	button
 	{
 		area 36 610 234 44
-		bam GUIOSTUL
+		bam LUIOSTUL
 		text 'INFORMATION_BUTTON'
 		text style "button"
 		action
@@ -324,7 +320,7 @@ menu
 	{
 		clickable lua "CurrentlyInGame() and characterScreen:IsReformPartyButtonClickable()"
 		area 36 654 234 44
-		bam GUIOSTLL
+		bam LUIOSTLL
 		text 'REFORM_PARTY_BUTTON'
 		text style "button"
 		action
@@ -336,7 +332,7 @@ menu
 	{
 		clickable lua "CurrentlyInGame() and characterScreen:IsDualClassButtonClickable()"
 		area 331 610 201 44
-		bam GUIOSTUM
+		bam LUIOSTUM
 		text 'DUAL_CLASS_BUTTON'
 		text style "button"
 		action
@@ -347,7 +343,7 @@ menu
 	button
 	{
 		area 331 654 201 44
-		bam GUIOSTLM
+		bam LUIOSTLM
 		text 'KIT_DESC_LABEL'
 		text style "button"
 		action
@@ -359,7 +355,7 @@ menu
 	{
 		clickable lua "CurrentlyInGame()"
 		area 598 610 234 44
-		bam GUIOSTUR
+		bam LUIOSTUR
 		text 'CUSTOMIZE_BUTTON'
 		text style "button"
 		action
@@ -371,7 +367,7 @@ menu
 	{
 		clickable lua "CurrentlyInGame() and characters[currentID].PC == 1"
 		area 598 654 234 44
-		bam GUIOSTLR
+		bam LUIOSTLR
 		text 'EXPORT_BUTTON'
 		text style "button"
 		action
@@ -389,7 +385,7 @@ menu
 	label
 	{
 		area 0 0 864 710
-		mosaic GUISTATS
+		mosaic LUISTATS
 	}
 	label
 	{
@@ -560,7 +556,7 @@ menu
 	button
 	{
 		on escape
-		bam GUIOSTUL
+		bam LUIOSTUL
 		area 210 653 234 44
 		text style "button"
 		text "DONE_BUTTON"
@@ -571,7 +567,7 @@ menu
 	}
 	button
 	{
-		bam GUIOSTUR
+		bam LUIOSTUR
 		area 464 653 234 44
 		text style "button"
 		text "BIOGRAPHY_BUTTON"
@@ -590,7 +586,7 @@ menu
 	label
 	{
 		area 0 0 864 710
-		mosaic GUICHISE
+		mosaic LUICHISE
 	}
 	label
 	{
@@ -602,14 +598,14 @@ menu
 	{
 		area 44 198 768 410
 		text lua "Infinity_FetchString(characters[currentID].biography)"
-		scrollbar 'GUISCRC'
+		scrollbar 'LUISCRC'
 		text style parchment
 		text color D
 	}
 	button
 	{
 		on escape
-		bam GUIOSTCL
+		bam LUIOSTCL
 		area 308 653 300 44
 		text style "button"
 		text "DONE_BUTTON"
@@ -628,7 +624,7 @@ menu
 	label
 	{
 		area 0 0 864 710
-		mosaic GUICHISE
+		mosaic LUICHISE
 	}
 	label
 	{
@@ -640,14 +636,14 @@ menu
 	{
 		area 44 198 768 410
 		text lua "characters[currentID].kitDesc"
-		scrollbar 'GUISCRC'
+		scrollbar 'LUISCRC'
 		text style parchment
 		text color D
 	}
 	button
 	{
 		on escape
-		bam GUIOSTCL
+		bam LUIOSTCL
 		area 308 653 300 44
 		text style "button"
 		text "DONE_BUTTON"

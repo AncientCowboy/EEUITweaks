@@ -161,7 +161,7 @@ WITH
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/Mr2150JrnlFix/journalmenusod.menu~
 	END
 
-	%IsTIWDonBG2% %IsTIWDonSoD%
+	%IsTIWDonBG2% %IsTIWDonSoD% %IsTIWD2onBG2%
 	BEGIN
 		PRINT @40
 		SILENT

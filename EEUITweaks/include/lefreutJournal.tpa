@@ -75,4 +75,31 @@ END
 // Copy files
 PRINT @24
 SILENT
-COPY ~%PKGNAME%/copy/lefreutJournal~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUISCRC.BAM~ ~override~
+
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUISBR.BAM~ ~override~
+
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUILS10.BAM~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4003.PVRZ~ ~override~
+
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUIOSTLL.BAM~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUIOSTLM.BAM~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUIOSTLR.BAM~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUIOSTUL.BAM~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUIOSTUR.BAM~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4004.PVRZ~ ~override~
+
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUIPRC.BAM~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4010.PVRZ~ ~override~
+
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUIOSW.BAM~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4015.PVRZ~ ~override~
+
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUIJRNL.MOS~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4268.PVRZ~ ~override~
+
+
+
+
+
+

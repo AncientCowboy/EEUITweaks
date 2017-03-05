@@ -11,7 +11,7 @@ menu
 	label
 	{
 		area 0 0 864 710
-		mosaic GUICHISD
+		mosaic LUICHISD
 	}
 	label
 	{
@@ -54,7 +54,7 @@ menu
 		hidehighlight
 		table		"list_GUIREC_20_5"
 		var			"list_GUIREC_20_5_idx"
-		scrollbar	'GUISCRC'
+		scrollbar	'LUISCRC'
 		action
 		"
 			Infinity_OnSoundItemSelect(list_GUIREC_20_5_idx - 1)
@@ -66,14 +66,14 @@ menu
 	{
 		area 450 198 362 410
 		text 11315
-		scrollbar 'GUISCRC'
+		scrollbar 'LUISCRC'
 		text style normal
 		text color D
 	}
 	button
 	{
 		clickable lua "list_GUIREC_20_5_idx"
-		bam GUIOSTCL
+		bam LUIOSTCL
 		area 272 120 300 44
 		text style "button"
 		text	"PLAY_IMPORT_BUTTON"
@@ -84,7 +84,7 @@ menu
 	}
 	button
 	{
-		bam GUIOSTUL
+		bam LUIOSTUL
 		area 210 653 234 44
 		text style "button"
 		text "DONE_BUTTON"
@@ -98,7 +98,7 @@ menu
 	button
 	{
 		on escape
-		bam GUIOSTUR
+		bam LUIOSTUR
 		area 464 653 234 44
 		text style "button"
 		text "CANCEL_BUTTON"

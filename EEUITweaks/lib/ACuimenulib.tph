@@ -611,6 +611,7 @@ END
  * Replaces the existing definition for the menu named '$UIMenuIF("MenuName")'
  * with the same-named menu definition extracted from the file 
  * '$UIMenuIF("Filespec")'. Puts the new definiton text in $UIMenuIF("Body").
+ * Does not require subsequent call to UIMenuUpdateMenu.
  *
  * Properly extracts comments.
  *

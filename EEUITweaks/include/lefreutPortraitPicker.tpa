@@ -1,0 +1,158 @@
+/*******************************************************************************
+ * lefreutPortraitPicker.ChargenPatch1
+ * Adds 'onOpen "gender = 2" ' code to passed CHARGEN
+ *
+ * On completion $UIMenuIF("Succeeded") 1 => Success, 0 => Failure
+ * 
+ ******************************************************************************/
+DEFINE_ACTION_MACRO lefreutPortraitPicker.ChargenPatch1
+BEGIN
+	LOCAL_SPRINT tempstr $UIMenuIF("Body")
+	LOCAL_SPRINT adder ~%TAB%onOpen%LE%%TAB%"%LE%%TAB%%TAB%gender = 2%LE%%TAB%"%LE%~
+	LOCAL_SPRINT adder2 ~%LE%%TAB%%TAB%gender = 2%LE%%TAB%~
+	LOCAL_SET found = 0
+
+	// Put current menu definition into inline file
+	COPY - ~ToInlineTemplate~ ~.../CounterInLine~
+		REPLACE_EVALUATE ~dummy~ BEGIN END
+		~%tempstr%~
+	OUTER_SPRINT tempstr ~~
+
+	// Allow for other patches that may have already added onopen - first single quote delimited
+	COPY - ~.../CounterInLine~ ~.../CounterInLine~
+		REPLACE_EVALUATE CASE_INSENSITIVE ~\(^[%TAB% ]*onopen%MWHITE%%MSQUOTE%%MNOTSQUOTE%*\)\(%MSQUOTE%.*%MEOL%\)~
+		BEGIN
+			SPRINT tempstr ~%MATCH1%%adder2%%MATCH2%~
+			SET found = 1
+		END
+		~%tempstr%~
+
+	ACTION_IF NOT %found% THEN
+	BEGIN // Try for double quote
+		COPY - ~.../CounterInLine~ ~.../CounterInLine~
+			REPLACE_EVALUATE CASE_INSENSITIVE ~\(^[%TAB% ]*onopen%MWHITE%%MDQUOTE%%MNOTDQUOTE%*\)\(%MDQUOTE%.*%MEOL%\)~
+			BEGIN
+				SPRINT tempstr ~%MATCH1%%adder2%%MATCH2%~
+				SET found = 1
+			END
+			~%tempstr%~
+
+	END
+
+	ACTION_IF NOT %found% THEN
+	BEGIN // No existing onopen - Add code after ignoreesc
+		COPY - ~.../CounterInLine~ ~.../CounterInLine~
+			REPLACE_EVALUATE CASE_INSENSITIVE ~^[%TAB% ]*ignoreesc.*%MEOL%~
+			BEGIN
+				SPRINT tempstr ~%MATCH0%%adder%~
+				SET found = 1
+			END
+			~%tempstr%~
+	END
+
+	// Not found - give up
+	ACTION_IF NOT %found% THEN
+	BEGIN
+		LOG ~In lefreutPortraitPicker.ChargenPatch1 - failed to insert onopen code~
+		OUTER_SET $UIMenuIF("Succeeded") = 0
+	END ELSE 
+
+	// Success somewhere - copy .../CounterInLine to $UIMenuIF("Body")
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Body") ~~
+		OUTER_SET found = SIZE_OF_FILE ~.../CounterInLine~
+		COPY - ~.../CounterInLine~ ~.../CounterInLine~
+			READ_ASCII 0 $UIMenuIF("Body") (%found%-1)
+		OUTER_SET $UIMenuIF("Succeeded") = 1
+	END
+	COPY - ~EmptyInlineTemplate~ ~.../CounterInline~
+END
+
+/******************************************************************************
+ * lefreut's Portrait Picker Installation
+ *****************************************************************************/
+// Open UI.MENU
+PRINT @12
+SILENT
+LAUNCH_ACTION_MACRO UIMenuOpen
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @20
+END
+
+// Add CHARACTER_PORTRAIT
+PRINT @108001
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_PORTRAIT~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutPortraitPicker/ChargenPortraitMixed1.menu~
+LAUNCH_ACTION_MACRO UIMenuReplaceMenuMixed
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @108002
+END
+
+// Replace CHARGEN_GENDER
+PRINT @108003
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_GENDER~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutPortraitPicker/ChargenGender1.menu~
+LAUNCH_ACTION_MACRO UIMenuReplaceMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @108004
+END
+
+// Patch CHARGEN menu
+PRINT @149
+SILENT
+
+OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+LAUNCH_ACTION_MACRO UIMenuGetMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @150
+END
+
+LAUNCH_ACTION_MACRO lefreutPortraitPicker.ChargenPatch1
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @151
+END
+
+LAUNCH_ACTION_MACRO UIMenuUpdateMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @103
+END
+
+// Close UI.MENU
+PRINT @13
+SILENT
+LAUNCH_ACTION_MACRO UIMenuClose
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @21
+END
+
+
+// Copy common UI resources
+PRINT @17
+SILENT
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUISCRC.BAM~ ~override~
+
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUIOSTUL.BAM~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUIOSTUR.BAM~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4004.PVRZ~ ~override~
+
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUIGEND1.BAM~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4015.PVRZ~ ~override~
+
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUIAPBR.MOS~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4249.PVRZ~ ~override~
+
+
+
+

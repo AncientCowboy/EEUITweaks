@@ -1,0 +1,113 @@
+menu
+{
+	name 'CHARGEN_CUSTOMSOUNDS'
+	modal
+	align center center
+	ignoreesc
+	onOpen
+	"
+		currentChargenCustomSound = nil
+	"
+	label
+	{
+		area 0 0 864 710
+		mosaic LUICHISD
+	}
+	label
+	{
+		area 82 12 700 40
+		text "SOUND_TITLE"
+		text style title
+	}
+	list
+	{
+		column
+		{
+			width 100
+			label
+			{
+				enabled "rowNumber ~= currentChargenCustomSound and rowNumber ~= hoverChargenCustomSound"
+				area 0 0 -1 -1
+				text lua "getFileNameStringRef(rowNumber, chargen.customSound)"
+				text style "normal"
+				text color D
+			}
+			label
+			{
+				enabled "rowNumber == currentChargenCustomSound and rowNumber ~= hoverChargenCustomSound"
+				area 0 0 -1 -1
+				text lua "getFileNameStringRef(rowNumber, chargen.customSound)"
+				text style "normal"
+				text color S
+			}
+			label
+			{
+				enabled "rowNumber == hoverChargenCustomSound"
+				area 0 0 -1 -1
+				text lua "getFileNameStringRef(rowNumber, chargen.customSound)"
+				text style "normal"
+				text color H
+			}
+		}
+		area 46 198 356 410
+		rowheight	dynamic
+		hidehighlight
+		table		"chargen.customSound"
+		var			"currentChargenCustomSound"
+		scrollbar	'LUISCRC'
+		action
+		"
+			createCharScreen:OnSoundItemSelect(currentChargenCustomSound-1)
+		"
+		actionEnter	"hoverChargenCustomSound = mouseoverRow"
+		actionExit	"hoverChargenCustomSound = 0"
+	}
+
+	text
+	{
+		area 450 198 362 410
+		text 24437
+		scrollbar 'LUISCRC'
+		text style normal
+		text color D
+	}
+	button
+	{
+		clickable lua "currentChargenCustomSound"
+		bam GUIOSTCL
+		area 272 120 300 44
+		text style "button"
+		text "PLAY_GAME_BUTTON"
+		action
+		"
+			createCharScreen:OnPlayButtonClick()
+		"
+	}
+	button
+	{
+		on return
+		bam LUIOSTUL
+		area 210 653 234 44
+		text style "button"
+		text "DONE_BUTTON"
+		clickable lua "createCharScreen:IsDoneButtonClickable() and currentChargenCustomSound"
+		action
+		"
+			Infinity_PopMenu()
+			createCharScreen:OnDoneButtonClick()
+		"
+	}
+	button
+	{
+		on escape
+		bam LUIOSTUR
+		area 464 653 234 44
+		text style "button"
+		text "BACK_BUTTON"
+		action
+		"
+			Infinity_PopMenu()
+			createCharScreen:OnCancelButtonClick()
+		"
+	}
+}

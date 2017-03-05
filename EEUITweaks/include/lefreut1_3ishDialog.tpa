@@ -34,9 +34,14 @@ END
 // Replace WORLD_DIALOG_CONFIRM menu
 PRINT @206001
 SILENT
-
 OUTER_SPRINT $UIMenuIF("MenuName") ~WORLD_DIALOG_CONFIRM~
-OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreut1_3ishDialog/WDConfirmMenuBG.menu~
+ACTION_IF IsSoD OR IsEETSoD OR IsKRDS THEN
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreut1_3ishDialog/WDConfirmMenu2.menu~
+END ELSE
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreut1_3ishDialog/WDConfirmMenuBG.menu~
+END
 LAUNCH_ACTION_MACRO UIMenuReplaceMenu
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
@@ -86,13 +91,5 @@ LAUNCH_ACTION_MACRO UIMenuClose
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
 	FAIL @21
-END
-
-ACTION_IF IsSoD OR IsEETSoD OR IsKRDS THEN
-BEGIN
-	PRINT @24
-	SILENT
-	COPY ~%PKGNAME%/copy/lefreut1_3ishDialog/GUIBUTWT.BAM~ ~override/GUIOSTCL.BAM~
-	COPY ~%PKGNAME%/copy/lefreut1_3ishDialog/MOS5000.PVRZ~ ~override~
 END
 

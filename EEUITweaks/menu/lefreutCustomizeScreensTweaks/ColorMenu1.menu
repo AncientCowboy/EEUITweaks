@@ -28,7 +28,7 @@ menu
 	label
 	{
 		area 0 0 864 710
-		mosaic GUICHISE
+		mosaic LUICHISE
 	}
 	label
 	{
@@ -84,7 +84,7 @@ menu
 	{
 		palette 6
 		area 46 390 734 42
-		bam	 SLDRSTAR
+		bam	 LLDRSTAR
 		position "SLIDER_color_hair"
 		sequence 0
 		frame	 1
@@ -104,7 +104,7 @@ menu
 	{
 		palette 3
 		area 46 436 734 42
-		bam	 SLDRSTAR
+		bam	 LLDRSTAR
 		position "SLIDER_color_skin"
 		sequence 0
 		frame	 1
@@ -131,7 +131,7 @@ menu
 	{
 		palette 2
 		area 46 510 734 42
-		bam	 SLDRSTAR
+		bam	 LLDRSTAR
 		position "SLIDER_color_major"
 		sequence 0
 		frame	 1
@@ -152,7 +152,7 @@ menu
 	{
 		palette 1
 		area 46 556 734 42
-		bam	 SLDRSTAR
+		bam	 LLDRSTAR
 		position "SLIDER_color_minor"
 		sequence 0
 		frame	 1
@@ -167,7 +167,7 @@ menu
 	{
 		on return
 		area 210 653 234 44
-		bam GUIOSTUL
+		bam LUIOSTUL
 		text style "button"
 		text "DONE_BUTTON"
 		action
@@ -189,7 +189,7 @@ menu
 	{
 		on escape
 		area 464 653 234 44
-		bam GUIOSTUR
+		bam LUIOSTUR
 		text style "button"
 		text "CANCEL_BUTTON"
 		action

@@ -42,13 +42,30 @@ BEGIN
 	FAIL @302804
 END
 
+// Replace CHARACTER_SCRIPT Lua code block
+PRINT @302817
+SILENT
+OUTER_SPRINT $UIMenuIF("LuaRegex") ~scriptList_idx[%TAB% ]*=[%TAB% ]*0~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+LAUNCH_ACTION_MACRO UIMenuGetMatchingLuaBlock
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @302818
+END
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/lefreutCustomizeScreensTweaks/ScriptCode1.lua~
+LAUNCH_ACTION_MACRO UIMenuReplaceLuaBlock
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @302819
+END
+
 // Replace CHARACTER_SCRIPT
 PRINT @302808
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~CHARACTER_SCRIPT~
 OUTER_SPRINT $UIMenuIF("Body") ~~
 OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCustomizeScreensTweaks/ScriptMenu1.menu~
-LAUNCH_ACTION_MACRO UIMenuReplaceMenuMixed
+LAUNCH_ACTION_MACRO UIMenuReplaceMenu
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
 	FAIL @302809
@@ -78,22 +95,6 @@ BEGIN
 	FAIL @302813
 END
 
-ACTION_IF ((NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1030~))AND(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1040~))) THEN
-BEGIN
-	// Adding CHARACTER_PORTRAIT
-	PRINT @302815
-	SILENT
-	OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_PORTRAIT~
-	OUTER_SPRINT $UIMenuIF("Body") ~~
-	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCustomizeScreensTweaks/ChargenPortraitMenu1.menu~
-	LAUNCH_ACTION_MACRO UIMenuReplaceMenuMixed
-	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
-	BEGIN
-		FAIL @302816
-	END
-	COPY ~%PKGNAME%/copy/lefreutCustomizeScreensTweaks~ ~override~
-END
-
 // Close UI.MENU
 PRINT @13
 SILENT
@@ -102,4 +103,32 @@ ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
 	FAIL @21
 END
+
+// Copy common UI resources
+PRINT @17
+SILENT
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUISCRC.BAM~ ~override~
+
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LLDRSTAR.BAM~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4006.PVRZ~ ~override~
+
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUICHLNG.BAM~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4009.PVRZ~ ~override~
+
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUIOSTUL.BAM~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUIOSTUM.BAM~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUIOSTUR.BAM~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4004.PVRZ~ ~override~
+
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUICHISD.MOS~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4253.PVRZ~ ~override~
+
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUICHISE.MOS~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4254.PVRZ~ ~override~
+
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUICUSTB.MOS~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4258.PVRZ~ ~override~
+
+
+
 

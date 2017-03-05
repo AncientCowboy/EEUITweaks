@@ -1,0 +1,104 @@
+menu
+{
+	name 'CHARGEN_HATEDRACE'
+	modal
+	align center center
+	ignoreesc
+	onOpen
+	"
+		currentChargenHatedRace = nil
+	"
+	label
+	{
+		area 0 0 864 710
+		mosaic LUICUSTB
+	}
+	label
+	{
+		area 82 12 700 40
+		text "HATED_RACE_TITLE"
+		text style "title"
+	}
+	list
+	{
+		column
+		{
+			width 100
+			label
+			{
+				enabled "rowNumber ~= currentChargenHatedRace and rowNumber ~= hoverChargenHatedRace"
+				area 8 0 340 44
+				text lua "Infinity_FetchString(chargen.hatedRace[rowNumber].name)"
+				text style "list"
+				text align center center
+				text color D
+			}
+			label
+			{
+				enabled "rowNumber == currentChargenHatedRace and rowNumber ~= hoverChargenHatedRace"
+				area 8 0 340 44
+				text lua "Infinity_FetchString(chargen.hatedRace[rowNumber].name)"
+				text style "list"
+				text align center center
+				text color S
+			}
+			label
+			{
+				enabled "rowNumber == hoverChargenHatedRace"
+				area 8 0 340 44
+				text lua "Infinity_FetchString(chargen.hatedRace[rowNumber].name)"
+				text style "list"
+				text align center center
+				text color H
+			}
+		}
+		action
+		"
+			if chargen.hatedRace[currentChargenHatedRace] then
+				createCharScreen:OnRacialEnemySelectButtonClick(chargen.hatedRace[currentChargenHatedRace].id)
+			end
+		"
+		actionEnter	"hoverChargenHatedRace = mouseoverRow"
+		actionExit	"hoverChargenHatedRace = 0"
+		rowheight 44
+		hidehighlight
+		area 42 192 340 414
+		table "chargen.hatedRace"
+		var currentChargenHatedRace
+		scrollbar	'LUISCRC'
+	}
+	text
+	{
+		area 436 128 382 478
+		text lua "hatedRaceOrGeneralHelp()"
+		text style "normal"
+		scrollbar 'LUISCRC'
+	}
+	button
+	{
+		on return
+		bam LUIOSTUL
+		area 210 653 234 44
+		text style "button"
+		text "DONE_BUTTON"
+		clickable lua "createCharScreen:IsDoneButtonClickable() and currentChargenHatedRace"
+		action
+		"
+			Infinity_PopMenu()
+			createCharScreen:OnDoneButtonClick()
+		"
+	}
+	button
+	{
+		on escape
+		bam LUIOSTUR
+		area 464 653 234 44
+		text style "button"
+		text "BACK_BUTTON"
+		action
+		"
+			Infinity_PopMenu()
+			createCharScreen:OnCancelButtonClick()
+		"
+	}
+}

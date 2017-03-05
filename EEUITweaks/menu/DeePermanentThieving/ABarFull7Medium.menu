@@ -1,0 +1,167 @@
+menu
+{
+	name "WORLD_ACTIONBAR"
+	align center bottom
+	onOpen 
+	"
+		toolbarTop = 50
+		Infinity_PushMenu('WORLD_MESSAGES')
+		if(groundItemsButtonToggle == 1) then
+			worldScreen:StartGroundItems()
+		end
+	"
+	onClose 
+	"
+		Infinity_PopMenu('WORLD_QUICKLOOT');
+		Infinity_PopMenu('WORLD_MESSAGES');
+	"
+	ignoreEsc
+	label
+	{
+		area 0 0 794 57
+		mosaic GUWBTP10
+	}
+	button
+	{
+		area 22 12 32 32
+		bam ROUNDBUT
+		toggle groundItemsButtonToggle
+		action
+		"
+			if(groundItemsButtonToggle == 1) then
+				worldScreen:StartGroundItems()
+			else
+				worldScreen:StopGroundItems()
+			end
+		"
+	}
+	button
+	{
+		area 74 2 52 52
+		actionBar 0
+		enabled "buttonArray:GetButtonEnabled(0)"
+		tooltip lua "actionBarTooltip[0]"
+		action "buttonArray:OnLButtonPressed(0)"
+		actionAlt "buttonArray:OnRButtonPressed(0)"
+	}
+	button
+	{
+		area 128 2 52 52
+		actionBar 1
+		enabled "buttonArray:GetButtonEnabled(1)"
+		tooltip lua "actionBarTooltip[1]"
+		action "buttonArray:OnLButtonPressed(1)"
+		actionAlt "buttonArray:OnRButtonPressed(1)"
+	}
+	button
+	{
+		area 183 2 52 52
+		actionBar 2
+		enabled "buttonArray:GetButtonEnabled(2)"
+		tooltip lua "actionBarTooltip[2]"
+		action "buttonArray:OnLButtonPressed(2)"
+		actionAlt "buttonArray:OnRButtonPressed(2)"
+	}
+	button
+	{
+		area 237 2 52 52
+		actionBar 3
+		enabled "buttonArray:GetButtonEnabled(3)"
+		tooltip lua "actionBarTooltip[3]"
+		action "buttonArray:OnLButtonPressed(3)"
+		actionAlt "buttonArray:OnRButtonPressed(3)"
+	}
+	button
+	{
+		area 291 2 52 52
+		actionBar 4
+		enabled "buttonArray:GetButtonEnabled(4)"
+		tooltip lua "actionBarTooltip[4]"
+		action "buttonArray:OnLButtonPressed(4)"
+		actionAlt "buttonArray:OnRButtonPressed(4)"
+	}
+	button
+	{
+		area 345 2 52 52
+		actionBar 5
+		enabled "buttonArray:GetButtonEnabled(5)"
+		tooltip lua "actionBarTooltip[5]"
+		action "buttonArray:OnLButtonPressed(5)"
+		actionAlt "buttonArray:OnRButtonPressed(5)"
+	}
+	button
+	{
+		area 399 2 52 52
+		actionBar 6
+		enabled "buttonArray:GetButtonEnabled(6)"
+		tooltip lua "actionBarTooltip[6]"
+		action "buttonArray:OnLButtonPressed(6)"
+		actionAlt "buttonArray:OnRButtonPressed(6)"
+	}
+	button
+	{
+		area 453 2 52 52
+		actionBar 7
+		enabled "buttonArray:GetButtonEnabled(7)"
+		tooltip lua "actionBarTooltip[7]"
+		action "buttonArray:OnLButtonPressed(7)"
+		actionAlt "buttonArray:OnRButtonPressed(7)"
+	}
+	
+	button
+	{
+		area 507 2 52 52
+		actionBar 8
+		enabled "buttonArray:GetButtonEnabled(8)"
+		tooltip lua "actionBarTooltip[8]"
+		action "buttonArray:OnLButtonPressed(8)"
+		actionAlt "buttonArray:OnRButtonPressed(8)"
+	}
+	button
+	{
+		area 561 2 52 52
+		actionBar 9
+		enabled "buttonArray:GetButtonEnabled(9)"
+		tooltip lua "actionBarTooltip[9]"
+		action "buttonArray:OnLButtonPressed(9)"
+		actionAlt "buttonArray:OnRButtonPressed(9)"
+	}
+	button
+	{
+		area 615 2 52 52
+		actionBar 10
+		enabled "buttonArray:GetButtonEnabled(10)"
+		tooltip lua "actionBarTooltip[10]"
+		action "buttonArray:OnLButtonPressed(10)"
+		actionAlt "buttonArray:OnRButtonPressed(10)"
+	}
+	button
+	{
+		area 669 2 52 52
+		actionBar 11
+		enabled "buttonArray:GetButtonEnabled(11)"
+		tooltip lua "actionBarTooltip[11]"
+		action "buttonArray:OnLButtonPressed(11)"
+		actionAlt "buttonArray:OnRButtonPressed(11)"
+	}
+	button
+	{
+		name "PermanentThieving"
+		area 723 2 52 52
+		enabled "keybindings[2][7][6] ~= 0"
+		bam GUIBTACT
+		frame 26
+		tooltip lua "string.format('%s : %s',string.upper(string.char(keybindings[2][7][6])),getHotkeyName(2,7))"
+		action "Infinity_PressKeyboardButton(string.format('%c', keybindings[2][7][6]))"
+		actionAlt "Infinity_PressKeyboardButton(string.format('%c', 27))"
+	}
+	button
+	{
+		area 723 2 52 52
+		enabled "keybindings[2][7][6] == 0"
+		clickable lua "false"
+		bam DIMSTEAL
+		frame 0
+		tooltip lua "string.format('%s : %s',string.upper(string.char(keybindings[2][7][6])),getHotkeyName(2,7))"
+	}
+}

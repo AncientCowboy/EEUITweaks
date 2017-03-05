@@ -22,7 +22,7 @@ menu
 	label
 	{
 		area 0 0 864 614
-		mosaic GUISTIDB
+		mosaic LUISTIDB
 	}
 	label
 	{
@@ -65,7 +65,7 @@ menu
 			label
 			{
 				area 0 0 318 62
-				mosaic GUISTBK3
+				mosaic LUISTBK3
 				respectClipping
 			}
 			label
@@ -108,7 +108,7 @@ menu
 		rowheight	62
 		table		"store.drinks"
 		var			"storeDrinksVar"
-		scrollbar 'GUISCRC'
+		scrollbar 'LUISCRC'
 		action
 		"
 			local drink = store.drinks[storeDrinksVar]
@@ -122,7 +122,7 @@ menu
 	button
 	{
 		area 119 554 201 44
-		bam GUIOSTUM
+		bam LUIOSTUM
 		text "DRINK_LABEL"
 		text style "button"
 		clickable lua "selectedDrinks ~= 0 and store.drinks[selectedDrinks].value <= game:GetPartyGold()"
@@ -150,6 +150,6 @@ menu
 		area 484 274 315 273
 		text lua "store.drinkText"
 		text style "normal_parchment"
-		scrollbar 'GUISBR'
+		scrollbar 'LUISBR'
 	}
 }

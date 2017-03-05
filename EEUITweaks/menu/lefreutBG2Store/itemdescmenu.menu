@@ -6,7 +6,7 @@ menu
 	label
 	{
 		area 0 0 864 710
-		mosaic GUIINVHI
+		mosaic LUIINVHI
 	}
 	label
 	{
@@ -23,7 +23,7 @@ menu
 	{
 		area 356 185 430 340
 		text lua "itemDesc.item.description"
-		scrollbar 'GUISBR'
+		scrollbar 'LUISBR'
 		text style "parchment"
 	}
 	text
@@ -44,7 +44,7 @@ menu
 	}
 	button
 	{
-		bam			GUIOSTUL
+		bam			LUIOSTUL
 		area		57 638 234 44
 		enabled "itemDescLeftButtonEnabled()"
 		clickable lua "itemDesc.item.identified == 1 or Infinity_GetSpellIdentifyEnabled(itemDesc.id)"
@@ -57,7 +57,7 @@ menu
 	}
 	button
 	{
-		bam			GUIOSTUM
+		bam			LUIOSTUM
 		area		327 638 201 44
 		text  "DONE_BUTTON"
 		text style "button"
@@ -68,7 +68,7 @@ menu
 	}
 	button
 	{
-		bam			GUIOSTUR
+		bam			LUIOSTUR
 		area		572 638 234 44
 		enabled "itemDescRightButtonEnabled()"
 		clickable lua "itemDesc.item.identified == 1 or Infinity_GetScrollIdentifyEnabled(itemDesc.id)"

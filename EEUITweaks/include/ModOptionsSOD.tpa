@@ -2116,6 +2116,197 @@ BEGIN
 END
 
 /*******************************************************************************
+ *
+ * IsTIWD2onBG2 Section
+ *
+ ******************************************************************************/
+ //
+// ModOptions.TIWD2onBG2PatchStartOptions
+// Inserts button defined in 'modostartopt4.menu' as the last element of
+// START_OPTIONS menu.
+// On completion $UIMenuIF("Succeeded") 1 => Success, 0 => Failure
+//
+DEFINE_ACTION_MACRO ModOptions.TIWD2onBG2PatchStartOptions
+BEGIN
+	LOCAL_SPRINT tempstr $UIMenuIF("Body")
+	LOCAL_SPRINT adder ~~
+
+	// Read patch insertion from modostartopt4.menu
+	LOCAL_SET found = SIZE_OF_FILE ~%PKGNAME%/menu/ModsOptions/modostartopt4.menu~
+	COPY - ~%PKGNAME%/menu/ModsOptions/modostartopt4.menu~ ~.../CounterInLine~
+		READ_ASCII 0 adder (%found%)
+	OUTER_SET found = 0 
+
+	// Put current menu definition into inline file
+	COPY - ~ToInlineTemplate~ ~.../CounterInLine~
+		REPLACE_EVALUATE ~dummy~ BEGIN END
+		~%tempstr%~
+	OUTER_SPRINT tempstr ~~
+
+	// Search for all of menu except closing brace, insert new button code
+	COPY - ~.../CounterInLine~ ~.../CounterInLine~
+		REPLACE_EVALUATE CASE_INSENSITIVE ~menu%MWHITE%{\(%MNOBRACE%*%MBRACES%\)+%MNOBRACE%*~
+		BEGIN
+			SPRINT tempstr ~%MATCH0%%adder%~
+			SET found = 1
+		END
+		~%tempstr%~
+
+	// If not found, nothing to do but fail.
+	ACTION_IF NOT %found% THEN
+	BEGIN
+		LOG ~In ModOptions.TIWD2onBG2PatchStartOptions - failed to match menu body - bailing out~
+		OUTER_SET $UIMenuIF("Succeeded") = 0
+	END ELSE 
+
+	// Success copy .../CounterInLine to $UIMenuIF("Body")
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Body") ~~
+		OUTER_SET found = SIZE_OF_FILE ~.../CounterInLine~
+		COPY - ~.../CounterInLine~ ~.../CounterInLine~
+			READ_ASCII 0 $UIMenuIF("Body") (%found%-1)
+		OUTER_SET $UIMenuIF("Succeeded") = 1
+	END
+	COPY - ~EmptyInlineTemplate~ ~.../CounterInline~
+END
+
+//
+// ModOptions.TIWD2onBG2EscMenuThirdPatch
+// Inserts button defined in modoesc6.menu before the GAMEPLAY_BUTTON button
+// On completion $UIMenuIF("Succeeded") 1 => Success, 0 => Failure
+//
+DEFINE_ACTION_MACRO ModOptions.TIWD2onBG2EscMenuThirdPatch
+BEGIN
+	LOCAL_SPRINT tempstr $UIMenuIF("Body")
+	LOCAL_SPRINT adder ~~
+
+	// Read patch insertion from modoesc6.menu
+	LOCAL_SET found = SIZE_OF_FILE ~%PKGNAME%/menu/ModsOptions/modoesc6.menu~
+	COPY - ~%PKGNAME%/menu/ModsOptions/modoesc6.menu~ ~.../CounterInLine~
+		READ_ASCII 0 adder (%found%)
+	OUTER_SET found = 0 
+
+	// Put current menu definition into inline file
+	COPY - ~ToInlineTemplate~ ~.../CounterInLine~
+		REPLACE_EVALUATE ~dummy~ BEGIN END
+		~%tempstr%~
+	OUTER_SPRINT tempstr ~~
+
+	// Search for GAMEPLAY_BUTTON, insert new button code before
+	COPY - ~.../CounterInLine~ ~.../CounterInLine~
+		REPLACE_EVALUATE CASE_INSENSITIVE ~[%TAB% ]+button%MWHITE%{%MNOBRACE%+Infinity_PushMenu[%TAB% ]*([%TAB ]*%MQUOTE%OPTIONS_GAMEPLAY%MQUOTE%[%TAB% ]*)~
+		BEGIN
+			SPRINT tempstr ~%adder%%MATCH0%~
+			SET found = 1
+		END
+		~%tempstr%~
+
+	// Not found - give up
+	ACTION_IF NOT %found% THEN
+	BEGIN
+		LOG ~In ModOptions.TIWD2onBG2EscMenuThirdPatch - failed to find GAMEPLAY_BUTTON - bailing out~
+		OUTER_SET $UIMenuIF("Succeeded") = 0
+	END ELSE 
+
+	// Success - copy .../CounterInLine to $UIMenuIF("Body")
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Body") ~~
+		OUTER_SET found = SIZE_OF_FILE ~.../CounterInLine~
+		COPY - ~.../CounterInLine~ ~.../CounterInLine~
+			READ_ASCII 0 $UIMenuIF("Body") (%found%-1)
+		OUTER_SET $UIMenuIF("Succeeded") = 1
+	END
+	COPY - ~EmptyInlineTemplate~ ~.../CounterInline~
+
+END
+
+//
+// ModOptions.TIWD2onBG2Specific
+// Main sequence
+//	
+DEFINE_ACTION_MACRO ModOptions.TIWD2onBG2Specific
+BEGIN	
+	PRINT @41 // Installing trinit's IWD2 GUI
+	
+	// Copy specific override files
+	PRINT @17
+	SILENT
+	COPY ~%PKGNAME%/copy/ModsOptions/modoimg1.BAM~ ~override~
+	COPY ~%PKGNAME%/copy/ModsOptions/MOS5020.PVRZ~ ~override~
+
+	// Patch START_OPTIONS menu
+	PRINT @100
+	SILENT
+
+	OUTER_SPRINT $UIMenuIF("MenuName") ~START_OPTIONS~
+	OUTER_SPRINT $UIMenuIF("Body") ~~
+	LAUNCH_ACTION_MACRO UIMenuGetMenu
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @101
+	END
+
+	LAUNCH_ACTION_MACRO ModOptions.TIWD2onBG2PatchStartOptions
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @102
+	END
+
+	LAUNCH_ACTION_MACRO UIMenuUpdateMenu
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @103
+	END
+
+	// Patch ESC_MENU
+	PRINT @104
+	SILENT
+
+	OUTER_SPRINT $UIMenuIF("MenuName") ~ESC_MENU~
+	OUTER_SPRINT $UIMenuIF("Body") ~~
+	LAUNCH_ACTION_MACRO UIMenuGetMenu
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @105
+	END
+
+	LAUNCH_ACTION_MACRO ModOptions.TOBEscMenuFirstPatch
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @106
+	END
+
+	LAUNCH_ACTION_MACRO ModOptions.TOBEscMenuSecondPatch
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @106
+	END
+
+	LAUNCH_ACTION_MACRO ModOptions.TIWD2onBG2EscMenuThirdPatch
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @106
+	END
+
+	LAUNCH_ACTION_MACRO UIMenuUpdateMenu
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @103
+	END
+
+	// Add ModsOptions menus
+	PRINT @100001
+	SILENT
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/ModsOptions/modoptions9.menu~
+	LAUNCH_ACTION_MACRO UIMenuAppendFile
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @100002
+	END
+END
+
+
+/*******************************************************************************
  * Mods Options Installation
  ******************************************************************************/
 // Open UI.MENU abstraction
@@ -2193,6 +2384,11 @@ WITH
 	%IsTIWDonBG2% %IsTIWDonSoD%
 	BEGIN
 		LAUNCH_ACTION_MACRO ModOptions.TIWDonBG2Specific
+	END
+
+	%IsTIWD2onBG2%
+	BEGIN
+		LAUNCH_ACTION_MACRO ModOptions.TIWD2onBG2Specific
 	END
 
 	DEFAULT // Nothing left except Fail

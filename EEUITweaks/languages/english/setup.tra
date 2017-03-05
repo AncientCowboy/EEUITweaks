@@ -54,6 +54,7 @@
 @38   = ~Installing for Kilivit's Revised Dragon Scale UI configuration~
 @39   = ~None of the possible options of this group are supported for your game configuration~
 @40   = ~Installing for trinit's IWD GUI for BG2EE/BG1EE with DJKajuru's Enhancement~
+@41   = ~Installing for trinit's IWD2 GUI for BG2EE~
 
 ///////////////////////////////////////////////////////////////////////////////
 // Specific Menu patching/error messages
@@ -187,6 +188,8 @@
 @102000 = ~Mr2150's Random PC Generator~
 @102001 = ~The user directory below does not exist. Skipping installation of zzzzzzz.BMP~
 @102002 = ~Incompatible with previously installed Mr2150's Roll First~
+@102003 = ~Incompatible with previously installed lefreut's Portrait Picker~
+@102004 = ~Incompatible with previously installed lefreut's Character Creation Screens~
 
 @103000 = ~BillyYank's Multi-Portrait Mod~
 @103001 = ~Replacing CHARGEN_GENDER menu~
@@ -214,6 +217,7 @@ Please enter return or a number between 1 and 4 [1]~
 @104406 = ~Adding new entries for portraits that match the criteria~
 
 @105000 = ~Adul's Unhide Chargen Options~
+@105001 = ~Incompatible with lefreut's Portrait Picker~
 
 @106000 = ~Mr2150's Roll First~
 @106001 = ~Incompatible with previously installed Mr2150's Random PC Generator~
@@ -222,6 +226,80 @@ Please enter return or a number between 1 and 4 [1]~
 @107000 = ~Faydark's Abilities Auto-Roller/GrimLefourbe's BG2 UI~
 @107001 = ~Replacing CHARGEN_ABILITIES~
 @107002 = ~Error encountered replacing CHARGEN_ABILITIES~
+
+@108000 = ~lefreut's Portrait Picker~
+@108001 = ~Adding CHARACTER_PORTRAIT menu~
+@108002 = ~Unable to add CHARACTER_PORTRAIT menu~
+@108003 = ~Replacing CHARGEN_GENDER menu~
+@108004 = ~Unable to replace CHARGEN_GENDER menu~
+@108005 = ~Incompatible with Adul's Unhide Chargen Options~
+@108006 = ~Incompatible with Mr2150's Random PC Generator~
+
+@109000 = ~lefreut's Character Creation Screens~
+@109001 = ~Replacing CHARGEN menu~
+@109002 = ~Unable to replace CHARGEN menu~
+@109003 = ~Replacing CHARGEN_RACE menu~
+@109004 = ~Unable to replace CHARGEN_RACE menu~
+@109005 = ~Replacing CHARGEN_CLASS menu~
+@109006 = ~Unable to replace CHARGEN_CLASS menu~
+@109007 = ~Replacing CHARGEN_KIT menu~
+@109008 = ~Unable to replace CHARGEN_KIT menu~
+@109009 = ~Replacing CHARGEN_ALIGNMENT menu~
+@109010 = ~Unable to replace CHARGEN_ALIGNMENT menu~
+@109011 = ~Replacing CHARGEN_ABILITIES menu~
+@109012 = ~Unable to replace CHARGEN_ABILITIES menu~
+@109013 = ~Replacing CHARGEN_PROFICIENCIES menu~
+@109014 = ~Unable to replace CHARGEN_PROFICIENCIES menu~
+@109015 = ~Replacing CHARGEN_CUSTOMSOUNDS menu~
+@109016 = ~Unable to replace CHARGEN_CUSTOMSOUNDS menu~
+@109017 = ~Replacing CHARGEN_HATEDRACE menu~
+@109018 = ~Unable to replace CHARGEN_HATEDRACE menu~
+@109019 = ~Replacing CHARGEN_NAME menu~
+@109020 = ~Unable to replace CHARGEN_NAME menu~
+@109021 = ~Replacing CHARGEN_BIO menu~
+@109022 = ~Unable to replace CHARGEN_BIO menu~
+@109023 = ~Replacing CHARGEN_IMPORT menu~
+@109024 = ~Unable to replace CHARGEN_IMPORT menu~
+@109025 = ~Replacing POPUP_THREEBUTTON menu~
+@109026 = ~Unable to replace POPUP_THREEBUTTON menu~
+@109027 = ~Replacing LOAD menu~
+@109028 = ~Unable to replace LOAD menu~
+@109029 = ~Replacing CHARACTER_SELECT menu~
+@109030 = ~Unable to replace CHARACTER_SELECT menu~
+@109031 = ~Replacing IMPORTPARTY menu~
+@109032 = ~Unable to replace IMPORTPARTY menu~
+@109033 = ~Replacing CHARGEN_DIFFICULTY menu~
+@109034 = ~Unable to replace CHARGEN_DIFFICULTY menu~
+@109035 = ~Replacing CHARGEN_CHOOSE_SPELLS menu~
+@109036 = ~Unable to replace CHARGEN_CHOOSE_SPELLS menu~
+@109037 = ~Replacing CHARGEN_MEMORIZE_MAGE menu~
+@109038 = ~Unable to replace CHARGEN_MEMORIZE_MAGE menu~
+@109039 = ~Replacing CHARGEN_MEMORIZE_PRIEST menu~
+@109040 = ~Unable to replace CHARGEN_MEMORIZE_PRIEST menu~
+@109041 = ~Replacing CHARGEN_EXPORT menu~
+@109042 = ~Unable to replace CHARGEN_EXPORT menu~
+@109043 = ~Replacing CHARGEN_DUALCLASS menu~
+@109044 = ~Unable to replace CHARGEN_DUALCLASS menu~
+@109045 = ~Replacing CHARGEN_HIGH_LEVEL_ABILITIES menu~
+@109046 = ~Unable to replace CHARGEN_HIGH_LEVEL_ABILITIES menu~
+@109047 = ~Replacing CHARGEN_HIGH_LEVEL_ABILITIES lua block~
+@109048 = ~Unable to find CHARGEN_HIGH_LEVEL_ABILITIES lua block~
+@109049 = ~Unable to replace CHARGEN_HIGH_LEVEL_ABILITIES lua block~
+@109050 = ~Replacing CHARGEN_BIO lua block~
+@109051 = ~Unable to find CHARGEN_BIO lua block~
+@109052 = ~Unable to replace CHARGEN_BIO lua block~
+@109053 = ~Replacing CHARGEN_CHOOSE_SPELLS lua block~
+@109054 = ~Unable to find CHARGEN_CHOOSE_SPELLS lua block~
+@109055 = ~Unable to replace CHARGEN_CHOOSE_SPELLS lua block~
+@109056 = ~Replacing LOAD lua block~
+@109057 = ~Unable to find LOAD lua block~
+@109058 = ~Unable to replace LOAD lua block~
+@109059 = ~Replacing CHARGEN_MEMORIZE_MAGE lua block~
+@109060 = ~Unable to find CHARGEN_MEMORIZE_MAGE lua block~
+@109061 = ~Unable to replace CHARGEN_MEMORIZE_MAGE lua block~
+@109062 = ~Replacing CHARGEN_MEMORIZE_PRIEST lua block~
+@109063 = ~Unable to find CHARGEN_MEMORIZE_PRIEST lua block~
+@109064 = ~Unable to replace CHARGEN_MEMORIZE_PRIEST lua block~
 
 ///////////////////////////////////////////////////////////////////////////////
 // Game World/Maps/Travel Group
@@ -327,6 +405,9 @@ Please enter return or a number between 1 and 4 [1]~
 @302814 = ~Uninstalling redundant Customize All Characters component~
 @302815 = ~Adding CHARACTER_PORTRAIT menu~
 @302816 = ~Unable to add CHARACTER_PORTRAIT menu~
+@302817 = ~Replacing CHARACTER_SCRIPT code block~
+@302818 = ~Unable to find CHARACTER_SCRIPT code block~
+@302819 = ~Unable to replace CHARACTER_SCRIPT code block~
 
 @303000 = ~lefreut's Customize All Characters~
 @303001 = ~Already included in previously installed Customize Screens Tweaks~

@@ -1,0 +1,130 @@
+menu
+{
+	name 'CHARGEN_MEMORIZE_MAGE'
+	modal
+	align center center
+	ignoreesc
+	onOpen
+	"
+ 		table.sort(chargen.choose_spell, sortByMageSpellName)
+		currentChargenMemorizeMageSpell = nil
+		needSpecialist = false
+	"
+	label
+	{
+		area 0 0 864 710
+		mosaic LUICUSTB
+	}
+	label
+	{
+		area 82 12 700 40
+		text lua "chargen.title"
+		text style "title"
+	}
+	list
+	{
+		column
+		{
+			width 16
+			label
+			{
+				bam LUIBTBUT
+				area 0 0 52 52
+				align center center
+				icon lua "mageSpells[chargen.currentSpellLevelChoice][chargen.choose_spell[rowNumber].key].groundicon"
+				frame lua "specialistFrame(rowNumber)"
+				count lua "chargen.choose_spell[rowNumber].count"
+			}
+		}
+		column
+		{
+			width 56
+			label
+			{
+				area 4 0 -1 -1
+				text lua "Infinity_FetchString(mageSpells[chargen.currentSpellLevelChoice][chargen.choose_spell[rowNumber].key].name)"
+				text style "normal"
+				glow lua "chargen.choose_spell[rowNumber].enabled"
+				align left center
+			}
+		}
+		column
+		{
+			width 14
+			label
+			{
+				area 0 4 45 42
+				bam LUIOSW
+				frame lua "chargen.choose_spell[rowNumber].count > 0 and currentCellCheck(3) or 3"
+				sequence 1
+			}
+		}
+		column
+		{
+			width 14
+			label
+			{
+				area 0 4 45 42
+				bam LUIOSW
+				frame lua "spellSelectable(rowNumber) and currentCellCheck(4) or 3"
+				sequence 0
+			}
+		}
+		scrollbar 'LUISCRC'
+		rowheight 52
+		hidehighlight
+		area 42 192 340 414
+		table "chargen.choose_spell"
+		var currentChargenMemorizeMageSpell
+		action
+		"
+			if cellNumber == 3 then
+				createCharScreen:OnMemorizeMageSpellButtonClick(currentChargenMemorizeMageSpell, -1)
+			elseif cellNumber == 4 and spellSelectable(currentChargenMemorizeMageSpell) then
+				createCharScreen:OnMemorizeMageSpellButtonClick(currentChargenMemorizeMageSpell, 1)
+			end
+			cellNumber = nil
+		"
+	}
+	label
+	{
+		area 46 116 336 48
+		text lua "t('SPELLS_REMAINING_NORMAL') .. ': ' .. chargen.extraSpells"
+		text style "normal"
+		text align center center
+	}
+
+	text
+	{
+		area 436 128 382 478
+		text lua "mageMemorizeSpellOrGeneralHelp()"
+		text style "normal"
+		scrollbar 'LUISCRC'
+	}
+	button
+	{
+		on return
+		bam LUIOSTUL
+		area 210 653 234 44
+		text style "button"
+		text lua "nextOrDone()"
+		clickable lua "createCharScreen:IsDoneButtonClickable()"
+		action
+		"
+			createCharScreen:OnDoneButtonClick()
+		"
+	}
+	button
+	{
+		on escape
+		bam LUIOSTUR
+		area 464 653 234 44
+		text style "button"
+		text "BACK_BUTTON"
+		action
+		"
+			Infinity_PopMenu()
+			createCharScreen:OnCancelButtonClick()
+		"
+	}
+}

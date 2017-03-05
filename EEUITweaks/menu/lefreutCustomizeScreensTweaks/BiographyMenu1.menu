@@ -11,7 +11,7 @@ menu
 	label
 	{
 		area 0 0 864 710
-		mosaic GUICUSTB
+		mosaic LUICUSTB
 	}
 	label
 	{
@@ -23,13 +23,13 @@ menu
 	{
 		area		436 128 382 478
 		var			recBioEdit
-		scrollbar	'GUISCRC'
+		scrollbar	'LUISCRC'
 		text style	"edit"
 	}
 
 	button
 	{
-		bam GUICHLNG
+		bam LUICHLNG
 		area 42 192 340 32
 		text style "button"
 		text	"CLEAR_BUTTON"
@@ -40,7 +40,7 @@ menu
 	}
 	button
 	{
-		bam GUICHLNG
+		bam LUICHLNG
 		area 42 228 340 32
 		text style "button"
 		text "REVERT_BUTTON"
@@ -51,7 +51,7 @@ menu
 	}
 	button
 	{
-		bam GUIOSTUL
+		bam LUIOSTUL
 		area 210 653 234 44
 		text style "button"
 		text "DONE_BUTTON"
@@ -65,7 +65,7 @@ menu
 	button
 	{
 		on escape
-		bam GUIOSTUR
+		bam LUIOSTUR
 		area 464 653 234 44
 		text style "button"
 		text "CANCEL_BUTTON"

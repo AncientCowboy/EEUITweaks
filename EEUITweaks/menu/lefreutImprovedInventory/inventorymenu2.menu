@@ -78,7 +78,7 @@ menu
 		text lua "TEXT_inventoryError"
 		text style normal
 		pad 8 8 8 8
-		scrollbar 'GUISCRC'
+		scrollbar 'LUISCRC'
 	}
 	label
 	{
@@ -208,7 +208,7 @@ menu
 		hidehighlight
 		table		"buildInventoryStats()"
 		var			inventoryVar
-		scrollbar	'GUISCRC'
+		scrollbar	'LUISCRC'
 		scrollbar func "inventoryScroll"
 		action
 		"
@@ -303,58 +303,58 @@ menu
 		hidehighlight
 		rowheight	106
 		table		"makeTable(Infinity_GetMaxGroundPage())"
-		scrollbar 'GUISCRC'
+		scrollbar 'LUISCRC'
 		scrollbar func "groundScroll"
 	}
 
-	slot {name "slot_inv_1"		area 26 243 52 52	bam STONSLOT	slotinfo "characters[id].equipment.weapon0"}
-	slot {name "slot_inv_2"		area 78 243 52 52	bam STONSLOT	slotinfo "characters[id].equipment.weapon1"}
-	slot {name "slot_inv_3"		area 130 243 52 52	bam STONSLOT	slotinfo "characters[id].equipment.weapon2"}
-	slot {name "slot_inv_4"		area 182 243 52 52	bam STONSLOT	slotinfo "characters[id].equipment.weapon3"}
+	slot {name "slot_inv_1"		area 26 243 52 52	bam LTONSLOT	slotinfo "characters[id].equipment.weapon0"}
+	slot {name "slot_inv_2"		area 78 243 52 52	bam LTONSLOT	slotinfo "characters[id].equipment.weapon1"}
+	slot {name "slot_inv_3"		area 130 243 52 52	bam LTONSLOT	slotinfo "characters[id].equipment.weapon2"}
+	slot {name "slot_inv_4"		area 182 243 52 52	bam LTONSLOT	slotinfo "characters[id].equipment.weapon3"}
 
-	slot {name "slot_inv_5"		area 27 347 52 52	bam STONSLOT	slotinfo "characters[id].equipment.personal0"}
-	slot {name "slot_inv_6"		area 80 347 52 52	bam STONSLOT	slotinfo "characters[id].equipment.personal1"}
-	slot {name "slot_inv_7"		area 133 347 52 52	bam STONSLOT	slotinfo "characters[id].equipment.personal2"}
+	slot {name "slot_inv_5"		area 27 347 52 52	bam LTONSLOT	slotinfo "characters[id].equipment.personal0"}
+	slot {name "slot_inv_6"		area 80 347 52 52	bam LTONSLOT	slotinfo "characters[id].equipment.personal1"}
+	slot {name "slot_inv_7"		area 133 347 52 52	bam LTONSLOT	slotinfo "characters[id].equipment.personal2"}
 
-	slot {name "slot_inv_11"		area 243 98 52 52	bam STONSLOT	slotinfo "characters[id].equipment.armor"}
-	slot {name "slot_inv_12"		area 297 98 52 52	bam STONSLOT	slotinfo "characters[id].equipment.gauntlets"}
-	slot {name "slot_inv_13"		area 351 98 52 52	bam STONSLOT	slotinfo "characters[id].equipment.helmet"}
-	slot {name "slot_inv_14"		area 405 98 52 52	bam STONSLOT	slotinfo "characters[id].equipment.amulet"}
-	slot {name "slot_inv_15"		area 76 138 52 52	bam STONSLOT	slotinfo "characters[id].equipment.quiver0"}
-	slot {name "slot_inv_16"		area 129 138 52 52	bam STONSLOT	slotinfo "characters[id].equipment.quiver1"}
-	slot {name "slot_inv_17"		area 182 138 52 52	bam STONSLOT	slotinfo "characters[id].equipment.quiver2"}
-	slot {name "slot_inv_21"		area 393 361 52 52	bam STONSLOT	slotinfo "characters[id].equipment.belt"}
-	slot {name "slot_inv_22"		area 218 302 52 52	bam STONSLOT	slotinfo "characters[id].equipment.ringleft"}
-	slot {name "slot_inv_23"		area 462 302 52 52	bam STONSLOT	slotinfo "characters[id].equipment.ringright"}
-	slot {name "slot_inv_24"		area 282 361 52 52	bam STONSLOT	slotinfo "characters[id].equipment.cloak"}
-	slot {name "slot_inv_25"		area 338 361 52 52	bam STONSLOT	slotinfo "characters[id].equipment.boots"}
-	slot {name "slot_inv_26"		area 461 244 52 52	bam STONSLOT	slotinfo "characters[id].equipment.shield"}
+	slot {name "slot_inv_11"		area 243 98 52 52	bam LTONSLOT	slotinfo "characters[id].equipment.armor"}
+	slot {name "slot_inv_12"		area 297 98 52 52	bam LTONSLOT	slotinfo "characters[id].equipment.gauntlets"}
+	slot {name "slot_inv_13"		area 351 98 52 52	bam LTONSLOT	slotinfo "characters[id].equipment.helmet"}
+	slot {name "slot_inv_14"		area 405 98 52 52	bam LTONSLOT	slotinfo "characters[id].equipment.amulet"}
+	slot {name "slot_inv_15"		area 76 138 52 52	bam LTONSLOT	slotinfo "characters[id].equipment.quiver0"}
+	slot {name "slot_inv_16"		area 129 138 52 52	bam LTONSLOT	slotinfo "characters[id].equipment.quiver1"}
+	slot {name "slot_inv_17"		area 182 138 52 52	bam LTONSLOT	slotinfo "characters[id].equipment.quiver2"}
+	slot {name "slot_inv_21"		area 393 361 52 52	bam LTONSLOT	slotinfo "characters[id].equipment.belt"}
+	slot {name "slot_inv_22"		area 218 302 52 52	bam LTONSLOT	slotinfo "characters[id].equipment.ringleft"}
+	slot {name "slot_inv_23"		area 462 302 52 52	bam LTONSLOT	slotinfo "characters[id].equipment.ringright"}
+	slot {name "slot_inv_24"		area 282 361 52 52	bam LTONSLOT	slotinfo "characters[id].equipment.cloak"}
+	slot {name "slot_inv_25"		area 338 361 52 52	bam LTONSLOT	slotinfo "characters[id].equipment.boots"}
+	slot {name "slot_inv_26"		area 461 244 52 52	bam LTONSLOT	slotinfo "characters[id].equipment.shield"}
 
-	slot {name "slot_inv_30"		area 90 578 52 52	bam STONSLOT	slotinfo "characters[id].equipment.group0"}
-	slot {name "slot_inv_31"		area 90 632 52 52	bam STONSLOT	slotinfo "characters[id].equipment.group1"}
-	slot {name "slot_inv_32"		area 143 578 52 52	bam STONSLOT	slotinfo "characters[id].equipment.group2"}
-	slot {name "slot_inv_33"		area 143 632 52 52	bam STONSLOT	slotinfo "characters[id].equipment.group3"}
-	slot {name "slot_inv_34"		area 196 578 52 52	bam STONSLOT	slotinfo "characters[id].equipment.group4"}
-	slot {name "slot_inv_35"		area 196 632 52 52	bam STONSLOT	slotinfo "characters[id].equipment.group5"}
-	slot {name "slot_inv_36"		area 249 578 52 52	bam STONSLOT	slotinfo "characters[id].equipment.group6"}
-	slot {name "slot_inv_37"		area 249 632 52 52	bam STONSLOT	slotinfo "characters[id].equipment.group7"}
-	slot {name "slot_inv_38"		area 302 578 52 52	bam STONSLOT	slotinfo "characters[id].equipment.group8"}
-	slot {name "slot_inv_39"		area 302 632 52 52	bam STONSLOT	slotinfo "characters[id].equipment.group9"}
-	slot {name "slot_inv_40"		area 355 578 52 52	bam STONSLOT	slotinfo "characters[id].equipment.group10"}
-	slot {name "slot_inv_41"		area 355 632 52 52	bam STONSLOT	slotinfo "characters[id].equipment.group11"}
-	slot {name "slot_inv_42"		area 408 578 52 52	bam STONSLOT	slotinfo "characters[id].equipment.group12"}
-	slot {name "slot_inv_43"		area 408 632 52 52	bam STONSLOT	slotinfo "characters[id].equipment.group13"}
-	slot {name "slot_inv_44"		area 461 578 52 52	bam STONSLOT	slotinfo "characters[id].equipment.group14"}
-	slot {name "slot_inv_45"		area 461 632 52 52	bam STONSLOT	slotinfo "characters[id].equipment.group15"}
+	slot {name "slot_inv_30"		area 90 578 52 52	bam LTONSLOT	slotinfo "characters[id].equipment.group0"}
+	slot {name "slot_inv_31"		area 90 632 52 52	bam LTONSLOT	slotinfo "characters[id].equipment.group1"}
+	slot {name "slot_inv_32"		area 143 578 52 52	bam LTONSLOT	slotinfo "characters[id].equipment.group2"}
+	slot {name "slot_inv_33"		area 143 632 52 52	bam LTONSLOT	slotinfo "characters[id].equipment.group3"}
+	slot {name "slot_inv_34"		area 196 578 52 52	bam LTONSLOT	slotinfo "characters[id].equipment.group4"}
+	slot {name "slot_inv_35"		area 196 632 52 52	bam LTONSLOT	slotinfo "characters[id].equipment.group5"}
+	slot {name "slot_inv_36"		area 249 578 52 52	bam LTONSLOT	slotinfo "characters[id].equipment.group6"}
+	slot {name "slot_inv_37"		area 249 632 52 52	bam LTONSLOT	slotinfo "characters[id].equipment.group7"}
+	slot {name "slot_inv_38"		area 302 578 52 52	bam LTONSLOT	slotinfo "characters[id].equipment.group8"}
+	slot {name "slot_inv_39"		area 302 632 52 52	bam LTONSLOT	slotinfo "characters[id].equipment.group9"}
+	slot {name "slot_inv_40"		area 355 578 52 52	bam LTONSLOT	slotinfo "characters[id].equipment.group10"}
+	slot {name "slot_inv_41"		area 355 632 52 52	bam LTONSLOT	slotinfo "characters[id].equipment.group11"}
+	slot {name "slot_inv_42"		area 408 578 52 52	bam LTONSLOT	slotinfo "characters[id].equipment.group12"}
+	slot {name "slot_inv_43"		area 408 632 52 52	bam LTONSLOT	slotinfo "characters[id].equipment.group13"}
+	slot {name "slot_inv_44"		area 461 578 52 52	bam LTONSLOT	slotinfo "characters[id].equipment.group14"}
+	slot {name "slot_inv_45"		area 461 632 52 52	bam LTONSLOT	slotinfo "characters[id].equipment.group15"}
 
-	slot {name "slot_inv_68"		area 580 578 52 52	bam STONSLOT	slotinfo "characters[id].equipment.ground0"	actionScroll "scrollGroundItems()"}
-	slot {name "slot_inv_69"		area 633 578 52 52	bam STONSLOT	slotinfo "characters[id].equipment.ground1"	actionScroll "scrollGroundItems()"}
-	slot {name "slot_inv_70"		area 686 578 52 52	bam STONSLOT	slotinfo "characters[id].equipment.ground2"	actionScroll "scrollGroundItems()"}
-	slot {name "slot_inv_71"		area 739 578 52 52	bam STONSLOT	slotinfo "characters[id].equipment.ground3"	actionScroll "scrollGroundItems()"}
-	slot {name "slot_inv_72"		area 580 632 52 52	bam STONSLOT	slotinfo "characters[id].equipment.ground4"	actionScroll "scrollGroundItems()"}
-	slot {name "slot_inv_73"		area 633 632 52 52	bam STONSLOT	slotinfo "characters[id].equipment.ground5"	actionScroll "scrollGroundItems()"}
-	slot {name "slot_inv_74"		area 686 632 52 52	bam STONSLOT	slotinfo "characters[id].equipment.ground6"	actionScroll "scrollGroundItems()"}
-	slot {name "slot_inv_75"		area 739 632 52 52	bam STONSLOT	slotinfo "characters[id].equipment.ground7"	actionScroll "scrollGroundItems()"}
+	slot {name "slot_inv_68"		area 580 578 52 52	bam LTONSLOT	slotinfo "characters[id].equipment.ground0"	actionScroll "scrollGroundItems()"}
+	slot {name "slot_inv_69"		area 633 578 52 52	bam LTONSLOT	slotinfo "characters[id].equipment.ground1"	actionScroll "scrollGroundItems()"}
+	slot {name "slot_inv_70"		area 686 578 52 52	bam LTONSLOT	slotinfo "characters[id].equipment.ground2"	actionScroll "scrollGroundItems()"}
+	slot {name "slot_inv_71"		area 739 578 52 52	bam LTONSLOT	slotinfo "characters[id].equipment.ground3"	actionScroll "scrollGroundItems()"}
+	slot {name "slot_inv_72"		area 580 632 52 52	bam LTONSLOT	slotinfo "characters[id].equipment.ground4"	actionScroll "scrollGroundItems()"}
+	slot {name "slot_inv_73"		area 633 632 52 52	bam LTONSLOT	slotinfo "characters[id].equipment.ground5"	actionScroll "scrollGroundItems()"}
+	slot {name "slot_inv_74"		area 686 632 52 52	bam LTONSLOT	slotinfo "characters[id].equipment.ground6"	actionScroll "scrollGroundItems()"}
+	slot {name "slot_inv_75"		area 739 632 52 52	bam LTONSLOT	slotinfo "characters[id].equipment.ground7"	actionScroll "scrollGroundItems()"}
 
 	button
 	{

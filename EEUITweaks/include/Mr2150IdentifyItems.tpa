@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Mr2150IdentifyItems
+ * Mr2150IdentifyItems.PatchLuaBlock
  * 
  * Replaces "Infinity_PushMenu('ITEM_IDENTIFY',0,0)" with
  * "

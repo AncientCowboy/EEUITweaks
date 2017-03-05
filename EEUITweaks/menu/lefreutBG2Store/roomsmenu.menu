@@ -14,7 +14,7 @@ menu
 	label
 	{
 		area 0 0 864 614
-		mosaic GUISTROB
+		mosaic LUISTROB
 	}
 	label
 	{
@@ -38,7 +38,7 @@ menu
 	button
 	{
 		area 31 148 245 161
-		bam INNROOMS
+		bam LINNROOM
 		sequence 0
 		clickable lua "storeScreen:IsRoomTypeClickable(1)"
 		action
@@ -51,7 +51,7 @@ menu
 	{
 		name "BUTTON_room_peasant"
 		area 31 324 201 44
-		bam GUIOSTUM
+		bam LUIOSTUM
 		text "PEASANT_BUTTON"
 		text style "button"
 		glow lua "storeScreen:GetRoomType() == 1"
@@ -65,7 +65,7 @@ menu
 	button
 	{
 		area 385 148 245 161
-		bam INNROOMS
+		bam LINNROOM
 		sequence 1
 		clickable lua "storeScreen:IsRoomTypeClickable(2)"
 		action
@@ -78,7 +78,7 @@ menu
 	{
 		name "BUTTON_room_merchant"
 		area 385 324 201 44
-		bam GUIOSTUM
+		bam LUIOSTUM
 		text "MERCHANT_BUTTON"
 		text style "button"
 		glow lua "storeScreen:GetRoomType() == 2"
@@ -92,7 +92,7 @@ menu
 	button
 	{
 		area 31 387 245 161
-		bam INNROOMS
+		bam LINNROOM
 		sequence 2
 		clickable lua "storeScreen:IsRoomTypeClickable(3)"
 		frame 0
@@ -106,7 +106,7 @@ menu
 	{
 		name "BUTTON_room_noble"
 		area 31 560 201 44
-		bam GUIOSTUM
+		bam LUIOSTUM
 		text "NOBLE_BUTTON"
 		text style "button"
 		glow lua "storeScreen:GetRoomType() == 3"
@@ -120,7 +120,7 @@ menu
 	button
 	{
 		area 385 387 245 161
-		bam INNROOMS
+		bam LINNROOM
 		sequence 3
 		clickable lua "storeScreen:IsRoomTypeClickable(4)"
 		action
@@ -133,7 +133,7 @@ menu
 	{
 		name "BUTTON_room_royal"
 		area 385 560 201 44
-		bam GUIOSTUM
+		bam LUIOSTUM
 		text "ROYAL_BUTTON"
 		text style "button"
 		glow lua "storeScreen:GetRoomType() == 4"
@@ -164,7 +164,7 @@ menu
 	button
 	{
 		area 643 521 201 44
-		bam GUIOSTUM
+		bam LUIOSTUM
 		text "RENT_BUTTON"
 		text style "button"
 		clickable lua "storeScreen:GetRoomCost() > 0 and storeScreen:GetRoomCost() <= game:GetPartyGold()"

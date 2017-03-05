@@ -25,7 +25,7 @@ menu
 	label
 	{
 		area 0 0 864 710
-		mosaic GUIJRNL
+		mosaic LUIJRNL
 	}
 	label
 	{
@@ -37,7 +37,7 @@ menu
 	button
 	{
 		area 24 132 52 132
-		bam GUIPRC
+		bam LUIPRC
 		sequence 0
 		action
 		"
@@ -47,7 +47,7 @@ menu
 	button
 	{
 		area 788 132 52 132
-		bam GUIPRC
+		bam LUIPRC
 		sequence 1
 		action
 		"
@@ -117,7 +117,7 @@ menu
 		hidehighlight
 		table		"questDisplay"
 		var			selectedQuest
-		scrollbar	'GUISBR'
+		scrollbar	'LUISBR'
 		area		152 236 582 346
 		action
 		"
@@ -158,7 +158,7 @@ menu
 		hidehighlight
 		table		"journalDisplay"
 		var			selectedJournal
-		scrollbar	'GUISBR'
+		scrollbar	'LUISBR'
 		area		152 236 582 346
 		action
 		"
@@ -195,7 +195,7 @@ menu
 		hidehighlight
 		table		"userDisplay"
 		var			selectedUser
-		scrollbar	'GUISBR'
+		scrollbar	'LUISBR'
 		area		152 236 582 346
 		action
 		"
@@ -208,7 +208,7 @@ menu
 	button
 	{
 		area 72 94 234 44
-		bam GUIOSTUL
+		bam LUIOSTUL
 		glow lua "journalMode == 0"
 		text "QUESTS_BUTTON"
 		text style "button"
@@ -220,7 +220,7 @@ menu
 	button
 	{
 		area 556 94 234 44
-		bam GUIOSTUR
+		bam LUIOSTUR
 		glow lua "journalMode == 1"
 		text "DONE_QUESTS_BUTTON"
 		text style "button"
@@ -232,7 +232,7 @@ menu
 	button
 	{
 		area 58 604 234 44
-		bam GUIOSTLL
+		bam LUIOSTLL
 		glow lua "journalMode == 2"
 		text "JOURNAL_BUTTON"
 		text style "button"
@@ -244,7 +244,7 @@ menu
 	button
 	{
 		area 332 610 201 44
-		bam GUIOSTLM
+		bam LUIOSTLM
 		enabled "journalMode == 3"
 		clickable lua "chapter == Infinity_GetMaxChapterPage()"
 		text 'ADD_BUTTON'
@@ -260,7 +260,7 @@ menu
 	{
 		area 572 604 234 44
 		glow lua "journalMode == 3"
-		bam GUIOSTLR
+		bam LUIOSTLR
 		text "USER_BUTTON"
 		text style "button"
 		action

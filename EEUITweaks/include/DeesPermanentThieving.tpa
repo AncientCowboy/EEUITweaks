@@ -125,178 +125,95 @@ END
 PRINT @119
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~WORLD_ACTIONBAR~
-OUTER_SPRINT $UIMenuIF("Body") ~~
-LAUNCH_ACTION_MACRO UIMenuGetMenu
-ACTION_IF NOT $UIMenuIF("Succeeded") THEN
-BEGIN
-	FAIL @120
-END
 
-ACTION_MATCH 1
-WITH
-	%IsSoD% %IsEETSoD% %IsTIWDonSoD%
+// For Kilivitz's Revised Dragon Scale this is a menu replacement rather than patch
+ACTION_IF IsKRDS THEN
+BEGIN
+	ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2010~ THEN
 	BEGIN
-		ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2010~ THEN
-		BEGIN
-			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ABarLabel1Large.menu~
-		END ELSE
-		BEGIN
-			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ABarLabel1Medium.menu~
-		END
-	END
-	%IsSoDOverhaul%
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ABarFull7Large.menu~
+	END ELSE
 	BEGIN
-		ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2010~ THEN
-		BEGIN
-			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ABarLabel2Large.menu~
-		END ELSE
-		BEGIN
-			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ABarLabel2Medium.menu~
-		END
-	END
-	%IsBG2% %IsEETBG2% %IsTIWDonBG2%
-	BEGIN
-		ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2010~ THEN
-		BEGIN
-			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ABarLabel3Large.menu~
-		END ELSE
-		BEGIN
-			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ABarLabel3Medium.menu~
-		END
-	END
-	%IsBGEE%
-	BEGIN
-		ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2010~ THEN
-		BEGIN
-			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ABarLabel4Large.menu~
-		END ELSE
-		BEGIN
-			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ABarLabel4Medium.menu~
-		END
-	END
-	%IsBG2onSoD%
-	BEGIN
-		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ABarLabel5Medium.menu~
-	END
-	%IsLeUIBG2% %IsLeUISOD% %IsLeUIBG1% %IsEETLeUI%
-	BEGIN
-		ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2010~ THEN
-		BEGIN
-			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ABarLabel6Large.menu~
-		END ELSE
-		BEGIN
-			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ABarLabel6Medium.menu~
-		END
-	END
-	%IsKRDS%
-	BEGIN
-		ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2010~ THEN
-		BEGIN
-			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ABarLabel7Large.menu~
-		END ELSE
-		BEGIN
-			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ABarLabel7Medium.menu~
-		END
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ABarFull7Medium.menu~
 	END
 
-	DEFAULT
-		FAIL @15
-END
-LAUNCH_ACTION_MACRO DeesPermanent.ActionBarPatch1
-ACTION_IF NOT $UIMenuIF("Succeeded") THEN
-BEGIN
-	FAIL @121
-END
-LAUNCH_ACTION_MACRO UIMenuUpdateMenu
-ACTION_IF NOT $UIMenuIF("Succeeded") THEN
-BEGIN
-	FAIL @103
-END
-
-ACTION_MATCH 1
-WITH
-	%IsSoD% %IsEETSoD% %IsTIWDonSoD%
+	LAUNCH_ACTION_MACRO UIMenuReplaceMenu
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 	BEGIN
-		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ActionBarButton1.menu~
-	END
-	%IsSoDOverhaul%
-	BEGIN
-		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ActionBarButton2.menu~
-	END
-	%IsBG2% %IsEETBG2% %IsTIWDonBG2%
-	BEGIN
-		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ActionBarButton3.menu~
-	END
-	%IsBGEE%
-	BEGIN
-		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ActionBarButton4.menu~
-	END
-	%IsBG2onSoD%
-	BEGIN
-		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ActionBarButton5.menu~
-	END
-	%IsLeUIBG2% %IsLeUISOD% %IsLeUIBG1% %IsEETLeUI%
-	BEGIN
-		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ActionBarButton6.menu~
-	END
-	%IsKRDS%
-	BEGIN
-		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ActionBarButton7.menu~
+		FAIL @121
 	END
 
-	DEFAULT
-		FAIL @15
-END
-LAUNCH_ACTION_MACRO UIMenuAppendMenuElements
-ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+END ELSE
+
+// Everyone else
 BEGIN
-	FAIL @121
-END
-LAUNCH_ACTION_MACRO UIMenuUpdateMenu
-ACTION_IF NOT $UIMenuIF("Succeeded") THEN
-BEGIN
-	FAIL @103
-END
-		
- // Patch location of existing Message Scrolls
-ACTION_IF (IsBG2onSoD) OR (MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2010~) THEN
-BEGIN
+	OUTER_SPRINT $UIMenuIF("Body") ~~
+	LAUNCH_ACTION_MACRO UIMenuGetMenu
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @120
+	END
 	ACTION_MATCH 1
 	WITH
 		%IsSoD% %IsEETSoD% %IsTIWDonSoD%
 		BEGIN
-			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/newbuttons1Large.menu~
+			ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2010~ THEN
+			BEGIN
+				OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ABarLabel1Large.menu~
+			END ELSE
+			BEGIN
+				OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ABarLabel1Medium.menu~
+			END
 		END
 		%IsSoDOverhaul%
 		BEGIN
-			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/newbuttons2Large.menu~
+			ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2010~ THEN
+			BEGIN
+				OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ABarLabel2Large.menu~
+			END ELSE
+			BEGIN
+				OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ABarLabel2Medium.menu~
+			END
 		END
-		%IsBG2% %IsEETBG2% %IsTIWDonBG2%
+		%IsBG2% %IsEETBG2% %IsTIWDonBG2% %IsTIWD2onBG2%
 		BEGIN
-			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/newbuttons3Large.menu~
+			ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2010~ THEN
+			BEGIN
+				OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ABarLabel3Large.menu~
+			END ELSE
+			BEGIN
+				OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ABarLabel3Medium.menu~
+			END
 		END
 		%IsBGEE%
 		BEGIN
-			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/newbuttons4Large.menu~
+			ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2010~ THEN
+			BEGIN
+				OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ABarLabel4Large.menu~
+			END ELSE
+			BEGIN
+				OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ABarLabel4Medium.menu~
+			END
 		END
 		%IsBG2onSoD%
 		BEGIN
-			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ABarScrBtns5.menu~
+			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ABarLabel5Medium.menu~
 		END
 		%IsLeUIBG2% %IsLeUISOD% %IsLeUIBG1% %IsEETLeUI%
 		BEGIN
-			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/newbuttons6Large.menu~
+			ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2010~ THEN
+			BEGIN
+				OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ABarLabel6Large.menu~
+			END ELSE
+			BEGIN
+				OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ABarLabel6Medium.menu~
+			END
 		END
-		%IsKRDS%
-		BEGIN
-			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/newbuttons7Large.menu~
-		END
-
+	
 		DEFAULT
 			FAIL @15
 	END
-
-	LAUNCH_ACTION_MACRO DeesPermanent.ActionBarPatch2
+	LAUNCH_ACTION_MACRO DeesPermanent.ActionBarPatch1
 	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 	BEGIN
 		FAIL @121
@@ -306,7 +223,94 @@ BEGIN
 	BEGIN
 		FAIL @103
 	END
-END
+	
+	ACTION_MATCH 1
+	WITH
+		%IsSoD% %IsEETSoD% %IsTIWDonSoD%
+		BEGIN
+			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ActionBarButton1.menu~
+		END
+		%IsSoDOverhaul%
+		BEGIN
+			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ActionBarButton2.menu~
+		END
+		%IsBG2% %IsEETBG2% %IsTIWDonBG2% %IsTIWD2onBG2%
+		BEGIN
+			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ActionBarButton3.menu~
+		END
+		%IsBGEE%
+		BEGIN
+			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ActionBarButton4.menu~
+		END
+		%IsBG2onSoD%
+		BEGIN
+			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ActionBarButton5.menu~
+		END
+		%IsLeUIBG2% %IsLeUISOD% %IsLeUIBG1% %IsEETLeUI%
+		BEGIN
+			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ActionBarButton6.menu~
+		END
+	
+		DEFAULT
+			FAIL @15
+	END
+	LAUNCH_ACTION_MACRO UIMenuAppendMenuElements
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @121
+	END
+	LAUNCH_ACTION_MACRO UIMenuUpdateMenu
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @103
+	END
+			
+	 // Patch location of existing Message Scrolls
+	ACTION_IF (IsBG2onSoD) OR (MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2010~) THEN
+	BEGIN
+		ACTION_MATCH 1
+		WITH
+			%IsSoD% %IsEETSoD% %IsTIWDonSoD%
+			BEGIN
+				OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/newbuttons1Large.menu~
+			END
+			%IsSoDOverhaul%
+			BEGIN
+				OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/newbuttons2Large.menu~
+			END
+			%IsBG2% %IsEETBG2% %IsTIWDonBG2% %IsTIWD2onBG2%
+			BEGIN
+				OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/newbuttons3Large.menu~
+			END
+			%IsBGEE%
+			BEGIN
+				OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/newbuttons4Large.menu~
+			END
+			%IsBG2onSoD%
+			BEGIN
+				OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ABarScrBtns5.menu~
+			END
+			%IsLeUIBG2% %IsLeUISOD% %IsLeUIBG1% %IsEETLeUI%
+			BEGIN
+				OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/newbuttons6Large.menu~
+			END
+	
+			DEFAULT
+				FAIL @15
+		END
+	
+		LAUNCH_ACTION_MACRO DeesPermanent.ActionBarPatch2
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @121
+		END
+		LAUNCH_ACTION_MACRO UIMenuUpdateMenu
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @103
+		END
+	END
+END // Not IsKRDS
 
 // Close UI.MENU
 PRINT @13
@@ -345,7 +349,7 @@ WITH
 		END
 		DELETE ~override/GUWBTP10.png~
 	END
-	%IsBG2% %IsEETBG2% %IsTIWDonBG2%
+	%IsBG2% %IsEETBG2% %IsTIWDonBG2% %IsTIWD2onBG2%
 	BEGIN
 		ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2010~ THEN
 		BEGIN
@@ -388,11 +392,11 @@ WITH
 	END
 	%IsKRDS%
 	BEGIN
-		ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2010~ THEN
-		BEGIN
-			COPY ~%PKGNAME%/copy/CommonActionBars/KDS/ABKDSL.MOS~ ~override/GUWBTP10.MOS~
-			COPY ~%PKGNAME%/copy/CommonActionBars/KDS/MOS5053.PVRZ~ ~override~
-		END
+//		ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2010~ THEN
+//		BEGIN
+//			COPY ~%PKGNAME%/copy/CommonActionBars/KDS/ABKDSL.MOS~ ~override/GUWBTP10.MOS~
+//			COPY ~%PKGNAME%/copy/CommonActionBars/KDS/MOS5053.PVRZ~ ~override~
+//		END
 	END
 
 	DEFAULT

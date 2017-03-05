@@ -9,7 +9,7 @@ menu
 	label
 	{
 		area 0 0 864 614
-		mosaic GUISTBSC
+		mosaic LUISTBSC
 	}
 	label
 	{
@@ -70,7 +70,7 @@ menu
 			label
 			{
 				area 0 0 412 62
-				mosaic GUISTBK2
+				mosaic LUISTBK2
 				respectClipping
 			}
 			label
@@ -111,7 +111,7 @@ menu
 		rowheight	62
 		table		"store.storeItems"
 		var			"storeItemsVar"
-		scrollbar 'GUISCRC'
+		scrollbar 'LUISCRC'
 		action
 		"
 			if store.storeItems[storeItemsVar] then
@@ -151,7 +151,7 @@ menu
 			label
 			{
 				area 0 0 370 62
-				mosaic GUISTBK1
+				mosaic LUISTBK1
 				respectClipping
 			}
 			label
@@ -193,7 +193,7 @@ menu
 		rowheight	62
 		table		"store.groupItems"
 		var			"storeGroupItemsVar"
-		scrollbar 'GUISCRC'
+		scrollbar 'LUISCRC'
 		action
 		"
 			if store.groupItems[storeGroupItemsVar] then
@@ -239,7 +239,7 @@ menu
 	button
 	{
 		area 118 560 201 44
-		bam GUIOSTUM
+		bam LUIOSTUM
 		text lua "checkContainerText('BUY_BUTTON', 'TO_BACKPACK_BUTTON')"
 		text style "button"
 		clickable lua "storeScreen:IsBuyItemButtonClickable() and storeScreen:GetStoreCost() <= game:GetPartyGold()"
@@ -251,7 +251,7 @@ menu
 	button
 	{
 		area 604 560 201 44
-		bam GUIOSTUM
+		bam LUIOSTUM
 		text lua "checkContainerText('SELL_BUTTON','TO_CONTAINER_BUTTON')"
 		text style "button"
 		clickable lua "storeScreen:IsSellItemButtonClickable()"
@@ -264,7 +264,7 @@ menu
 	{
 		area 360 560 201 44
 		enabled "(not storeScreen:IsContainer()) and storeScreen:IsStealEnabled()"
-		bam GUIOSTUM
+		bam LUIOSTUM
 		text "STEAL_BUTTON"
 		text style "button"
 		clickable lua "canSteal()"
@@ -304,7 +304,7 @@ menu
 	{
 		area 361 560 201 44
 		enabled "storeScreen:IsCloseBagButtonClickable()"
-		bam GUIOSTUM
+		bam LUIOSTUM
 		text "CLOSE_CONTAINER_BUTTON"
 		text style "button"
 		action

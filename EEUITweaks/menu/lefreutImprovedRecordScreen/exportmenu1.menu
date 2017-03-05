@@ -18,7 +18,7 @@ menu
 	label
 	{
 		area 0 0 864 710
-		mosaic GUICHISD
+		mosaic LUICHISD
 	}
 	label
 	{
@@ -62,7 +62,7 @@ menu
 		hidehighlight
 		table		"list_GUIREC_13_0"
 		var			"list_GUIREC_13_0_idx"
-		scrollbar	'GUISCRC'
+		scrollbar	'LUISCRC'
 		action
 		"
 			Infinity_OnCharacterItemSelect(list_GUIREC_13_0_idx - 1)
@@ -97,14 +97,14 @@ menu
 	{
 		area 450 198 362 410
 		text 10962
-		scrollbar 'GUISCRC'
+		scrollbar 'LUISCRC'
 		text style normal
 		text color D
 	}
 	button
 	{
 		clickable	lua "characterScreen:IsDoneButtonClickable(currentID)"
-		bam GUIOSTUL
+		bam LUIOSTUL
 		area 210 653 234 44
 		text style "button"
 		text "DONE_BUTTON"
@@ -116,7 +116,7 @@ menu
 	button
 	{
 		on escape
-		bam GUIOSTUR
+		bam LUIOSTUR
 		area 464 653 234 44
 		text style "button"
 		text "CANCEL_BUTTON"

@@ -12,7 +12,7 @@ menu
 	label
 	{
 		area 0 0 864 614
-		mosaic GUISTIDB
+		mosaic LUISTIDB
 	}
 	label
 	{
@@ -54,7 +54,7 @@ menu
 			label
 			{
 				area 0 0 318 62
-				mosaic GUISTBK3
+				mosaic LUISTBK3
 				respectClipping
 			}
 			label
@@ -93,7 +93,7 @@ menu
 		rowheight	62
 		table		"store.healingSpells"
 		var			"healingSpellsVar"
-		scrollbar 'GUISCRC'
+		scrollbar 'LUISCRC'
 		action
 		"
 			local spell = store.healingSpells[healingSpellsVar]
@@ -117,7 +117,7 @@ menu
 	button
 	{
 		area 119 554 201 44
-		bam GUIOSTUM
+		bam LUIOSTUM
 		text "BUY_BUTTON"
 		text style "button"
 		clickable lua "storeScreen:GetSpellCost() > 0"
@@ -132,6 +132,6 @@ menu
 		area 480 182 313 364
 		text lua "store.spellText"
 		text style "normal_parchment"
-		scrollbar 'GUISBR'
+		scrollbar 'LUISBR'
 	}
 }

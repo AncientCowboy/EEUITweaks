@@ -1,0 +1,188 @@
+menu
+{
+	name 'CHARGEN_ABILITIES'
+	modal
+	align center center
+	ignoreesc
+	onOpen
+	"
+		ticksPassed = 0
+		ticksStarting = 0
+	"
+	label
+	{
+		area 0 0 864 710
+		mosaic LUICUSTB
+	}
+	label
+	{
+		area 82 12 700 40
+		text "ABILITIES_TITLE"
+		text style "title"
+	}
+	list
+	{
+		column
+		{
+			width 45
+			label
+			{
+				area 0 0 -1 55
+				text lua "t(chargen.ability[rowNumber].name)"
+				text style "normal"
+				align right center
+			}
+		}
+		column
+		{
+			width 27
+			label
+			{
+				area 20 0 90 55
+				text lua "chargen.ability[rowNumber].roll"
+				text style "normal"
+				align center center
+			}
+		}
+		column
+		{
+			width 14
+			label
+			{
+				area 0 6 45 42
+				bam LUIOSW
+				frame lua "currentCellCheck(3)"
+				sequence 1
+			}
+		}
+		column
+		{
+			width 14
+			label
+			{
+				area 0 6 45 42
+				bam LUIOSW
+				frame lua "currentCellCheck(4)"
+				sequence 0
+			}
+		}
+		action
+		"
+			if ticksStarting < 10 then
+				if cellNumber == 3 then
+					createCharScreen:OnAbilityPlusMinusButtonClick(currentChargenAbility, false)
+				elseif cellNumber == 4 then
+					createCharScreen:OnAbilityPlusMinusButtonClick(currentChargenAbility, true)
+				end
+			end
+			cellNumber = nil
+			ticksPassed = 0
+			ticksStarting = 0
+		"
+		actionUpdate
+		"
+			ticksStarting = ticksStarting + 1
+			if ticksStarting > 10 then
+				ticksPassed = ticksPassed + 1
+				if ticksPassed > 7 then
+					if cellNumber == 3 then
+						createCharScreen:OnAbilityPlusMinusButtonClick(currentChargenAbility, false)
+					elseif cellNumber == 4 then
+						createCharScreen:OnAbilityPlusMinusButtonClick(currentChargenAbility, true)
+					end
+					ticksPassed = 0
+				end
+			end
+		"
+		rowheight 54
+		hidehighlight
+		area 42 188 340 324
+		table "chargen.ability"
+		var currentChargenAbility
+	}
+	label
+	{
+		area 38 122 186 42
+		text "TOTAL_ROLL_NORMAL"
+		text style "normal"
+		text align right center
+	}
+	label
+	{
+		area 224 122 50 42
+		text lua "chargen.totalRoll"
+		text style "normal"
+		text align center center
+	}
+	label
+	{
+		area 288 122 94 42
+		text lua "chargen.extraAbilityPoints"
+		text style "normal"
+		text align center center
+	}
+
+	text
+	{
+		area 436 128 382 478
+		text lua "abilityOrGeneralHelp()"
+		text style "normal"
+		scrollbar 'LUISCRC'
+	}
+	button
+	{
+		area 42 510 340 32
+		bam LUICHLNG
+		sequence 0
+		text "REROLL_BUTTON"
+		text style "button"
+		action "createCharScreen:OnAbilityReRollButtonClick()"
+	}
+	button
+	{
+		area 42 544 340 32
+		bam LUICHLNG
+		sequence 0
+		text "STORE_BUTTON"
+		text style "button"
+		action "createCharScreen:OnAbilityStoreButtonClick()"
+	}
+	button
+	{
+		area 42 578 340 32
+		bam LUICHLNG
+		sequence 0
+		text "RECALL_BUTTON"
+		text style "button"
+		clickable lua "createCharScreen:IsAbilityRecallButtonClickable()"
+		action "createCharScreen:OnAbilityRecallButtonClick()"
+	}
+
+	button
+	{
+		on return
+		bam LUIOSTUL
+		area 210 653 234 44
+		text style "button"
+		text lua "nextOrDone()"
+		clickable lua "createCharScreen:IsDoneButtonClickable()"
+		action
+		"
+			Infinity_PopMenu()
+			createCharScreen:OnDoneButtonClick()
+		"
+	}
+	button
+	{
+		on escape
+		bam LUIOSTUR
+		area 464 653 234 44
+		text style "button"
+		text "BACK_BUTTON"
+		action
+		"
+			Infinity_PopMenu()
+			createCharScreen:OnCancelButtonClick()
+		"
+	}
+}

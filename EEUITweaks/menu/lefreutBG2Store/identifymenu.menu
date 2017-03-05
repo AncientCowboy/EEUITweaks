@@ -13,7 +13,7 @@ menu
 	label
 	{
 		area 0 0 864 614
-		mosaic GUISTIDB
+		mosaic LUISTIDB
 	}
 	label
 	{
@@ -56,7 +56,7 @@ menu
 			{
 				enabled "store.identifyItems[rowNumber].valid"
 				area 0 0 318 62
-				mosaic GUISTBK3
+				mosaic LUISTBK3
 				respectClipping
 			}
 			label
@@ -83,7 +83,7 @@ menu
 		rowheight	dynamic
 		table		"store.identifyItems"
 		var			"identifyItemsVar"
-		scrollbar 'GUISCRC'
+		scrollbar 'LUISCRC'
 		action
 		"
 			local highlight = store.identifyItems[identifyItemsVar].highlight ~= 1
@@ -93,7 +93,7 @@ menu
 	button
 	{
 		area 119 554 201 44
-		bam GUIOSTUM
+		bam LUIOSTUM
 		text "IDENTIFY_BUTTON"
 		text style "button"
 		clickable lua "storeScreen:IsIdentifyItemButtonClickable() and storeScreen:GetIdentifyCost() <= game:GetPartyGold()"
@@ -107,6 +107,6 @@ menu
 		area 480 182 313 364
 		text lua "store.identifyText"
 		text style "normal_parchment"
-		scrollbar 'GUISBR'
+		scrollbar 'LUISBR'
 	}
 }

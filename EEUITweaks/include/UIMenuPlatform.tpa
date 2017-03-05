@@ -18,6 +18,7 @@
  * IsKRDS - Kilivitz's Revised Dragon Scale UI on SoD
  * IsTIWDonBG2 - trinit's IWD GUI on BG2
  * IsTIWDonSoD - trinit's IWD GUI on SoD
+ * IsTIWD2onBG2 - trinit's IWD2 GUI on BG2EE
  ******************************************************************************/
 DEFINE_ACTION_MACRO EEUIGetMenuEnv
 BEGIN
@@ -35,6 +36,7 @@ BEGIN
 	OUTER_SET IsKRDS = 0
 	OUTER_SET IsTIWDonBG2 = 0
 	OUTER_SET IsTIWDonSoD = 0
+	OUTER_SET IsTIWD2onBG2 = 0
 
 	ACTION_IF GAME_IS ~eet~ THEN
 	BEGIN
@@ -69,8 +71,15 @@ BEGIN
 				LOG ~IsTIWDonBG2~
 			END ELSE
 			BEGIN
-				OUTER_SET IsBG2 = 1
-				LOG ~IsBG2~
+				ACTION_IF FILE_EXISTS ~override/guiiwd2dummy.png~ THEN
+				BEGIN
+					OUTER_SET IsTIWD2onBG2 = 1
+					LOG ~IsTIWD2onBG2~
+				END ELSE
+				BEGIN
+					OUTER_SET IsBG2 = 1
+					LOG ~IsBG2~
+				END
 			END
 		END
 	END

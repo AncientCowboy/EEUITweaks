@@ -1,15 +1,13 @@
-EEUITweaks - Version 2.1
+EEUITweaks - Version 2.2
 
-This mod is supplied in the form of a WeiDU mod - the contents of the archive
-(zip in this case) are placed in the target installation directory, and
-a setup program - setup-EEUITweaks.exe - is run to install the mod.
-
-As of version 1.7 it is no longer necessary to pre-extract UI.MENU to your
-override directory. WeiDU v240 (packaged as setup-EEUITweaks.exe) will
-extract it as necessary.
+This mod is configured as a WeiDU mod and consists of a setup program
+named setup-EEUITweaks.exe and a mod files directory named EEUITweaks.
+You'll find each of these within the EEUITweaks-master directory with- 
+in the zipped archive. Ignore the .gitattributes and .gitignore files -
+they are irrelevant to installing/using EEUITweaks.
 
 Note for EET installations: This package has been restructured to work with
-EET RC 7.1 which changed the installation for the optional SoD GUI 
+EET RC 7.1 (or later) which changed the installation for the optional SoD GUI 
 (setup-EET_gui). This version of EEUITweaks will not work reliably with
 versions of EET prior to RC 7.1. If you are using the default BG2 gui, 
 EEUITweaks should be run after setup-EET_end. If you are using the SoD gui, 
@@ -21,9 +19,8 @@ mods in non-EET environments.
 
 To install the mod:
 
-1. Copy setup-EEUITweaks.exe (a renamed copy of WeiDU.exe) and the
-   EEUITweaks directory tree to your game installation directory
-   (contains the chitin.key file)
+1. Copy setup-EEUITweaks.exe and the EEUITweaks directory tree to your game
+   installation directory (contains the chitin.key file)
 
 2. Run setup-EEUITweaks.exe, answering the questions it asks.
    Depending on where your game is installed and the security settings on your
