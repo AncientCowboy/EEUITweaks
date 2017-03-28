@@ -157,7 +157,7 @@ END
  * lefreut's Steal Multiple Items Installation
  ******************************************************************************/
 // Open UI.MENU
-PRINT @12
+LOG @12
 SILENT
 LAUNCH_ACTION_MACRO UIMenuOpen
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
@@ -166,7 +166,7 @@ BEGIN
 END
 
 // Patch STORE_BUYSELL Lua block
-PRINT @401001
+LOG @401001
 SILENT
 
 OUTER_SPRINT $UIMenuIF("LuaRegex") ~function[%TAB% ]+getStoreSlotHighlight([^)]+)~
@@ -189,7 +189,7 @@ BEGIN
 END
 
 // Patch STORE_BUYSELL menu
-PRINT @122
+LOG @122
 SILENT
 
 OUTER_SPRINT $UIMenuIF("MenuName") ~STORE_BUYSELL~
@@ -219,7 +219,7 @@ BEGIN
 END
 
 // Close UI.MENU
-PRINT @13
+LOG @13
 SILENT
 LAUNCH_ACTION_MACRO UIMenuClose
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN

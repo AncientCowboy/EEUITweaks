@@ -1,0 +1,20 @@
+/******************************************************************************
+ * elminster's Easier Area Cheats Installation
+ *****************************************************************************/
+SILENT
+ACTION_MATCH 1
+WITH
+	%IsSoD% %IsBG2onSoD% %IsSoDOverhaul% %IsTIWDonSoD% %IsKRDS% %IsLeUISOD%
+	BEGIN
+		LOG ~Copying M_k9SoD.lua~
+		COPY ~%PKGNAME%/copy/elminsterAreaCheats/M_k9SoD.lua~ ~override~
+	END
+	%IsBGEE% %IsLeUIBG1%
+	BEGIN
+		LOG ~Copying M_k9BGEE.lua~
+		COPY ~%PKGNAME%/copy/elminsterAreaCheats/M_k9BGEE.lua~ ~override~
+	END
+	
+	DEFAULT
+		FAIL @15
+END

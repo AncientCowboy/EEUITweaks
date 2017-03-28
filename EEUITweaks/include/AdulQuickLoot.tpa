@@ -118,12 +118,12 @@ END
  * Adul's Better Quick Loot Installation
  ******************************************************************************/
 // Copy files
-PRINT @24
+LOG @24
 SILENT
 COPY ~%PKGNAME%/copy/AdulQuickLoot~ ~override~
 
 // Open UI.MENU
-PRINT @12
+LOG @12
 SILENT
 LAUNCH_ACTION_MACRO UIMenuOpen
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
@@ -132,7 +132,7 @@ BEGIN
 END
 
 // Patch WORLD_ACTIONBAR
-PRINT @119
+LOG @119
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~WORLD_ACTIONBAR~
 OUTER_SPRINT $UIMenuIF("Body") ~~
@@ -153,7 +153,7 @@ BEGIN
 END
 
 // Replace WORLD_QUICKLOOT menu
-PRINT @203001
+LOG @203001
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~WORLD_QUICKLOOT~
 OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/AdulQuickLoot/quicklootmenu.menu~
@@ -164,7 +164,7 @@ BEGIN
 END
 
 // Remove WORLD_MESSAGES code block line that moves the quick loot bar
-PRINT @203003
+LOG @203003
 SILENT
 LAUNCH_ACTION_MACRO AdulQuickLoot.PatchRemoveMoveCode
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN 
@@ -173,7 +173,7 @@ BEGIN
 END
 
 // Close UI.MENU
-PRINT @13
+LOG @13
 SILENT
 LAUNCH_ACTION_MACRO UIMenuClose
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN

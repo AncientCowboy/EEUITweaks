@@ -72,7 +72,7 @@ END
  * lefreut's Portrait Picker Installation
  *****************************************************************************/
 // Open UI.MENU
-PRINT @12
+LOG @12
 SILENT
 LAUNCH_ACTION_MACRO UIMenuOpen
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
@@ -81,7 +81,7 @@ BEGIN
 END
 
 // Add CHARACTER_PORTRAIT
-PRINT @108001
+LOG @108001
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_PORTRAIT~
 OUTER_SPRINT $UIMenuIF("Body") ~~
@@ -93,7 +93,7 @@ BEGIN
 END
 
 // Replace CHARGEN_GENDER
-PRINT @108003
+LOG @108003
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_GENDER~
 OUTER_SPRINT $UIMenuIF("Body") ~~
@@ -105,7 +105,7 @@ BEGIN
 END
 
 // Patch CHARGEN menu
-PRINT @149
+LOG @149
 SILENT
 
 OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN~
@@ -129,7 +129,7 @@ BEGIN
 END
 
 // Close UI.MENU
-PRINT @13
+LOG @13
 SILENT
 LAUNCH_ACTION_MACRO UIMenuClose
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
@@ -139,7 +139,7 @@ END
 
 
 // Copy common UI resources
-PRINT @17
+LOG @17
 SILENT
 COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUISCRC.BAM~ ~override~
 

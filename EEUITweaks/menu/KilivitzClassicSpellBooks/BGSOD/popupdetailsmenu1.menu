@@ -1,0 +1,51 @@
+menu
+{
+	name "POPUP_DETAILS"
+	align center center
+	modal
+
+	label
+	{
+		area 0 0 864 710
+		mosaic "GUIINVHI"
+	}
+	label
+	{
+		area 82 10 700 44
+		text lua "Infinity_FetchString(PopupDetails.title)"
+		text style "title"
+	}
+	label
+	{
+		area 254 65 350 50
+		text lua "Infinity_FetchString(PopupDetails.name)"
+		text style "label"
+	}
+	text
+	{
+		area 62 178 736 348
+		text lua "Infinity_FetchString(PopupDetails.description)"
+		text style "parchment"
+		scrollbar 'GUISCRC'
+	}
+	label
+	{
+		area 94 72 52 52
+		bam lua "PopupDetails.icon"
+		align center center
+		sequence 0
+	}
+	button
+	{
+		area 326 638 230 44
+		bam GUIBUTMT
+		text "DONE_BUTTON"
+		text style "button"
+		
+		on escape
+		action
+		"
+			Infinity_PopMenu('POPUP_DETAILS')
+		"
+	}		
+}

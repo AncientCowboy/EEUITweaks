@@ -27,7 +27,7 @@ ACTION_IF NOT %mrportraitpickUpdateCancel%
 BEGIN
 	ACTION_IF (NOT FILE_EXISTS_IN_GAME ~M_BG.lua~) 
 	BEGIN
-		PRINT @104404
+		LOG @104404
 		SILENT
 <<<<<<<< .../M_BG.lua
 BGImages = {
@@ -37,7 +37,7 @@ BGImages = {
 		COPY + ~.../M_BG.lua~ ~override~
 	END ELSE
 	BEGIN // Remove entries in M_BG.lua that no longer exist
-		PRINT @104405
+		LOG @104405
 		SILENT
 		COPY_EXISTING + ~M_BG.lua~ ~override~
 			REPLACE_EVALUATE CASE_INSENSITIVE ~\({[%TAB% ]*"[^"]+"[%TAB% ]*,[%TAB% ]*"[MFD]"[%TAB% ]*,[%TAB% ]*"\)\([^"]+\)\("[%TAB% ]*},?[%WNL%%LNL%%MNL%%TAB% ]*\)~ 
@@ -53,7 +53,7 @@ BGImages = {
 		BUT_ONLY
 	END
 
-	PRINT @104406
+	LOG @104406
 	SILENT
 	COPY_EXISTING + ~M_BG.lua~ ~override~ // Add new entries for portraits that match the criteria
 		PATCH_BASH_FOR ~%mrportraitpickPortraitDirectory%~ ~^.+bmp$~ 

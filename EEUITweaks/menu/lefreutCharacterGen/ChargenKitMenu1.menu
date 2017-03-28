@@ -6,7 +6,7 @@ menu
 	ignoreesc
 	onOpen
 	"
-		currentChargenKit = nil
+		currentChargenKit = 1
 	"
 	label
 	{

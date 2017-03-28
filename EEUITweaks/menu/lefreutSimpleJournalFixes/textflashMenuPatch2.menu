@@ -1,0 +1,9 @@
+	text
+	{
+		area 20 64 468 62
+		text lua "getBodyString()"
+		text style "normal"
+		text align left top
+		scrollbar 'GUISCRC'
+		scrollbar hide lua "1"
+	}

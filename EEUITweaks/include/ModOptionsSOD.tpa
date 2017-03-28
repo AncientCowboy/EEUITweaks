@@ -257,10 +257,10 @@ END
 DEFINE_ACTION_MACRO ModOptions.SoDSpecific
 BEGIN
 	// SoD configuration
-	PRINT @19
+	LOG @19
 
 	// Patch START_OPTIONS
-	PRINT @100
+	LOG @100
 	SILENT
 
 	OUTER_SPRINT $UIMenuIF("MenuName") ~START_OPTIONS~
@@ -289,7 +289,7 @@ BEGIN
 	END
 
 	// Patch ESC_MENU
-	PRINT @104
+	LOG @104
 	SILENT
 
 	OUTER_SPRINT $UIMenuIF("MenuName") ~ESC_MENU~
@@ -313,7 +313,7 @@ BEGIN
 	END
 
 	// Patch OptionsButtons assignment
-	PRINT @100003
+	LOG @100003
 	SILENT
 
 	OUTER_SPRINT $UIMenuIF("LuaRegex") ~OptionsButtons%MWHITE%=%MWHITE%{~
@@ -338,7 +338,7 @@ BEGIN
 	END
 
  	// Add Mods Options menus
- 	PRINT @100001
+ 	LOG @100001
 	SILENT
 
 	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/ModsOptions/modoptions1.menu~
@@ -548,10 +548,10 @@ END
 //	
 DEFINE_ACTION_MACRO ModOptions.BG2onSoDSpecific
 BEGIN
-	PRINT @16 // Installing BG2onSoD
+	LOG @16 // Installing BG2onSoD
 	
 	// Copy specific override files
-	PRINT @17
+	LOG @17
 	SILENT
 	COPY ~%PKGNAME%/copy/ModsOptions/MODOPSOD.BAM~ ~override~
 	COPY ~%PKGNAME%/copy/ModsOptions/MOS5024.PVRZ~ ~override~
@@ -559,7 +559,7 @@ BEGIN
 	COPY ~%PKGNAME%/copy/ModsOptions/MOS5019.PVRZ~ ~override~
 	
 	// Patch START_OPTIONS
-	PRINT @100
+	LOG @100
 	SILENT
 	OUTER_SPRINT $UIMenuIF("MenuName") ~START_OPTIONS~
 	OUTER_SPRINT $UIMenuIF("Body") ~~
@@ -582,7 +582,7 @@ BEGIN
 	END
 
 	// Patch ESC_MENU
-	PRINT @104
+	LOG @104
 	SILENT
 	OUTER_SPRINT $UIMenuIF("MenuName") ~ESC_MENU~
 	OUTER_SPRINT $UIMenuIF("Body") ~~
@@ -617,7 +617,7 @@ BEGIN
 	END
 
  	// Add Mods Options menus
- 	PRINT @100001
+ 	LOG @100001
 	SILENT
 
 	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/ModsOptions/modoptions2.menu~
@@ -781,10 +781,10 @@ END
 DEFINE_ACTION_MACRO ModOptions.SoDOverhaulSpecific
 BEGIN
 	// Installing Dragonspear UI++
-	PRINT @18
+	LOG @18
 
 	// Patch OPTIONS_GAMEPLAY
-	PRINT @107
+	LOG @107
 	SILENT
 
 	OUTER_SPRINT $UIMenuIF("MenuName") ~OPTIONS_GAMEPLAY~
@@ -808,7 +808,7 @@ BEGIN
 	END
 
 	// Patch START_OPTIONS
-	PRINT @100
+	LOG @100
 	SILENT
 
 	OUTER_SPRINT $UIMenuIF("MenuName") ~START_OPTIONS~
@@ -832,7 +832,7 @@ BEGIN
 	END
 
 	// Patch ESC_MENU
-	PRINT @104
+	LOG @104
 	SILENT
 
 	OUTER_SPRINT $UIMenuIF("MenuName") ~ESC_MENU~
@@ -856,7 +856,7 @@ BEGIN
 	END
 
  	// Add Mods Options menus and registration code for UI SETTINGS
- 	PRINT @100001
+ 	LOG @100001
 	SILENT
 
 	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/ModsOptions/modoptions1.menu~
@@ -983,16 +983,16 @@ END
 //	
 DEFINE_ACTION_MACRO ModOptions.BGEESpecific
 BEGIN
-	PRINT @14 // Installing BGEE
+	LOG @14 // Installing BGEE
 	
 	// Copy specific override files
-	PRINT @17
+	LOG @17
 	SILENT
 	COPY ~%PKGNAME%/copy/ModsOptions/MODOPSOD.BAM~ ~override~
 	COPY ~%PKGNAME%/copy/ModsOptions/MOS5024.PVRZ~ ~override~
 
 	// Patch START_OPTIONS
-	PRINT @100
+	LOG @100
 	SILENT
 	OUTER_SPRINT $UIMenuIF("MenuName") ~START_OPTIONS~
 	OUTER_SPRINT $UIMenuIF("Body") ~~
@@ -1015,7 +1015,7 @@ BEGIN
 	END
 
 	// Patch ESC_MENU
-	PRINT @104
+	LOG @104
 	SILENT
 	OUTER_SPRINT $UIMenuIF("MenuName") ~ESC_MENU~
 	OUTER_SPRINT $UIMenuIF("Body") ~~
@@ -1050,7 +1050,7 @@ BEGIN
 	END
 
   	// Add Mods Options menus
- 	PRINT @100001
+ 	LOG @100001
 	SILENT
 
 	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/ModsOptions/modoptions4.menu~
@@ -1260,16 +1260,16 @@ END
 //	
 DEFINE_ACTION_MACRO ModOptions.BG2TOBSpecific
 BEGIN	
-	PRINT @28 // Installing BG2EE
+	LOG @28 // Installing BG2EE
 	
 	// Copy specific override files
-	PRINT @17
+	LOG @17
 	SILENT
 	COPY ~%PKGNAME%/copy/ModsOptions/modoimg1.BAM~ ~override~
 	COPY ~%PKGNAME%/copy/ModsOptions/MOS5020.PVRZ~ ~override~
 
 	// Patch START_OPTIONS menu
-	PRINT @100
+	LOG @100
 	SILENT
 
 	OUTER_SPRINT $UIMenuIF("MenuName") ~START_OPTIONS~
@@ -1293,7 +1293,7 @@ BEGIN
 	END
 
 	// Patch ESC_MENU
-	PRINT @104
+	LOG @104
 	SILENT
 
 	OUTER_SPRINT $UIMenuIF("MenuName") ~ESC_MENU~
@@ -1329,7 +1329,7 @@ BEGIN
 	END
 
 	// Add ModsOptions menus
-	PRINT @100001
+	LOG @100001
 	SILENT
 	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/ModsOptions/modoptions3.menu~
 	LAUNCH_ACTION_MACRO UIMenuAppendFile
@@ -1350,16 +1350,16 @@ END
 //	
 DEFINE_ACTION_MACRO ModOptions.BG2EETSpecific
 BEGIN	
-	PRINT @31 // Installing BG2EE
+	LOG @31 // Installing BG2EE
 	
 	// Copy specific override files
-	PRINT @17
+	LOG @17
 	SILENT
 	COPY ~%PKGNAME%/copy/ModsOptions/modoimg2.BAM~ ~override~
 	COPY ~%PKGNAME%/copy/ModsOptions/MOS5021.PVRZ~ ~override~
 
 	// Patch START_OPTIONS menu
-	PRINT @100
+	LOG @100
 	SILENT
 
 	OUTER_SPRINT $UIMenuIF("MenuName") ~START_OPTIONS~
@@ -1383,7 +1383,7 @@ BEGIN
 	END
 
 	// Patch ESC_MENU
-	PRINT @104
+	LOG @104
 	SILENT
 
 	OUTER_SPRINT $UIMenuIF("MenuName") ~ESC_MENU~
@@ -1419,7 +1419,7 @@ BEGIN
 	END
 
 	// Add ModsOptions menus
-	PRINT @100001
+	LOG @100001
 	SILENT
 
 	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/ModsOptions/modoptions6.menu~
@@ -1441,16 +1441,16 @@ END
 //	
 DEFINE_ACTION_MACRO ModOptions.LeUIBG2Specific
 BEGIN	
-	PRINT @34 // Installing LeUI BG2EE
+	LOG @34 // Installing LeUI BG2EE
 	
 	// Copy specific override files
-	PRINT @17
+	LOG @17
 	SILENT
 	COPY ~%PKGNAME%/copy/ModsOptions/modoimg1.BAM~ ~override~
 	COPY ~%PKGNAME%/copy/ModsOptions/MOS5020.PVRZ~ ~override~
 
 	// Patch START_OPTIONS menu
-	PRINT @100
+	LOG @100
 	SILENT
 
 	OUTER_SPRINT $UIMenuIF("MenuName") ~START_OPTIONS~
@@ -1474,7 +1474,7 @@ BEGIN
 	END
 
 	// Patch ESC_MENU
-	PRINT @104
+	LOG @104
 	SILENT
 
 	OUTER_SPRINT $UIMenuIF("MenuName") ~ESC_MENU~
@@ -1504,7 +1504,7 @@ BEGIN
 	END
 
 	// Add ModsOptions menus
-	PRINT @100001
+	LOG @100001
 	SILENT
 
 	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/ModsOptions/modoptions5.menu~
@@ -1526,10 +1526,10 @@ END
 //	
 DEFINE_ACTION_MACRO ModOptions.LeUISODSpecific
 BEGIN	
-	PRINT @35 // Installing LeUI SoD
+	LOG @35 // Installing LeUI SoD
 	
 	// Copy specific override files
-	PRINT @17
+	LOG @17
 	SILENT
 	COPY ~%PKGNAME%/copy/ModsOptions/MODOPSOD.BAM~ ~override~
 	COPY ~%PKGNAME%/copy/ModsOptions/MOS5024.PVRZ~ ~override~
@@ -1537,7 +1537,7 @@ BEGIN
 	COPY ~%PKGNAME%/copy/ModsOptions/MOS5019.PVRZ~ ~override~
 
 	// Patch START_OPTIONS menu
-	PRINT @100
+	LOG @100
 	SILENT
 
 	OUTER_SPRINT $UIMenuIF("MenuName") ~START_OPTIONS~
@@ -1561,7 +1561,7 @@ BEGIN
 	END
 
 	// Patch ESC_MENU
-	PRINT @104
+	LOG @104
 	SILENT
 
 	OUTER_SPRINT $UIMenuIF("MenuName") ~ESC_MENU~
@@ -1591,7 +1591,7 @@ BEGIN
 	END
 
 	// Add ModsOptions menus
-	PRINT @100001
+	LOG @100001
 	SILENT
 
 	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/ModsOptions/modoptions7.menu~
@@ -1613,10 +1613,10 @@ END
 //	
 DEFINE_ACTION_MACRO ModOptions.LeUIBG1Specific
 BEGIN	
-	PRINT @36 // Installing LeUI BG1EE
+	LOG @36 // Installing LeUI BG1EE
 	
 	// Copy specific override files
-	PRINT @17
+	LOG @17
 	SILENT
 	COPY ~%PKGNAME%/copy/ModsOptions/MODOPSOD.BAM~ ~override~
 	COPY ~%PKGNAME%/copy/ModsOptions/MOS5024.PVRZ~ ~override~
@@ -1624,7 +1624,7 @@ BEGIN
 	COPY ~%PKGNAME%/copy/ModsOptions/MOS5019.PVRZ~ ~override~
 
 	// Patch START_OPTIONS menu
-	PRINT @100
+	LOG @100
 	SILENT
 
 	OUTER_SPRINT $UIMenuIF("MenuName") ~START_OPTIONS~
@@ -1648,7 +1648,7 @@ BEGIN
 	END
 
 	// Patch ESC_MENU
-	PRINT @104
+	LOG @104
 	SILENT
 
 	OUTER_SPRINT $UIMenuIF("MenuName") ~ESC_MENU~
@@ -1678,7 +1678,7 @@ BEGIN
 	END
 
 	// Add ModsOptions menus
-	PRINT @100001
+	LOG @100001
 	SILENT
 
 	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/ModsOptions/modoptions7.menu~
@@ -1700,16 +1700,16 @@ END
 //	
 DEFINE_ACTION_MACRO ModOptions.EETLeUISpecific
 BEGIN	
-	PRINT @37 // Installing LeUI EET
+	LOG @37 // Installing LeUI EET
 	
 	// Copy specific override files
-	PRINT @17
+	LOG @17
 	SILENT
 	COPY ~%PKGNAME%/copy/ModsOptions/modoimg2.BAM~ ~override~
 	COPY ~%PKGNAME%/copy/ModsOptions/MOS5021.PVRZ~ ~override~
 
 	// Patch START_OPTIONS menu
-	PRINT @100
+	LOG @100
 	SILENT
 
 	OUTER_SPRINT $UIMenuIF("MenuName") ~START_OPTIONS~
@@ -1733,7 +1733,7 @@ BEGIN
 	END
 
 	// Patch ESC_MENU
-	PRINT @104
+	LOG @104
 	SILENT
 
 	OUTER_SPRINT $UIMenuIF("MenuName") ~ESC_MENU~
@@ -1763,7 +1763,7 @@ BEGIN
 	END
 
 	// Add ModsOptions menus
-	PRINT @100001
+	LOG @100001
 	SILENT
 
 	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/ModsOptions/modoptions6.menu~
@@ -1835,10 +1835,10 @@ END
 DEFINE_ACTION_MACRO ModOptions.KRDSSpecific
 BEGIN
 	// SoD configuration
-	PRINT @38
+	LOG @38
 
 	// Patch START_OPTIONS
-	PRINT @100
+	LOG @100
 	SILENT
 
 	OUTER_SPRINT $UIMenuIF("MenuName") ~START_OPTIONS~
@@ -1867,7 +1867,7 @@ BEGIN
 	END
 
 	// Patch ESC_MENU
-	PRINT @104
+	LOG @104
 	SILENT
 
 	OUTER_SPRINT $UIMenuIF("MenuName") ~ESC_MENU~
@@ -1891,7 +1891,7 @@ BEGIN
 	END
 
 	// Patch OptionsButtons assignment
-	PRINT @100003
+	LOG @100003
 	SILENT
 
 	OUTER_SPRINT $UIMenuIF("LuaRegex") ~OptionsButtons%MWHITE%=%MWHITE%{~
@@ -1914,7 +1914,7 @@ BEGIN
 	END
 
  	// Add Mods Options menus
- 	PRINT @100001
+ 	LOG @100001
 	SILENT
 
 	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/ModsOptions/modoptions1.menu~
@@ -2036,16 +2036,16 @@ END
 //	
 DEFINE_ACTION_MACRO ModOptions.TIWDonBG2Specific
 BEGIN	
-	PRINT @40 // Installing trinit's IWD GUI
+	LOG @40 // Installing trinit's IWD GUI
 	
 	// Copy specific override files
-	PRINT @17
+	LOG @17
 	SILENT
 	COPY ~%PKGNAME%/copy/ModsOptions/modoimg1.BAM~ ~override~
 	COPY ~%PKGNAME%/copy/ModsOptions/MOS5020.PVRZ~ ~override~
 
 	// Patch START_OPTIONS menu
-	PRINT @100
+	LOG @100
 	SILENT
 
 	OUTER_SPRINT $UIMenuIF("MenuName") ~START_OPTIONS~
@@ -2069,7 +2069,7 @@ BEGIN
 	END
 
 	// Patch ESC_MENU
-	PRINT @104
+	LOG @104
 	SILENT
 
 	OUTER_SPRINT $UIMenuIF("MenuName") ~ESC_MENU~
@@ -2105,7 +2105,7 @@ BEGIN
 	END
 
 	// Add ModsOptions menus
-	PRINT @100001
+	LOG @100001
 	SILENT
 	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/ModsOptions/modoptions8.menu~
 	LAUNCH_ACTION_MACRO UIMenuAppendFile
@@ -2226,16 +2226,16 @@ END
 //	
 DEFINE_ACTION_MACRO ModOptions.TIWD2onBG2Specific
 BEGIN	
-	PRINT @41 // Installing trinit's IWD2 GUI
+	LOG @41 // Installing trinit's IWD2 GUI
 	
 	// Copy specific override files
-	PRINT @17
+	LOG @17
 	SILENT
 	COPY ~%PKGNAME%/copy/ModsOptions/modoimg1.BAM~ ~override~
 	COPY ~%PKGNAME%/copy/ModsOptions/MOS5020.PVRZ~ ~override~
 
 	// Patch START_OPTIONS menu
-	PRINT @100
+	LOG @100
 	SILENT
 
 	OUTER_SPRINT $UIMenuIF("MenuName") ~START_OPTIONS~
@@ -2259,7 +2259,7 @@ BEGIN
 	END
 
 	// Patch ESC_MENU
-	PRINT @104
+	LOG @104
 	SILENT
 
 	OUTER_SPRINT $UIMenuIF("MenuName") ~ESC_MENU~
@@ -2295,7 +2295,7 @@ BEGIN
 	END
 
 	// Add ModsOptions menus
-	PRINT @100001
+	LOG @100001
 	SILENT
 	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/ModsOptions/modoptions9.menu~
 	LAUNCH_ACTION_MACRO UIMenuAppendFile
@@ -2310,7 +2310,7 @@ END
  * Mods Options Installation
  ******************************************************************************/
 // Open UI.MENU abstraction
-PRINT @12
+LOG @12
 SILENT
 LAUNCH_ACTION_MACRO UIMenuOpen
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
@@ -2319,7 +2319,7 @@ BEGIN
 END
 
 // Copy common override files
-PRINT @24
+LOG @24
 SILENT
 COPY ~%PKGNAME%/copy/ModsOptions/M_ModsOp.lua~ ~override~
 COPY ~%PKGNAME%/copy/ModsOptions/en_ModOp.lua~ ~override~
@@ -2397,7 +2397,7 @@ WITH
 END
 
 // All done - close up
-PRINT @13
+LOG @13
 SILENT
 LAUNCH_ACTION_MACRO UIMenuClose
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN

@@ -99,7 +99,7 @@ END
  * Transparent Sidebars Installation
  ******************************************************************************/
 // Open UI.MENU
-PRINT @12
+LOG @12
 SILENT
 LAUNCH_ACTION_MACRO UIMenuOpen
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
@@ -108,7 +108,7 @@ BEGIN
 END
 
 // Patch LEFT_SIDEBAR
-PRINT @113
+LOG @113
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~LEFT_SIDEBAR~
 OUTER_SPRINT $UIMenuIF("Body") ~~
@@ -129,7 +129,7 @@ BEGIN
 END
 
 // Patch RIGHT_SIDEBAR
-PRINT @116
+LOG @116
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~RIGHT_SIDEBAR~
 OUTER_SPRINT $UIMenuIF("Body") ~~
@@ -150,7 +150,7 @@ BEGIN
 END
 	
 // Close UI.MENU
-PRINT @13
+LOG @13
 SILENT
 LAUNCH_ACTION_MACRO UIMenuClose
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN

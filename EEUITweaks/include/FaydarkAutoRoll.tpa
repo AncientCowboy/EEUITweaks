@@ -101,7 +101,7 @@ END
  * Faydark's Abilities Auto-Roller Installation
  ******************************************************************************/
 // Open UI.MENU
-PRINT @12
+LOG @12
 SILENT
 LAUNCH_ACTION_MACRO UIMenuOpen
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
@@ -110,7 +110,7 @@ BEGIN
 END
 
 // Patch CHARGEN_RACE menu
-PRINT @161
+LOG @161
 SILENT
 
 OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_RACE~
@@ -134,7 +134,7 @@ BEGIN
 END
 
 // Patch CHARGEN_CLASS menu
-PRINT @164
+LOG @164
 SILENT
 
 OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_CLASS~
@@ -158,7 +158,7 @@ BEGIN
 END
 
 // Replace CHARGEN_ABILITIES menu
-PRINT @107001
+LOG @107001
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_ABILITIES~
 
@@ -192,7 +192,7 @@ BEGIN
 END
 
 // Close up
-PRINT @13
+LOG @13
 SILENT
 LAUNCH_ACTION_MACRO UIMenuClose
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
@@ -201,7 +201,7 @@ BEGIN
 END
 
 // Copying ui specific files
-PRINT @17
+LOG @17
 SILENT
 ACTION_MATCH 1
 WITH

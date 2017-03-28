@@ -70,8 +70,10 @@ menu
 		"
 			if ticksStarting < 10 then
 				if cellNumber == 3 then
+					Infinity_PlaySound('GAM_09')
 					createCharScreen:OnAbilityPlusMinusButtonClick(currentChargenAbility, false)
 				elseif cellNumber == 4 then
+					Infinity_PlaySound('GAM_09')
 					createCharScreen:OnAbilityPlusMinusButtonClick(currentChargenAbility, true)
 				end
 			end

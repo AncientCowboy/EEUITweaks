@@ -2,7 +2,7 @@
  * BillyYank's Multi-Portrait Installation
  ******************************************************************************/
 // Open UI.MENU
-PRINT @12
+LOG @12
 SILENT
 LAUNCH_ACTION_MACRO UIMenuOpen
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
@@ -11,7 +11,7 @@ BEGIN
 END
 
 // Patch CHARGEN_PORTRAIT menu
-PRINT @158
+LOG @158
 SILENT
 
 OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_PORTRAIT~
@@ -19,77 +19,77 @@ ACTION_MATCH 1
 WITH
 	%IsSoD%
 	BEGIN
-		PRINT @19
+		LOG @19
 		SILENT
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/BillyYankMultiPort/chargenportSOD.menu~
 	END
 
 	%IsEETSoD%
 	BEGIN
-		PRINT @32
+		LOG @32
 		SILENT
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/BillyYankMultiPort/chargenportSOD.menu~
 	END
 
 	%IsKRDS%
 	BEGIN
-		PRINT @38
+		LOG @38
 		SILENT
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/BillyYankMultiPort/chargenportSOD.menu~
 	END
 
 	%IsBG2onSoD%
 	BEGIN
-		PRINT @16
+		LOG @16
 		SILENT
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/BillyYankMultiPort/chargenportBG2.menu~
 	END
 
 	%IsBG2%
 	BEGIN
-		PRINT @28
+		LOG @28
 		SILENT
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/BillyYankMultiPort/chargenportBG2.menu~
 	END
 
 	%IsEETBG2%
 	BEGIN
-		PRINT @31
+		LOG @31
 		SILENT
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/BillyYankMultiPort/chargenportBG2.menu~
 	END
 
 	%IsLeUIBG2%
 	BEGIN
-		PRINT @34
+		LOG @34
 		SILENT
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/BillyYankMultiPort/chargenportBG2.menu~
 	END
 
 	%IsLeUISOD%
 	BEGIN
-		PRINT @35
+		LOG @35
 		SILENT
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/BillyYankMultiPort/chargenportBG2.menu~
 	END
 
 	%IsLeUIBG1%
 	BEGIN
-		PRINT @36
+		LOG @36
 		SILENT
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/BillyYankMultiPort/chargenportBG2.menu~
 	END
 
 	%IsEETLeUI%
 	BEGIN
-		PRINT @37
+		LOG @37
 		SILENT
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/BillyYankMultiPort/chargenportBG2.menu~
 	END
 
 	%IsBGEE% 
 	BEGIN
-		PRINT @14
+		LOG @14
 		SILENT
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/BillyYankMultiPort/chargenportBGEE.menu~
 	END
@@ -106,7 +106,7 @@ END
 
 ACTION_IF %IsLeUIBG2% OR %IsLeUISOD% OR %IsLeUIBG1% OR %IsEETLeUI% THEN
 BEGIN
-	PRINT @103001
+	LOG @103001
 	SILENT
 	OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_GENDER~
 	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/BillyYankMultiPort/genderLeUI1.menu~
@@ -119,7 +119,7 @@ END
 
 
 // Close up
-PRINT @13
+LOG @13
 SILENT
 LAUNCH_ACTION_MACRO UIMenuClose
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
@@ -128,7 +128,7 @@ BEGIN
 END
 
 // Copying ui specific files
-PRINT @17
+LOG @17
 SILENT
 ACTION_MATCH 1
 WITH

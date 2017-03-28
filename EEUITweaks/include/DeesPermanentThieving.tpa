@@ -107,13 +107,13 @@ END
  * Dee's Permanent Thieving Button Installation
  ******************************************************************************/	
 // Copy common files
-PRINT @24
+LOG @24
 SILENT
 COPY ~%PKGNAME%/copy/DeePermanentThieving/DIMSTEAL.BAM~ ~override~
 COPY ~%PKGNAME%/copy/DeePermanentThieving/MOS5058.PVRZ~ ~override~
 
 // Open UI.MENU
-PRINT @12
+LOG @12
 SILENT
 LAUNCH_ACTION_MACRO UIMenuOpen
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
@@ -122,7 +122,7 @@ BEGIN
 END
 
 // Patch WORLD_ACTIONBAR
-PRINT @119
+LOG @119
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~WORLD_ACTIONBAR~
 
@@ -313,7 +313,7 @@ BEGIN
 END // Not IsKRDS
 
 // Close UI.MENU
-PRINT @13
+LOG @13
 SILENT
 LAUNCH_ACTION_MACRO UIMenuClose
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
@@ -392,11 +392,6 @@ WITH
 	END
 	%IsKRDS%
 	BEGIN
-//		ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2010~ THEN
-//		BEGIN
-//			COPY ~%PKGNAME%/copy/CommonActionBars/KDS/ABKDSL.MOS~ ~override/GUWBTP10.MOS~
-//			COPY ~%PKGNAME%/copy/CommonActionBars/KDS/MOS5053.PVRZ~ ~override~
-//		END
 	END
 
 	DEFAULT

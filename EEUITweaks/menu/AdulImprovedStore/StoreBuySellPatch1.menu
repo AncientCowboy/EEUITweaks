@@ -28,11 +28,8 @@
 			if not storeScreen:IsCloseBagButtonClickable() or store.storeItems[storeItemsVar].valid == 1 then
 				local maxCount = store.storeItems[storeItemsVar].maxCount
 				if(maxCount > 1) then
-					if not storeScreen:IsContainer() then
-						popupRequester(maxCount, storeSplitStack, false)
-					else
-						popupRequester(maxCount, storeSplitStack, true)
-					end
+					popupRequester(maxCount, storeSplitStack, false)
+					storeScreen:SelectStoreItem(storeItemsVar - 1, false)
 				end
 			end
 		"

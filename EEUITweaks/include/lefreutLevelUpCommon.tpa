@@ -62,7 +62,7 @@ BEGIN
 	LOCAL_SPRINT savedfspec $UIMenuIF("Filespec")
 
 	// Open UI.MENU
-	PRINT @12
+	LOG @12
 	SILENT
 	LAUNCH_ACTION_MACRO UIMenuOpen
 	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
@@ -71,7 +71,7 @@ BEGIN
 	END
 
 	// Replace WORLD_LEVEL_UP_BUTTONS menu
-	PRINT @204404
+	LOG @204404
 	SILENT
 
 	OUTER_SPRINT $UIMenuIF("MenuName") ~WORLD_LEVEL_UP_BUTTONS~
@@ -83,7 +83,7 @@ BEGIN
 	END
 
 	// Patch updateAttrTable function
-	PRINT @204401
+	LOG @204401
 	SILENT
 
 	OUTER_SPRINT $UIMenuIF("LuaRegex") ~function updateAttrTable()~
@@ -107,7 +107,7 @@ BEGIN
 	END
 
 	// All done - close up
-	PRINT @13
+	LOG @13
 	SILENT
 	LAUNCH_ACTION_MACRO UIMenuClose
 	ACTION_IF NOT $UIMenuIF("Succeeded") THEN

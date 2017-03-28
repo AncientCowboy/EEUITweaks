@@ -89,8 +89,10 @@ menu
 		action
 		"
 			if cellNumber == 3 and chargenHLAPlusMinusFrame(3, currentHLASelection) ~= 3 then
+				Infinity_PlaySound('GAM_09')
 				createCharScreen:OnHLAButtonClick(currentHLASelection, -1)
 			elseif cellNumber == 4 and chargenHLAPlusMinusFrame(4, currentHLASelection) ~= 3 then
+				Infinity_PlaySound('GAM_09')
 				createCharScreen:OnHLAButtonClick(currentHLASelection, 1)
 			end
 			cellNumber = nil

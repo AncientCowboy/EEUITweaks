@@ -25,7 +25,7 @@ ALWAYS
 	END
 END
 
-VERSION ~2.2~
+VERSION ~2.3~
 
 LANGUAGE 
 	~English~ ~EEUITweaks/languages/english~ ~EEUITweaks/languages/english/setup.tra~
@@ -142,7 +142,7 @@ SUBCOMPONENT @510
 INCLUDE ~%PKGNAME%/include/BillyYankMultiPort.tpa~
 
 /******************************************************************************
- * Mr2150's Portrait Picker
+ * Mr2150's Portrait Picker - Scale UI
  *****************************************************************************/
 BEGIN @104000 DESIGNATED 1040
 GROUP @1
@@ -153,6 +153,32 @@ SUBCOMPONENT @510
 	(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)
 ) // Common limitations + not simple BGEE
 
+OUTER_SET mrportraitpickscaleui = 2
+INCLUDE ~%PKGNAME%/include/Mr2150PortraitPick.tpa~
+
+/******************************************************************************
+ * Mr2150's Portrait Picker - No Scale UI
+ *****************************************************************************/
+BEGIN @104100 DESIGNATED 1041
+GROUP @1
+SUBCOMPONENT @510
+( 
+	(
+		(GAME_IS ~eet~) AND
+		(MOD_IS_INSTALLED ~setup-EET_gui.tp2~ ~0~)
+	) OR
+	(
+		(GAME_IS ~bgee~) AND 
+		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND
+		(NOT(FILE_EXISTS ~override/ULGOTHST.MOS~)) AND 
+		(NOT(FILE_EXISTS ~override/M_CKUI.LUA~)) AND 
+		(NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~)) AND
+		(FILE_EXISTS_IN_GAME ~BD0010.ARE~) AND
+		(NOT(FILE_EXISTS ~override/guiweidufile.png~))
+	)
+) // SoD/IsEETSoD Only
+
+OUTER_SET mrportraitpickscaleui = 1
 INCLUDE ~%PKGNAME%/include/Mr2150PortraitPick.tpa~
 
 /******************************************************************************
@@ -191,7 +217,11 @@ INCLUDE ~%PKGNAME%/include/lefreutPortraitPicker.tpa~
  *****************************************************************************/
 BEGIN @104200 DESIGNATED 1042
 GROUP @1
-REQUIRE_COMPONENT ~EEUITweaks.tp2~ ~1040~ @29
+REQUIRE_PREDICATE 
+(
+	(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1040~) OR
+	(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1041~)
+) @29
 REQUIRE_PREDICATE FILE_EXISTS ~override/M_BG.lua~ @104201 
 
 COPY_EXISTING + ~M_BG.lua~ ~override/backup-M_BG~
@@ -201,7 +231,11 @@ COPY_EXISTING + ~M_BG.lua~ ~override/backup-M_BG~
  *****************************************************************************/
 BEGIN @104400 DESIGNATED 1044
 GROUP @1
-REQUIRE_COMPONENT ~EEUITweaks.tp2~ ~1040~ @29
+REQUIRE_PREDICATE 
+(
+	(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1040~) OR
+	(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1041~)
+) @29
 
 INCLUDE ~%PKGNAME%/include/Mr2150UpdateM_BG.tpa~
 
@@ -267,7 +301,7 @@ REQUIRE_PREDICATE (
 		(FILE_EXISTS_IN_GAME ~BD0010.ARE~) AND
 		(NOT(FILE_EXISTS ~override/guiweidufile.png~))
 	)
-) @27 // SoD/IsEETSoD Only
+) @27 // SoD/IsEETSoD/KRDS Only
 FORBID_COMPONENT ~EEUITweaks.tp2~ ~1020~ @106001 // Mr2150's Random PC Generator
 FORBID_COMPONENT ~EEUITweaks.tp2~ ~1070~ @106002 // Faydark's Abilities Auto-Roller
 
@@ -460,6 +494,17 @@ REQUIRE_PREDICATE (
 
 INCLUDE ~%PKGNAME%/include/DeesPermanentThieving.tpa~
 
+/******************************************************************************
+ * elminster's Easier Area Cheats
+ *****************************************************************************/
+BEGIN @208000 DESIGNATED 2080
+GROUP @2
+REQUIRE_PREDICATE (
+	(GAME_IS ~bgee~)
+) @27
+
+INCLUDE ~%PKGNAME%/include/elminsterAreaCheats.tpa~
+
 
 ///////////////////////////////////////////////////////////////////////////////
 // Record/Inventory/Journal Group
@@ -564,6 +609,30 @@ SUBCOMPONENT @540
 INCLUDE ~%PKGNAME%/include/lefreutJournal.tpa~
 
 /******************************************************************************
+ * lefreut's Simple Journal Fixes
+ *****************************************************************************/
+BEGIN @307000 DESIGNATED 3070
+GROUP @3
+REQUIRE_PREDICATE (
+	(
+		(GAME_IS ~eet~) AND
+		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~))		
+	) OR
+	(
+		(GAME_IS ~bg2ee~) AND
+		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~))		
+	) OR 
+	(
+		(GAME_IS ~bgee~) AND 
+		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~))
+	)
+) @27 // No LeUI
+
+FORBID_COMPONENT ~EEUITweaks.tp2~ ~3023~ @307005 // lefreut's Journal
+INCLUDE ~%PKGNAME%/include/lefreutSimpleJournalFixes.tpa~
+
+
+/******************************************************************************
  * lefreut's Customize Screens Tweaks
  *****************************************************************************/
 BEGIN @302800 DESIGNATED 3028
@@ -601,7 +670,7 @@ REQUIRE_PREDICATE (
 	(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~))	
 ) @27 // Not LeUI
 
-FORBID_COMPONENT ~EEUITweaks.tp2~ ~3028~ @303001
+FORBID_COMPONENT ~EEUITweaks.tp2~ ~3028~ @303001 // lefreut's Customize Screens Tweaks
 
 INCLUDE ~%PKGNAME%/include/lefreutCustomAll.tpa~
 
@@ -758,7 +827,7 @@ FORBID_COMPONENT ~EEUITweaks.tp2~ ~4005~ @401004 // Redundant lefreut's BG2 Stor
 INCLUDE ~%PKGNAME%/include/lefreutStealMulti.tpa~
 
 /******************************************************************************
- * Adul's Improved Store Useability
+ * Adul's Smooth Selling previously Improved Store Useability
  *****************************************************************************/
 BEGIN @402000 DESIGNATED 4020
 GROUP @4
@@ -787,27 +856,82 @@ INCLUDE ~%PKGNAME%/include/AdulImprovedStore.tpa~
 BEGIN @403000 DESIGNATED 4030
 GROUP @4
 REQUIRE_PREDICATE (
+	// Predicate that all elements of the subgroup must meet 
+	// This prevents showing the subcomponent group with no selectable options
+	// when none of the subgroup elements can be installed
+	(
+		(GAME_IS ~bgee~) AND
+			// Not IWD UI
+		(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND
+			// Not DragonSpear UI++
+		(NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~))
+	) OR 
 	(
 		(GAME_IS ~bg2ee~) AND
-		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND
+			// Not IWD UI
 		(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND
+			// Not IWD2 UI
 		(NOT(FILE_EXISTS ~override/guiiwd2dummy.png~))
 	) OR 
 	(
-		(GAME_IS ~eet~) AND
-		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND
-		(NOT(MOD_IS_INSTALLED ~setup-EET_gui.tp2~ ~0~))
-
-	) OR
+		(GAME_IS ~eet~)
+	) 
+) @39 // 'None of the possible options of this group are supported for your game configuration'
+SUBCOMPONENT @550
+(
+	// Subcomponent specific predicate - Common further limited to 
+	// either BG2 or BG2onSoD or EETBG2
 	(
 		(GAME_IS ~bgee~) AND 
+		(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND
+		(NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~)) AND
+		// Disable LeUI
 		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND
+		// With Disabled LeUI, enables BG2onSoD 
 		(FILE_EXISTS ~override/ULGOTHST.MOS~)
+	) OR
+	(
+		(GAME_IS ~bg2ee~) AND
+		(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND
+		(NOT(FILE_EXISTS ~override/guiiwd2dummy.png~)) AND
+		// Disable LeUI
+		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~))
+	) OR 
+	(
+		(GAME_IS ~eet~) AND
+		// Disable LeUI
+		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND
+		// Disable EET SoD UI
+		(NOT(MOD_IS_INSTALLED ~setup-EET_gui.tp2~ ~0~))
 	)
-) @27 // Either BG2 or BG2onSoD or EETBG2
+)
 
 INCLUDE ~%PKGNAME%/include/lefreutInscribedArcana.tpa~
 
+/******************************************************************************
+ * Kilivitz's Classic Spellbooks
+ *****************************************************************************/
+BEGIN @404000 DESIGNATED 4040
+GROUP @4
+SUBCOMPONENT @550
+(
+	// Subcomponent specific predicate - Same as common predicate
+	(
+		(GAME_IS ~bgee~) AND 
+		(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND
+		(NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~))
+	) OR
+	(
+		(GAME_IS ~bg2ee~) AND
+		(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND
+		(NOT(FILE_EXISTS ~override/guiiwd2dummy.png~))
+	) OR
+	(
+		(GAME_IS ~eet~)
+	)
+)
+
+INCLUDE ~%PKGNAME%/include/KilivitzClassicSpellbooks.tpa~
 
 ///////////////////////////////////////////////////////////////////////////////
 // Multiplayer/General/Other Group
@@ -834,7 +958,7 @@ REQUIRE_PREDICATE (
 	)
 ) @27 // Neither Dragonspear UI++ nor LeUI
 
-PRINT @24
+LOG @24
 SILENT
 COPY ~%PKGNAME%/copy/lefreutTooltip~ ~override~
 
@@ -856,7 +980,7 @@ REQUIRE_PREDICATE (
 	(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~))
 ) @27 // Not LeUI
 
-PRINT @24
+LOG @24
 SILENT
 COPY ~%PKGNAME%/copy/lefreutBG2ScrollBar~ ~override~
 
@@ -887,7 +1011,7 @@ REQUIRE_PREDICATE (
 ) @27 // Either BG2 or BG2onSoD or EETBG2
 
 
-PRINT @24
+LOG @24
 SILENT
 COPY ~%PKGNAME%/copy/lefreutImprovedFonts/M_BG2STYLES.lua~ ~override/M_STYLES.lua~
 

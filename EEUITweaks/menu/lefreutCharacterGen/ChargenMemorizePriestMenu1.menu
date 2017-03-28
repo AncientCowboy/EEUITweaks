@@ -78,8 +78,10 @@ menu
 		action
 		"
 			if cellNumber == 3 then
+				Infinity_PlaySound('GAM_09')
 				createCharScreen:OnMemorizePriestSpellButtonClick(currentChargenMemorizePriestSpell, -1)
 			elseif cellNumber == 4 then
+				Infinity_PlaySound('GAM_09')
 				createCharScreen:OnMemorizePriestSpellButtonClick(currentChargenMemorizePriestSpell, 1)
 			end
 			cellNumber = nil

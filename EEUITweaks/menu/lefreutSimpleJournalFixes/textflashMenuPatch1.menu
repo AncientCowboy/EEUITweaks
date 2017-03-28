@@ -1,0 +1,11 @@
+	text
+	{
+		area 92 36 348 26
+		text lua "getSubtitleString()"
+		text style "label"
+		text align left top
+		text point 14
+		text color D
+		scrollbar 'GUISCRC'
+		scrollbar hide lua "1"
+	}

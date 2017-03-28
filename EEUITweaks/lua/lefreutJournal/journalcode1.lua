@@ -81,11 +81,12 @@ end
 function setSelectedQuest(id)
 	--set to the correct state
 	local quest = quests[entryToQuest[id]]
+	journalMode = 2
 	if(not quest) then return end
+	journalMode = 0
 	for k,objective in pairs(quest.objectives) do
 		for k2,entry in pairs(objective.entries) do
 			if(entry.id == id) then
-				journalMode = 0
 				if entry.stateType == const.ENTRY_TYPE_COMPLETE then
 					journalMode = 1
 				end
@@ -117,7 +118,7 @@ function updateJournalEntry(journalId, recvTime, stateType, chapter, timeStamp)
 	--NOTE this can be placed in a loop if there needs to be more than quest to an entry
 	--this would just mean entryToQuest returns a table that we iterate over
 	local questId = entryToQuest[journalId]
-	if stateType == const.ENTRY_TYPE_INFO or questId == nil then
+	if questId == nil then
 		--add loose entries into the looseEntries table so they still get displayed.
 		local entry = buildEntry(journalId, recvTime, stateType, chapter, timeStamp)
 		table.insert(looseEntries,entry)
@@ -188,6 +189,12 @@ function updateJournalEntry(journalId, recvTime, stateType, chapter, timeStamp)
 	end
 	--sort the objectives.
 	table.sort(quest.objectives,compareByRecvTime)
+
+	if stateType == const.ENTRY_TYPE_INFO then
+		--add loose entries into the looseEntries table so they still get displayed.
+		local entry = buildEntry(journalId, recvTime, stateType, chapter, timeStamp)
+		table.insert(looseEntries,entry)
+	end
 
 	--update display data
 	buildQuestDisplay()

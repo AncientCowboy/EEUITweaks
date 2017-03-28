@@ -2,7 +2,7 @@
  * lefreut's Inscribed Arcana Installation
  *****************************************************************************/
 // Open UI.MENU
-PRINT @12
+LOG @12
 SILENT
 LAUNCH_ACTION_MACRO UIMenuOpen
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
@@ -11,7 +11,7 @@ BEGIN
 END
 
 // Replace MAGE menu code
-PRINT @403001
+LOG @403001
 SILENT
 OUTER_SPRINT $UIMenuIF("LuaRegex") ~function[%TAB% ]+magePageInfo[%TAB% ]*([%TAB% ]*)~
 LAUNCH_ACTION_MACRO UIMenuGetMatchingLuaBlock
@@ -28,7 +28,7 @@ BEGIN
 END
 
 // Replace MAGE menu
-PRINT @403004
+LOG @403004
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~MAGE~
 OUTER_SPRINT $UIMenuIF("Body") ~~
@@ -55,7 +55,7 @@ BEGIN
 END
 
 // Replace mixed MAGE_CONTINGENCY menu
-PRINT @403008
+LOG @403008
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~MAGE_CONTINGENCY~
 OUTER_SPRINT $UIMenuIF("Body") ~~
@@ -67,7 +67,7 @@ BEGIN
 END
 
 // Replace POPUP_DETAILS menu
-PRINT @403010
+LOG @403010
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~POPUP_DETAILS~
 OUTER_SPRINT $UIMenuIF("Body") ~~
@@ -79,7 +79,7 @@ BEGIN
 END
 
 // Replace PRIEST menu code
-PRINT @403012
+LOG @403012
 SILENT
 OUTER_SPRINT $UIMenuIF("LuaRegex") ~function[%TAB% ]+priestPageInfo[%TAB% ]*([%TAB% ]*)~
 LAUNCH_ACTION_MACRO UIMenuGetMatchingLuaBlock
@@ -96,7 +96,7 @@ BEGIN
 END
 
 // Replace PRIEST menu
-PRINT @403015
+LOG @403015
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~PRIEST~
 OUTER_SPRINT $UIMenuIF("Body") ~~
@@ -108,7 +108,7 @@ BEGIN
 END
 
 // Close UI.MENU
-PRINT @13
+LOG @13
 SILENT
 LAUNCH_ACTION_MACRO UIMenuClose
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
@@ -117,7 +117,7 @@ BEGIN
 END
 
 // Copy UI resources
-PRINT @17
+LOG @17
 SILENT
 COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUISCRC.BAM~ ~override~
 

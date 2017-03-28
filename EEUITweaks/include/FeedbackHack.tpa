@@ -54,13 +54,13 @@ END
  * Feedback Buttons Hack Installation
  ******************************************************************************/	
 // Copy common files
-PRINT @24
+LOG @24
 SILENT
 COPY ~%PKGNAME%/copy/FeedbackHack/M_FeedHk.lua~ ~override~
 COPY ~%PKGNAME%/copy/FeedbackHack/en_FeedH.lua~ ~override~
 
 // Open UI.MENU
-PRINT @12
+LOG @12
 SILENT
 LAUNCH_ACTION_MACRO UIMenuOpen
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
@@ -69,7 +69,7 @@ BEGIN
 END
 
 // Patch WORLD_ACTIONBAR
-PRINT @119
+LOG @119
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~WORLD_ACTIONBAR~
 
@@ -234,7 +234,7 @@ BEGIN
 END // Not IsKRDS
 		
 // Close UI.MENU
-PRINT @13
+LOG @13
 SILENT
 LAUNCH_ACTION_MACRO UIMenuClose
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN

@@ -1432,7 +1432,7 @@ END
  * Adul's Unhide Chargen Options Installation
  ******************************************************************************/
 // Open UI.MENU
-PRINT @12
+LOG @12
 SILENT
 LAUNCH_ACTION_MACRO UIMenuOpen
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
@@ -1441,7 +1441,7 @@ BEGIN
 END
 
 // Patch CHARGEN menu
-PRINT @149
+LOG @149
 SILENT
 
 OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN~
@@ -1465,7 +1465,7 @@ BEGIN
 END
 
 // Patch CHARGEN_RACE menu
-PRINT @161
+LOG @161
 SILENT
 
 OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_RACE~
@@ -1495,7 +1495,7 @@ BEGIN
 END
 
 // Patch CHARGEN_CLASS menu
-PRINT @164
+LOG @164
 SILENT
 
 OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_CLASS~
@@ -1561,7 +1561,7 @@ BEGIN
 END
 
 // Patch CHARGEN_KIT menu
-PRINT @167
+LOG @167
 SILENT
 
 OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_KIT~
@@ -1627,7 +1627,7 @@ BEGIN
 END
 
 // Patch CHARGEN_ALIGNMENT menu
-PRINT @170
+LOG @170
 SILENT
 
 OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_ALIGNMENT~
@@ -1693,7 +1693,7 @@ BEGIN
 END
 
 // Patch CHARGEN_HATEDRACE menu
-PRINT @173
+LOG @173
 SILENT
 
 OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_HATEDRACE~
@@ -1723,7 +1723,7 @@ BEGIN
 END
 
 // Patch CHARGEN_PROFICIENCIES menu
-PRINT @176
+LOG @176
 SILENT
 
 OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_PROFICIENCIES~
@@ -1789,7 +1789,7 @@ BEGIN
 END
 
 // Close up
-PRINT @13
+LOG @13
 SILENT
 LAUNCH_ACTION_MACRO UIMenuClose
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
@@ -1798,7 +1798,7 @@ BEGIN
 END
 
 // Copy files
-PRINT @24
+LOG @24
 SILENT
 
 COPY ~%PKGNAME%/copy/AdulUnhideChargen~ ~override~

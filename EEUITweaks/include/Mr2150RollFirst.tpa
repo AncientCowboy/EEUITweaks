@@ -654,7 +654,7 @@ END
  * Mr2150's Roll First Installation
  ******************************************************************************/
 // Open UI.MENU
-PRINT @12
+LOG @12
 SILENT
 LAUNCH_ACTION_MACRO UIMenuOpen
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
@@ -663,7 +663,7 @@ BEGIN
 END
 
 // Patch CHARGEN menu
-PRINT @149
+LOG @149
 SILENT
 
 OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN~
@@ -721,7 +721,7 @@ BEGIN
 END
 
 // Patch CHARGEN_ABILITIES menu
-PRINT @182
+LOG @182
 SILENT
 
 OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_ABILITIES~
@@ -775,7 +775,7 @@ BEGIN
 END
 
 // Close up
-PRINT @13
+LOG @13
 SILENT
 LAUNCH_ACTION_MACRO UIMenuClose
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
@@ -784,7 +784,7 @@ BEGIN
 END
 
 // Copy files
-PRINT @24
+LOG @24
 SILENT
 COPY ~%PKGNAME%/copy/Mr2150RollFirst/M_roll1.lua~ ~override~
 

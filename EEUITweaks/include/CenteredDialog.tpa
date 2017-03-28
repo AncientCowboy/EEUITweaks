@@ -157,7 +157,7 @@ END
  * Centered Dialog Installation
  ******************************************************************************/
 // Open UI.MENU
-PRINT @12
+LOG @12
 SILENT
 LAUNCH_ACTION_MACRO UIMenuOpen
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
@@ -166,7 +166,7 @@ BEGIN
 END
 
 // Patch WORLD_DIALOG_CONFIRM
-PRINT @185
+LOG @185
 SILENT
 
 OUTER_SPRINT $UIMenuIF("MenuName") ~WORLD_DIALOG_CONFIRM~
@@ -201,7 +201,7 @@ OUTER_SPRINT $UIMenuIF("MenuName") ~WORLD_DIALOG~
 OUTER_SPRINT $UIMenuIF("Body") ~~
 ACTION_IF ((MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2060~) OR (IsLeUIBG2 = 1) OR (IsLeUISOD = 1) OR (IsLeUIBG1 = 1) OR (IsEETLeUI = 1)) THEN
 BEGIN // Patch
-	PRINT @205007
+	LOG @205007
 	SILENT
 	LAUNCH_ACTION_MACRO UIMenuGetMenu
 	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
@@ -220,7 +220,7 @@ BEGIN // Patch
 	END
 END ELSE
 BEGIN // Replace
-	PRINT @205001
+	LOG @205001
 	SILENT
 	ACTION_MATCH 1
 	WITH
@@ -260,7 +260,7 @@ BEGIN // Replace
 END
 
 // Close up
-PRINT @13
+LOG @13
 SILENT
 LAUNCH_ACTION_MACRO UIMenuClose
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN

@@ -1,0 +1,9 @@
+		on return
+		action
+		"
+			local cnt = tonumber(itemRequestAmt)
+			Infinity_PopMenu()
+			if(cnt and cnt > 0 and cnt <= requester.requesterMax) then
+				requester.requesterFunc(cnt)
+			end
+		"

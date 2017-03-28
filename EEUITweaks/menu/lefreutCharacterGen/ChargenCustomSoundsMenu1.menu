@@ -6,7 +6,7 @@ menu
 	ignoreesc
 	onOpen
 	"
-		currentChargenCustomSound = nil
+		currentChargenCustomSound = 1
 	"
 	label
 	{

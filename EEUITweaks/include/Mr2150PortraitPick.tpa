@@ -1,22 +1,8 @@
 /*******************************************************************************
  * Mr2150's Portrait Picker Installation
  ******************************************************************************/
-ACTION_IF %IsSoD% OR %IsEETSoD% THEN
-BEGIN // Find out about Scale UI
-	OUTER_SPRINT mrportraitpickscaleui ~~
-	OUTER_WHILE (NOT IS_AN_INT %mrportraitpickscaleui%) || (%mrportraitpickscaleui% < 1 ) || (%mrportraitpickscaleui% > 4)
-	BEGIN
-		PRINT @104001
-		ACTION_READLN mrportraitpickscaleui
-		ACTION_IF ~%mrportraitpickscaleui%~ STRING_EQUAL ~~
-		BEGIN
-			OUTER_SET mrportraitpickscaleui = 1
-		END
-	END
-END
-
 // Open UI.MENU
-PRINT @12
+LOG @12
 SILENT
 LAUNCH_ACTION_MACRO UIMenuOpen
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
@@ -25,7 +11,7 @@ BEGIN
 END
 
 // Patch CHARGEN_PORTRAIT menu
-PRINT @158
+LOG @158
 SILENT
 
 OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_PORTRAIT~
@@ -33,7 +19,7 @@ ACTION_MATCH 1
 WITH
 	%IsSoD%
 	BEGIN		
-		PRINT @19
+		LOG @19
 		SILENT
 		ACTION_IF %mrportraitpickscaleui% = 1 THEN
 		BEGIN
@@ -46,7 +32,7 @@ WITH
 
 	%IsEETSoD%
 	BEGIN		
-		PRINT @32
+		LOG @32
 		SILENT
 		ACTION_IF %mrportraitpickscaleui% = 1 THEN
 		BEGIN
@@ -59,56 +45,56 @@ WITH
 
 	%IsKRDS%
 	BEGIN		
-		PRINT @38
+		LOG @38
 		SILENT
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/Mr2150PortPicker/charportscaledsod.menu~
 	END
 
 	%IsBG2onSoD%
 	BEGIN
-		PRINT @16
+		LOG @16
 		SILENT
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/Mr2150PortPicker/charportbg2.menu~
 	END
 
 	%IsBG2% 
 	BEGIN
-		PRINT @28
+		LOG @28
 		SILENT
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/Mr2150PortPicker/charportbg2.menu~
 	END
 
 	%IsEETBG2% 
 	BEGIN
-		PRINT @31
+		LOG @31
 		SILENT
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/Mr2150PortPicker/charportbg2.menu~
 	END
 
 	%IsLeUIBG2% 
 	BEGIN
-		PRINT @34
+		LOG @34
 		SILENT
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/Mr2150PortPicker/charportbg2.menu~
 	END
 
 	%IsLeUISOD% 
 	BEGIN
-		PRINT @35
+		LOG @35
 		SILENT
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/Mr2150PortPicker/charportbg2.menu~
 	END
 
 	%IsLeUIBG1% 
 	BEGIN
-		PRINT @36
+		LOG @36
 		SILENT
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/Mr2150PortPicker/charportbg2.menu~
 	END
 
 	%IsEETLeUI% 
 	BEGIN
-		PRINT @37
+		LOG @37
 		SILENT
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/Mr2150PortPicker/charportbg2.menu~
 	END
@@ -125,7 +111,7 @@ END
 
 ACTION_IF %IsLeUIBG2% OR %IsLeUISOD% OR %IsLeUIBG1% OR %IsEETLeUI% THEN
 BEGIN
-	PRINT @103001
+	LOG @103001
 	SILENT
 	OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_GENDER~
 	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/BillyYankMultiPort/genderLeUI1.menu~
@@ -137,7 +123,7 @@ BEGIN
 END
 
 // Close up
-PRINT @13
+LOG @13
 SILENT
 LAUNCH_ACTION_MACRO UIMenuClose
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
@@ -146,8 +132,8 @@ BEGIN
 END
 
 // Copying language specific files
-PRINT @30
-PRINT ~%EE_LANGUAGE%~
+LOG @30
+LOG ~%EE_LANGUAGE%~
 SILENT
 ACTION_MATCH ~%EE_LANGUAGE%~
 WITH
@@ -187,7 +173,7 @@ WITH
 END
 
 // Copying ui specific files
-PRINT @17
+LOG @17
 SILENT
 ACTION_MATCH 1
 WITH

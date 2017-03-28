@@ -55,8 +55,17 @@ END
 /*******************************************************************************
  * Mr2150's Journal Fixes Installation
  ******************************************************************************/
+// Uninstall lefreut's Simple Journal Fixes if it has been installed
+ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~3070~ THEN
+BEGIN
+	PRINT @302005
+	PRINT @302006
+	SILENT
+	UNINSTALL ~EEUITweaks.tp2~ ~3070~
+END
+
 // Open UI.MENU
-PRINT @12
+LOG @12
 SILENT
 LAUNCH_ACTION_MACRO UIMenuOpen
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
@@ -65,7 +74,7 @@ BEGIN
 END
 
 // Patch textflash menu
-PRINT @143
+LOG @143
 SILENT
 
 OUTER_SPRINT $UIMenuIF("MenuName") ~textflash~
@@ -88,7 +97,7 @@ BEGIN
 END
 
 // Replace Journal Lua functions with ~~
-PRINT @302001
+LOG @302001
 SILENT
 
 OUTER_SPRINT $UIMenuIF("LuaRegex") ~function[%TAB% ]+initQuests[%TAB% ]*([%TAB% ]*)~
@@ -106,7 +115,7 @@ BEGIN
 END
 
 // Patch JOURNAL menu
-PRINT @146
+LOG @146
 SILENT
 
 OUTER_SPRINT $UIMenuIF("MenuName") ~JOURNAL~
@@ -114,56 +123,56 @@ ACTION_MATCH 1
 WITH
 	%IsBG2%
 	BEGIN
-		PRINT @28
+		LOG @28
 		SILENT
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/Mr2150JrnlFix/journalmenubg2.menu~
 	END
 
 	%IsEETBG2%
 	BEGIN
-		PRINT @31
+		LOG @31
 		SILENT
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/Mr2150JrnlFix/journalmenubg2.menu~
 	END
 
 	%IsBG2onSoD%
 	BEGIN
-		PRINT @16
+		LOG @16
 		SILENT
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/Mr2150JrnlFix/journalmenubg2.menu~
 	END
 
 	%IsBGEE%
 	BEGIN
-		PRINT @14
+		LOG @14
 		SILENT
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/Mr2150JrnlFix/journalmenuee.menu~
 	END
 
 	%IsSoD%
 	BEGIN
-		PRINT @19
+		LOG @19
 		SILENT
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/Mr2150JrnlFix/journalmenusod.menu~
 	END
 
 	%IsEETSoD%
 	BEGIN
-		PRINT @32
+		LOG @32
 		SILENT
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/Mr2150JrnlFix/journalmenusod.menu~
 	END
 
 	%IsKRDS%
 	BEGIN
-		PRINT @38
+		LOG @38
 		SILENT
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/Mr2150JrnlFix/journalmenusod.menu~
 	END
 
 	%IsTIWDonBG2% %IsTIWDonSoD% %IsTIWD2onBG2%
 	BEGIN
-		PRINT @40
+		LOG @40
 		SILENT
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/Mr2150JrnlFix/journalmenubg2.menu~
 	END
@@ -179,7 +188,7 @@ BEGIN
 END
 
 // Close up
-PRINT @13
+LOG @13
 SILENT
 LAUNCH_ACTION_MACRO UIMenuClose
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
@@ -188,6 +197,6 @@ BEGIN
 END
 
 // Copy files
-PRINT @24
+LOG @24
 SILENT
 COPY ~%PKGNAME%/copy/Mr2150JrnlFix/M_JFlang.lua~ ~override~

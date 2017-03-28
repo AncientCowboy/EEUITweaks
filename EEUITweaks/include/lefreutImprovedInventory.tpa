@@ -2,7 +2,7 @@
  * lefreut's Improved Inventory Screen Installation
  ******************************************************************************/	
 // Open UI.MENU
-PRINT @12
+LOG @12
 SILENT
 LAUNCH_ACTION_MACRO UIMenuOpen
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
@@ -11,7 +11,7 @@ BEGIN
 END
 
 // Patch INVENTORY
-PRINT @188
+LOG @188
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~INVENTORY~
 OUTER_SPRINT $UIMenuIF("Body") ~~
@@ -45,7 +45,7 @@ BEGIN
 END
 
 // Replace INVENTORY Lua code block
-PRINT @305001
+LOG @305001
 SILENT
 
 OUTER_SPRINT $UIMenuIF("LuaRegex") ~TEXT_inventoryError[%TAB% ]*=[%TAB% ]*""~
@@ -81,7 +81,7 @@ BEGIN
 END
 
 // Close UI.MENU
-PRINT @13
+LOG @13
 SILENT
 LAUNCH_ACTION_MACRO UIMenuClose
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
@@ -95,7 +95,7 @@ BEGIN
 END
 
 // Copying ui specific files
-PRINT @17
+LOG @17
 SILENT
 ACTION_MATCH 1
 WITH

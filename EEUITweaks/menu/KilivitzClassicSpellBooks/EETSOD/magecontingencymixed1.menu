@@ -1,0 +1,544 @@
+`
+function getCastableCount(idx)
+	local nb = bookSpells[idx].castableCount
+	if nb <= 1 then
+		return 0
+	end
+	return nb
+end
+`
+menu
+{
+	name 'MAGE_CHOOSE_CONTINGENCY'
+	align center center
+	ignoreesc
+	modal
+	onOpen
+	"
+		currentContingencyCondition = 0
+		currentContingencyTarget = 0
+	"
+	label
+	{
+		area 0 0 864 710
+		mosaic LUIMGCP
+	}
+	label
+	{
+		area 82 12 700 40
+		text lua "mageBookTitle()"
+		text style "title"
+	}
+	label
+	{
+		area 380 60 110 40
+		text lua "t('LEVEL_LABEL') .. ' ' .. currentSpellLevel"
+		text style "label"
+	}
+
+	list
+	{
+		column
+		{
+			width 25
+			label
+			{
+				enabled "bookSpells[4 * rowNumber - 3] ~= nil"
+				area 6 5 52 52
+				bam GUIWDBUT
+				icon lua "bookSpells[4 * rowNumber - 3].icon:sub(1, -2) .. 'B'"
+				count lua "getCastableCount(4 * rowNumber - 3)"
+				align center center
+			}
+		}
+		column
+		{
+			width 25
+			label
+			{
+				enabled "bookSpells[4 * rowNumber - 2] ~= nil"
+				area 6 5 52 52
+				bam GUIWDBUT
+				icon lua "bookSpells[4 * rowNumber - 2].icon:sub(1, -2) .. 'B'"
+				count lua "getCastableCount(4 * rowNumber - 2)"
+				align center center
+			}
+		}
+		column
+		{
+			width 25
+			label
+			{
+				enabled "bookSpells[4 * rowNumber - 1] ~= nil"
+				area 6 5 52 52
+				bam GUIWDBUT
+				icon lua "bookSpells[4 * rowNumber - 1].icon:sub(1, -2) .. 'B'"
+				count lua "getCastableCount(4 * rowNumber - 1)"
+				align center center
+			}
+		}
+		column
+		{
+			width 25
+			label
+			{
+				enabled "bookSpells[4 * rowNumber] ~= nil"
+				area 6 5 52 52
+				bam GUIWDBUT
+				icon lua "bookSpells[4 * rowNumber].icon:sub(1, -2) .. 'B'"
+				count lua "getCastableCount(4 * rowNumber)"
+				align center center
+			}
+		}
+		area 54 130 256 248
+		rowheight 62
+		hidehighlight
+		table "makeTable(length(bookSpells) / 4)"
+		var currentBookSpell
+		action
+		"
+			contingencyDescription = mageBookStrings[contingencyResRef].tip
+			local idx = 4 * (currentBookSpell - 1) + cellNumber
+			if bookSpells[idx] and #bottomSpells < #bottomSpellsPlaceHolder then
+				mageScreen:SequenceSpell(bookSpells[idx].resref)
+			end
+		"
+		actionAlt
+		"
+			local idx = 4 * (currentBookSpell - 1) + cellNumber
+			popupDetails(16189, bookSpells[idx].name, bookSpells[idx].description, bookSpells[idx].icon)
+		"		
+	}
+	button
+	{
+		area 120 410 45 42
+		bam GUIOSW
+		sequence 1
+		clickable lua "currentSpellLevel > 1"
+		action
+		"
+			setMageBookLevel(currentSpellLevel - 1)
+		"
+	}
+	button
+	{
+		area 166 410 45 42
+		bam GUIOSW
+		sequence 0
+		clickable lua "currentSpellLevel < maxMagePage"
+		action
+		"
+			setMageBookLevel(currentSpellLevel + 1)
+		"
+	}
+
+	list
+	{
+		column
+		{
+			width 100
+			label
+			{
+				area 0 0 -1 -1
+				bam GUIWDBUT
+				align center center
+			}
+		}
+		area 264 402 333 60
+		rowwidth 111
+		hidehighlight
+		table "bottomSpellsPlaceHolder"
+	}
+	list
+	{
+		column
+		{
+			width 100
+			label
+			{
+				area 0 0 -1 -1
+				bam lua "bottomSpells[rowNumber].icon:sub(1, -2) .. 'B'"
+				align center center
+			}
+		}
+		area 264 402 333 60
+		enabled "#bottomSpells ~= 0"
+		rowwidth 111
+		hidehighlight
+		table "bottomSpells"
+		var currentBottomSpell
+		action
+		"
+			if bottomSpells[currentBottomSpell] then
+				mageScreen:UnSequenceSpell(bottomSpells[currentBottomSpell].resref)
+				table.remove(sequencerSpells, currentBottomSpell)
+				bottomSpells = sequencerSpells
+			end
+		"
+		actionAlt
+		"
+			if bottomSpells[currentBottomSpell] then
+			popupDetails(16189, bottomSpells[currentBottomSpell].name, bottomSpells[currentBottomSpell].description, bottomSpells[currentBottomSpell].icon)
+			end
+		"		
+	}
+	label
+	{
+		enabled "showContingency == true"
+		area 320 130 240 30
+		text "CONDITION_NORMAL"
+		text style "label"
+	}
+	list
+	{
+		column
+		{
+			width 100
+			label
+			{
+				enabled "rowNumber ~= currentContingencyCondition and rowNumber ~= currentContingencyCondition_hover"
+				area 0 0 -1 -1
+				text lua "Infinity_FetchString(contingencyConditions[rowNumber].strref)"
+				text style "normal"
+				text color D
+			}
+			label
+			{
+				enabled "rowNumber == currentContingencyCondition and rowNumber ~= currentContingencyCondition_hover"
+				area 0 0 -1 -1
+				text lua "Infinity_FetchString(contingencyConditions[rowNumber].strref)"
+				text style "normal"
+				text color S
+			}
+			label
+			{
+				enabled "rowNumber == currentContingencyCondition_hover"
+				area 0 0 -1 -1
+				text lua "Infinity_FetchString(contingencyConditions[rowNumber].strref)"
+				text style "normal"
+				text color H
+			}
+		}
+		enabled "showContingency == true"
+		area 320 172 240 206
+		rowheight 40
+		hidehighlight
+		table "contingencyConditions"
+		var currentContingencyCondition
+		scrollbar 'GUISCRC'
+		action
+		"
+			contingencyDescription = contingencyConditions[currentContingencyCondition].desc
+		"
+		actionEnter	"currentContingencyCondition_hover = mouseoverRow"
+		actionExit	"currentContingencyCondition_hover = 0"
+	}
+	label
+	{
+		enabled "showContingency == true"
+		area 572 130 240 30
+		text "TARGET_NORMAL"
+		text style "label"
+	}
+	list
+	{
+		column
+		{
+			width 100
+			label
+			{
+				enabled "rowNumber ~= currentContingencyTarget and rowNumber ~= currentContingencyTarget_hover"
+				area 0 0 -1 -1
+				text lua "Infinity_FetchString(contingencyTargets[rowNumber].strref)"
+				text style "normal"
+				text color D
+			}
+			label
+			{
+				enabled "rowNumber == currentContingencyTarget and rowNumber ~= currentContingencyTarget_hover"
+				area 0 0 -1 -1
+				text lua "Infinity_FetchString(contingencyTargets[rowNumber].strref)"
+				text style "normal"
+				text color S
+			}
+			label
+			{
+				enabled "rowNumber == currentContingencyTarget_hover"
+				area 0 0 -1 -1
+				text lua "Infinity_FetchString(contingencyTargets[rowNumber].strref)"
+				text style "normal"
+				text color H
+			}
+		}
+		enabled "showContingency == true"
+		area 572 172 240 206
+		rowheight 40
+		hidehighlight
+		table "contingencyTargets"
+		var currentContingencyTarget
+		scrollbar 'LUISCRC'
+		action
+		"
+			contingencyDescription = contingencyTargets[currentContingencyTarget].desc
+		"
+		actionEnter	"currentContingencyTarget_hover = mouseoverRow"
+		actionExit	"currentContingencyTarget_hover = 0"
+	}
+	button
+	{
+		on return
+		clickable lua "contingencyComplete()"
+		area 176 640 230 44
+		bam GUIBUTMT
+		text "DONE_BUTTON"
+		text style "button"
+		action
+		"
+			Infinity_PopMenu()
+			mageScreen:DoneSequencingSpells()
+			e:SelectEngine(worldScreen)
+		"
+	}
+	button
+	{
+		on escape
+		bam GUIBUTMT
+		area 454 640 230 44
+		text style "button"
+		text "CANCEL_BUTTON"
+		action
+		"
+			Infinity_PopMenu()
+			mageScreen:CancelSequencingSpells()
+			e:SelectEngine(worldScreen)
+		"
+	}
+}
+`
+function refreshMageContingency()
+	preparedSpells = {}
+	for k, v in pairs(characters[id].contingencySpells) do
+		table.insert(preparedSpells, v)
+	end
+	for k, v in pairs(characters[id].sequencerSpells) do
+		table.insert(preparedSpells, v)
+	end
+end
+`
+menu
+{
+	name 'MAGE_CONTINGENCY'
+	align center center
+	modal
+	onOpen "refreshMageContingency()"
+
+	label
+	{
+		area 0 0 864 710
+		mosaic GUIINVHI
+	}
+	label --Title
+	{
+		area 81 11 700 44
+		text "CONTINGENCY_TITLE"
+		text style "title"
+	}
+	label
+	{
+		area 254 68 360 48
+		text "SPELLS_PREPARED_LABEL"
+		text style "label"
+		text align center center
+	}
+	label
+	{
+		area 252 180 182 36
+		text "CONDITION_LABEL"
+		text style "label"
+		text align left center
+		text color 5
+	}
+	label
+	{
+		area 434 180 182 36
+		text "TARGET_LABEL"
+		text style "label"
+		text align left center
+		text color 5
+	}
+	label
+	{
+		area 616 180 182 36
+		text "SPELL_LABEL"
+		text style "label"
+		text align left center
+		text color 5
+	}
+
+	list
+	{
+		column
+		{
+			width 25
+			label
+			{
+				area 0 0 -1 -1
+				text lua "t(mageBookStrings[preparedSpells[rowNumber].resref].title)"
+				text style "label_parchment"
+				align left center
+			}
+		}
+		column
+		{
+			width 25
+			label
+			{
+				area 0 0 -1 -1
+				text lua "Infinity_FetchString(preparedSpells[rowNumber].condition)"
+				text style "label_parchment"
+				align left center
+			}
+		}
+		column
+		{
+			width 25
+			label
+			{
+				area 0 0 -1 -1
+				text lua "Infinity_FetchString(preparedSpells[rowNumber].target)"
+				text style "label_parchment"
+				align left center
+			}
+		}
+		column
+		{
+			width 5
+			label
+			{
+				enabled "preparedSpells[rowNumber].spells[1] ~= nil"
+				area 0 0 -1 -1
+				bam lua "preparedSpells[rowNumber].spells[1].icon"
+				align center center
+			}
+		}
+		column
+		{
+			width 5
+			label
+			{
+				enabled "preparedSpells[rowNumber].spells[2] ~= nil"
+				area 0 0 -1 -1
+				bam lua "preparedSpells[rowNumber].spells[2].icon"
+				align center center
+			}
+		}
+		column
+		{
+			width 5
+			label
+			{
+				enabled "preparedSpells[rowNumber].spells[3] ~= nil"
+				area 0 0 -1 -1
+				bam lua "preparedSpells[rowNumber].spells[3].icon"
+				align center center
+			}
+		}
+		column
+		{
+			width 10
+			label
+			{
+				area 0 0 -1 -1
+				text lua "'X'"
+				text style "label_parchment"
+				align center center
+				enabled "preparedSpells[rowNumber].dispellable"
+			}
+		}
+		area 70 216 728 308
+		rowheight	56
+		hidehighlight
+		table		"preparedSpells"
+		var		"currentContingencySpell"
+		action
+		"
+			if cellNumber == 7 and preparedSpells[currentContingencySpell].dispellable then
+				popup2Button(engine_mode == 0 and 24398 or 32665, 'YES_BUTTON', function() mageScreen:OnDispellButtonClick(currentContingencySpell) end, 'NO_BUTTON')
+			end
+		"
+	}
+	button
+	{
+		bam GUIBUTNT
+		area 327 638 200 44
+		text "DONE_BUTTON"
+		text style "button"
+		action "Infinity_PopMenu('MAGE_CONTINGENCY')"
+	}
+}
+
+menu
+{
+	name 'SPELLINFO_MAGE'
+	modal
+	align center center
+	ignoreEsc
+
+	label
+	{
+		area 0 0 864 710
+		mosaic "GUIINVHI"
+	}
+	label
+	{
+		area 82 10 700 44
+		text lua "Infinity_FetchString(16189)"
+		text style "title"
+	}
+	label
+	{
+		area 254 65 350 50
+		text lua "Infinity_FetchString(selectedSpell.name)"
+		text style "label"
+	}
+	text
+	{
+		area 62 178 736 348
+		text lua "Infinity_FetchString(selectedSpell.description)"
+		text style "parchment"
+		scrollbar 'GUISCRC'
+	}
+	label
+	{
+		area 94 72 52 52
+		bam lua "selectedSpell.icon"
+		align center center
+		sequence 0
+	}
+	button
+	{
+		area 326 638 230 44
+		bam GUIBUTMT
+		text "DONE_BUTTON"
+		text style "button"
+		
+		on escape
+		action
+		"
+			Infinity_PopMenu('SPELLINFO_MAGE')
+		"
+	}	
+	button
+	{
+		area 570 638 230 44
+		enabled "characters[id].hasSorcererBook == false"
+		bam GUIBUTMT
+		text lua "Infinity_FetchString(63668)"
+		text style "button"
+		action
+		"
+			popup2Button(engine_mode == 0 and 24485 or 63745, 'REMOVE_BUTTON', function() mageScreen:EraseKnownSpell(selectedSpell.resref); selectedSpell = nil; Infinity_PopMenu('SPELLINFO_MAGE') end)
+			
+		"
+	}			
+}

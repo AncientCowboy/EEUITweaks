@@ -11,7 +11,7 @@ BEGIN
 END
 
 // Open UI.MENU
-PRINT @12
+LOG @12
 SILENT
 LAUNCH_ACTION_MACRO UIMenuOpen
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
@@ -20,7 +20,7 @@ BEGIN
 END
 
 // Patch STORE_BUYSELL
-PRINT @122
+LOG @122
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~STORE_BUYSELL~
 OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutBG2Store/buysellmenu.menu~
@@ -31,7 +31,7 @@ BEGIN
 END
 
 // Patch STORE_IDENTIFY
-PRINT @125
+LOG @125
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~STORE_IDENTIFY~
 OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutBG2Store/identifymenu.menu~
@@ -42,7 +42,7 @@ BEGIN
 END
 
 // Patch STORE_DONATE
-PRINT @128
+LOG @128
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~STORE_DONATE~
 OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutBG2Store/donatemenu.menu~
@@ -53,7 +53,7 @@ BEGIN
 END
 
 // Patch STORE_ROOMS
-PRINT @131
+LOG @131
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~STORE_ROOMS~
 OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutBG2Store/roomsmenu.menu~
@@ -64,7 +64,7 @@ BEGIN
 END
 
 // Patch STORE_HEALING
-PRINT @134
+LOG @134
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~STORE_HEALING~
 OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutBG2Store/healingmenu.menu~
@@ -75,7 +75,7 @@ BEGIN
 END
 
 // Patch STORE_DRINKS
-PRINT @137
+LOG @137
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~STORE_DRINKS~
 OUTER_SPRINT $UIMenuIF("Body") ~~
@@ -87,7 +87,7 @@ BEGIN
 END
 
 // Patch STORE_CHOOSER
-PRINT @140
+LOG @140
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~STORE_CHOOSER~
 OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutBG2Store/choosermenu.menu~
@@ -98,7 +98,7 @@ BEGIN
 END
 
 // Patch ITEM_DESCRIPTION
-PRINT @191
+LOG @191
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~ITEM_DESCRIPTION~
 OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutBG2Store/itemdescmenu.menu~
@@ -109,7 +109,7 @@ BEGIN
 END
 
 // Replace STORE_BUYSELL Lua code block
-PRINT @401001
+LOG @401001
 SILENT
 
 OUTER_SPRINT $UIMenuIF("LuaRegex") ~store[%TAB% ]*=[%TAB% ]*{}~
@@ -126,7 +126,7 @@ BEGIN
 END
 
 // Replace ITEM_DESCRIPTION Lua code block
-PRINT @400504
+LOG @400504
 SILENT
 OUTER_SPRINT $UIMenuIF("LuaRegex") ~function[%TAB% ]+showItemDescriptionInventory[%TAB% ]*([%TAB% ]*%NAMECHARS%+[%TAB% ]*)~
 LAUNCH_ACTION_MACRO UIMenuGetMatchingLuaBlock
@@ -143,7 +143,7 @@ END
 
 
 // Close UI.MENU
-PRINT @13
+LOG @13
 SILENT
 LAUNCH_ACTION_MACRO UIMenuClose
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
@@ -152,7 +152,7 @@ BEGIN
 END
 
 // Copy files
-PRINT @24
+LOG @24
 SILENT
 COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUISCRC.BAM~ ~override~
 

@@ -2,7 +2,7 @@ menu
 {
 	name 'textflash'
 	opacity lua 'hoverPopup and 1 or getOpacityForInfoBlock(1000)'
-	enabled 'next(textflashes)'
+	enabled 'hoverPopup and 1 or getOpacityForInfoBlock(1000) ~= 0'
 	align center top
 	offset 0 10
 

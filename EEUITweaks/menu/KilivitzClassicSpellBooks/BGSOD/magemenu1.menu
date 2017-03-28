@@ -1,0 +1,392 @@
+menu
+{
+	name 'MAGE'
+	align center center
+	greyscale lua "mageBookEnabled == false"
+
+	onOpen
+	"
+		showMageMemorizationFlash = false
+		selectedSpell = nil
+		currentAnimationID = 1
+		updateCounterMemorizationSparkles = 1
+		if bookMode == 1 then
+			Infinity_PopMenu()
+			Infinity_PushMenu('MAGE_CHOOSE_CONTINGENCY')
+		end
+	"
+	button
+	{
+		enabled "CurrentlyInGame()"
+		on escape
+		action
+		"
+			--Return to world screen on escape
+			e:SelectEngine(worldScreen)
+		"
+	}
+
+	label
+	{
+		area 0 0 864 710
+		mosaic LUIMGB
+	}
+	label
+	{
+		area		82 10 700 44
+		text lua	"mageBookTitle()"
+		text style	"title"
+	}
+	label
+	{
+		area 		210 59 446 30
+		text lua	"mageBookAction()"
+		text style	"label"
+	}
+	button
+	{
+		area		168 110 54 54
+		bam		GUIPRTC
+		frame lua "getSpellHighlight(1)"
+		sequence	0
+		enabled		"maxMagePage > 0"
+		action		"setMageBookLevel(1)"
+	}
+	button
+	{
+		area		227 110 54 54
+		bam		GUIPRTC
+		frame lua "getSpellHighlight(2)"
+		sequence	1
+		enabled		"maxMagePage > 1"
+		action		"setMageBookLevel(2)"
+	}
+	button
+	{
+		area		286 110 54 54
+		bam		GUIPRTC
+		frame lua "getSpellHighlight(3)"
+		sequence	2
+		enabled		"maxMagePage > 2"
+		action		"setMageBookLevel(3)"
+	}
+	button
+	{
+		area		345 110 54 54
+		bam		GUIPRTC
+		frame lua "getSpellHighlight(4)"
+		sequence	3
+		enabled		"maxMagePage > 3"
+		action		"setMageBookLevel(4)"
+	}
+	button
+	{
+		area		404 110 54 54
+		bam		GUIPRTC
+		frame lua "getSpellHighlight(5)"
+		sequence	4
+		enabled		"maxMagePage > 4"
+		action		"setMageBookLevel(5)"
+	}
+	button
+	{
+		area		464 110 54 54
+		bam		GUIPRTC
+		frame lua "getSpellHighlight(6)"
+		sequence	5
+		enabled		"maxMagePage > 5"
+		action		"setMageBookLevel(6)"
+	}
+	button
+	{
+		area		523 110 54 54
+		bam		GUIPRTC
+		frame lua "getSpellHighlight(7)"
+		sequence	6
+		enabled		"maxMagePage > 6"
+		action		"setMageBookLevel(7)"
+	}
+	button
+	{
+		area		583 110 54 54
+		bam		GUIPRTC
+		frame lua "getSpellHighlight(8)"
+		sequence	7
+		enabled		"maxMagePage > 7"
+		action		"setMageBookLevel(8)"
+	}
+	button
+	{
+		area		644 110 54 54
+		bam		GUIPRTC
+		frame lua "getSpellHighlight(9)"
+		sequence	8
+		enabled		"maxMagePage > 8"
+		action		"setMageBookLevel(9)"
+	}
+	button
+	{
+		area 18 278 52 132
+		bam GUIPRC
+		sequence 0
+		action
+		"
+			if currentSpellLevel > 1 then
+				setMageBookLevel(currentSpellLevel - 1)
+			end
+		"
+	}
+	button
+	{
+		area 794 278 52 132
+		bam GUIPRC
+		sequence 1
+		action
+		"
+			if currentSpellLevel < maxMagePage then
+				setMageBookLevel(currentSpellLevel + 1)
+			end
+		"
+	}
+
+	template
+	{
+		label
+		{
+			enabled "showMemorizationSparkle(instanceId)"
+			ignoreEvents
+			area 0 0 45 42
+			bam FLASHBR
+			usealpha lua "true"
+			frame lua "memorizationFlashes[instanceId][2]"
+			align center center
+		}
+		name "TEMPLATE_mageMemorizationSparkle"
+	}
+	text
+	{
+		area 450 180 256 22
+		text lua "Infinity_FetchString(11945)"
+		text style "normal_parchment"
+	}
+	list
+	{
+		column
+		{
+			width 25
+			label
+			{
+				enabled "bookSpells[4 * rowNumber - 3] ~= nil"
+				area 0 0 -1 -1
+				bam lua "bookSpells[4 * rowNumber - 3].icon"
+				align center center
+			}
+		}
+		column
+		{
+			width 25
+			label
+			{
+				enabled "bookSpells[4 * rowNumber - 2] ~= nil"
+				area 0 0 -1 -1
+				bam lua "bookSpells[4 * rowNumber - 2].icon"
+				align center center
+			}
+		}
+		column
+		{
+			width 25
+			label
+			{
+				enabled "bookSpells[4 * rowNumber - 1] ~= nil"
+				area 0 0 -1 -1
+				bam lua "bookSpells[4 * rowNumber - 1].icon"
+				align center center
+			}
+		}
+		column
+		{
+			width 25
+			label
+			{
+				enabled "bookSpells[4 * rowNumber] ~= nil"
+				area 0 0 -1 -1
+				bam lua "bookSpells[4 * rowNumber].icon"
+				align center center
+			}
+		}
+		area 450 204 256 372
+		name "bookListMage"
+		rowheight 62
+		hidehighlight
+		table "makeTable(length(bookSpells) / 4)"
+		var currentBookSpell
+		action
+		"
+			local idx = 4 * (currentBookSpell - 1) + cellNumber
+			if bookSpells[idx] and #bottomSpells < #bottomSpellsPlaceHolder then
+				createMageMemorizationSparkle(62 * (cellNumber - 1), 0, 62, 62, 'bookListMage', currentBookSpell)
+				Infinity_PlaySound('GAM_24')
+				showMageMemorizationFlash = true
+				mageScreen:MemorizeSpell(bookSpells[idx].level, bookSpells[idx].index)
+			end
+			selectedSpell = nil
+		"
+		actionAlt
+		"
+			local idx = 4 * (currentBookSpell - 1) + cellNumber
+			if bookSpells[idx] then
+			selectedSpell = bookSpells[idx]			
+			end
+			Infinity_PushMenu('SPELLINFO_MAGE')
+		"
+	}
+
+	text
+	{
+		area 158 180 256 22
+		text lua "magePageInfo()"	
+		text style "normal_parchment"
+	}
+	list
+	{
+		column
+		{
+			width 25
+			label
+			{
+				enabled "bottomSpellsPlaceHolder[4 * rowNumber - 3] ~= nil"
+				area 0 0 -1 -1
+				bam SPELFRAM
+				align center center
+			}
+		}
+		column
+		{
+			width 25
+			label
+			{
+				enabled "bottomSpellsPlaceHolder[4 * rowNumber - 2] ~= nil"
+				area 0 0 -1 -1
+				bam SPELFRAM
+				align center center
+			}
+		}
+		column
+		{
+			width 25
+			label
+			{
+				enabled "bottomSpellsPlaceHolder[4 * rowNumber - 1] ~= nil"
+				area 0 0 -1 -1
+				bam SPELFRAM
+				align center center
+			}
+		}
+		column
+		{
+			width 25
+			label
+			{
+				enabled "bottomSpellsPlaceHolder[4 * rowNumber] ~= nil"
+				area 0 0 -1 -1
+				bam SPELFRAM
+				align center center
+			}
+		}
+		area 158 204 256 372
+		rowheight 62
+		hidehighlight
+		table "makeTable(length(bottomSpellsPlaceHolder) / 4)"
+	}
+	list
+	{
+		column
+		{
+			width 25
+			label
+			{
+				enabled "bottomSpells[4 * rowNumber - 3] ~= nil"
+				area 0 0 -1 -1
+				bam lua "bottomSpells[4 * rowNumber - 3].icon"
+				opacity lua "getSpellOpacity(4 * rowNumber - 3)"
+				align center center
+			}
+		}
+		column
+		{
+			width 25
+			label
+			{
+				enabled "bottomSpells[4 * rowNumber - 2] ~= nil"
+				area 0 0 -1 -1
+				bam lua "bottomSpells[4 * rowNumber - 2].icon"
+				opacity lua "getSpellOpacity(4 * rowNumber - 2)"
+				align center center
+			}
+		}
+		column
+		{
+			width 25
+			label
+			{
+				enabled "bottomSpells[4 * rowNumber - 1] ~= nil"
+				area 0 0 -1 -1
+				bam lua "bottomSpells[4 * rowNumber - 1].icon"
+				opacity lua "getSpellOpacity(4 * rowNumber - 1)"
+				align center center
+			}
+		}
+		column
+		{
+			width 25
+			label
+			{
+				enabled "bottomSpells[4 * rowNumber] ~= nil"
+				area 0 0 -1 -1
+				bam lua "bottomSpells[4 * rowNumber].icon"
+				opacity lua "getSpellOpacity(4 * rowNumber)"
+				align center center
+			}
+		}
+		area 158 204 256 372
+		name "memorizedListMage"
+		enabled "#bottomSpells ~= 0"
+		rowheight 62
+		hidehighlight
+		table "makeTable(length(bottomSpells) / 4)"
+		var currentBottomSpell
+		action
+		"
+			local idx = 4 * (currentBottomSpell - 1) + cellNumber
+			if bottomSpells[idx] then
+				if bottomSpells[idx].memorizedCount > bottomSpells[idx].castableCount then
+					removeMageSpell(idx)
+				else
+					popup2Button(11824, 'DELETE_BUTTON', function() removeMageSpell(idx) end)
+				end
+			end
+		"
+		actionAlt
+		"
+			local idx = 4 * (currentBottomSpell - 1) + cellNumber
+			popupDetails(16189, bottomSpells[idx].name, bottomSpells[idx].description, bottomSpells[idx].icon)
+		"	
+	}
+	label
+	{
+		area 294 608 276 50
+		text lua "t('LEVEL_LABEL') .. ' ' .. currentSpellLevel .. ' ' .. t('SPELLS_LABEL')"
+		text style "label"
+	}
+
+	button
+	{
+		area 46 611 230 44
+		enabled "(#characters[id].contingencySpells > 0 or #characters[id].sequencerSpells > 0)"
+		bam GUIBUTMT
+		text "CONTINGENCY_BUTTON"
+		text style "button"
+		action "Infinity_PushMenu('MAGE_CONTINGENCY')"
+	}
+}

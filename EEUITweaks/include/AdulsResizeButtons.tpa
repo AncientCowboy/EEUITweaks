@@ -2,7 +2,7 @@
  * Adul's Message Box Resize Buttons Installation
  ******************************************************************************/
 // Open UI.MENU
-PRINT @12
+LOG @12
 SILENT
 LAUNCH_ACTION_MACRO UIMenuOpen
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
@@ -11,7 +11,7 @@ BEGIN
 END
 
 // Patch WORLD_MESSAGES
-PRINT @155
+LOG @155
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~WORLD_MESSAGES~
 OUTER_SPRINT $UIMenuIF("Body") ~~
@@ -51,7 +51,7 @@ BEGIN
 END
 		
 // Close up
-PRINT @13
+LOG @13
 SILENT
 LAUNCH_ACTION_MACRO UIMenuClose
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN

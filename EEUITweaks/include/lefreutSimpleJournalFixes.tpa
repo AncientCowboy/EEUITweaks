@@ -1,0 +1,250 @@
+/*******************************************************************************
+ * lefreutSimpleJournalFixes.PatchBody
+ * 
+ * In code previously read into $UIMenuIF("Body"), replaces occurances of 
+ * $UIMenuIF("LuaRegex") with contents of $UIMenuIF("Filespec")  
+ *
+ * On completion $UIMenuIF("Succeeded") 1 => Success, 0 => Failure
+ * 
+ ******************************************************************************/
+DEFINE_ACTION_MACRO lefreutSimpleJournalFixes.PatchBody
+BEGIN
+	LOCAL_SPRINT tempstr $UIMenuIF("Body")
+	LOCAL_SPRINT tempfs $UIMenuIF("Filespec")
+	LOCAL_SPRINT adder ~~
+	LOCAL_SPRINT pattern $UIMenuIF("LuaRegex")
+
+	// Read patch insertion from $UIMenuIF("Filespec")
+	LOCAL_SET found = SIZE_OF_FILE ~%tempfs%~
+	COPY - ~%tempfs%~ ~.../CounterInLine~
+		READ_ASCII 0 adder (%found%)
+	OUTER_SET found = 0 
+
+	// Put code block into inline file
+	COPY - ~ToInlineTemplate~ ~.../CounterInLine~
+		REPLACE_EVALUATE ~dummy~ BEGIN END
+		~%tempstr%~
+	OUTER_SPRINT tempstr ~~
+
+	// Find target function definitions, replace them
+	COPY - ~.../CounterInLine~ ~.../CounterInLine~
+		REPLACE_EVALUATE ~%pattern%~
+		BEGIN
+			SET found = 1
+		END
+		~%adder%~
+
+	// If not found, nothing to do but fail.
+	ACTION_IF NOT %found% THEN
+	BEGIN
+		LOG ~In lefreutSimpleJournalFixes.PatchBody - failed to find pattern %pattern%~
+		OUTER_SET $UIMenuIF("Succeeded") = 0
+	END
+
+	// Success - copy .../CounterInLine to $UIMenuIF("Body")
+	ACTION_IF %found% THEN
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Body") ~~
+		OUTER_SET found = SIZE_OF_FILE ~.../CounterInLine~
+		COPY - ~.../CounterInLine~ ~.../CounterInLine~
+			READ_ASCII 0 $UIMenuIF("Body") (%found%-1)
+			OUTER_SET $UIMenuIF("Succeeded") = 1
+	END
+	COPY - ~EmptyInlineTemplate~ ~.../CounterInline~
+END
+
+/******************************************************************************
+ * lefreut's Simple Journal Fixes Installation
+ *****************************************************************************/
+// Open UI.MENU
+LOG @12
+SILENT
+LAUNCH_ACTION_MACRO UIMenuOpen
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @20
+END
+
+// Patch JOURNAL Lua block
+LOG ~Patching JOURNAL Lua block~
+SILENT
+
+OUTER_SPRINT $UIMenuIF("LuaRegex") ~function[%TAB% ]+initQuests[%TAB% ]*([%TAB% ]*)~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+LAUNCH_ACTION_MACRO UIMenuGetMatchingLuaBlock
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @307001
+END
+
+// Fix for information entries
+LOG ~Patching updateJournalEntry function~
+ACTION_MATCH 1
+WITH
+	%IsBG2% %IsTIWDonBG2% %IsTIWD2onBG2% %IsBGEE% %IsSoD% %IsBG2onSoD% %IsSoDOverhaul% %IsTIWDonSoD% %IsKRDS% %IsEETBG2% %IsEETSoD%
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("LuaRegex") ~^[%TAB% ]*table.sort[%TAB% ]*([%TAB% ]*quest.objectives[%TAB% ]*,[%TAB% ]*compareByRecvTime[%TAB% ]*).*$~
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/lefreutSimpleJournalFixes/updateJournalEntryPatch1.lua~
+	END
+
+	DEFAULT
+		FAIL @15
+END
+
+LAUNCH_ACTION_MACRO lefreutSimpleJournalFixes.PatchBody
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @307002
+END
+LAUNCH_ACTION_MACRO UIMenuUpdateLuaBlock
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @103
+END
+
+ACTION_IF (NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~3020~) AND NOT(%IsSoDOverhaul% = 1)) THEN // Not needed for Mr2150's Journal Fixes nor DS UI++
+BEGIN
+	// Fix for No Objective Text
+	LOG ~Patching buildQuestDisplay function~
+	ACTION_MATCH 1
+	WITH
+		%IsBG2% %IsTIWDonBG2% %IsTIWD2onBG2% %IsBGEE% %IsEETBG2% %IsEETSoD%
+		BEGIN
+			OUTER_SPRINT $UIMenuIF("LuaRegex") ~^[%TAB% ]*if[%TAB% ]*([%TAB% ]*objective\.text[%TAB% ]*==[%TAB% ]*Infinity_FetchString[%TAB% ]*([%TAB% ]*quest\.text[%TAB% ]*)[%TAB% ]*)[%TAB% ]*then.*$~
+			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/lefreutSimpleJournalFixes/buildQuestDisplayPatch1.lua~
+		END
+		%IsSoD% %IsBG2onSoD% %IsTIWDonSoD% %IsKRDS%
+		BEGIN
+			OUTER_SPRINT $UIMenuIF("LuaRegex") "^[%TAB% ]*if[%TAB% ]*([%TAB% ]*objective\.stateType[%TAB% ]*~=[%TAB% ]*const\.ENTRY_TYPE_INFO[%TAB% ]*)[%TAB% ]*then"
+			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/lefreutSimpleJournalFixes/buildQuestDisplayPatch2.lua~
+		END
+
+		DEFAULT
+			FAIL @15
+	END
+
+	LAUNCH_ACTION_MACRO lefreutSimpleJournalFixes.PatchBody
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @307003
+	END
+	LAUNCH_ACTION_MACRO UIMenuUpdateLuaBlock
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @103
+	END
+END
+
+// Fix for empty entries
+LOG ~Patching questEnabled function~
+ACTION_MATCH 1
+WITH
+	%IsBG2% %IsTIWDonBG2% %IsTIWD2onBG2% %IsBGEE% %IsSoD% %IsBG2onSoD% %IsSoDOverhaul% %IsTIWDonSoD% %IsKRDS% %IsEETBG2% %IsEETSoD%
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("LuaRegex") ~return[%TAB% ]*([%TAB% ]*questDisplay\[row\][%TAB% ]+and[%TAB% ]+questDisplay\[row\]\.quest[%TAB% ]+and[%TAB% ]+containsChapter[%TAB% ]*([%TAB% ]*questDisplay\[row\]\.chapters[%TAB% ]*,[%TAB% ]*chapter[%TAB% ]*)[%TAB% ]+and[%TAB% ]+([%TAB% ]*#questDisplay\[row\]\.children[%TAB% ]+>[%TAB% ]+0[%TAB% ]*)[%TAB% ]*)~
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/lefreutSimpleJournalFixes/questEnabledPatch1.lua~
+	END
+
+	DEFAULT
+		FAIL @15
+END
+
+LAUNCH_ACTION_MACRO lefreutSimpleJournalFixes.PatchBody
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @307004
+END
+LAUNCH_ACTION_MACRO UIMenuUpdateLuaBlock
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @103
+END
+
+LOG ~Adding childrenContainsChapter function~
+ACTION_MATCH 1
+WITH
+	%IsBG2% %IsTIWDonBG2% %IsTIWD2onBG2% %IsBGEE% %IsSoD% %IsBG2onSoD% %IsSoDOverhaul% %IsTIWDonSoD% %IsKRDS% %IsEETBG2% %IsEETSoD%
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("LuaRegex") ~^[%TAB% ]*function[%TAB% ]+questEnabled[%TAB% ]*([%TAB% ]*row[%TAB% ]*)~
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/lefreutSimpleJournalFixes/questEnabledPatch2.lua~
+	END
+
+	DEFAULT
+		FAIL @15
+END
+
+LAUNCH_ACTION_MACRO lefreutSimpleJournalFixes.PatchBody
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @307004
+END
+LAUNCH_ACTION_MACRO UIMenuUpdateLuaBlock
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @103
+END
+
+// Patch textflash menu - Fix for journal popup
+LOG ~Patching textflash menu~
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~textflash~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+LAUNCH_ACTION_MACRO UIMenuGetMenu
+
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @144
+END
+
+LOG ~First label to text patch~
+ACTION_MATCH 1
+WITH
+	%IsBG2% %IsTIWDonBG2% %IsTIWD2onBG2% %IsBGEE% %IsSoD% %IsBG2onSoD% %IsSoDOverhaul% %IsTIWDonSoD% %IsKRDS% %IsEETBG2% %IsEETSoD%
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("LuaRegex") ~^[%TAB% ]*label%MNOBRACE%*{%MNOBRACE%*area[%TAB% ]+[0-9]+[%TAB% ]+[0-9]+[%TAB% ]+[0-9]+[%TAB% ]+[0-9]+%MNOBRACE%+"getSubtitleString[%TAB% ]*([%TAB% ]*)"%MNOBRACE%+}.*$~
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutSimpleJournalFixes/textflashMenuPatch1.menu~
+	END
+
+	DEFAULT
+		FAIL @15
+END
+
+LAUNCH_ACTION_MACRO lefreutSimpleJournalFixes.PatchBody
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @145
+END
+
+LOG ~Second label to text patch~
+ACTION_MATCH 1
+WITH
+	%IsBG2% %IsTIWDonBG2% %IsTIWD2onBG2% %IsBGEE% %IsSoD% %IsBG2onSoD% %IsSoDOverhaul% %IsTIWDonSoD% %IsKRDS% %IsEETBG2% %IsEETSoD%
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("LuaRegex") ~^[%TAB% ]*label%MNOBRACE%*{%MNOBRACE%*area[%TAB% ]+[0-9]+[%TAB% ]+[0-9]+[%TAB% ]+[0-9]+[%TAB% ]+[0-9]+%MNOBRACE%+"getBodyString[%TAB% ]*([%TAB% ]*)"%MNOBRACE%+}.*$~
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutSimpleJournalFixes/textflashMenuPatch2.menu~
+	END
+
+	DEFAULT
+		FAIL @15
+END
+
+LAUNCH_ACTION_MACRO lefreutSimpleJournalFixes.PatchBody
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @145
+END
+
+LAUNCH_ACTION_MACRO UIMenuUpdateMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @103
+END
+
+// Close UI.MENU
+LOG @13
+SILENT
+LAUNCH_ACTION_MACRO UIMenuClose
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @21
+END

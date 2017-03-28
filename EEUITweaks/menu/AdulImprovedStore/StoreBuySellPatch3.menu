@@ -11,7 +11,24 @@
 						storeScreen:SetGroupItemCount(storeGroupItemsVar - 1, count)
 					elseif (stock > 1) then
 						storeScreen:SetGroupItemCount(storeGroupItemsVar - 1, stock)
-					end	
+					end
 				end
+			end
+		"
+		actionalt
+		"
+			showItemDescription(store.groupItems[storeGroupItemsVar].item, 1)
+		"
+		actionDbl
+		"
+			if store.groupItems[storeGroupItemsVar].valid ~= 0 then
+				local count = store.groupItems[storeGroupItemsVar].item.count
+				local stock = store.groupItems[storeGroupItemsVar].numInStock
+				if(count > 1) then
+					popupRequester(count, groupSplitStack, false)
+				elseif stock > 1 then
+					popupRequester(stock, groupSplitStack, false)
+				end
+				storeScreen:SelectGroupItem(storeGroupItemsVar - 1, false)
 			end
 		"

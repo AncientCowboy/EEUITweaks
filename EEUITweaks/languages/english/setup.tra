@@ -164,6 +164,7 @@
 @520  = ~lefreut's Better Level Up Indicators~
 @530  = ~Mr2150's Auto-Identify Items~
 @540  = ~Journal Fixes and Tweaks~
+@550  = ~Spell Books~
 
 ///////////////////////////////////////////////////////////////////////////////
 // Component specific strings
@@ -196,14 +197,8 @@
 @103002 = ~Unable to replace CHARGEN_GENDER menu~
 
 
-@104000 = ~Mr2150's Portrait Picker~
-@104001 = 
-~How often do you play the game with Scale UI enabled?
-(1) Never
-(2) Always
-(3) Sometimes
-(4) I don't know
-Please enter return or a number between 1 and 4 [1]~
+@104000 = ~Mr2150's Portrait Picker (Scaleable UI)~
+@104100 = ~Mr2150's Portrait Picker (Non-Scaleable UI)~
 
 @104200 = ~Mr2150's Backup M_BG.lua~
 @104201 = ~Skipping - override/M_BG.lua not found~
@@ -354,6 +349,8 @@ Please enter return or a number between 1 and 4 [1]~
 
 @207000 = ~Dee's Permanent Thieving Button~
 
+@208000 = ~elminster's Easier Area Cheats~
+
 ///////////////////////////////////////////////////////////////////////////////
 // Record/Inventory/Journal Group
 ///////////////////////////////////////////////////////////////////////////////
@@ -375,6 +372,8 @@ Please enter return or a number between 1 and 4 [1]~
 @302002 = ~Unable to get Journal Lua functions~
 @302003 = ~Encountered error replacing Journal Lua functions~
 @302004	= ~Incompatible with previously installed lefreut's Journal~
+@302005 = ~Uninstalling incompatible lefreut's Simple Journal Fixes~
+@302006 = ~Installing it again will make it compatible~
 
 @302300 = ~lefreut's Journal~
 @302301 = ~Replacing textflash menu~
@@ -387,6 +386,7 @@ Please enter return or a number between 1 and 4 [1]~
 @302308 = ~Replacing JOURNAL_RECENT_EVENTS with EDIT_JOURNAL~
 @302309 = ~Unable to replace JOURNAL_RECENT_EVENTS menu~
 @302010	= ~Incompatible with previously installed Mr2150's Journal Fixes~
+@302011 = ~Uninstalling redundant Simple Journal Fixes~
 
 @302800 = ~lefreut's Customize Screens Tweaks~
 @302801 = ~Replacing CHARACTER_CUSTOMIZE menu~
@@ -394,7 +394,7 @@ Please enter return or a number between 1 and 4 [1]~
 @302803 = ~Replacing CHARACTER_BIOGRAPHY menu~
 @302804 = ~Unable to replace CHARACTER_BIOGRAPHY menu~
 @302805 = ~Replacing CHARACTER_SCRIPT Lua functions~
-@302006 = ~Unable to find CHARACTER_SCRIPT Lua functions~
+@302806 = ~Unable to find CHARACTER_SCRIPT Lua functions~
 @302807 = ~Unable to replace CHARACTER_SCRIPT Lua functions~
 @302808 = ~Replacing CHARACTER_SCRIPT menu~
 @302809 = ~Unable to replace CHARACTER_SCRIPT menu~
@@ -438,6 +438,14 @@ Please enter return or a number between 1 and 4 [1]~
 @306007 = ~Replacing CHARACTER_EXPORT menu~
 @306008 = ~Unable to replace CHARACTER_EXPORT menu~
 
+@307000 = ~lefreut's Simple Journal Fixes~
+@307001 = ~Unable to find JOURNAL menu Lua code block~
+@307002 = ~Unable to patch updateJournalEntry function~
+@307003 = ~Unable to patch buildQuestDisplay function~
+@307004 = ~Unable to patch questEnabled function~
+@307005 = ~Redundant with previously installed lefreut's Journal~
+
+
 ///////////////////////////////////////////////////////////////////////////////
 // Stores/Dialogs/Spell Books Group
 ///////////////////////////////////////////////////////////////////////////////
@@ -462,7 +470,7 @@ Please enter return or a number between 1 and 4 [1]~
 @401003	= ~Unable to patch STORE_BUYSELL Lua block~
 
 
-@402000 = ~Adul's Improved Store Usability~
+@402000 = ~Adul's Smooth Selling~
 @402001 = ~Incompatible with previously installed lefreut's BG2 Store Screen Tweaks~
 
 @403000 = ~lefleut's Inscribed Arcana~
@@ -482,6 +490,8 @@ Please enter return or a number between 1 and 4 [1]~
 @403014 = ~Unable to replace Priest Scrolls Lua code block~
 @403015 = ~Replacing PRIEST menu~
 @403016 = ~Unable to replace PRIEST menu~
+
+@404000 = ~Kilivitz's Classic Spellbooks~
 
 ///////////////////////////////////////////////////////////////////////////////
 // Multiplayer/General/Other Group

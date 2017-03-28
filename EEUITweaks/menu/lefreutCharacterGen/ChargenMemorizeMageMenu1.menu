@@ -79,8 +79,10 @@ menu
 		action
 		"
 			if cellNumber == 3 then
+				Infinity_PlaySound('GAM_09')
 				createCharScreen:OnMemorizeMageSpellButtonClick(currentChargenMemorizeMageSpell, -1)
 			elseif cellNumber == 4 and spellSelectable(currentChargenMemorizeMageSpell) then
+				Infinity_PlaySound('GAM_09')
 				createCharScreen:OnMemorizeMageSpellButtonClick(currentChargenMemorizeMageSpell, 1)
 			end
 			cellNumber = nil

@@ -1,8 +1,16 @@
 /******************************************************************************
  * lefreut's Journal Installation
  *****************************************************************************/
+// Uninstall Simple Journal Fixes if it has been installed
+ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~3070~ THEN
+BEGIN
+	PRINT @302011
+	SILENT
+	UNINSTALL ~EEUITweaks.tp2~ ~3070~
+END
+
 // Open UI.MENU
-PRINT @12
+LOG @12
 SILENT
 LAUNCH_ACTION_MACRO UIMenuOpen
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
@@ -11,7 +19,7 @@ BEGIN
 END
 
 // Replace textflash menu
-PRINT @302301
+LOG @302301
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~textflash~
 OUTER_SPRINT $UIMenuIF("Body") ~~
@@ -23,7 +31,7 @@ BEGIN
 END
 
 // Replace Journal Lua code
-PRINT @302303
+LOG @302303
 SILENT
 OUTER_SPRINT $UIMenuIF("LuaRegex") ~function[%TAB% ]+initQuests[%TAB% ]*([%TAB% ]*)~
 LAUNCH_ACTION_MACRO UIMenuGetMatchingLuaBlock
@@ -40,7 +48,7 @@ BEGIN
 END
 
 // Replace JOURNAL menu
-PRINT @302306
+LOG @302306
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~JOURNAL~
 OUTER_SPRINT $UIMenuIF("Body") ~~
@@ -52,7 +60,7 @@ BEGIN
 END
 
 // Replace JOURNAL_RECENT_EVENTS menu with EDIT_JOURNAL menu
-PRINT @302308
+LOG @302308
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~JOURNAL_RECENT_EVENTS~
 OUTER_SPRINT $UIMenuIF("Body") ~~
@@ -64,7 +72,7 @@ BEGIN
 END
 
 // Close UI.MENU
-PRINT @13
+LOG @13
 SILENT
 LAUNCH_ACTION_MACRO UIMenuClose
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
@@ -73,7 +81,7 @@ BEGIN
 END
 
 // Copy files
-PRINT @24
+LOG @24
 SILENT
 COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUISCRC.BAM~ ~override~
 

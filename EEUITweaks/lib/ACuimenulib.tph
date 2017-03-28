@@ -403,6 +403,7 @@ BEGIN
 			END
 		END
 	END
+	ACTION_CLEAR_ARRAY ~uimenulibglobal~
 	OUTER_SET $uimenulibglobal("state") = 0 // Closed
 	OUTER_SET $uimenulibglobal("luacount") = 0
 	OUTER_SET $uimenulibglobal("commentcount") = 0
