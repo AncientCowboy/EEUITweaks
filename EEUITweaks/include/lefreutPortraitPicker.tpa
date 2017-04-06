@@ -147,6 +147,9 @@ COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUIOSTUL.BAM~ ~override~
 COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUIOSTUR.BAM~ ~override~
 COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4004.PVRZ~ ~override~
 
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUIRSP10.BAM~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4010.PVRZ~ ~override~
+
 COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUIGEND1.BAM~ ~override~
 COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4015.PVRZ~ ~override~
 
