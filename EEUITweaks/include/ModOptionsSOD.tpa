@@ -2305,6 +2305,142 @@ BEGIN
 	END
 END
 
+/*******************************************************************************
+ *
+ * IsPSTEE Section
+ *
+ ******************************************************************************/
+//
+// ModOptions.AddFileAfterMatch
+// Adds the contents of the file passed in $UIMenuIF("Filespec") to the contents
+// of $UIMenuIF("Body") immediately after a match of $UIMenuIF("LuaRegex").
+// On completion $UIMenuIF("Succeeded") 1 => Success, 0 => Failure
+//
+DEFINE_ACTION_MACRO ModOptions.AddFileAfterMatch
+BEGIN
+	LOCAL_SPRINT tempstr $UIMenuIF("Body")
+	LOCAL_SPRINT matchstr $UIMenuIF("LuaRegex")
+	LOCAL_SPRINT insertstr $UIMenuIF("Filespec")
+	LOCAL_SPRINT adder ~~
+
+	// Read patch insertion from passed
+	LOCAL_SET found = SIZE_OF_FILE ~%insertstr%~
+	COPY - ~%insertstr%~ ~.../CounterInLine~
+		READ_ASCII 0 adder (%found%)
+
+	// Put target code into inline file
+	OUTER_SET found = 0 
+	COPY - ~ToInlineTemplate~ ~.../CounterInLine~
+		REPLACE_EVALUATE ~dummy~ BEGIN END
+		~%tempstr%~
+	OUTER_SPRINT tempstr ~~
+
+	// Search for all of assignment, add new code after it
+	ACTION_IF NOT %found% THEN
+	BEGIN
+		COPY - ~.../CounterInLine~ ~.../CounterInLine~
+			REPLACE_EVALUATE CASE_INSENSITIVE ~%matchstr%~
+			BEGIN
+				SPRINT tempstr ~%MATCH0%%adder%~
+				SET found = 1
+			END
+			~%tempstr%~
+	END
+
+	// If not found, nothing to do but fail.
+	ACTION_IF NOT %found% THEN
+	BEGIN
+		LOG ~In ModOptions.AddFileAfterMatch - failed to match regex~
+		OUTER_SET $UIMenuIF("Succeeded") = 0
+	END ELSE 
+
+	// Success copy .../CounterInLine to $UIMenuIF("Body")
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Body") ~~
+		OUTER_SET found = SIZE_OF_FILE ~.../CounterInLine~
+		COPY - ~.../CounterInLine~ ~.../CounterInLine~
+			READ_ASCII 0 $UIMenuIF("Body") (%found%-1)
+		OUTER_SET $UIMenuIF("Succeeded") = 1
+	END
+	COPY - ~EmptyInlineTemplate~ ~.../CounterInline~
+END
+
+//
+// ModOptions.PSTEESpecific
+// Main sequence
+//	
+DEFINE_ACTION_MACRO ModOptions.PSTEESpecific
+BEGIN	
+	LOG @42 // Installing for PST:EE
+
+	// Patch includes.lua
+	LOG @43
+	SILENT
+	INCLUDE ~%PKGNAME%/lib/ACFixIncludeLua.tpa~
+	LAUNCH_ACTION_MACRO EEUITweaks.FixIncludeLua
+
+	// Patch UI.MENU beginning to load lang_ModOp.lua
+	LOG @206
+	SILENT
+
+	OUTER_SPRINT $UIMenuIF("LuaRegex") ~^[%TAB% ]*if[%TAB% ]*([%TAB% ]*uiTranslationFile[%TAB% ]*)[%TAB% ]*then%MWHITE%Infinity_DoFile[%TAB% ]*([%TAB% ]*"L_"[%TAB% ]*\.\.[%TAB% ]*uiTranslationFile[%TAB% ]*)%MWHITE%else%MWHITE%Infinity_DoFile[%TAB% ]*([%TAB% ]*"L_en_us"[%TAB% ]*)%MWHITE%end.*$~
+	OUTER_SPRINT $UIMenuIF("Body") ~~
+	LAUNCH_ACTION_MACRO UIMenuGetMatchingLuaBlock
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @207
+	END
+
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/ModsOptions/uimenutop1.lua~
+	LAUNCH_ACTION_MACRO ModOptions.AddFileAfterMatch
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @208
+	END
+
+	LAUNCH_ACTION_MACRO UIMenuUpdateLuaBlock
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @103
+	END
+
+	// Patch ESC_MENU
+	LOG @104
+	SILENT
+
+	OUTER_SPRINT $UIMenuIF("MenuName") ~ESC_MENU~
+	OUTER_SPRINT $UIMenuIF("Body") ~~
+	LAUNCH_ACTION_MACRO UIMenuGetMenu
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @105
+	END
+
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/ModsOptions/modoesc7.menu~
+	LAM UIMenuAppendMenuElements
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @106
+	END
+
+	LAUNCH_ACTION_MACRO UIMenuUpdateMenu
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @103
+	END
+
+	// Add ModsOptions menus
+	LOG @100001
+	SILENT
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/ModsOptions/modoptions10.menu~
+	LAUNCH_ACTION_MACRO UIMenuAppendFile
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @100002
+	END
+
+END
+
 
 /*******************************************************************************
  * Mods Options Installation
@@ -2326,12 +2462,12 @@ COPY ~%PKGNAME%/copy/ModsOptions/en_ModOp.lua~ ~override~
 
 ACTION_MATCH 1
 WITH
-	%IsSoD% %IsEETSoD%
+	%IsSoD% %IsEETSoD% %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS4% %IsKRDS6% WHEN NOT(%IsKRDS5%)
 	BEGIN
 		LAUNCH_ACTION_MACRO ModOptions.SoDSpecific
 	END
 
-	%IsKRDS%
+	%IsKRDS% %IsKRDS5%
 	BEGIN
 		LAUNCH_ACTION_MACRO ModOptions.KRDSSpecific
 	END
@@ -2389,6 +2525,11 @@ WITH
 	%IsTIWD2onBG2%
 	BEGIN
 		LAUNCH_ACTION_MACRO ModOptions.TIWD2onBG2Specific
+	END
+
+	%IsPSTEE%
+	BEGIN
+		LAUNCH_ACTION_MACRO ModOptions.PSTEESpecific
 	END
 
 	DEFAULT // Nothing left except Fail

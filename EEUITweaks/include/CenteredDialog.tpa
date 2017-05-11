@@ -232,11 +232,11 @@ BEGIN // Replace
 		BEGIN
 			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/CenteredDialog/worlddialogmenu3.menu~
 		END
-		%IsKRDS%
+		%IsKRDS% %IsKRDS0%
 		BEGIN
 			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/CenteredDialog/worlddialogmenu4.menu~
 		END
-		%IsSoD% %IsBG2onSoD%
+		%IsSoD% %IsBG2onSoD% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS4% %IsKRDS5% %IsKRDS6% WHEN NOT(%IsKRDS0%)
 		BEGIN
 			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/CenteredDialog/worlddialogmenu.menu~
 		END

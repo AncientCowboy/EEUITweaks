@@ -164,7 +164,7 @@ OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_ABILITIES~
 
 ACTION_MATCH 1
 WITH
-	%IsSoD% %IsEETSoD% %IsKRDS%
+	%IsSoD% %IsEETSoD% %IsKRDS% %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS4% %IsKRDS5% %IsKRDS6%
 	BEGIN
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FaydarkAutoRoll/chargenabilitiesmenu1.menu~
 	END

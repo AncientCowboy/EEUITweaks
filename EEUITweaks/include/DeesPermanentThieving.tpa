@@ -126,7 +126,7 @@ LOG @119
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~WORLD_ACTIONBAR~
 
-// For Kilivitz's Revised Dragon Scale this is a menu replacement rather than patch
+// For Kilivitz's Revised Dragon Scale v2 this is a menu replacement rather than patch
 ACTION_IF IsKRDS THEN
 BEGIN
 	ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2010~ THEN
@@ -155,7 +155,7 @@ BEGIN
 	END
 	ACTION_MATCH 1
 	WITH
-		%IsSoD% %IsEETSoD% %IsTIWDonSoD%
+		%IsSoD% %IsEETSoD% %IsTIWDonSoD% %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS4% %IsKRDS5% %IsKRDS6%
 		BEGIN
 			ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2010~ THEN
 			BEGIN
@@ -226,7 +226,7 @@ BEGIN
 	
 	ACTION_MATCH 1
 	WITH
-		%IsSoD% %IsEETSoD% %IsTIWDonSoD%
+		%IsSoD% %IsEETSoD% %IsTIWDonSoD% %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS4% %IsKRDS5% %IsKRDS6%
 		BEGIN
 			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/DeePermanentThieving/ActionBarButton1.menu~
 		END
@@ -270,7 +270,7 @@ BEGIN
 	BEGIN
 		ACTION_MATCH 1
 		WITH
-			%IsSoD% %IsEETSoD% %IsTIWDonSoD%
+			%IsSoD% %IsEETSoD% %IsTIWDonSoD% %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS4% %IsKRDS5% %IsKRDS6%
 			BEGIN
 				OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FeedbackHack/newbuttons1Large.menu~
 			END
@@ -310,7 +310,7 @@ BEGIN
 			FAIL @103
 		END
 	END
-END // Not IsKRDS
+END // Not (IsKRDS)
 
 // Close UI.MENU
 LOG @13
@@ -324,7 +324,7 @@ END
 // Copy configuration specific ACTION_BAR resources
 ACTION_MATCH 1
 WITH
-	%IsSoD% %IsEETSoD% %IsTIWDonSoD%
+	%IsSoD% %IsEETSoD% %IsTIWDonSoD% %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS4% %IsKRDS5% %IsKRDS6%
 	BEGIN
 		ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2010~ THEN
 		BEGIN

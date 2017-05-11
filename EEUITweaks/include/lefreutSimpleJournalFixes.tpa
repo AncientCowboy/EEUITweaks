@@ -81,7 +81,7 @@ END
 LOG ~Patching updateJournalEntry function~
 ACTION_MATCH 1
 WITH
-	%IsBG2% %IsTIWDonBG2% %IsTIWD2onBG2% %IsBGEE% %IsSoD% %IsBG2onSoD% %IsSoDOverhaul% %IsTIWDonSoD% %IsKRDS% %IsEETBG2% %IsEETSoD%
+	%IsBG2% %IsTIWDonBG2% %IsTIWD2onBG2% %IsBGEE% %IsSoD% %IsBG2onSoD% %IsSoDOverhaul% %IsTIWDonSoD% %IsKRDS% %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS4% %IsKRDS5% %IsKRDS6% %IsEETBG2% %IsEETSoD%
 	BEGIN
 		OUTER_SPRINT $UIMenuIF("LuaRegex") ~^[%TAB% ]*table.sort[%TAB% ]*([%TAB% ]*quest.objectives[%TAB% ]*,[%TAB% ]*compareByRecvTime[%TAB% ]*).*$~
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/lefreutSimpleJournalFixes/updateJournalEntryPatch1.lua~
@@ -113,7 +113,7 @@ BEGIN
 			OUTER_SPRINT $UIMenuIF("LuaRegex") ~^[%TAB% ]*if[%TAB% ]*([%TAB% ]*objective\.text[%TAB% ]*==[%TAB% ]*Infinity_FetchString[%TAB% ]*([%TAB% ]*quest\.text[%TAB% ]*)[%TAB% ]*)[%TAB% ]*then.*$~
 			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/lefreutSimpleJournalFixes/buildQuestDisplayPatch1.lua~
 		END
-		%IsSoD% %IsBG2onSoD% %IsTIWDonSoD% %IsKRDS%
+		%IsSoD% %IsBG2onSoD% %IsTIWDonSoD% %IsKRDS% %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS4% %IsKRDS5% %IsKRDS6%
 		BEGIN
 			OUTER_SPRINT $UIMenuIF("LuaRegex") "^[%TAB% ]*if[%TAB% ]*([%TAB% ]*objective\.stateType[%TAB% ]*~=[%TAB% ]*const\.ENTRY_TYPE_INFO[%TAB% ]*)[%TAB% ]*then"
 			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/lefreutSimpleJournalFixes/buildQuestDisplayPatch2.lua~
@@ -139,7 +139,7 @@ END
 LOG ~Patching questEnabled function~
 ACTION_MATCH 1
 WITH
-	%IsBG2% %IsTIWDonBG2% %IsTIWD2onBG2% %IsBGEE% %IsSoD% %IsBG2onSoD% %IsSoDOverhaul% %IsTIWDonSoD% %IsKRDS% %IsEETBG2% %IsEETSoD%
+	%IsBG2% %IsTIWDonBG2% %IsTIWD2onBG2% %IsBGEE% %IsSoD% %IsBG2onSoD% %IsSoDOverhaul% %IsTIWDonSoD% %IsKRDS% %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS4% %IsKRDS5% %IsKRDS6% %IsEETBG2% %IsEETSoD%
 	BEGIN
 		OUTER_SPRINT $UIMenuIF("LuaRegex") ~return[%TAB% ]*([%TAB% ]*questDisplay\[row\][%TAB% ]+and[%TAB% ]+questDisplay\[row\]\.quest[%TAB% ]+and[%TAB% ]+containsChapter[%TAB% ]*([%TAB% ]*questDisplay\[row\]\.chapters[%TAB% ]*,[%TAB% ]*chapter[%TAB% ]*)[%TAB% ]+and[%TAB% ]+([%TAB% ]*#questDisplay\[row\]\.children[%TAB% ]+>[%TAB% ]+0[%TAB% ]*)[%TAB% ]*)~
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/lefreutSimpleJournalFixes/questEnabledPatch1.lua~
@@ -163,7 +163,7 @@ END
 LOG ~Adding childrenContainsChapter function~
 ACTION_MATCH 1
 WITH
-	%IsBG2% %IsTIWDonBG2% %IsTIWD2onBG2% %IsBGEE% %IsSoD% %IsBG2onSoD% %IsSoDOverhaul% %IsTIWDonSoD% %IsKRDS% %IsEETBG2% %IsEETSoD%
+	%IsBG2% %IsTIWDonBG2% %IsTIWD2onBG2% %IsBGEE% %IsSoD% %IsBG2onSoD% %IsSoDOverhaul% %IsTIWDonSoD% %IsKRDS% %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS4% %IsKRDS5% %IsKRDS6% %IsEETBG2% %IsEETSoD%
 	BEGIN
 		OUTER_SPRINT $UIMenuIF("LuaRegex") ~^[%TAB% ]*function[%TAB% ]+questEnabled[%TAB% ]*([%TAB% ]*row[%TAB% ]*)~
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/lefreutSimpleJournalFixes/questEnabledPatch2.lua~
@@ -199,7 +199,7 @@ END
 LOG ~First label to text patch~
 ACTION_MATCH 1
 WITH
-	%IsBG2% %IsTIWDonBG2% %IsTIWD2onBG2% %IsBGEE% %IsSoD% %IsBG2onSoD% %IsSoDOverhaul% %IsTIWDonSoD% %IsKRDS% %IsEETBG2% %IsEETSoD%
+	%IsBG2% %IsTIWDonBG2% %IsTIWD2onBG2% %IsBGEE% %IsSoD% %IsBG2onSoD% %IsSoDOverhaul% %IsTIWDonSoD% %IsKRDS% %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS4% %IsKRDS5% %IsKRDS6% %IsEETBG2% %IsEETSoD%
 	BEGIN
 		OUTER_SPRINT $UIMenuIF("LuaRegex") ~^[%TAB% ]*label%MNOBRACE%*{%MNOBRACE%*area[%TAB% ]+[0-9]+[%TAB% ]+[0-9]+[%TAB% ]+[0-9]+[%TAB% ]+[0-9]+%MNOBRACE%+"getSubtitleString[%TAB% ]*([%TAB% ]*)"%MNOBRACE%+}.*$~
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutSimpleJournalFixes/textflashMenuPatch1.menu~
@@ -218,7 +218,7 @@ END
 LOG ~Second label to text patch~
 ACTION_MATCH 1
 WITH
-	%IsBG2% %IsTIWDonBG2% %IsTIWD2onBG2% %IsBGEE% %IsSoD% %IsBG2onSoD% %IsSoDOverhaul% %IsTIWDonSoD% %IsKRDS% %IsEETBG2% %IsEETSoD%
+	%IsBG2% %IsTIWDonBG2% %IsTIWD2onBG2% %IsBGEE% %IsSoD% %IsBG2onSoD% %IsSoDOverhaul% %IsTIWDonSoD% %IsKRDS% %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS4% %IsKRDS5% %IsKRDS6% %IsEETBG2% %IsEETSoD%
 	BEGIN
 		OUTER_SPRINT $UIMenuIF("LuaRegex") ~^[%TAB% ]*label%MNOBRACE%*{%MNOBRACE%*area[%TAB% ]+[0-9]+[%TAB% ]+[0-9]+[%TAB% ]+[0-9]+[%TAB% ]+[0-9]+%MNOBRACE%+"getBodyString[%TAB% ]*([%TAB% ]*)"%MNOBRACE%+}.*$~
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutSimpleJournalFixes/textflashMenuPatch2.menu~

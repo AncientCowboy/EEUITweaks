@@ -73,7 +73,7 @@ LOG @119
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~WORLD_ACTIONBAR~
 
-// For Kilivitz's Revised Dragon Scale this is a menu replacement rather than patch
+// For Kilivitz's Revised Dragon Scale V2 this is a menu replacement rather than patch
 ACTION_IF IsKRDS THEN
 BEGIN
 	ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2070~ THEN
@@ -104,7 +104,7 @@ BEGIN
 	// Patch label
 	ACTION_MATCH 1
 	WITH
-		%IsSoD% %IsEETSoD% %IsTIWDonSoD%
+		%IsSoD% %IsEETSoD% %IsTIWDonSoD% %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS4% %IsKRDS5% %IsKRDS6%
 		BEGIN
 			ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2070~ THEN
 			BEGIN
@@ -167,7 +167,7 @@ BEGIN
 	// Add buttons
 	ACTION_MATCH 1
 	WITH
-		%IsSoD% %IsEETSoD% %IsTIWDonSoD%
+		%IsSoD% %IsEETSoD% %IsTIWDonSoD%  %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS4% %IsKRDS5% %IsKRDS6%
 		BEGIN
 			ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2070~ THEN
 			BEGIN
@@ -245,7 +245,7 @@ END
 // Copy configuration specific ACTION_BAR resources
 ACTION_MATCH 1
 WITH
-	%IsSoD% %IsEETSoD% %IsTIWDonSoD%
+	%IsSoD% %IsEETSoD% %IsTIWDonSoD%  %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS4% %IsKRDS5% %IsKRDS6%
 	BEGIN
 		COPY ~%PKGNAME%/copy/FeedbackHack/SOD/GMSGSCRL.BAM~ ~override~
 		COPY ~%PKGNAME%/copy/FeedbackHack/SOD/MOS5055.PVRZ~ ~override~

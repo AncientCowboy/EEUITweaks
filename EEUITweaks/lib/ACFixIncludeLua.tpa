@@ -1,0 +1,30 @@
+/*******************************************************************************
+ *
+ * EEUITweaks.FixIncludeLua
+ *
+ ******************************************************************************/
+DEFINE_ACTION_MACRO EEUITweaks.FixIncludeLua
+BEGIN
+	LOCAL_SPRINT adder ~~
+	LOCAL_SET fsize = 0
+
+// First, put includes.LUA into override if necessary, and test if it's already fixed
+	ACTION_IF NOT(FILE_EXISTS ~override/includes.LUA~) THEN
+	BEGIN
+		COPY ~%PKGNAME%/lib/includes.LUA~ ~override~
+	END ELSE
+	BEGIN
+		ACTION_IF NOT(FILE_CONTAINS ~override/includes.LUA~ ~"M_"~) THEN
+		// Not fixed so append contents of %PKGNAME%/lib/includes_LUA_addition.lua to includes.LUA
+		BEGIN 
+			// Read addition
+			OUTER_SET fsize = SIZE_OF_FILE ~%PKGNAME%/lib/includes_LUA_addition.lua~
+			COPY - ~%PKGNAME%/lib/includes_LUA_addition.lua~ ~.../CounterInLine~
+				READ_ASCII 0 adder (%fsize%)
+
+			APPEND_OUTER ~override/includes.LUA~ ~%adder%~
+			COPY - ~EmptyInlineTemplate~ ~.../CounterInline~
+
+		END
+	END
+END
