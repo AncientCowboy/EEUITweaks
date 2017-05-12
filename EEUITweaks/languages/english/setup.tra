@@ -39,10 +39,13 @@
 @23   = ~Encountered error determining if running Dragonspear UI++~
 @24   = ~Copying files to override~
 @25   = ~Requires either BGEE or BG2EE~
-@26   = ~Mods Options must be installed for this mod to function~
-@27   = ~Mod is either not supported or not useful for your game configuration~
+@26   = ~~
+@27   = ~~
+//@26   = ~Mods Options must be installed for this mod to function~
+//@27   = ~Either this mod is not supported by or conflicts with your game configuration~
 @28   = ~Installing for BG2EE configuration~
-@29   = ~Mr2150's Portrait Picker must be installed for this mod to function~
+@29   = ~~
+//@29   = ~Mr2150's Portrait Picker must be installed for this mod to function~
 @30   = ~Copying language specific files for:~
 @31   = ~Installing for EET BG2 GUI configuration~
 @32   = ~Installing for EET SoD GUI configuration~
@@ -52,9 +55,12 @@
 @36   = ~Installing for LeUI BG1EE configuration~
 @37   = ~Installing for LeUI EET configuration~
 @38   = ~Installing for Kilivit's Revised Dragon Scale UI configuration~
-@39   = ~None of the possible options of this group are supported for your game configuration~
+@39   = ~~
+//@39   = ~None of the possible options of this group are supported for your game configuration~
 @40   = ~Installing for trinit's IWD GUI for BG2EE/BG1EE with DJKajuru's Enhancement~
 @41   = ~Installing for trinit's IWD2 GUI for BG2EE~
+@42   = ~Installing for PST:EE configuration~
+@43   = ~Updating PST:EE includes.lua~
 
 ///////////////////////////////////////////////////////////////////////////////
 // Specific Menu patching/error messages
@@ -154,6 +160,22 @@
 @191  = ~Patching ITEM_DESCRIPTION menu~
 @192  = ~Unable to get ITEM_DESCRIPTION menu~
 @193  = ~Unable to patch ITEM_DESCRIPTION menu~
+@194  = ~Patching START menu~
+@195  = ~Unable to get START menu~
+@196  = ~Unable to patch START menu~
+@197  = ~Patching START_SP menu~
+@198  = ~Unable to get START_SP menu~
+@199  = ~Unable to patch START_SP menu~
+@200  = ~Patching QuitMenu menu~
+@201  = ~Unable to get QuitMenu menu~
+@202  = ~Unable to patch QuitMenu menu~
+@203  = ~Patching START_MAIN menu~
+@204  = ~Unable to get START_MAIN menu~
+@205  = ~Unable to patch START_MAIN menu~
+@206  = ~Patching UI.MENU initial code block~
+@207  = ~Unable to get UI.MENU initial code block~
+@208  = ~Unable to patch UI.MENU initial code block~
+
 
 ///////////////////////////////////////////////////////////////////////////////
 // Subcomponent groups
@@ -217,6 +239,7 @@
 @106000 = ~Mr2150's Roll First~
 @106001 = ~Incompatible with previously installed Mr2150's Random PC Generator~
 @106002 = ~Incompatible with previously installed Faydark's Abilities Auto-Roller~
+@106003 = ~Incompatible with previously installed Mr2150's Portrait Picker~
 
 @107000 = ~Faydark's Abilities Auto-Roller/GrimLefourbe's BG2 UI~
 @107001 = ~Replacing CHARGEN_ABILITIES~
@@ -362,7 +385,8 @@
 @300004 = ~Encountered error creating external Lua leveling information tables~ 
 
 @301000 = ~Leveling Progress Bars Options~
-@301001 = ~Leveling Progress Bars Tweaks must be installed for this mod to function~
+@301001 = ~~
+//@301001 = ~Leveling Progress Bars Tweaks must be installed for this mod to function~
 @301002 = ~Appending Progress Bars Options menu to UI.MENU~
 @301003 = ~Progress Bars Options menu already installed~
 @301004 = ~Encountered error appending Progress Bars Options menu~

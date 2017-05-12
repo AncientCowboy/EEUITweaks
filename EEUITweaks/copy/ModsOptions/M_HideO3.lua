@@ -1,15 +1,3 @@
-
-if(uiTranslationFile) then
-	Infinity_DoFile("L_" .. uiTranslationFile)
-	Infinity_DoFile(string.sub(uiTranslationFile,1,3).."HideO.lua")
-	if(uiStrings.HIDEOPT_TITLE == nil) then -- Badly named or non-existant file
-		Infinity_DoFile("en_HideO.lua")
-	end
-else
-	Infinity_DoFile("L_en_us")
-	Infinity_DoFile("en_HideO.lua")
-end
-
 -- Label Key, Description Key, toggle frame, toggle value, INI section name, INI option key  
 hiddenOptionsToggles = {
 	{"HIDEOPT_UI_EDIT_LABEL",		"HIDEOPT_UI_EDIT_DESCRIPTION",		0,	0,	"Program Options",	"UI Edit Mode"},
@@ -17,14 +5,15 @@ hiddenOptionsToggles = {
 	{"HIDEOPT_EXTRACOMBAT_LABEL",	"HIDEOPT_EXTRACOMBAT_DESCRIPTION", 	0,	0,	"Game Options",		"Extra Combat Info"},
 	{"HIDEOPT_FOG_LABEL",			"HIDEOPT_FOG_DESCRIPTION", 			0,	0,	"Game Options",		"Enable Fog"},
 	{"HIDEOPT_PAUSEDATE_LABEL",		"HIDEOPT_PAUSEDATE_DESCRIPTION", 	0,	0,	"Game Options",		"Show Date On Pause"},
+	{"HIDEOPT_DISABLE_MAPZ_LABEL",	"HIDEOPT_DISABLE_MAPZ_DESCRIPTION",	0,	0,	"Graphics",			"Disable Area Map Zoom"}, 
 	{"HIDEOPT_SHOWTRIGTAB_LABEL",	"HIDEOPT_SHOWTRIGTAB_DESCRIPTION", 	0,	0,	"Game Options",		"Show Triggers On Tab"},
 	{"HIDEOPT_WILDSRGKEY_LABEL",	"HIDEOPT_WILDSRGKEY_DESCRIPTION", 	0,	0,	"Game Options",		"WILD SURGE KEYS"},
+	{"HIDEOPT_CHEATS_LABEL",		"HIDEOPT_CHEATS_DESCRIPTION", 		0,	0,	"Game Options",		"Cheats"},
 	{"HIDEOPT_NOMOVIES_LABEL",		"HIDEOPT_NOMOVIES_DESCRIPTION", 	0,	0,	"Program Options",	"Disable Movies"},
 	{"HIDEOPT_REVERSE_MOUSE_LABEL",	"HIDEOPT_REVERSE_MOUSE_DESCRIPTION",0,	0,	"Game Options",		"Reverse Mouse Wheel Zoom"},
 	{"HIDEOPT_STRREF_LABEL",		"HIDEOPT_STRREF_DESCRIPTION", 		0,	0,	"Program Options",	"Strref On"},
 	{"HIDEOPT_CHSS_LABEL",			"HIDEOPT_CHSS_DESCRIPTION", 		0,	0,	"Game Options",		"Critical Hit Screen Shake"},
 	{"HIDEOPT_HPOH_LABEL",			"HIDEOPT_HPOH_DESCRIPTION", 		0,	0,	"Game Options",		"HP Over Head"},
-	{"HIDEOPT_CRSPELL_LABEL",		"HIDEOPT_CRSPELL_DESCRIPTION",		0,	0,	"Game Options",		"Cleric Ranger Spells"},
 	{"HIDEOPT_NDBXP_LABEL",			"HIDEOPT_NDBXP_DESCRIPTION", 		0,	0,	"Game Options",		"No Difficulty Based XP Bonus"},
 	{"HIDEOPT_NBXP_LABEL",			"HIDEOPT_NBXP_DESCRIPTION", 		0,	0,	"Game Options",		"Nightmare Bonus XP"},
 	{"HIDEOPT_NBGLD_LABEL",			"HIDEOPT_NBGLD_DESCRIPTION", 		0,	0,	"Game Options",		"Nightmare Bonus Gold"},
@@ -37,11 +26,10 @@ hiddenOptionsToggles = {
 	{"HIDEOPT_3ETHIEF_LABEL",		"HIDEOPT_3ETHIEF_DESCRIPTION", 		0,	0,	"Game Options",		"3E Thief Sneak Attack"},
 }
 
--- Label Key, Description Key, #Values, Base value, multiplier, slider value, INI section name, INI option key
+--    Label Key, 				Description Key, 				 #Values, Base value, multiplier, slider value,   INI section name, 	INI option key
 hiddenOptionsSliders = {
-	{"HIDEOPT_BRIGHTNESS_LABEL","HIDEOPT_BRIGHTNESS_DESCRIPTION",	41,		0,			1,			0,			"Program Options",	"Brightness Correction"},
-	{"HIDEOPT_BORE_LABEL",		"HIDEOPT_BORE_DESCRIPTION",			130,	1,		  500,			0,			"Game Options",	"Bored Timeout"},
-	{"HIDEOPT_TPRECACHE_LABEL",	"HIDEOPT_TPRECACHE_DESCRIPTION",	101,	0,			1,			0,			"Game Options",	"Tiles Precache Percent"},
+	{"HIDEOPT_BORE_LABEL",		"HIDEOPT_BORE_DESCRIPTION",			65,		1,		1000,			0,			"Game Options",		"Bored Timeout"},
+	{"HIDEOPT_TPRECACHE_LABEL",	"HIDEOPT_TPRECACHE_DESCRIPTION",	101,	0,		   1,			0,			"Game Options",		"Tiles Precache Percent"},
 }
 
 currentHiddenIdx = 0

@@ -22,7 +22,7 @@ BEGIN
 END
 ACTION_MATCH 1
 WITH
-	%IsSoD% %IsEETSoD% %IsSoDOverhaul% %IsKRDS%
+	%IsSoD% %IsEETSoD% %IsSoDOverhaul% %IsKRDS% %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS4% %IsKRDS5% %IsKRDS6%
 	BEGIN
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutImprovedInventory/inventorymenu1.menu~
 	END
@@ -58,7 +58,7 @@ END
 
 ACTION_MATCH 1
 WITH
-	%IsSoD% %IsEETSoD% %IsSoDOverhaul% %IsKRDS%
+	%IsSoD% %IsEETSoD% %IsSoDOverhaul% %IsKRDS% %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS4% %IsKRDS5% %IsKRDS6%
 	BEGIN
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/lefreutImprovedInventory/inventorycode1.lua~
 	END
@@ -99,7 +99,7 @@ LOG @17
 SILENT
 ACTION_MATCH 1
 WITH
-	%IsSoD% %IsEETSoD% %IsSoDOverhaul% %IsKRDS%
+	%IsSoD% %IsEETSoD% %IsSoDOverhaul% %IsKRDS% %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS4% %IsKRDS5% %IsKRDS6%
 	BEGIN
 		COPY ~%PKGNAME%/copy/luicommon/SODTheme/INVENTOR.MOS~ ~override~
 		COPY ~%PKGNAME%/copy/luicommon/SODTheme/INVSEP1.MOS~ ~override~

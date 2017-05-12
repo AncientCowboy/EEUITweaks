@@ -112,7 +112,7 @@ BEGIN
 
 	~LuaID~		=>	0-1		// Unique keynumber for a specific Lua code block copy/replacement
 							// Output from UIMenuGetMatchingLuaBlock 
-							// Input to UIMentUpdateLuaBlock/UIMenuReplaceLuaBlock
+							// Input to UIMenuUpdateLuaBlock/UIMenuReplaceLuaBlock
 
 	~LuaRegex~	=>	~~		// Regular expression to be used to identify a particular Lua code block
 							// Input to UIMenuGetMatchingLuaBlock

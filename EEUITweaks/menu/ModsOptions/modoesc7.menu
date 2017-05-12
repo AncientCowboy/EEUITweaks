@@ -1,0 +1,18 @@
+-- ESC_MENU addition
+	label
+	{
+		area 39 730 67 31
+		mosaic "VERPLATE"
+	}
+	button
+	{
+		area 43 736 58 20
+		clickable lua "(optionsFromStart() and modOptionsStartupEnabled()) or (not(optionsFromStart()) and modOptionsIngameEnabled())"
+		text "MODOPT_BRIEF"
+		text style	"label"
+		text point	10
+		action
+		"
+			Infinity_PushMenu('OPTIONS_MODS')
+		"
+	} 

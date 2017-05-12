@@ -26,7 +26,7 @@ WITH
 	BEGIN
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/KilivitzClassicSpellBooks/BG2EE/magecode1.lua~
 	END
-	%IsSoD% %IsKRDS% %IsEETSoD%
+	%IsSoD% %IsKRDS% %IsEETSoD% %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS5% %IsKRDS6%
 	BEGIN
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/KilivitzClassicSpellBooks/BGSOD/magecode1.lua~
 	END
@@ -55,7 +55,7 @@ WITH
 	BEGIN
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/KilivitzClassicSpellBooks/BG2EE/magemenu1.menu~
 	END
-	%IsSoD% %IsKRDS% %IsEETSoD%
+	%IsSoD% %IsKRDS% %IsEETSoD% %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS5% %IsKRDS6%
 	BEGIN
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/KilivitzClassicSpellBooks/BGSOD/magemenu1.menu~
 	END
@@ -99,7 +99,7 @@ WITH
 	BEGIN
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/KilivitzClassicSpellBooks/BG2EE/magecontingencymixed1.menu~
 	END
-	%IsSoD% %IsKRDS%
+	%IsSoD% %IsKRDS% %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS5% %IsKRDS6%
 	BEGIN
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/KilivitzClassicSpellBooks/BGSOD/magecontingencymixed1.menu~
 	END
@@ -136,7 +136,7 @@ WITH
 	BEGIN
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/KilivitzClassicSpellBooks/BG2EE/popupdetailsmenu1.menu~
 	END
-	%IsSoD% %IsKRDS% %IsEETSoD% %IsEETSoD%
+	%IsSoD% %IsKRDS% %IsEETSoD% %IsEETSoD% %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS5% %IsKRDS6%
 	BEGIN
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/KilivitzClassicSpellBooks/BGSOD/popupdetailsmenu1.menu~
 	END
@@ -170,7 +170,7 @@ WITH
 	BEGIN
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/KilivitzClassicSpellBooks/BG2EE/priestcode1.lua~
 	END
-	%IsSoD% %IsKRDS% %IsEETSoD%
+	%IsSoD% %IsKRDS% %IsEETSoD% %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS5% %IsKRDS6%
 	BEGIN
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/KilivitzClassicSpellBooks/BGSOD/priestcode1.lua~
 	END
@@ -199,7 +199,7 @@ WITH
 	BEGIN
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/KilivitzClassicSpellBooks/BG2EE/priestmenu1.menu~
 	END
-	%IsSoD% %IsKRDS% %IsEETSoD%
+	%IsSoD% %IsKRDS% %IsEETSoD% %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS5% %IsKRDS6%
 	BEGIN
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/KilivitzClassicSpellBooks/BGSOD/priestmenu1.menu~
 	END
@@ -242,7 +242,7 @@ WITH
 		COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUIMGB.MOS~ ~override~
 		COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4314.PVRZ~ ~override~
 	END
-	%IsSoD% %IsKRDS% %IsEETSoD%
+	%IsSoD% %IsKRDS% %IsEETSoD% %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS5% %IsKRDS6%
 	BEGIN
 		COPY ~%PKGNAME%/copy/luicommon/SODTheme/LUIMGCP.MOS~ ~override~
 		COPY ~%PKGNAME%/copy/luicommon/SODTheme/MOS4294.PVRZ~ ~override~

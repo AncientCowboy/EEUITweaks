@@ -162,6 +162,11 @@ menu
 
 	button
 	{
+		on '8'
+		action "createCharScreen:OnCheatyMcCheaterson()"
+	}
+	button
+	{
 		on return
 		bam LUIOSTUL
 		area 210 653 234 44

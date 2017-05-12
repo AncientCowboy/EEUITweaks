@@ -4,7 +4,7 @@
 SILENT
 ACTION_MATCH 1
 WITH
-	%IsSoD% %IsBG2onSoD% %IsSoDOverhaul% %IsTIWDonSoD% %IsKRDS% %IsLeUISOD%
+	%IsSoD% %IsBG2onSoD% %IsSoDOverhaul% %IsTIWDonSoD% %IsKRDS% %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS4% %IsKRDS5% %IsKRDS6% %IsLeUISOD%
 	BEGIN
 		LOG ~Copying M_k9SoD.lua~
 		COPY ~%PKGNAME%/copy/elminsterAreaCheats/M_k9SoD.lua~ ~override~

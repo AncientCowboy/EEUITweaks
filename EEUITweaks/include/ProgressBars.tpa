@@ -776,7 +776,7 @@ END
  * Progress Bar Tweaks Installation
  ******************************************************************************/
 // Test for lefreut's Improved Record Screen
-OUTER_SET ProgressBars.lefreuts = ((MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2900~) OR (MOD_IS_INSTALLED ~LeUI.tp2~ ~0~))
+OUTER_SET ProgressBars.lefreuts = ((MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2900~) OR (MOD_IS_INSTALLED ~LeUI.tp2~ ~0~) OR (MOD_IS_INSTALLED ~CKUISOD.tp2~ ~3~))
 
 
 // Open UI.MENU
@@ -785,6 +785,7 @@ SILENT
 LAUNCH_ACTION_MACRO UIMenuOpen
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
+	LAUNCH_ACTION_MACRO UIMenuClose
 	FAIL @20
 END
 
@@ -797,17 +798,20 @@ OUTER_SPRINT $UIMenuIF("Body") ~~
 LAUNCH_ACTION_MACRO UIMenuGetMenu
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
+	LAUNCH_ACTION_MACRO UIMenuClose
 	FAIL @111
 END
 
 LAUNCH_ACTION_MACRO ProgressBars.CharacterFirstPatch
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
+	LAUNCH_ACTION_MACRO UIMenuClose
 	FAIL @112
 END
 LAUNCH_ACTION_MACRO UIMenuUpdateMenu
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
+	LAUNCH_ACTION_MACRO UIMenuClose
 	FAIL @103
 END
 
@@ -817,17 +821,20 @@ BEGIN
 	LAUNCH_ACTION_MACRO UIMenuGetMenu
 	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 	BEGIN
+		LAUNCH_ACTION_MACRO UIMenuClose
 		FAIL @111
 	END
 
 	LAUNCH_ACTION_MACRO ProgressBars.CharacterSecondPatch
 	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 	BEGIN
+		LAUNCH_ACTION_MACRO UIMenuClose
 		FAIL @112
 	END
 	LAUNCH_ACTION_MACRO UIMenuUpdateMenu
 	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 	BEGIN
+		LAUNCH_ACTION_MACRO UIMenuClose
 		FAIL @103
 	END
 END
@@ -836,6 +843,7 @@ OUTER_SPRINT $UIMenuIF("Body") ~~
 LAUNCH_ACTION_MACRO UIMenuGetMenu
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
+	LAUNCH_ACTION_MACRO UIMenuClose
 	FAIL @111
 END
 
@@ -849,11 +857,13 @@ END
 
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
+	LAUNCH_ACTION_MACRO UIMenuClose
 	FAIL @112
 END
 LAUNCH_ACTION_MACRO UIMenuUpdateMenu
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
+	LAUNCH_ACTION_MACRO UIMenuClose
 	FAIL @103
 END
 
@@ -864,6 +874,7 @@ BEGIN
 	LAUNCH_ACTION_MACRO ProgressBars.PatchupdateAttrTable
 	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 	BEGIN
+		LAUNCH_ACTION_MACRO UIMenuClose
 		FAIL @300002
 	END
 END

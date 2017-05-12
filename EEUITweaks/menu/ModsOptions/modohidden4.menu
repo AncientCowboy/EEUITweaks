@@ -1,4 +1,4 @@
--- Hidden Options
+-- Hidden Options IsBGEE
 `
 if(modOptionsRegisterMenu) then
 	modOptionsRegisterMenu('HIDEOPT_TITLE', 'OPTIONS_HIDDEN', 'HIDEOPT_INFO', 0)
@@ -71,7 +71,7 @@ menu
 			}
 		}
 
-		area 207 175 481 138
+		area 58 174 370 360
 		
 		rowheight	46
 		table		"hiddenOptionsToggles"
@@ -97,9 +97,10 @@ menu
 		"
 	}
 
+-- Slider 1
 	text
 	{
-		area 207 313 481 88
+		area 430 174 370 72
 		text highlight lua "getSelected(currentHiddenSL, 1)"
 		text style	"normal"
 		text align	left center
@@ -113,7 +114,7 @@ menu
 	}
 	text
 	{
-		area		213 313 475 36
+		area		434 174 370 36
 		text lua	"t(hiddenOptionsSliders[1][1])"
 		text style	"normal"
 		text align	left bottom
@@ -126,14 +127,14 @@ menu
 	}
 	slider
 	{
-		area 			213 349 200 36
+		area 			434 210 200 36
 		position		"hiddenOptionsSliders[1][6]"
 		bam				'SLDRSTAR'
 		mosaic			GUISLDR
 		sequence		0
 		frame			1
 		settings lua	"hiddenOptionsSliders[1][3]"
-		pad 			8 0 10 0
+		pad 			5 0 5 0
 		action
 		"
 			currentHiddenSL = 1
@@ -143,13 +144,131 @@ menu
 	}
 	text
 	{
-		area		428 349 100 36
+		area		674 210 100 36
 		text lua	"tostring(hiddenGetSliderValue(1))"
 		text style	"normal"
-		text align	left center
+		text align	right center
 		action 
 		"
 			currentHiddenSL = 1
+			currentHiddenInfo = hiddenOptionsSliders[currentHiddenSL][2] 
+			currentHiddenIdx = 0
+		" 
+	}
+
+-- Slider 2
+	text
+	{
+		area 430 246 370 72
+		text highlight lua "getSelected(currentHiddenSL, 2)"
+		text style	"normal"
+		text align	left center
+		text ""
+		action 
+		"
+			currentHiddenSL = 2
+			currentHiddenInfo = hiddenOptionsSliders[currentHiddenSL][2] 
+			currentHiddenIdx = 0
+		" 
+	}
+	text
+	{
+		area		434 246 300 36
+		text lua	"t(hiddenOptionsSliders[2][1])"
+		text style	"normal"
+		text align	left bottom
+		action 
+		"
+			currentHiddenSL = 2
+			currentHiddenInfo = hiddenOptionsSliders[currentHiddenSL][2] 
+			currentHiddenIdx = 0
+		" 
+	}
+	slider
+	{
+		area 			434 282 200 36
+		position		"hiddenOptionsSliders[2][6]"
+		bam				'SLDRSTAR'
+		mosaic			GUISLDR
+		sequence		0
+		frame			1
+		settings lua	"hiddenOptionsSliders[2][3]"
+		pad 			5 0 5 0
+		action
+		"
+			currentHiddenSL = 2
+			currentHiddenInfo = hiddenOptionsSliders[currentHiddenSL][2] 
+			currentHiddenIdx = 0
+		"
+	}
+	text
+	{
+		area		674 282 100 36
+		text lua	"tostring(hiddenGetSliderValue(2))"
+		text style	"normal"
+		text align	right center
+		action 
+		"
+			currentHiddenSL = 2
+			currentHiddenInfo = hiddenOptionsSliders[currentHiddenSL][2] 
+			currentHiddenIdx = 0
+		" 
+	}
+
+-- Slider 3
+	text
+	{
+		area 430 318 370 72
+		text highlight lua "getSelected(currentHiddenSL, 3)"
+		text style	"normal"
+		text align	left center
+		text ""
+		action 
+		"
+			currentHiddenSL = 3
+			currentHiddenInfo = hiddenOptionsSliders[currentHiddenSL][2] 
+			currentHiddenIdx = 0
+		" 
+	}
+	text
+	{
+		area		434 318 300 36
+		text lua	"t(hiddenOptionsSliders[3][1])"
+		text style	"normal"
+		text align	left bottom
+		action 
+		"
+			currentHiddenSL = 3
+			currentHiddenInfo = hiddenOptionsSliders[currentHiddenSL][2] 
+			currentHiddenIdx = 0
+		" 
+	}
+	slider
+	{
+		area 			434 354 200 36
+		position		"hiddenOptionsSliders[3][6]"
+		bam				'SLDRSTAR'
+		mosaic			GUISLDR
+		sequence		0
+		frame			1
+		settings lua	"hiddenOptionsSliders[3][3]"
+		pad 			5 0 5 0
+		action
+		"
+			currentHiddenSL = 3
+			currentHiddenInfo = hiddenOptionsSliders[currentHiddenSL][2] 
+			currentHiddenIdx = 0
+		"
+	}
+	text
+	{
+		area		674 354 100 36
+		text lua	"tostring(hiddenGetSliderValue(3))"
+		text style	"normal"
+		text align	right center
+		action 
+		"
+			currentHiddenSL = 3
 			currentHiddenInfo = hiddenOptionsSliders[currentHiddenSL][2] 
 			currentHiddenIdx = 0
 		" 

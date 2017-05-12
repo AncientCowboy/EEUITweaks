@@ -20,12 +20,12 @@ ALWAYS
 	BEGIN
 		OUTER_SPRINT PKGNAME ~EEUITweaks~
 		INCLUDE ~%PKGNAME%/lib/ACuimenulib.tph~
-		INCLUDE ~%PKGNAME%/include/UIMenuPlatform.tpa~
+		INCLUDE ~%PKGNAME%/lib/UIMenuPlatform.tpa~
 		LAUNCH_ACTION_MACRO EEUIGetMenuEnv
 	END
 END
 
-VERSION ~2.3~
+VERSION ~2.4~
 
 LANGUAGE 
 	~English~ ~EEUITweaks/languages/english~ ~EEUITweaks/languages/english/setup.tra~
@@ -41,12 +41,22 @@ LANGUAGE
 BEGIN @100000 DESIGNATED 1000
 GROUP @1
 REQUIRE_PREDICATE (
-	(GAME_IS ~eet~) OR
-	(GAME_IS ~bgee~) OR
-	(GAME_IS ~bg2ee~)
+	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND // IE 2.0+
+	(
+		(GAME_IS ~eet~) OR
+		(GAME_IS ~bgee~) OR
+		(GAME_IS ~bg2ee~) OR
+		(GAME_IS ~pst~)
+	)
 ) @27
 
-INCLUDE ~%PKGNAME%/include/ModOptionsSOD.tpa~
+ACTION_TRY
+	INCLUDE ~%PKGNAME%/include/ModOptionsSOD.tpa~
+WITH 
+	DEFAULT
+		LAM UIMenuClose
+		ACTION_RERAISE
+END
 
 /******************************************************************************
  * Hidden Game Options
@@ -54,13 +64,23 @@ INCLUDE ~%PKGNAME%/include/ModOptionsSOD.tpa~
 BEGIN @101000 DESIGNATED 1010
 GROUP @1
 REQUIRE_PREDICATE (
-	(GAME_IS ~eet~) OR
-	(GAME_IS ~bgee~) OR
-	(GAME_IS ~bg2ee~)
+	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND // IE 2.0+
+	(
+		(GAME_IS ~eet~) OR
+		(GAME_IS ~bgee~) OR
+		(GAME_IS ~bg2ee~) OR
+		(GAME_IS ~pst~)
+	)
 ) @27
 REQUIRE_COMPONENT ~EEUITweaks/EEUITweaks.tp2~ ~1000~ @26
 
-INCLUDE ~%PKGNAME%/include/HiddenOptions.tpa~
+ACTION_TRY
+	INCLUDE ~%PKGNAME%/include/HiddenOptions.tpa~
+WITH 
+	DEFAULT
+		LAM UIMenuClose
+		ACTION_RERAISE
+END
 
 /******************************************************************************
  * lefreut's Character Creation Screens
@@ -69,29 +89,36 @@ BEGIN @109000 DESIGNATED 1090
 GROUP @1
 REQUIRE_PREDICATE
 (
+	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND // IE 2.0+
+	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1050~)) AND // Not Adul's Unhide Chargen Options
+	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1020~)) AND // Not Mr2150's Random PC Generator
+	(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND          // Not Lefreut's UI
 	(
-		(GAME_IS ~bg2ee~) AND
-		(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND
-		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND
-		(NOT(FILE_EXISTS ~override/guiiwd2dummy.png~))
-	) OR 
-	(
-		(GAME_IS ~eet~) AND
-		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND
-		(NOT(MOD_IS_INSTALLED ~setup-EET_gui.tp2~ ~0~))
+		(
+			(GAME_IS ~bg2ee~) AND
+			(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND // Not IWD GUI
+			(NOT(FILE_EXISTS ~override/guiiwd2dummy.png~))     // Not IWD2 GUI
+		) OR 
+		(
+			(GAME_IS ~eet~) AND
+			(NOT(MOD_IS_INSTALLED ~setup-EET_gui.tp2~ ~0~)) // Not EET SoD GUI
 
-	) OR
-	(
-		(GAME_IS ~bgee~) AND 
-		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND
-		(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND
-		(FILE_EXISTS ~override/ULGOTHST.MOS~)
+		) OR
+		(
+			(GAME_IS ~bgee~) AND 
+			(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND // Not IWD GUI
+			(FILE_EXISTS ~override/ULGOTHST.MOS~)              // BG2onSoD
+		)
 	)
 ) @27 // Only BG2 or BG2onSoD or EETBG2
-FORBID_COMPONENT ~EEUITweaks.tp2~ ~1050~ @108005 // Adul's Unhide Chargen Options
-FORBID_COMPONENT ~EEUITweaks.tp2~ ~1020~ @108006 // Mr2150's Random PC Generator
 
-INCLUDE ~%PKGNAME%/include/lefreutCharacterGen.tpa~
+ACTION_TRY
+	INCLUDE ~%PKGNAME%/include/lefreutCharacterGen.tpa~
+WITH 
+	DEFAULT
+		LAM UIMenuClose
+		ACTION_RERAISE
+END
 
 /******************************************************************************
  * Mr2150's Random PC Generator
@@ -99,25 +126,28 @@ INCLUDE ~%PKGNAME%/include/lefreutCharacterGen.tpa~
 BEGIN @102000 DESIGNATED 1020
 GROUP @1
 REQUIRE_PREDICATE (
+	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND // IE 2.0+
+	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1060~)) AND  // Not Mr2150's Roll First
+	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1080~)) AND  // Not lefreut's Portrait Picker
+	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1090~)) AND  // Not lefreut's Character Creation Screens
+	(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~))          AND  // Not Lefreut's UI
 	(
-		(GAME_IS ~eet~) AND
-		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~))
-	) OR
-	(
-		(GAME_IS ~bg2ee~) AND
-		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~))
-	) OR
-	(
-		(GAME_IS ~bgee~) AND
- 		(NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~)) AND
-		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~))
+		(GAME_IS ~eet~) OR
+		(GAME_IS ~bg2ee~) OR
+		(
+			(GAME_IS ~bgee~) AND
+	 		(NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~)) // Not Dragonspear UI++
+		)
 	)
-) @27 // NOT Dragonspear UI++ nor Lefreut's UI (apparently M_random.lua issue)
-FORBID_COMPONENT ~EEUITweaks.tp2~ ~1060~ @102002 // Mr2150's Roll First
-FORBID_COMPONENT ~EEUITweaks.tp2~ ~1080~ @102003 // lefreut's Portrait Picker
-FORBID_COMPONENT ~EEUITweaks.tp2~ ~1090~ @102004 // lefreut's Character Creation Screens
+) @27
 
-INCLUDE ~%PKGNAME%/include/Mr2150RndChar.tpa~
+ACTION_TRY
+	INCLUDE ~%PKGNAME%/include/Mr2150RndChar.tpa~
+WITH 
+	DEFAULT
+		LAM UIMenuClose
+		ACTION_RERAISE
+END
 
 /******************************************************************************
  * BillyYank's Multi-Portrait
@@ -125,21 +155,30 @@ INCLUDE ~%PKGNAME%/include/Mr2150RndChar.tpa~
 BEGIN @103000 DESIGNATED 1030
 GROUP @1
 REQUIRE_PREDICATE (
-	(GAME_IS ~eet~) OR
+	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND // IE 2.0+
 	(
-		(GAME_IS ~bg2ee~) AND
-		(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND
-		(NOT(FILE_EXISTS ~override/guiiwd2dummy.png~))
-	) OR
-	(
-		(GAME_IS ~bgee~) AND 
-		(NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~)) AND
-		(NOT(FILE_EXISTS ~override/guiweidufile.png~))
+		(GAME_IS ~eet~) OR
+		(
+			(GAME_IS ~bg2ee~) AND
+			(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND // Not IWD GUI
+			(NOT(FILE_EXISTS ~override/guiiwd2dummy.png~))     // Not IWD2 GUI
+		) OR
+		(
+			(GAME_IS ~bgee~) AND 
+			(NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~)) AND // Not Dragonspear UI++
+			(NOT(FILE_EXISTS ~override/guiweidufile.png~))         // Not IWD GUI
+		)
 	)
 ) @39 // NOT Dragonspear UI++ nor trinit's IWD nor IWD2 GUI common to all subcomponents
 SUBCOMPONENT @510 
 
-INCLUDE ~%PKGNAME%/include/BillyYankMultiPort.tpa~
+ACTION_TRY
+	INCLUDE ~%PKGNAME%/include/BillyYankMultiPort.tpa~
+WITH 
+	DEFAULT
+		LAM UIMenuClose
+		ACTION_RERAISE
+END
 
 /******************************************************************************
  * Mr2150's Portrait Picker - Scale UI
@@ -148,13 +187,22 @@ BEGIN @104000 DESIGNATED 1040
 GROUP @1
 SUBCOMPONENT @510 
 (
-	NOT(GAME_IS ~bgee~) OR 
-	(FILE_EXISTS_IN_GAME ~BD0010.ARE~) OR 
-	(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)
-) // Common limitations + not simple BGEE
+	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1060~)) AND // Not Mr2150's Roll First
+	(
+		NOT(GAME_IS ~bgee~) OR 
+		(FILE_EXISTS_IN_GAME ~BD0010.ARE~) OR 
+		(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)
+	) // Not simple BGEE
+)
 
-OUTER_SET mrportraitpickscaleui = 2
-INCLUDE ~%PKGNAME%/include/Mr2150PortraitPick.tpa~
+ACTION_TRY
+	OUTER_SET mrportraitpickscaleui = 2
+	INCLUDE ~%PKGNAME%/include/Mr2150PortraitPick.tpa~
+WITH 
+	DEFAULT
+		LAM UIMenuClose
+		ACTION_RERAISE
+END
 
 /******************************************************************************
  * Mr2150's Portrait Picker - No Scale UI
@@ -163,23 +211,32 @@ BEGIN @104100 DESIGNATED 1041
 GROUP @1
 SUBCOMPONENT @510
 ( 
+	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1060~)) AND // Not Mr2150's Roll First
 	(
-		(GAME_IS ~eet~) AND
-		(MOD_IS_INSTALLED ~setup-EET_gui.tp2~ ~0~)
-	) OR
-	(
-		(GAME_IS ~bgee~) AND 
-		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND
-		(NOT(FILE_EXISTS ~override/ULGOTHST.MOS~)) AND 
-		(NOT(FILE_EXISTS ~override/M_CKUI.LUA~)) AND 
-		(NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~)) AND
-		(FILE_EXISTS_IN_GAME ~BD0010.ARE~) AND
-		(NOT(FILE_EXISTS ~override/guiweidufile.png~))
+		(
+			(GAME_IS ~eet~) AND
+			(MOD_IS_INSTALLED ~setup-EET_gui.tp2~ ~0~) // EET SoD GUI
+		) OR
+		(
+			(GAME_IS ~bgee~) AND 
+			(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND             // Not Lefreut's UI
+			(NOT(FILE_EXISTS ~override/ULGOTHST.MOS~)) AND         // Not BG2onSoD
+			(NOT(FILE_EXISTS ~override/M_CKUI.LUA~)) AND           // Not Revised Dragon Scale  
+			(NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~)) AND // Not Dragonspear UI++
+			(FILE_EXISTS_IN_GAME ~BD0010.ARE~) AND                 // Not simple BGEE
+			(NOT(FILE_EXISTS ~override/guiweidufile.png~))         // Not IWD GUI
+		)
 	)
 ) // SoD/IsEETSoD Only
 
-OUTER_SET mrportraitpickscaleui = 1
-INCLUDE ~%PKGNAME%/include/Mr2150PortraitPick.tpa~
+ACTION_TRY
+	OUTER_SET mrportraitpickscaleui = 1
+	INCLUDE ~%PKGNAME%/include/Mr2150PortraitPick.tpa~
+WITH 
+	DEFAULT
+		LAM UIMenuClose
+		ACTION_RERAISE
+END
 
 /******************************************************************************
  * lefreut's Portrait Picker
@@ -188,29 +245,35 @@ BEGIN @108000 DESIGNATED 1080
 GROUP @1
 SUBCOMPONENT @510 
 (
+	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1050~)) AND  // Adul's Unhide Chargen Options
+	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1020~)) AND  // Mr2150's Random PC Generator
+	(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~))          AND  // Not Lefreut's UI
 	(
-		(GAME_IS ~bg2ee~) AND
-		(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND
-		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND
-		(NOT(FILE_EXISTS ~override/guiiwd2dummy.png~))
-	) OR 
-	(
-		(GAME_IS ~eet~) AND
-		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND
-		(NOT(MOD_IS_INSTALLED ~setup-EET_gui.tp2~ ~0~))
+		(
+			(GAME_IS ~bg2ee~) AND
+			(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND // Not IWD GUI
+			(NOT(FILE_EXISTS ~override/guiiwd2dummy.png~))     // Not IWD2 GUI
+		) OR 
+		(
+			(GAME_IS ~eet~) AND
+			(NOT(MOD_IS_INSTALLED ~setup-EET_gui.tp2~ ~0~))    // Not EET SoD GUI
 
-	) OR
-	(
-		(GAME_IS ~bgee~) AND 
-		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND
-		(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND
-		(FILE_EXISTS ~override/ULGOTHST.MOS~)
+		) OR
+		(
+			(GAME_IS ~bgee~) AND 
+			(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND // Not IWD GUI
+			(FILE_EXISTS ~override/ULGOTHST.MOS~)
+		)
 	)
 ) // Only BG2 or BG2onSoD or EETBG2
-FORBID_COMPONENT ~EEUITweaks.tp2~ ~1050~ @108005 // Adul's Unhide Chargen Options
-FORBID_COMPONENT ~EEUITweaks.tp2~ ~1020~ @108006 // Mr2150's Random PC Generator
 
-INCLUDE ~%PKGNAME%/include/lefreutPortraitPicker.tpa~
+ACTION_TRY
+	INCLUDE ~%PKGNAME%/include/lefreutPortraitPicker.tpa~
+WITH 
+	DEFAULT
+		LAM UIMenuClose
+		ACTION_RERAISE
+END
 
 /******************************************************************************
  * Mr2150's Backup M_BG.lua
@@ -219,11 +282,16 @@ BEGIN @104200 DESIGNATED 1042
 GROUP @1
 REQUIRE_PREDICATE 
 (
-	(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1040~) OR
-	(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1041~)
+	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND // IE 2.0+
+	(
+		(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1040~) OR // Mr2150's Portrait Picker - Scale UI
+		(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1041~)    // Mr2150's Portrait Picker - No Scale UI
+	)
 ) @29
 REQUIRE_PREDICATE FILE_EXISTS ~override/M_BG.lua~ @104201 
 
+LOG @24
+SILENT
 COPY_EXISTING + ~M_BG.lua~ ~override/backup-M_BG~
 
 /******************************************************************************
@@ -233,8 +301,11 @@ BEGIN @104400 DESIGNATED 1044
 GROUP @1
 REQUIRE_PREDICATE 
 (
-	(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1040~) OR
-	(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1041~)
+	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND // IE 2.0+
+	(
+		(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1040~) OR // Mr2150's Portrait Picker - Scale UI
+		(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1041~)    // Mr2150's Portrait Picker - No Scale UI
+	)
 ) @29
 
 INCLUDE ~%PKGNAME%/include/Mr2150UpdateM_BG.tpa~
@@ -245,24 +316,27 @@ INCLUDE ~%PKGNAME%/include/Mr2150UpdateM_BG.tpa~
 BEGIN @105000 DESIGNATED 1050
 GROUP @1
 REQUIRE_PREDICATE (
+	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND                 // IE 2.0+
+	(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND          // Not Lefreut's UI
+	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1080~)) AND // Not lefreut's Portrait Picker
+	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1090~)) AND // Not lefreut's Character Creation Screens
 	(
-		(GAME_IS ~eet~) AND
-		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~))
-	) OR
-	(
-		(GAME_IS ~bg2ee~) AND
-		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~))
-	) OR
-	(
-		(GAME_IS ~bgee~) AND
-		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND
- 		(NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~))
+		(GAME_IS ~eet~) OR
+		(GAME_IS ~bg2ee~) OR
+		(
+			(GAME_IS ~bgee~) AND
+	 		(NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~)) // Not Dragonspear UI++
+		)
 	)
 ) @27 // NOT Dragonspear UI++ nor Lefreut's UI (several issues)
-FORBID_COMPONENT ~EEUITweaks.tp2~ ~1080~ @105001 // lefreut's Portrait Picker
-FORBID_COMPONENT ~EEUITweaks.tp2~ ~1090~ @102004 // lefreut's Character Creation Screens
 
-INCLUDE ~%PKGNAME%/include/AdulUnhideChargen.tpa~
+ACTION_TRY
+	INCLUDE ~%PKGNAME%/include/AdulUnhideChargen.tpa~
+WITH 
+	DEFAULT
+		LAM UIMenuClose
+		ACTION_RERAISE
+END
 
 
 /******************************************************************************
@@ -271,16 +345,25 @@ INCLUDE ~%PKGNAME%/include/AdulUnhideChargen.tpa~
 BEGIN @107000 DESIGNATED 1070
 GROUP @1
 REQUIRE_PREDICATE (
-	(GAME_IS ~eet~) OR
-	(GAME_IS ~bg2ee~) OR 
+	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND                 // IE 2.0+
+	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1060~)) AND // Not Mr2150's Roll First
 	(
-		(GAME_IS ~bgee~) AND 
-		(NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~))
+		(GAME_IS ~eet~) OR
+		(GAME_IS ~bg2ee~) OR 
+		(
+			(GAME_IS ~bgee~) AND 
+			(NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~)) // Not Dragonspear UI++
+		)
 	)
-) @27 // NOT Dragonspear UI++
-FORBID_COMPONENT ~EEUITweaks.tp2~ ~1060~ @102002 // Mr2150's Roll First
+) @27
 
-INCLUDE ~%PKGNAME%/include/FaydarkAutoRoll.tpa~
+ACTION_TRY
+	INCLUDE ~%PKGNAME%/include/FaydarkAutoRoll.tpa~
+WITH 
+	DEFAULT
+		LAM UIMenuClose
+		ACTION_RERAISE
+END
 
 
 /******************************************************************************
@@ -289,23 +372,34 @@ INCLUDE ~%PKGNAME%/include/FaydarkAutoRoll.tpa~
 BEGIN @106000 DESIGNATED 1060
 GROUP @1
 REQUIRE_PREDICATE (
+	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND                 // IE 2.0+
+	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1020~)) AND // Not Mr2150's Random PC Generator
+	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1070~)) AND // Not Faydark's Abilities Auto-Roller
+	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1040~)) AND // Not Mr2150's Portrait Picker (Scaleable UI)
+	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1041~)) AND // Not Mr2150's Portrait Picker (Non-Scaleable UI)
 	(
-		(GAME_IS ~eet~) AND
-		(MOD_IS_INSTALLED ~setup-EET_gui.tp2~ ~0~)
-	) OR
-	(
-		(GAME_IS ~bgee~) AND 
-		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND
-		(NOT(FILE_EXISTS ~override/ULGOTHST.MOS~)) AND 
-		(NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~)) AND
-		(FILE_EXISTS_IN_GAME ~BD0010.ARE~) AND
-		(NOT(FILE_EXISTS ~override/guiweidufile.png~))
+		(
+			(GAME_IS ~eet~) AND
+			(MOD_IS_INSTALLED ~setup-EET_gui.tp2~ ~0~) // EET SoD GUI
+		) OR
+		(
+			(GAME_IS ~bgee~) AND 
+			(FILE_EXISTS_IN_GAME ~BD0010.ARE~) AND                 // Not simple BGEE
+			(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND             // Not Lefreut's UI
+			(NOT(FILE_EXISTS ~override/ULGOTHST.MOS~)) AND         // Not BG2onSOD
+			(NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~)) AND // Not Dragonspear UI++
+			(NOT(FILE_EXISTS ~override/guiweidufile.png~))         // Not IWD GUI
+		)
 	)
 ) @27 // SoD/IsEETSoD/KRDS Only
-FORBID_COMPONENT ~EEUITweaks.tp2~ ~1020~ @106001 // Mr2150's Random PC Generator
-FORBID_COMPONENT ~EEUITweaks.tp2~ ~1070~ @106002 // Faydark's Abilities Auto-Roller
 
-INCLUDE ~%PKGNAME%/include/Mr2150RollFirst.tpa~
+ACTION_TRY
+	INCLUDE ~%PKGNAME%/include/Mr2150RollFirst.tpa~
+WITH 
+	DEFAULT
+		LAM UIMenuClose
+		ACTION_RERAISE
+END
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -318,15 +412,24 @@ INCLUDE ~%PKGNAME%/include/Mr2150RollFirst.tpa~
 BEGIN @200000 DESIGNATED 2000
 GROUP @2
 REQUIRE_PREDICATE (
-	(GAME_IS ~eet~) OR
-	(GAME_IS ~bg2ee~) OR 
+	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND // IE 2.0+
 	(
-		(GAME_IS ~bgee~) AND 
-		(NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~))
+		(GAME_IS ~eet~) OR
+		(GAME_IS ~bg2ee~) OR 
+		(
+			(GAME_IS ~bgee~) AND 
+			(NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~)) // Not Dragonspear UI++
+		)
 	)
 ) @27 // NOT Dragonspear UI++
 
-INCLUDE ~%PKGNAME%/include/TransparentSidebars.tpa~
+ACTION_TRY
+	INCLUDE ~%PKGNAME%/include/TransparentSidebars.tpa~
+WITH 
+	DEFAULT
+		LAM UIMenuClose
+		ACTION_RERAISE
+END
 
 /******************************************************************************
  * Feedback Message Box Hack
@@ -334,19 +437,28 @@ INCLUDE ~%PKGNAME%/include/TransparentSidebars.tpa~
 BEGIN @201000 DESIGNATED 2010
 GROUP @2
 REQUIRE_PREDICATE (
-	(GAME_IS ~eet~) OR
-	(GAME_IS ~bg2ee~) OR 
+	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND // IE 2.0+
 	(
-		(GAME_IS ~bgee~) AND
+		(GAME_IS ~eet~) OR
+		(GAME_IS ~bg2ee~) OR 
 		(
-			(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~) OR
-			(NOT(FILE_EXISTS ~override/ULGOTHST.MOS~)) 
+			(GAME_IS ~bgee~) AND
+			(
+				(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~) OR       
+				(NOT(FILE_EXISTS ~override/ULGOTHST.MOS~)) 
+			) // Not BG2OnSOD
 		)
 	)
-) @39 // Not BG2EE on BGEE common to all subcomponents
+) @39 // Not BG2OnSOD common to all subcomponents
 SUBCOMPONENT @500
 
-INCLUDE ~%PKGNAME%/include/FeedbackHack.tpa~
+ACTION_TRY
+	INCLUDE ~%PKGNAME%/include/FeedbackHack.tpa~
+WITH 
+	DEFAULT
+		LAM UIMenuClose
+		ACTION_RERAISE
+END
 
 /******************************************************************************
  * Adul's Message Box Button
@@ -355,12 +467,18 @@ BEGIN @202000 DESIGNATED 2020
 GROUP @2
 SUBCOMPONENT @500
 (
-	(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND		
-	(NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~)) AND
-	(NOT(FILE_EXISTS ~override/M_CKUI.LUA~))
-) // Common limitations + not Dragonspear UI++ nor Lefreut's UI nor Revised Dragon Scale 
+	(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND             // Not Lefreut's UI	
+	(NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~)) AND // Not Dragonspear UI++
+	(NOT(FILE_EXISTS ~override/M_CKUI.LUA~))               // Not Revised Dragon Scale
+) 
 
-INCLUDE ~%PKGNAME%/include/AdulsResizeButtons.tpa~
+ACTION_TRY
+	INCLUDE ~%PKGNAME%/include/AdulsResizeButtons.tpa~
+WITH 
+	DEFAULT
+		LAM UIMenuClose
+		ACTION_RERAISE
+END
 
 
 /******************************************************************************
@@ -369,22 +487,25 @@ INCLUDE ~%PKGNAME%/include/AdulsResizeButtons.tpa~
 BEGIN @203000 DESIGNATED 2030
 GROUP @2
 REQUIRE_PREDICATE (
+	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND         // IE 2.0+
+	(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND  // Not Lefreut's UI
 	(
-		(GAME_IS ~eet~) AND
-		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~))
-	) OR
-	(
-		(GAME_IS ~bg2ee~) AND
-		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~))
-	) OR 
-	(
-		(GAME_IS ~bgee~) AND 
-		(NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~)) AND
-		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~))
+		(GAME_IS ~eet~) OR
+		(GAME_IS ~bg2ee~) OR 
+		(
+			(GAME_IS ~bgee~) AND 
+			(NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~)) // Not Dragonspear UI++
+		)
 	)
 ) @27 // Neither Dragonspear UI++ nor LeUI
 
-INCLUDE ~%PKGNAME%/include/AdulQuickLoot.tpa~
+ACTION_TRY
+	INCLUDE ~%PKGNAME%/include/AdulQuickLoot.tpa~
+WITH 
+	DEFAULT
+		LAM UIMenuClose
+		ACTION_RERAISE
+END
 
 
 /******************************************************************************
@@ -393,26 +514,26 @@ INCLUDE ~%PKGNAME%/include/AdulQuickLoot.tpa~
 BEGIN @204000 DESIGNATED 2040
 GROUP @2
 REQUIRE_PREDICATE (
+	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND                // IE 2.0+
+	(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND         // Not Lefreut's UI
+	(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND // Not IWD GUI
+	(NOT(FILE_EXISTS ~override/guiiwd2dummy.png~)) AND // Not IWD2 GUI
 	(
-		(GAME_IS ~bgee~) AND
-		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND
-		(NOT(FILE_EXISTS ~override/guiweidufile.png~))
-	) OR 
-	(
-		(GAME_IS ~bg2ee~) AND
-		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND
-		(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND
-		(NOT(FILE_EXISTS ~override/guiiwd2dummy.png~))
-	) OR 
-	(
-		(GAME_IS ~eet~) AND
-		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~))
-	) 
+		(GAME_IS ~bgee~) OR 
+		(GAME_IS ~bg2ee~) OR 
+		(GAME_IS ~eet~)
+	)
 ) @39 // Not LeUI nor trinit's IWD nor IWD2 GUI - Common to all subcomponents
 SUBCOMPONENT @520 
 
-INCLUDE ~%PKGNAME%/include/lefreutLevelUpCommon.tpa~
-LAUNCH_ACTION_MACRO lefreutLevelUpCommon.InstallGlowNoClick
+ACTION_TRY
+	INCLUDE ~%PKGNAME%/include/lefreutLevelUpCommon.tpa~
+	LAUNCH_ACTION_MACRO lefreutLevelUpCommon.InstallGlowNoClick
+WITH 
+	DEFAULT
+		LAM UIMenuClose
+		ACTION_RERAISE
+END
 
 /******************************************************************************
  * lefreut's Level Up Glow with Click
@@ -421,11 +542,17 @@ BEGIN @204200 DESIGNATED 2042
 GROUP @2
 SUBCOMPONENT @520 
 (
-	NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~)
+	NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~)  // Not Dragonspear UI++
 ) // Common limitations + not Dragonspear UI++
 
-INCLUDE ~%PKGNAME%/include/lefreutLevelUpCommon.tpa~
-LAUNCH_ACTION_MACRO lefreutLevelUpCommon.InstallGlowWithClick
+ACTION_TRY
+	INCLUDE ~%PKGNAME%/include/lefreutLevelUpCommon.tpa~
+	LAUNCH_ACTION_MACRO lefreutLevelUpCommon.InstallGlowWithClick
+WITH 
+	DEFAULT
+		LAM UIMenuClose
+		ACTION_RERAISE
+END
 
 /******************************************************************************
  * lefreut's Level Up Buttons
@@ -434,10 +561,17 @@ BEGIN @204400 DESIGNATED 2044
 GROUP @2
 SUBCOMPONENT @520
 (
-	NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~)
+	NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~) // Not Dragonspear UI++
 ) // Common limitations + not Dragonspear UI++
-INCLUDE ~%PKGNAME%/include/lefreutLevelUpCommon.tpa~
-LAUNCH_ACTION_MACRO lefreutLevelUpCommon.InstallButtons
+
+ACTION_TRY
+	INCLUDE ~%PKGNAME%/include/lefreutLevelUpCommon.tpa~
+	LAUNCH_ACTION_MACRO lefreutLevelUpCommon.InstallButtons
+WITH 
+	DEFAULT
+		LAM UIMenuClose
+		ACTION_RERAISE
+END
 
 
 /******************************************************************************
@@ -446,22 +580,25 @@ LAUNCH_ACTION_MACRO lefreutLevelUpCommon.InstallButtons
 BEGIN @206000 DESIGNATED 2060
 GROUP @2
 REQUIRE_PREDICATE (
+	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND        // IE 2.0+
+	(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND // Not Lefreut's UI
 	(
-		(GAME_IS ~eet~) AND
-		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~))
-	) OR
-	(
-		(GAME_IS ~bg2ee~) AND
-		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~))
-	) OR 
-	(
-		(GAME_IS ~bgee~) AND 
-		(NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~)) AND
-		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~))
+		(GAME_IS ~eet~) OR
+		(GAME_IS ~bg2ee~) OR 
+		(
+			(GAME_IS ~bgee~) AND 
+			(NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~)) // Not Dragonspear UI++
+		)
 	)
 ) @27 // Neither Dragonspear UI++ nor LeUI
 
-INCLUDE ~%PKGNAME%/include/lefreut1_3ishDialog.tpa~
+ACTION_TRY
+	INCLUDE ~%PKGNAME%/include/lefreut1_3ishDialog.tpa~
+WITH 
+	DEFAULT
+		LAM UIMenuClose
+		ACTION_RERAISE
+END
 
 
 /******************************************************************************
@@ -470,15 +607,24 @@ INCLUDE ~%PKGNAME%/include/lefreut1_3ishDialog.tpa~
 BEGIN @205000 DESIGNATED 2050
 GROUP @2
 REQUIRE_PREDICATE (
-	(GAME_IS ~eet~) OR
-	(GAME_IS ~bg2ee~) OR 
+	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND // IE 2.0+
 	(
-		(GAME_IS ~bgee~) AND 
-		(NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~))
+		(GAME_IS ~eet~) OR
+		(GAME_IS ~bg2ee~) OR 
+		(
+			(GAME_IS ~bgee~) AND 
+			(NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~)) // Not Dragonspear UI++
+		)
 	)
 ) @27 // NOT Dragonspear UI++
 
-INCLUDE ~%PKGNAME%/include/CenteredDialog.tpa~
+ACTION_TRY
+	INCLUDE ~%PKGNAME%/include/CenteredDialog.tpa~
+WITH 
+	DEFAULT
+		LAM UIMenuClose
+		ACTION_RERAISE
+END
 
 
 /******************************************************************************
@@ -487,12 +633,21 @@ INCLUDE ~%PKGNAME%/include/CenteredDialog.tpa~
 BEGIN @207000 DESIGNATED 2070
 GROUP @2
 REQUIRE_PREDICATE (
-	(GAME_IS ~eet~) OR
-	(GAME_IS ~bgee~) OR
-	(GAME_IS ~bg2ee~)
+	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND // IE 2.0+
+	(
+		(GAME_IS ~eet~) OR
+		(GAME_IS ~bgee~) OR
+		(GAME_IS ~bg2ee~)
+	)
 ) @27
 
-INCLUDE ~%PKGNAME%/include/DeesPermanentThieving.tpa~
+ACTION_TRY
+	INCLUDE ~%PKGNAME%/include/DeesPermanentThieving.tpa~
+WITH 
+	DEFAULT
+		LAM UIMenuClose
+		ACTION_RERAISE
+END
 
 /******************************************************************************
  * elminster's Easier Area Cheats
@@ -500,10 +655,17 @@ INCLUDE ~%PKGNAME%/include/DeesPermanentThieving.tpa~
 BEGIN @208000 DESIGNATED 2080
 GROUP @2
 REQUIRE_PREDICATE (
+	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND // IE 2.0+
 	(GAME_IS ~bgee~)
 ) @27
 
-INCLUDE ~%PKGNAME%/include/elminsterAreaCheats.tpa~
+ACTION_TRY
+	INCLUDE ~%PKGNAME%/include/elminsterAreaCheats.tpa~
+WITH 
+	DEFAULT
+		LAM UIMenuClose
+		ACTION_RERAISE
+END
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -516,47 +678,69 @@ INCLUDE ~%PKGNAME%/include/elminsterAreaCheats.tpa~
 BEGIN @306000 DESIGNATED 2900
 GROUP @3
 REQUIRE_PREDICATE (
+	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND                // IE 2.0+
+	(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND         // Not Lefreut's UI
+	(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND // Not IWD GUI
+	(NOT(FILE_EXISTS ~override/guiiwd2dummy.png~)) AND // Not IWD2 GUI
 	(
-		(GAME_IS ~bg2ee~) AND
-		(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND
-		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND
-		(NOT(FILE_EXISTS ~override/guiiwd2dummy.png~))
-	) OR 
-	(
-		(GAME_IS ~eet~) AND
-		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND
-		(NOT(MOD_IS_INSTALLED ~setup-EET_gui.tp2~ ~0~))
+		(GAME_IS ~bg2ee~) OR 
+		(
+			(GAME_IS ~eet~) AND
+			(NOT(MOD_IS_INSTALLED ~setup-EET_gui.tp2~ ~0~)) // Not EET SoD GUI
 
-	) OR
-	(
-		(GAME_IS ~bgee~) AND 
-		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND
-		(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND
-		(FILE_EXISTS ~override/ULGOTHST.MOS~)
+		) OR
+		(
+			(GAME_IS ~bgee~) AND 
+			(FILE_EXISTS ~override/ULGOTHST.MOS~) // BG2onSoD
+		)
 	)
 ) @27 // Only BG2 or BG2onSoD or EETBG2
 
-INCLUDE ~%PKGNAME%/include/lefreutImprovedRecordScreen.tpa~
+ACTION_TRY
+	INCLUDE ~%PKGNAME%/include/lefreutImprovedRecordScreen.tpa~
+WITH 
+	DEFAULT
+		LAM UIMenuClose
+		ACTION_RERAISE
+END
 
 /******************************************************************************
  * Leveling Progress Bars Tweaks
  *****************************************************************************/
 BEGIN @300000 DESIGNATED 3000
 GROUP @3
-REQUIRE_PREDICATE GAME_IS ~bgee bg2ee eet~ @27
+REQUIRE_PREDICATE (
+	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND // IE 2.0+
+	(GAME_IS ~bgee bg2ee eet~)
+) @27
 
-INCLUDE ~%PKGNAME%/include/ProgressBars.tpa~
+ACTION_TRY
+	INCLUDE ~%PKGNAME%/include/ProgressBars.tpa~
+WITH 
+	DEFAULT
+		LAM UIMenuClose
+		ACTION_RERAISE
+END
 
 /******************************************************************************
  * Leveling Progress Bars Options
  *****************************************************************************/
 BEGIN @301000 DESIGNATED 3010
 GROUP @3
-REQUIRE_PREDICATE GAME_IS ~bgee bg2ee eet~ @27
-REQUIRE_COMPONENT ~EEUITweaks.tp2~ ~1000~ @26
-REQUIRE_COMPONENT ~EEUITweaks.tp2~ ~3000~ @301001
+REQUIRE_PREDICATE (
+	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND // IE 2.0+
+	(GAME_IS ~bgee bg2ee eet~)
+) @27
+REQUIRE_COMPONENT ~EEUITweaks.tp2~ ~1000~ @26     // Mods Options
+REQUIRE_COMPONENT ~EEUITweaks.tp2~ ~3000~ @301001 // Leveling Progress Bars Tweaks
 
-INCLUDE ~%PKGNAME%/include/ProgressBarsOptions.tpa~
+ACTION_TRY
+	INCLUDE ~%PKGNAME%/include/ProgressBarsOptions.tpa~
+WITH 
+	DEFAULT
+		LAM UIMenuClose
+		ACTION_RERAISE
+END
 
 /******************************************************************************
  * Mr2150's Journal Fixes
@@ -564,24 +748,26 @@ INCLUDE ~%PKGNAME%/include/ProgressBarsOptions.tpa~
 BEGIN @302000 DESIGNATED 3020
 GROUP @3
 REQUIRE_PREDICATE (
+	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND         // IE 2.0+
+	(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND  // Not Lefreut's UI
 	(
-		(GAME_IS ~eet~) AND
-		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~))		
-	) OR
-	(
-		(GAME_IS ~bg2ee~) AND
-		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~))		
-	) OR 
-	(
-		(GAME_IS ~bgee~) AND 
-		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND		
-		(NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~))
+		(GAME_IS ~eet~) OR
+		(GAME_IS ~bg2ee~) OR 
+		(
+			(GAME_IS ~bgee~) AND 
+			(NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~)) // Not Dragonspear UI++
+		)
 	)
 ) @39 // Neither Dragonspear UI++ nor LeUI
+SUBCOMPONENT @540
 
-SUBCOMPONENT @540 
-
-INCLUDE ~%PKGNAME%/include/Mr2150JrnlFix.tpa~
+ACTION_TRY
+	INCLUDE ~%PKGNAME%/include/Mr2150JrnlFix.tpa~
+WITH 
+	DEFAULT
+		LAM UIMenuClose
+		ACTION_RERAISE
+END
 
 /******************************************************************************
  * lefreut's Journal
@@ -592,21 +778,27 @@ SUBCOMPONENT @540
 (
 	(
 		(GAME_IS ~bg2ee~) AND
-		(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND
-		(NOT(FILE_EXISTS ~override/guiiwd2dummy.png~))
+		(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND // Not IWD GUI
+		(NOT(FILE_EXISTS ~override/guiiwd2dummy.png~))     // Not IWD2 GUI
 	) OR 
 	(
 		(GAME_IS ~eet~) AND
-		(NOT(MOD_IS_INSTALLED ~setup-EET_gui.tp2~ ~0~))
+		(NOT(MOD_IS_INSTALLED ~setup-EET_gui.tp2~ ~0~)) // Not EET SoD GUI
 
 	) OR
 	(
 		(GAME_IS ~bgee~) AND 
-		(FILE_EXISTS ~override/ULGOTHST.MOS~)
+		(FILE_EXISTS ~override/ULGOTHST.MOS~) // BG2onSoD
 	)
 ) // Either BG2 or BG2onSoD or EETBG2
 
-INCLUDE ~%PKGNAME%/include/lefreutJournal.tpa~
+ACTION_TRY
+	INCLUDE ~%PKGNAME%/include/lefreutJournal.tpa~
+WITH 
+	DEFAULT
+		LAM UIMenuClose
+		ACTION_RERAISE
+END
 
 /******************************************************************************
  * lefreut's Simple Journal Fixes
@@ -614,22 +806,23 @@ INCLUDE ~%PKGNAME%/include/lefreutJournal.tpa~
 BEGIN @307000 DESIGNATED 3070
 GROUP @3
 REQUIRE_PREDICATE (
+	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND                 // IE 2.0+
+	(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND          // Not Lefreut's UI
+	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~3023~)) AND // Not lefreut's Journal
 	(
-		(GAME_IS ~eet~) AND
-		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~))		
-	) OR
-	(
-		(GAME_IS ~bg2ee~) AND
-		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~))		
-	) OR 
-	(
-		(GAME_IS ~bgee~) AND 
-		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~))
+		(GAME_IS ~eet~) OR
+		(GAME_IS ~bg2ee~) OR 
+		(GAME_IS ~bgee~)
 	)
-) @27 // No LeUI
+) @27
 
-FORBID_COMPONENT ~EEUITweaks.tp2~ ~3023~ @307005 // lefreut's Journal
-INCLUDE ~%PKGNAME%/include/lefreutSimpleJournalFixes.tpa~
+ACTION_TRY
+	INCLUDE ~%PKGNAME%/include/lefreutSimpleJournalFixes.tpa~
+WITH 
+	DEFAULT
+		LAM UIMenuClose
+		ACTION_RERAISE
+END
 
 
 /******************************************************************************
@@ -638,26 +831,33 @@ INCLUDE ~%PKGNAME%/include/lefreutSimpleJournalFixes.tpa~
 BEGIN @302800 DESIGNATED 3028
 GROUP @3
 REQUIRE_PREDICATE (
+	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND         // IE 2.0+
+	(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND  // Not Lefreut's UI
 	(
-		(GAME_IS ~bg2ee~) AND
-		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND
-		(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND
-		(NOT(FILE_EXISTS ~override/guiiwd2dummy.png~))
-	) OR 
-	(
-		(GAME_IS ~eet~) AND
-		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND	
-		(NOT(MOD_IS_INSTALLED ~setup-EET_gui.tp2~ ~0~))
+		(
+			(GAME_IS ~bg2ee~) AND
+			(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND // Not IWD GUI
+			(NOT(FILE_EXISTS ~override/guiiwd2dummy.png~))     // Not IWD2 GUI
+		) OR 
+		(
+			(GAME_IS ~eet~) AND
+			(NOT(MOD_IS_INSTALLED ~setup-EET_gui.tp2~ ~0~)) // Not EET SoD GUI
 
-	) OR
-	(
-		(GAME_IS ~bgee~) AND 
-		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND	
-		(FILE_EXISTS ~override/ULGOTHST.MOS~)
+		) OR
+		(
+			(GAME_IS ~bgee~) AND 
+			(FILE_EXISTS ~override/ULGOTHST.MOS~) // BG2onSoD
+		)
 	)
 ) @27 // Either BG2 or BG2onSoD or EETBG2
 
-INCLUDE ~%PKGNAME%/include/lefreutCustomizeScreensTweaks.tpa~
+ACTION_TRY
+	INCLUDE ~%PKGNAME%/include/lefreutCustomizeScreensTweaks.tpa~
+WITH 
+	DEFAULT
+		LAM UIMenuClose
+		ACTION_RERAISE
+END
 
 
 /******************************************************************************
@@ -666,13 +866,19 @@ INCLUDE ~%PKGNAME%/include/lefreutCustomizeScreensTweaks.tpa~
 BEGIN @303000 DESIGNATED 3030
 GROUP @3
 REQUIRE_PREDICATE (
-	(GAME_IS ~bgee bg2ee eet~) AND
-	(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~))	
-) @27 // Not LeUI
+	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND                 // IE 2.0+
+	(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND          // Not Lefreut's UI
+	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~3028~)) AND // Not lefreut's Customize Screens Tweaks
+	(GAME_IS ~bgee bg2ee eet~)
+) @27
 
-FORBID_COMPONENT ~EEUITweaks.tp2~ ~3028~ @303001 // lefreut's Customize Screens Tweaks
-
-INCLUDE ~%PKGNAME%/include/lefreutCustomAll.tpa~
+ACTION_TRY
+	INCLUDE ~%PKGNAME%/include/lefreutCustomAll.tpa~
+WITH 
+	DEFAULT
+		LAM UIMenuClose
+		ACTION_RERAISE
+END
 
 
 /******************************************************************************
@@ -681,44 +887,81 @@ INCLUDE ~%PKGNAME%/include/lefreutCustomAll.tpa~
 BEGIN @304000 DESIGNATED 3040
 GROUP @3
 REQUIRE_PREDICATE (
-	(GAME_IS ~bgee bg2ee eet~) AND
-	(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND
-	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~4005~))
-) @39 // Not LeUI nor lefreut's BG2 Store Screen Tweaks
+	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND                 // IE 2.0+
+	(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND          // Not Lefreut's UI
+	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~4005~)) AND // Not lefreut's BG2 Store Screen Tweaks
+	(GAME_IS ~bgee bg2ee eet pst~)
+) @39
 SUBCOMPONENT @530
 
-OUTER_SPRINT mrautoidgoldcost ~~
-INCLUDE ~%PKGNAME%/include/Mr2150IdentifyItems.tpa~
+ACTION_TRY
+	OUTER_SPRINT mrautoidgoldcost ~~
+	INCLUDE ~%PKGNAME%/include/Mr2150IdentifyItems.tpa~
+WITH 
+	DEFAULT
+		LAM UIMenuClose
+		ACTION_RERAISE
+END
 
 BEGIN @304100 DESIGNATED 3041
 GROUP @3
 SUBCOMPONENT @530
-OUTER_SPRINT mrautoidgoldcost ~%TAB%%TAB%%TAB%costGold = 10~
-INCLUDE ~%PKGNAME%/include/Mr2150IdentifyItems.tpa~
+ACTION_TRY
+	OUTER_SPRINT mrautoidgoldcost ~%TAB%%TAB%%TAB%costGold = 10~
+	INCLUDE ~%PKGNAME%/include/Mr2150IdentifyItems.tpa~
+WITH 
+	DEFAULT
+		LAM UIMenuClose
+		ACTION_RERAISE
+END
 
 BEGIN @304200 DESIGNATED 3042
 GROUP @3
 SUBCOMPONENT @530
-OUTER_SPRINT mrautoidgoldcost ~%TAB%%TAB%%TAB%costGold = 25~
-INCLUDE ~%PKGNAME%/include/Mr2150IdentifyItems.tpa~
+ACTION_TRY
+	OUTER_SPRINT mrautoidgoldcost ~%TAB%%TAB%%TAB%costGold = 25~
+	INCLUDE ~%PKGNAME%/include/Mr2150IdentifyItems.tpa~
+WITH 
+	DEFAULT
+		LAM UIMenuClose
+		ACTION_RERAISE
+END
 
 BEGIN @304300 DESIGNATED 3043
 GROUP @3
 SUBCOMPONENT @530
-OUTER_SPRINT mrautoidgoldcost ~%TAB%%TAB%%TAB%costGold = 50~
-INCLUDE ~%PKGNAME%/include/Mr2150IdentifyItems.tpa~
+ACTION_TRY
+	OUTER_SPRINT mrautoidgoldcost ~%TAB%%TAB%%TAB%costGold = 50~
+	INCLUDE ~%PKGNAME%/include/Mr2150IdentifyItems.tpa~
+WITH 
+	DEFAULT
+		LAM UIMenuClose
+		ACTION_RERAISE
+END
 
 BEGIN @304400 DESIGNATED 3044
 GROUP @3
 SUBCOMPONENT @530
-OUTER_SPRINT mrautoidgoldcost ~%TAB%%TAB%%TAB%costGold = 100~
-INCLUDE ~%PKGNAME%/include/Mr2150IdentifyItems.tpa~
+ACTION_TRY
+	OUTER_SPRINT mrautoidgoldcost ~%TAB%%TAB%%TAB%costGold = 100~
+	INCLUDE ~%PKGNAME%/include/Mr2150IdentifyItems.tpa~
+WITH 
+	DEFAULT
+		LAM UIMenuClose
+		ACTION_RERAISE
+END
 
 BEGIN @304500 DESIGNATED 3045
 GROUP @3
 SUBCOMPONENT @530
-OUTER_SPRINT mrautoidgoldcost ~%TAB%%TAB%%TAB%costGold =200~
-INCLUDE ~%PKGNAME%/include/Mr2150IdentifyItems.tpa~
+ACTION_TRY
+	OUTER_SPRINT mrautoidgoldcost ~%TAB%%TAB%%TAB%costGold =200~
+	INCLUDE ~%PKGNAME%/include/Mr2150IdentifyItems.tpa~
+WITH 
+	DEFAULT
+		LAM UIMenuClose
+		ACTION_RERAISE
+END
 
 
 /******************************************************************************
@@ -727,13 +970,20 @@ INCLUDE ~%PKGNAME%/include/Mr2150IdentifyItems.tpa~
 BEGIN @305000 DESIGNATED 3050
 GROUP @3
 REQUIRE_PREDICATE (
-	(GAME_IS ~bgee bg2ee eet~) AND
-	(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND
-	(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND
-	(NOT(FILE_EXISTS ~override/guiiwd2dummy.png~))
-) @27 // Not LeUI nor trinit's IWD/IWD2 GUIs
+	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND                // IE 2.0+
+	(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND         // Not Lefreut's UI
+	(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND // Not IWD GUI
+	(NOT(FILE_EXISTS ~override/guiiwd2dummy.png~)) AND // Not IWD2 GUI
+	(GAME_IS ~bgee bg2ee eet~)
+) @27
 
-INCLUDE ~%PKGNAME%/include/lefreutImprovedInventory.tpa~
+ACTION_TRY
+	INCLUDE ~%PKGNAME%/include/lefreutImprovedInventory.tpa~
+WITH 
+	DEFAULT
+		LAM UIMenuClose
+		ACTION_RERAISE
+END
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -746,34 +996,41 @@ INCLUDE ~%PKGNAME%/include/lefreutImprovedInventory.tpa~
 BEGIN @400500 DESIGNATED 4005
 GROUP @4
 REQUIRE_PREDICATE (
+	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND                 // IE 2.0+
+	(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND          // Not Lefreut's UI
+	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~4000~)) AND // Not Joined Store Panels Using lefreut's Solution
+	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~4020~)) AND // Not Adul's Improved Store Useability
+	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~3040~)) AND // Not Mr2150's Auto-Identify Items 1
+	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~3041~)) AND // Not Mr2150's Auto-Identify Items 2
+	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~3042~)) AND // Not Mr2150's Auto-Identify Items 3
+	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~3043~)) AND // Not Mr2150's Auto-Identify Items 4
+	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~3044~)) AND // Not Mr2150's Auto-Identify Items 5
+	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~3045~)) AND // Not Mr2150's Auto-Identify Items 6
 	(
-		(GAME_IS ~bg2ee~) AND
-		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND
-		(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND
-		(NOT(FILE_EXISTS ~override/guiiwd2dummy.png~))
-	) OR 
-	(
-		(GAME_IS ~eet~) AND
-		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND
-		(NOT(MOD_IS_INSTALLED ~setup-EET_gui.tp2~ ~0~))
+		(
+			(GAME_IS ~bg2ee~) AND
+			(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND // Not IWD GUI
+			(NOT(FILE_EXISTS ~override/guiiwd2dummy.png~))     // Not IWD2 GUI
+		) OR 
+		(
+			(GAME_IS ~eet~) AND
+			(NOT(MOD_IS_INSTALLED ~setup-EET_gui.tp2~ ~0~)) // Not EET SoD GUI
 
-	) OR
-	(
-		(GAME_IS ~bgee~) AND 
-		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND
-		(FILE_EXISTS ~override/ULGOTHST.MOS~)
+		) OR
+		(
+			(GAME_IS ~bgee~) AND 
+			(FILE_EXISTS ~override/ULGOTHST.MOS~) // BG2onSoD
+		)
 	)
-) @27 // Either BG2 or BG2onSoD or EETBG2
-FORBID_COMPONENT ~EEUITweaks.tp2~ ~4000~ @400501 // Joined Store Panels Using lefreut's Solution
-FORBID_COMPONENT ~EEUITweaks.tp2~ ~4020~ @400503 // Adul's Improved Store Useability
-FORBID_COMPONENT ~EEUITweaks.tp2~ ~3040~ @400507 // Mr2150's Auto-Identify Items
-FORBID_COMPONENT ~EEUITweaks.tp2~ ~3041~ @400507 // Mr2150's Auto-Identify Items
-FORBID_COMPONENT ~EEUITweaks.tp2~ ~3042~ @400507 // Mr2150's Auto-Identify Items
-FORBID_COMPONENT ~EEUITweaks.tp2~ ~3043~ @400507 // Mr2150's Auto-Identify Items
-FORBID_COMPONENT ~EEUITweaks.tp2~ ~3044~ @400507 // Mr2150's Auto-Identify Items
-FORBID_COMPONENT ~EEUITweaks.tp2~ ~3045~ @400507 // Mr2150's Auto-Identify Items
+) @27
 
-INCLUDE ~%PKGNAME%/include/lefreutBG2Store.tpa~
+ACTION_TRY
+	INCLUDE ~%PKGNAME%/include/lefreutBG2Store.tpa~
+WITH 
+	DEFAULT
+		LAM UIMenuClose
+		ACTION_RERAISE
+END
 
 
 /******************************************************************************
@@ -782,25 +1039,41 @@ INCLUDE ~%PKGNAME%/include/lefreutBG2Store.tpa~
 BEGIN @400000 DESIGNATED 4000
 GROUP @4
 REQUIRE_PREDICATE (
+	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND                 // IE 2.0+
+	(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND          // Not Lefreut's UI
+	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~4005~)) AND // Not BG2 Store Screen Tweaks
 	(
-		(GAME_IS ~eet~) AND
-		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~))
-	) OR
-	(
-		(GAME_IS ~bg2ee~) AND
-		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~))	
-	) OR 
-	(
-		(GAME_IS ~bgee~) AND 
-		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND
-		(NOT(FILE_EXISTS ~override/ULGOTHST.MOS~)) AND
-		(NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~)) AND
-		(NOT(FILE_EXISTS ~override/M_CKUI.LUA~))
+		(GAME_IS ~eet~) OR
+		(GAME_IS ~bg2ee~) OR 
+		(
+			(GAME_IS ~bgee~) AND 
+			(
+				(NOT(FILE_EXISTS ~override/M_CKUI.LUA~)) OR
+				(
+					(
+						(MOD_IS_INSTALLED ~CKUISOD.tp2~ ~1~) OR
+						(MOD_IS_INSTALLED ~CKUISOD.tp2~ ~2~) OR
+						(MOD_IS_INSTALLED ~CKUISOD.tp2~ ~3~) OR
+						(MOD_IS_INSTALLED ~CKUISOD.tp2~ ~4~) OR
+						(MOD_IS_INSTALLED ~CKUISOD.tp2~ ~5~) OR
+						(MOD_IS_INSTALLED ~CKUISOD.tp2~ ~6~)
+					) AND
+					(NOT(MOD_IS_INSTALLED ~CKUISOD.tp2~ ~0~))
+				)
+			) AND                                              // Not Revised DS V2 or RDS V3 without component 0
+			(NOT(FILE_EXISTS ~override/ULGOTHST.MOS~)) AND     // Not BG2onSOD
+			(NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~)) // Not Dragonspear UI++
+		)
 	)
-) @27  // Neither Dragonspear UI++ nor BG2onSOD nor LeUI nor Revised Dragon Scale
-FORBID_COMPONENT ~EEUITweaks.tp2~ ~4005~ @400001 // BG2 Store Screen Tweaks
+) @27
 
-INCLUDE ~%PKGNAME%/include/StoreFix.tpa~
+ACTION_TRY
+	INCLUDE ~%PKGNAME%/include/StoreFix.tpa~
+WITH 
+	DEFAULT
+		LAM UIMenuClose
+		ACTION_RERAISE
+END
 
 /******************************************************************************
  * lefreut's Steal Multiple Items
@@ -808,23 +1081,26 @@ INCLUDE ~%PKGNAME%/include/StoreFix.tpa~
 BEGIN @401000 DESIGNATED 4010
 GROUP @4
 REQUIRE_PREDICATE (
+	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND                 // IE 2.0+
+	(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND          // Not Lefreut's UI
+	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~4005~)) AND // Not lefreut's BG2 Store Screen Tweaks
 	(
-		(GAME_IS ~eet~) AND
-		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~))
-	) OR
-	(
-		(GAME_IS ~bg2ee~) AND
-		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~))
-	) OR 
-	(
-		(GAME_IS ~bgee~) AND 
-		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND
-		(NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~))
+		(GAME_IS ~eet~) OR
+		(GAME_IS ~bg2ee~) OR 
+		(
+			(GAME_IS ~bgee~) AND 
+			(NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~)) // Not Dragonspear UI++
+		)
 	)
 ) @27 // Neither Dragonspear UI++ nor LeUI
-FORBID_COMPONENT ~EEUITweaks.tp2~ ~4005~ @401004 // Redundant lefreut's BG2 Store Screen Tweaks
 
-INCLUDE ~%PKGNAME%/include/lefreutStealMulti.tpa~
+ACTION_TRY
+	INCLUDE ~%PKGNAME%/include/lefreutStealMulti.tpa~
+WITH 
+	DEFAULT
+		LAM UIMenuClose
+		ACTION_RERAISE
+END
 
 /******************************************************************************
  * Adul's Smooth Selling previously Improved Store Useability
@@ -832,23 +1108,26 @@ INCLUDE ~%PKGNAME%/include/lefreutStealMulti.tpa~
 BEGIN @402000 DESIGNATED 4020
 GROUP @4
 REQUIRE_PREDICATE (
+	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND                 // IE 2.0+
+	(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND          // Not Lefreut's UI
+	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~4005~)) AND // Not lefreut's BG2 Store Screen Tweaks
 	(
-		(GAME_IS ~eet~) AND
-		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~))
-	) OR
-	(
-		(GAME_IS ~bg2ee~) AND
-		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~))
-	) OR 
-	(
-		(GAME_IS ~bgee~) AND 
-		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND
-		(NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~))
+		(GAME_IS ~eet~) OR
+		(GAME_IS ~bg2ee~) OR 
+		(
+			(GAME_IS ~bgee~) AND 
+			(NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~)) // Not Dragonspear UI++
+		)
 	)
-) @27 // Neither Dragonspear UI++ nor LeUI
-FORBID_COMPONENT ~EEUITweaks.tp2~ ~4005~ @402001 // lefreut's BG2 Store Screen Tweaks
+) @27
 
-INCLUDE ~%PKGNAME%/include/AdulImprovedStore.tpa~
+ACTION_TRY
+	INCLUDE ~%PKGNAME%/include/AdulImprovedStore.tpa~
+WITH 
+	DEFAULT
+		LAM UIMenuClose
+		ACTION_RERAISE
+END
 
 /******************************************************************************
  * lefleut's Inscribed Arcana
@@ -859,54 +1138,58 @@ REQUIRE_PREDICATE (
 	// Predicate that all elements of the subgroup must meet 
 	// This prevents showing the subcomponent group with no selectable options
 	// when none of the subgroup elements can be installed
+	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND                // IE 2.0+
+	(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND // Not IWD UI
 	(
-		(GAME_IS ~bgee~) AND
-			// Not IWD UI
-		(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND
-			// Not DragonSpear UI++
-		(NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~))
-	) OR 
-	(
-		(GAME_IS ~bg2ee~) AND
-			// Not IWD UI
-		(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND
-			// Not IWD2 UI
-		(NOT(FILE_EXISTS ~override/guiiwd2dummy.png~))
-	) OR 
-	(
-		(GAME_IS ~eet~)
-	) 
-) @39 // 'None of the possible options of this group are supported for your game configuration'
+		(
+			(GAME_IS ~bgee~) AND
+			(NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~)) AND // Not Dragonspear UI++
+			(NOT(MOD_IS_INSTALLED ~CKUISOD.tp2~ ~4~))              // Not Revised Dragon Scale V.3 embedded Classic Spellbooks
+		) OR 
+		(
+			(GAME_IS ~bg2ee~) AND
+			(NOT(FILE_EXISTS ~override/guiiwd2dummy.png~))     // Not IWD2 UI
+		) OR 
+		(
+			(GAME_IS ~eet~)
+		)
+	)
+) @39
 SUBCOMPONENT @550
 (
 	// Subcomponent specific predicate - Common further limited to 
 	// either BG2 or BG2onSoD or EETBG2
+	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND                // IE 2.0+
+	(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND // Not IWD UI
 	(
-		(GAME_IS ~bgee~) AND 
-		(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND
-		(NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~)) AND
-		// Disable LeUI
-		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND
-		// With Disabled LeUI, enables BG2onSoD 
-		(FILE_EXISTS ~override/ULGOTHST.MOS~)
-	) OR
-	(
-		(GAME_IS ~bg2ee~) AND
-		(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND
-		(NOT(FILE_EXISTS ~override/guiiwd2dummy.png~)) AND
-		// Disable LeUI
-		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~))
-	) OR 
-	(
-		(GAME_IS ~eet~) AND
-		// Disable LeUI
-		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND
-		// Disable EET SoD UI
-		(NOT(MOD_IS_INSTALLED ~setup-EET_gui.tp2~ ~0~))
+		(
+			(GAME_IS ~bgee~) AND 
+			(NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~)) AND // Not Dragonspear UI++
+			(NOT(MOD_IS_INSTALLED ~CKUISOD.tp2~ ~4~)) AND          // Not Revised Dragon Scale V.3 embedded Classic Spellbooks
+			(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND             // Not Lefreut's UI
+			(FILE_EXISTS ~override/ULGOTHST.MOS~)                  // BGonSoD - Not SoD
+		) OR
+		(
+			(GAME_IS ~bg2ee~) AND
+			(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND // Not IWD GUI
+			(NOT(FILE_EXISTS ~override/guiiwd2dummy.png~)) AND // Not IWD2 GUI
+			(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~))             // Not Lefreut's UI
+		) OR 
+		(
+			(GAME_IS ~eet~) AND
+			(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND      // Not Lefreut's UI
+			(NOT(MOD_IS_INSTALLED ~setup-EET_gui.tp2~ ~0~)) // Not EET SoD GUI
+		)
 	)
 )
 
-INCLUDE ~%PKGNAME%/include/lefreutInscribedArcana.tpa~
+ACTION_TRY
+	INCLUDE ~%PKGNAME%/include/lefreutInscribedArcana.tpa~
+WITH 
+	DEFAULT
+		LAM UIMenuClose
+		ACTION_RERAISE
+END
 
 /******************************************************************************
  * Kilivitz's Classic Spellbooks
@@ -915,23 +1198,32 @@ BEGIN @404000 DESIGNATED 4040
 GROUP @4
 SUBCOMPONENT @550
 (
-	// Subcomponent specific predicate - Same as common predicate
+	// Subcomponent specific predicate - Same as common
+	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND                // IE 2.0+
+	(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND // Not IWD UI
 	(
-		(GAME_IS ~bgee~) AND 
-		(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND
-		(NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~))
-	) OR
-	(
-		(GAME_IS ~bg2ee~) AND
-		(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND
-		(NOT(FILE_EXISTS ~override/guiiwd2dummy.png~))
-	) OR
-	(
-		(GAME_IS ~eet~)
+		(
+			(GAME_IS ~bgee~) AND 
+			(NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~)) AND // Not Dragonspear UI++
+			(NOT(MOD_IS_INSTALLED ~CKUISOD.tp2~ ~4~))              // Not Revised Dragon Scale V.3 embedded Classic Spellbooks
+		) OR
+		(
+			(GAME_IS ~bg2ee~) AND
+			(NOT(FILE_EXISTS ~override/guiiwd2dummy.png~))     // Not IWD2 GUI
+		) OR
+		(
+			(GAME_IS ~eet~)
+		)
 	)
 )
 
-INCLUDE ~%PKGNAME%/include/KilivitzClassicSpellbooks.tpa~
+ACTION_TRY
+	INCLUDE ~%PKGNAME%/include/KilivitzClassicSpellbooks.tpa~
+WITH 
+	DEFAULT
+		LAM UIMenuClose
+		ACTION_RERAISE
+END
 
 ///////////////////////////////////////////////////////////////////////////////
 // Multiplayer/General/Other Group
@@ -943,20 +1235,17 @@ INCLUDE ~%PKGNAME%/include/KilivitzClassicSpellbooks.tpa~
 BEGIN @500000 DESIGNATED 5000
 GROUP @5
 REQUIRE_PREDICATE (
+	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND         // IE 2.0+
+	(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND  // Not Lefreut's UI
 	(
-		(GAME_IS ~eet~) AND
-		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~))
-	) OR
-	(
-		(GAME_IS ~bg2ee~) AND
-		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~))
-	) OR 
-	(
-		(GAME_IS ~bgee~) AND 
-		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND
-		(NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~))
+		(GAME_IS ~eet~) OR
+		(GAME_IS ~bg2ee~) OR 
+		(
+			(GAME_IS ~bgee~) AND 
+			(NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~)) // Not Dragonspear UI++
+		)
 	)
-) @27 // Neither Dragonspear UI++ nor LeUI
+) @27
 
 LOG @24
 SILENT
@@ -976,9 +1265,10 @@ GROUP @5
 BEGIN @503000 DESIGNATED 5030
 GROUP @5
 REQUIRE_PREDICATE (
-	(GAME_IS ~bgee bg2ee eet~) AND
-	(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~))
-) @27 // Not LeUI
+	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND        // IE 2.0+
+	(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND // Not Lefreut's UI
+	(GAME_IS ~bgee bg2ee eet~)
+) @27
 
 LOG @24
 SILENT
@@ -991,25 +1281,25 @@ COPY ~%PKGNAME%/copy/lefreutBG2ScrollBar~ ~override~
 BEGIN @504000 DESIGNATED 5040
 GROUP @5
 REQUIRE_PREDICATE (
+	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND // IE 2.0+
+	(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND  // Not Lefreut's UI
 	(
-		(GAME_IS ~bg2ee~) AND
-		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND
-		(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND
-		(NOT(FILE_EXISTS ~override/guiiwd2dummy.png~))
-	) OR 
-	(
-		(GAME_IS ~eet~) AND
-		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND
-		(NOT(MOD_IS_INSTALLED ~setup-EET_gui.tp2~ ~0~))
+		(
+			(GAME_IS ~bg2ee~) AND
+			(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND // Not IWD GUI
+			(NOT(FILE_EXISTS ~override/guiiwd2dummy.png~))     // Not IWD2 GUI
+		) OR 
+		(
+			(GAME_IS ~eet~) AND
+			(NOT(MOD_IS_INSTALLED ~setup-EET_gui.tp2~ ~0~)) // Not EET SoD GUI
 
-	) OR
-	(
-		(GAME_IS ~bgee~) AND 
-		(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND
-		(FILE_EXISTS ~override/ULGOTHST.MOS~)
+		) OR
+		(
+			(GAME_IS ~bgee~) AND 
+			(FILE_EXISTS ~override/ULGOTHST.MOS~) // BG2onSoD
+		)
 	)
-) @27 // Either BG2 or BG2onSoD or EETBG2
-
+) @27
 
 LOG @24
 SILENT
