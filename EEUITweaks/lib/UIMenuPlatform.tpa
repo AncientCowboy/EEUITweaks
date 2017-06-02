@@ -16,14 +16,6 @@
  * IsLeUIBG1 - Lefreut's UI on BGEE no SoD
  * IsEETLeUI - EET with Lefreut's UI
  * IsKRDS - Kilivitz's Revised Dragon Scale UI on SoD, prior to V3
--- * IsKRDS0 - Revised Dragon Scale V3, component 0 General tweaks
--- * IsKRDS1 - Maps
--- * IsKRDS2 - Inventory
--- * IsKRDS3 - Record
--- * IsKRDS4 - Classic Spellbook
--- * IsKRDS5 - Start and Escape Menus
--- * IsKRDS6 - Alternate Fonts
--- * IsKRDSV3 - Kilivitz's Revised Dragon Scale UI on SoD V3. IsKRDS will also be set
  * IsKRDS0 - Revised Dragon Scale V4, component 0 General tweaks, Maps, Start and Escape Menus
  * IsKRDS1 - Inventory
  * IsKRDS2 - Record
