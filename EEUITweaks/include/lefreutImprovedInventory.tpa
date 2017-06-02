@@ -22,7 +22,7 @@ BEGIN
 END
 ACTION_MATCH 1
 WITH
-	%IsSoD% %IsEETSoD% %IsSoDOverhaul% %IsKRDS% %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS4% %IsKRDS5% %IsKRDS6%
+	%IsSoD% %IsEETSoD% %IsSoDOverhaul% %IsKRDS% %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS4% %IsKRDS5%
 	BEGIN
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutImprovedInventory/inventorymenu1.menu~
 	END
@@ -58,17 +58,35 @@ END
 
 ACTION_MATCH 1
 WITH
-	%IsSoD% %IsEETSoD% %IsSoDOverhaul% %IsKRDS% %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS4% %IsKRDS5% %IsKRDS6%
+	%IsSoD% %IsEETSoD% %IsSoDOverhaul% %IsKRDS% %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS4% %IsKRDS5%
 	BEGIN
-		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/lefreutImprovedInventory/inventorycode1.lua~
+		ACTION_IF %lefitemcompare% = 1 THEN
+		BEGIN
+			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/lefreutImprovedInventory/inventorycode1.lua~
+		END ELSE
+		BEGIN
+			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/lefreutImprovedInventory/inventorycode4.lua~
+		END
 	END
 	%IsBG2% %IsEETBG2% %IsBG2onSoD%
 	BEGIN
-		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/lefreutImprovedInventory/inventorycode2.lua~
+		ACTION_IF %lefitemcompare% = 1 THEN
+		BEGIN
+			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/lefreutImprovedInventory/inventorycode2.lua~
+		END ELSE
+		BEGIN
+			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/lefreutImprovedInventory/inventorycode5.lua~
+		END
 	END
 	%IsBGEE%
 	BEGIN
-		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/lefreutImprovedInventory/inventorycode3.lua~
+		ACTION_IF %lefitemcompare% = 1 THEN
+		BEGIN
+			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/lefreutImprovedInventory/inventorycode3.lua~
+		END ELSE
+		BEGIN
+			OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/lefreutImprovedInventory/inventorycode6.lua~
+		END
 	END
 
 	DEFAULT
@@ -99,39 +117,159 @@ LOG @17
 SILENT
 ACTION_MATCH 1
 WITH
-	%IsSoD% %IsEETSoD% %IsSoDOverhaul% %IsKRDS% %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS4% %IsKRDS5% %IsKRDS6%
+	%IsSoD% %IsEETSoD% %IsSoDOverhaul% %IsKRDS% %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS4% %IsKRDS5%
 	BEGIN
-		COPY ~%PKGNAME%/copy/luicommon/SODTheme/INVENTOR.MOS~ ~override~
-		COPY ~%PKGNAME%/copy/luicommon/SODTheme/INVSEP1.MOS~ ~override~
-		COPY ~%PKGNAME%/copy/luicommon/SODTheme/INVSEP2.MOS~ ~override~
-		COPY ~%PKGNAME%/copy/luicommon/SODTheme/MOS5015.PVRZ~ ~override~
-		COPY ~%PKGNAME%/copy/luicommon/SODTheme/MOS5016.PVRZ~ ~override~
-		COPY ~%PKGNAME%/copy/luicommon/SODTheme/MOS5017.PVRZ~ ~override~
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/luicommon/SODTheme~
+				resource_file = ~INVENTOR.MOS~
+				pvrz_files = ~MOS5015.PVRZ~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
+
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/luicommon/SODTheme~
+				resource_file = ~INVSEP1.MOS~
+				pvrz_files = ~MOS5016.PVRZ~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
+
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/luicommon/SODTheme~
+				resource_file = ~INVSEP2.MOS~
+				pvrz_files = ~MOS5017.PVRZ~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
 	END
 
 	%IsBG2% %IsBG2onSoD% %IsEETBG2%
 	BEGIN
-		COPY ~%PKGNAME%/copy/luicommon/BG2Theme/INVENTOR.MOS~ ~override~
-		COPY ~%PKGNAME%/copy/luicommon/BG2Theme/INVSEP1.MOS~ ~override~
-		COPY ~%PKGNAME%/copy/luicommon/BG2Theme/INVSEP2.MOS~ ~override~
-		COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4309.PVRZ~ ~override~
-		COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4310.PVRZ~ ~override~
-		COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4311.PVRZ~ ~override~
 		COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUISCRC.BAM~ ~override~
-		COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LTONSLOT.BAM~ ~override~
-		COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4000.PVRZ~ ~override~
-		COPY ~%PKGNAME%/copy/luicommon/BG2Theme/INVBUT.BAM~ ~override~
-		COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4007.PVRZ~ ~override~
+
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+				resource_file = ~LTONSLOT.BAM~
+				pvrz_files = ~MOS4000.PVRZ~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
+		
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+				resource_file = ~INVBUT.BAM~
+				pvrz_files = ~MOS4007.PVRZ~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
+
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+				resource_file = ~INVENTOR.MOS~
+				pvrz_files = ~MOS4309.PVRZ~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
+
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+				resource_file = ~INVSEP1.MOS~
+				pvrz_files = ~MOS4310.PVRZ~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
+
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+				resource_file = ~INVSEP2.MOS~
+				pvrz_files = ~MOS4311.PVRZ~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
 	END
 
 	%IsBGEE%
 	BEGIN
-		COPY ~%PKGNAME%/copy/luicommon/BGEETheme/INVENTOR.MOS~ ~override~
-		COPY ~%PKGNAME%/copy/luicommon/BGEETheme/INVSEP1.MOS~ ~override~
-		COPY ~%PKGNAME%/copy/luicommon/BGEETheme/INVSEP2.MOS~ ~override~
-		COPY ~%PKGNAME%/copy/luicommon/BGEETheme/MOS5012.PVRZ~ ~override~
-		COPY ~%PKGNAME%/copy/luicommon/BGEETheme/MOS5013.PVRZ~ ~override~
-		COPY ~%PKGNAME%/copy/luicommon/BGEETheme/MOS5014.PVRZ~ ~override~
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/luicommon/BGEETheme~
+				resource_file = ~INVENTOR.MOS~
+				pvrz_files = ~MOS5012.PVRZ~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
+
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/luicommon/BGEETheme~
+				resource_file = ~INVSEP1.MOS~
+				pvrz_files = ~MOS5013.PVRZ~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
+
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/luicommon/BGEETheme~
+				resource_file = ~INVSEP2.MOS~
+				pvrz_files = ~MOS5014.PVRZ~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
+
 	END
 
 	DEFAULT

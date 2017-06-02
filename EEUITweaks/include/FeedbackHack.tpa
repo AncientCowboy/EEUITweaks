@@ -53,12 +53,6 @@ END
 /*******************************************************************************
  * Feedback Buttons Hack Installation
  ******************************************************************************/	
-// Copy common files
-LOG @24
-SILENT
-COPY ~%PKGNAME%/copy/FeedbackHack/M_FeedHk.lua~ ~override~
-COPY ~%PKGNAME%/copy/FeedbackHack/en_FeedH.lua~ ~override~
-
 // Open UI.MENU
 LOG @12
 SILENT
@@ -104,7 +98,7 @@ BEGIN
 	// Patch label
 	ACTION_MATCH 1
 	WITH
-		%IsSoD% %IsEETSoD% %IsTIWDonSoD% %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS4% %IsKRDS5% %IsKRDS6%
+		%IsSoD% %IsEETSoD% %IsTIWDonSoD% %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS4% %IsKRDS5%
 		BEGIN
 			ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2070~ THEN
 			BEGIN
@@ -167,7 +161,7 @@ BEGIN
 	// Add buttons
 	ACTION_MATCH 1
 	WITH
-		%IsSoD% %IsEETSoD% %IsTIWDonSoD%  %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS4% %IsKRDS5% %IsKRDS6%
+		%IsSoD% %IsEETSoD% %IsTIWDonSoD%  %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS4% %IsKRDS5%
 		BEGIN
 			ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2070~ THEN
 			BEGIN
@@ -242,84 +236,260 @@ BEGIN
 	FAIL @21
 END
 
+// Copy common files
+LOG @24
+SILENT
+COPY ~%PKGNAME%/copy/FeedbackHack/M_FeedHk.lua~ ~override~
+COPY ~%PKGNAME%/copy/FeedbackHack/en_FeedH.lua~ ~override~
+
 // Copy configuration specific ACTION_BAR resources
 ACTION_MATCH 1
 WITH
-	%IsSoD% %IsEETSoD% %IsTIWDonSoD%  %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS4% %IsKRDS5% %IsKRDS6%
+	%IsSoD% %IsEETSoD% %IsTIWDonSoD%  %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS4% %IsKRDS5%
 	BEGIN
-		COPY ~%PKGNAME%/copy/FeedbackHack/SOD/GMSGSCRL.BAM~ ~override~
-		COPY ~%PKGNAME%/copy/FeedbackHack/SOD/MOS5055.PVRZ~ ~override~
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/FeedbackHack/SOD~
+				resource_file = ~GMSGSCRL.BAM~
+				pvrz_files = ~MOS5055.PVRZ~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
 		ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2070~ THEN
 		BEGIN
-			COPY ~%PKGNAME%/copy/CommonActionBars/SOD/ABSODL.MOS~ ~override/GUWBTP10.MOS~
-			COPY ~%PKGNAME%/copy/CommonActionBars/SOD/MOS5042.PVRZ~ ~override~
+			LAF EEUITweaks.CopyPVRZResource
+				STR_VAR
+					source_folder = EVAL ~%PKGNAME%/copy/CommonActionBars/SOD~
+					resource_file = ~ABSODL.MOS~
+					resource_rename = ~GUWBTP10.MOS~
+					pvrz_files = ~MOS5042.PVRZ~
+				RET
+					$UIMenuIF("Succeeded") = succeeded
+			END
+			ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+			BEGIN
+				FAIL @44
+			END
 		END ELSE
 		BEGIN
-			COPY ~%PKGNAME%/copy/CommonActionBars/SOD/ABSODS.MOS~ ~override/GUWBTP10.MOS~
-			COPY ~%PKGNAME%/copy/CommonActionBars/SOD/MOS5040.PVRZ~ ~override~
+			LAF EEUITweaks.CopyPVRZResource
+				STR_VAR
+					source_folder = EVAL ~%PKGNAME%/copy/CommonActionBars/SOD~
+					resource_file = ~ABSODS.MOS~
+					resource_rename = ~GUWBTP10.MOS~
+					pvrz_files = ~MOS5040.PVRZ~
+				RET
+					$UIMenuIF("Succeeded") = succeeded
+			END
+			ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+			BEGIN
+				FAIL @44
+			END
 		END
 	END
 	%IsSoDOverhaul%
 	BEGIN
-		COPY ~%PKGNAME%/copy/FeedbackHack/DSP/GMSGSCRL.BAM~ ~override~
-		COPY ~%PKGNAME%/copy/FeedbackHack/DSP/MOS5056.PVRZ~ ~override~
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/FeedbackHack/DSP~
+				resource_file = ~GMSGSCRL.BAM~
+				pvrz_files = ~MOS5056.PVRZ~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
 		ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2070~ THEN
 		BEGIN
-			COPY ~%PKGNAME%/copy/CommonActionBars/DSP/ABDSPL.MOS~ ~override/GUWBTP10.MOS~
-			COPY ~%PKGNAME%/copy/CommonActionBars/DSP/MOS5045.PVRZ~ ~override~
+			LAF EEUITweaks.CopyPVRZResource
+				STR_VAR
+					source_folder = EVAL ~%PKGNAME%/copy/CommonActionBars/DSP~
+					resource_file = ~ABDSPL.MOS~
+					resource_rename = ~GUWBTP10.MOS~
+					pvrz_files = ~MOS5045.PVRZ~
+				RET
+					$UIMenuIF("Succeeded") = succeeded
+			END
+			ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+			BEGIN
+				FAIL @44
+			END
 		END ELSE
 		BEGIN
-			COPY ~%PKGNAME%/copy/CommonActionBars/DSP/ABDSPS.MOS~ ~override/GUWBTP10.MOS~
-			COPY ~%PKGNAME%/copy/CommonActionBars/DSP/MOS5043.PVRZ~ ~override~
+			LAF EEUITweaks.CopyPVRZResource
+				STR_VAR
+					source_folder = EVAL ~%PKGNAME%/copy/CommonActionBars/DSP~
+					resource_file = ~ABDSPS.MOS~
+					resource_rename = ~GUWBTP10.MOS~
+					pvrz_files = ~MOS5043.PVRZ~
+				RET
+					$UIMenuIF("Succeeded") = succeeded
+			END
+			ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+			BEGIN
+				FAIL @44
+			END
 		END
 		DELETE ~override/GUWBTP10.png~
 	END
 	%IsBG2% %IsEETBG2% %IsTIWDonBG2% %IsTIWD2onBG2%
 	BEGIN
-		COPY ~%PKGNAME%/copy/FeedbackHack/BG2/GMSGSCRL.BAM~ ~override~
-		COPY ~%PKGNAME%/copy/FeedbackHack/BG2/MOS5054.PVRZ~ ~override~
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/FeedbackHack/BG2~
+				resource_file = ~GMSGSCRL.BAM~
+				pvrz_files = ~MOS5054.PVRZ~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
 		ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2070~ THEN
 		BEGIN
-			COPY ~%PKGNAME%/copy/CommonActionBars/BG2/ABBG2L.MOS~ ~override/GUWBTP10.MOS~
-			COPY ~%PKGNAME%/copy/CommonActionBars/BG2/MOS5039.PVRZ~ ~override~
+			LAF EEUITweaks.CopyPVRZResource
+				STR_VAR
+					source_folder = EVAL ~%PKGNAME%/copy/CommonActionBars/BG2~
+					resource_file = ~ABBG2L.MOS~
+					resource_rename = ~GUWBTP10.MOS~
+					pvrz_files = ~MOS5039.PVRZ~
+				RET
+					$UIMenuIF("Succeeded") = succeeded
+			END
+			ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+			BEGIN
+				FAIL @44
+			END
 		END ELSE
 		BEGIN
-			COPY ~%PKGNAME%/copy/CommonActionBars/BG2/ABBG2S.MOS~ ~override/GUWBTP10.MOS~
-			COPY ~%PKGNAME%/copy/CommonActionBars/BG2/MOS5038.PVRZ~ ~override~
+			LAF EEUITweaks.CopyPVRZResource
+				STR_VAR
+					source_folder = EVAL ~%PKGNAME%/copy/CommonActionBars/BG2~
+					resource_file = ~ABBG2S.MOS~
+					resource_rename = ~GUWBTP10.MOS~
+					pvrz_files = ~MOS5038.PVRZ~
+				RET
+					$UIMenuIF("Succeeded") = succeeded
+			END
+			ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+			BEGIN
+				FAIL @44
+			END
 		END
 	END
 	%IsBGEE%
 	BEGIN
-		COPY ~%PKGNAME%/copy/FeedbackHack/BG1/GMSGSCRL.BAM~ ~override~
-		COPY ~%PKGNAME%/copy/FeedbackHack/BG1/MOS5057.PVRZ~ ~override~
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/FeedbackHack/BG1~
+				resource_file = ~GMSGSCRL.BAM~
+				pvrz_files = ~MOS5057.PVRZ~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
 		ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2070~ THEN
 		BEGIN
-			COPY ~%PKGNAME%/copy/CommonActionBars/BG1/ABBG1L.MOS~ ~override/GUWBTP10.MOS~
-			COPY ~%PKGNAME%/copy/CommonActionBars/BG1/MOS5048.PVRZ~ ~override~
+			LAF EEUITweaks.CopyPVRZResource
+				STR_VAR
+					source_folder = EVAL ~%PKGNAME%/copy/CommonActionBars/BG1~
+					resource_file = ~ABBG1L.MOS~
+					resource_rename = ~GUWBTP10.MOS~
+					pvrz_files = ~MOS5048.PVRZ~
+				RET
+					$UIMenuIF("Succeeded") = succeeded
+			END
+			ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+			BEGIN
+				FAIL @44
+			END
 		END ELSE
 		BEGIN
-			COPY ~%PKGNAME%/copy/CommonActionBars/BG1/ABBG1S.MOS~ ~override/GUWBTP10.MOS~
-			COPY ~%PKGNAME%/copy/CommonActionBars/BG1/MOS5046.PVRZ~ ~override~
+			LAF EEUITweaks.CopyPVRZResource
+				STR_VAR
+					source_folder = EVAL ~%PKGNAME%/copy/CommonActionBars/BG1~
+					resource_file = ~ABBG1S.MOS~
+					resource_rename = ~GUWBTP10.MOS~
+					pvrz_files = ~MOS5046.PVRZ~
+				RET
+					$UIMenuIF("Succeeded") = succeeded
+			END
+			ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+			BEGIN
+				FAIL @44
+			END
 		END
 	END
 	%IsLeUIBG2% %IsLeUISOD% %IsLeUIBG1% %IsEETLeUI%
 	BEGIN
-		COPY ~%PKGNAME%/copy/FeedbackHack/LUI/GMSGSCRL.BAM~ ~override~
-		COPY ~%PKGNAME%/copy/FeedbackHack/LUI/MOS5059.PVRZ~ ~override~
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/FeedbackHack/LUI~
+				resource_file = ~GMSGSCRL.BAM~
+				pvrz_files = ~MOS5059.PVRZ~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
 		ACTION_IF MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2070~ THEN
 		BEGIN
-			COPY ~%PKGNAME%/copy/CommonActionBars/LUI/ABLUIL.MOS~ ~override/GUIBAR.MOS~
-			COPY ~%PKGNAME%/copy/CommonActionBars/LUI/MOS5052.PVRZ~ ~override~
+			LAF EEUITweaks.CopyPVRZResource
+				STR_VAR
+					source_folder = EVAL ~%PKGNAME%/copy/CommonActionBars/LUI~
+					resource_file = ~ABLUIL.MOS~
+					resource_rename = ~GUIBAR.MOS~
+					pvrz_files = ~MOS5052.PVRZ~
+				RET
+					$UIMenuIF("Succeeded") = succeeded
+			END
+			ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+			BEGIN
+				FAIL @44
+			END
 		END ELSE
 		BEGIN
-			COPY ~%PKGNAME%/copy/CommonActionBars/LUI/ABLUIS.MOS~ ~override/GUIBAR.MOS~
-			COPY ~%PKGNAME%/copy/CommonActionBars/LUI/MOS5050.PVRZ~ ~override~
+			LAF EEUITweaks.CopyPVRZResource
+				STR_VAR
+					source_folder = EVAL ~%PKGNAME%/copy/CommonActionBars/LUI~
+					resource_file = ~ABLUIS.MOS~
+					resource_rename = ~GUIBAR.MOS~
+					pvrz_files = ~MOS5050.PVRZ~
+				RET
+					$UIMenuIF("Succeeded") = succeeded
+			END
+			ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+			BEGIN
+				FAIL @44
+			END
 		END
 	END
 	%IsKRDS%
 	BEGIN
-		COPY ~%PKGNAME%/copy/FeedbackHack/SOD/GMSGSCRL.BAM~ ~override~
-		COPY ~%PKGNAME%/copy/FeedbackHack/SOD/MOS5055.PVRZ~ ~override~
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/FeedbackHack/SOD~
+				resource_file = ~GMSGSCRL.BAM~
+				pvrz_files = ~MOS5055.PVRZ~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
 	END
 
 	DEFAULT

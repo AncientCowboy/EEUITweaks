@@ -3,7 +3,7 @@ fontcolors['D'] = 'FFA9D4FF'
 fontcolors['S'] = 'FF0066FF'
 fontcolors['H'] = 'FF00B7FF'
 
-chargenReverseButtons = false
+chargenReverseButtons = true
 `
 menu
 {

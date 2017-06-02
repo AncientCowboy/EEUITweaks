@@ -216,11 +216,12 @@ menu
 				align center center
 			}
 		}
-		area 158 204 256 372
+		area 154 204 266 372
 		name "bookListMage"
+		scrollbar 'LUISBR'
 		rowheight 62
 		hidehighlight
-		table "makeTable(length(bookSpells) / 4)"
+		table "makeTable((#bookSpells - 1) / 4)"
 		var currentBookSpell
 		action
 		"
@@ -278,54 +279,9 @@ menu
 			{
 				enabled "bottomSpellsPlaceHolder[4 * rowNumber - 3] ~= nil"
 				area 0 0 -1 -1
-				bam LPELFRMS
+				bam SPELFRMS
 				align center center
 			}
-		}
-		column
-		{
-			width 25
-			label
-			{
-				enabled "bottomSpellsPlaceHolder[4 * rowNumber - 2] ~= nil"
-				area 0 0 -1 -1
-				bam LPELFRMS
-				align center center
-			}
-		}
-		column
-		{
-			width 25
-			label
-			{
-				enabled "bottomSpellsPlaceHolder[4 * rowNumber - 1] ~= nil"
-				area 0 0 -1 -1
-				bam LPELFRMS
-				align center center
-			}
-		}
-		column
-		{
-			width 25
-			label
-			{
-				enabled "bottomSpellsPlaceHolder[4 * rowNumber] ~= nil"
-				area 0 0 -1 -1
-				bam LPELFRMS
-				align center center
-			}
-		}
-		enabled "selectedSpell == nil"
-		area 450 204 256 372
-		rowheight 62
-		hidehighlight
-		table "makeTable(length(bottomSpellsPlaceHolder) / 4)"
-	}
-	list
-	{
-		column
-		{
-			width 25
 			label
 			{
 				enabled "bottomSpells[4 * rowNumber - 3] ~= nil"
@@ -340,6 +296,13 @@ menu
 			width 25
 			label
 			{
+				enabled "bottomSpellsPlaceHolder[4 * rowNumber - 2] ~= nil"
+				area 0 0 -1 -1
+				bam SPELFRMS
+				align center center
+			}
+			label
+			{
 				enabled "bottomSpells[4 * rowNumber - 2] ~= nil"
 				area 0 0 -1 -1
 				bam lua "bottomSpells[4 * rowNumber - 2].icon"
@@ -350,6 +313,13 @@ menu
 		column
 		{
 			width 25
+			label
+			{
+				enabled "bottomSpellsPlaceHolder[4 * rowNumber - 1] ~= nil"
+				area 0 0 -1 -1
+				bam SPELFRMS
+				align center center
+			}
 			label
 			{
 				enabled "bottomSpells[4 * rowNumber - 1] ~= nil"
@@ -364,6 +334,13 @@ menu
 			width 25
 			label
 			{
+				enabled "bottomSpellsPlaceHolder[4 * rowNumber] ~= nil"
+				area 0 0 -1 -1
+				bam SPELFRMS
+				align center center
+			}
+			label
+			{
 				enabled "bottomSpells[4 * rowNumber] ~= nil"
 				area 0 0 -1 -1
 				bam lua "bottomSpells[4 * rowNumber].icon"
@@ -371,12 +348,13 @@ menu
 				align center center
 			}
 		}
-		area 450 204 256 372
+		area 450 204 266 372
 		name "memorizedListMage"
-		enabled "#bottomSpells ~= 0 and selectedSpell == nil"
+		enabled "selectedSpell == nil"
+		scrollbar 'LUISBR'
 		rowheight 62
 		hidehighlight
-		table "makeTable(length(bottomSpells) / 4)"
+		table "makeTable((#bottomSpellsPlaceHolder - 1) / 4)"
 		var currentBottomSpell
 		action
 		"

@@ -43,7 +43,7 @@ WITH
 		END
 	END
 
-	%IsKRDS% %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS4% %IsKRDS5% %IsKRDS6%
+	%IsKRDS% %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS4% %IsKRDS5%
 	BEGIN		
 		LOG @38
 		SILENT
@@ -177,7 +177,7 @@ LOG @17
 SILENT
 ACTION_MATCH 1
 WITH
-	%IsSoD% %IsEETSoD% %IsKRDS% %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS4% %IsKRDS5% %IsKRDS6%
+	%IsSoD% %IsEETSoD% %IsKRDS% %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS4% %IsKRDS5%
 	BEGIN
 		COPY ~%PKGNAME%/copy/Mr2150PortPicker/M_nicks.lua~ ~override~
 		COPY ~%PKGNAME%/copy/Mr2150PortPicker/NOPORTMD.BMP~ ~override~
@@ -187,15 +187,51 @@ WITH
 	BEGIN
 		COPY ~%PKGNAME%/copy/Mr2150PortPicker/M_nicks.lua~ ~override~
 		COPY ~%PKGNAME%/copy/Mr2150PortPicker/NOPORTMD.BMP~ ~override~
-		COPY ~%PKGNAME%/copy/Mr2150PortPicker/BG2~ ~override~
+		COPY ~%PKGNAME%/copy/Mr2150PortPicker/BG2/BWGUIBA.png~ ~override~
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/Mr2150PortPicker/BG2~
+				resource_file = ~RGGUIBA.MOS~
+				pvrz_files = ~MOS5002.PVRZ~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
+
 	END
 
 	%IsLeUISOD% %IsLeUIBG1%
 	BEGIN
 		COPY ~%PKGNAME%/copy/Mr2150PortPicker/M_nicks.lua~ ~override~
 		COPY ~%PKGNAME%/copy/Mr2150PortPicker/NOPORTMD.BMP~ ~override~
-		COPY ~%PKGNAME%/copy/Mr2150PortPicker/BG2~ ~override~
-		COPY ~%PKGNAME%/copy/BillyYankMultiPort/GENDER~ ~override~
+		COPY ~%PKGNAME%/copy/Mr2150PortPicker/BG2/BWGUIBA.png~ ~override~
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/Mr2150PortPicker/BG2~
+				resource_file = ~RGGUIBA.MOS~
+				pvrz_files = ~MOS5002.PVRZ~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/BillyYankMultiPort/GENDER~
+				resource_file = ~GUIGDB.MOS~
+				pvrz_files = ~mos0130.PVRZ mos0131.PVRZ~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
 	END
 
 	DEFAULT

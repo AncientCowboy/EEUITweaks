@@ -114,26 +114,26 @@ menu
 
 	button
 	{
-		on escape
 		area 278 712 234 44
 		bam LUIOSTUL
-		text "BACK_BUTTON" -- Back
-		text style "button"
-		action
-		"
-			createPartyScreen:OnBackButtonClick()
-		"
-	}
-	button
-	{
-		area 530 712 234 44
-		bam LUIOSTUR
 		text "PLAY_IMPORT_BUTTON" -- Play
 		text style "button"
 		clickable lua "partyImport.playbuttonclickable"
 		action
 		"
 			createPartyScreen:OnDoneButtonClick()
+		"
+	}
+	button
+	{
+		on escape
+		area 530 712 234 44
+		bam LUIOSTUR
+		text "BACK_BUTTON" -- Back
+		text style "button"
+		action
+		"
+			createPartyScreen:OnBackButtonClick()
 		"
 	}
 

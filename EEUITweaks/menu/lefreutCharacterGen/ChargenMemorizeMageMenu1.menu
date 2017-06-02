@@ -55,8 +55,8 @@ menu
 			{
 				area 0 4 45 42
 				bam LUIOSW
-				frame lua "chargen.choose_spell[rowNumber].count > 0 and currentCellCheck(3) or 3"
-				sequence 1
+				frame lua "getMageFrame(rowNumber, chargenReverseButtons) and currentCellCheck(3) or 3"
+				sequence lua "chargenReverseButtons and 1 or 3"
 			}
 		}
 		column
@@ -66,8 +66,8 @@ menu
 			{
 				area 0 4 45 42
 				bam LUIOSW
-				frame lua "spellSelectable(rowNumber) and currentCellCheck(4) or 3"
-				sequence 0
+				frame lua "getMageFrame(rowNumber, not chargenReverseButtons) and currentCellCheck(4) or 3"
+				sequence lua "chargenReverseButtons and 0 or 4"
 			}
 		}
 		scrollbar 'LUISCRC'
@@ -78,12 +78,13 @@ menu
 		var currentChargenMemorizeMageSpell
 		action
 		"
-			if cellNumber == 3 then
+			local delta = chargenReverseButtons and -1 or 1
+			if cellNumber == 3 and (chargenReverseButtons or spellSelectable(currentChargenMemorizeMageSpell)) then
 				Infinity_PlaySound('GAM_09')
-				createCharScreen:OnMemorizeMageSpellButtonClick(currentChargenMemorizeMageSpell, -1)
-			elseif cellNumber == 4 and spellSelectable(currentChargenMemorizeMageSpell) then
+				createCharScreen:OnMemorizeMageSpellButtonClick(currentChargenMemorizeMageSpell, delta)
+			elseif cellNumber == 4 and (not chargenReverseButtons or spellSelectable(currentChargenMemorizeMageSpell)) then
 				Infinity_PlaySound('GAM_09')
-				createCharScreen:OnMemorizeMageSpellButtonClick(currentChargenMemorizeMageSpell, 1)
+				createCharScreen:OnMemorizeMageSpellButtonClick(currentChargenMemorizeMageSpell, -delta)
 			end
 			cellNumber = nil
 		"

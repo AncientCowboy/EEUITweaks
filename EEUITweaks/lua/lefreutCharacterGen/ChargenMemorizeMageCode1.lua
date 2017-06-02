@@ -28,4 +28,13 @@ function spellSelectable(row)
 	end
 	return selectable
 end
+function getMageFrame(cellNum, minus)
+	if minus and chargen.choose_spell[cellNum].count > 0 then
+		return true
+	elseif not minus and spellSelectable(cellNum) then
+		return true
+	else
+		return false
+	end
+end
 `

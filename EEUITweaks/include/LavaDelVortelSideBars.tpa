@@ -1,0 +1,8 @@
+/******************************************************************************
+ * LavaDelVortel's Sculpted Transparent Sidebars Installation
+ *****************************************************************************/
+LOG @24
+SILENT
+COPY ~%PKGNAME%/copy/LavaDelVortelSideBars/mainwing.MOS~ ~override~
+COPY ~%PKGNAME%/copy/LavaDelVortelSideBars/MOS5000.PVRZ~ ~override~
+

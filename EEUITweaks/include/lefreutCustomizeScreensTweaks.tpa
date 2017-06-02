@@ -109,25 +109,83 @@ LOG @17
 SILENT
 COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUISCRC.BAM~ ~override~
 
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LLDRSTAR.BAM~ ~override~
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4006.PVRZ~ ~override~
+LAF EEUITweaks.CopyPVRZResource
+	STR_VAR
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		resource_file = ~LLDRSTAR.BAM~
+		pvrz_files = ~MOS4006.PVRZ~
+	RET
+		$UIMenuIF("Succeeded") = succeeded
+END
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @44
+END
 
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUICHLNG.BAM~ ~override~
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4009.PVRZ~ ~override~
+LAF EEUITweaks.CopyPVRZResource
+	STR_VAR
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		resource_file = ~LUICHLNG.BAM~
+		pvrz_files = ~MOS4009.PVRZ~
+	RET
+		$UIMenuIF("Succeeded") = succeeded
+END
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @44
+END
 
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUIOSTUL.BAM~ ~override~
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUIOSTUM.BAM~ ~override~
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUIOSTUR.BAM~ ~override~
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4004.PVRZ~ ~override~
+LAF EEUITweaks.MultiCopyPVRZResource
+	STR_VAR
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		resource_file = ~LUIOSTUL.BAM LUIOSTUM.BAM LUIOSTUR.BAM~
+		pvrz_files = ~MOS4004.PVRZ~
+	RET
+		$UIMenuIF("Succeeded") = succeeded
+END
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @44
+END
 
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUICHISD.MOS~ ~override~
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4253.PVRZ~ ~override~
+LAF EEUITweaks.CopyPVRZResource
+	STR_VAR
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		resource_file = ~LUICHISD.MOS~
+		pvrz_files = ~MOS4253.PVRZ~
+	RET
+		$UIMenuIF("Succeeded") = succeeded
+END
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @44
+END
 
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUICHISE.MOS~ ~override~
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4254.PVRZ~ ~override~
+LAF EEUITweaks.CopyPVRZResource
+	STR_VAR
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		resource_file = ~LUICHISE.MOS~
+		pvrz_files = ~MOS4254.PVRZ~
+	RET
+		$UIMenuIF("Succeeded") = succeeded
+END
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @44
+END
 
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUICUSTB.MOS~ ~override~
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4258.PVRZ~ ~override~
+LAF EEUITweaks.CopyPVRZResource
+	STR_VAR
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		resource_file = ~LUICUSTB.MOS~
+		pvrz_files = ~MOS4258.PVRZ~
+	RET
+		$UIMenuIF("Succeeded") = succeeded
+END
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @44
+END
 
 
 

@@ -61,34 +61,30 @@ menu
 	{
 		bam LUIOSW
 		area 288 482 45 42
-		sequence 0
-		clickable lua "(tonumber(storeDonateAmountEdit) or 0) < game:GetPartyGold()"
+		clickable lua "isStorePlusMinusButtonClickable(not reverseDonateButtons)"
+		sequence lua "reverseDonateButtons and 0 or 4"
 		action
 		"
-			local amt = tonumber(storeDonateAmountEdit) or 0
-			storeDonateAmountEdit = amt + 1
+			storePlusMinusButtonClick(not reverseDonateButtons)
 		"
 		actionHold
 		"
-			local amt = tonumber(storeDonateAmountEdit) or 0
-			storeDonateAmountEdit = amt + 1
+			storePlusMinusButtonClick(not reverseDonateButtons)
 		"
 	}
 	button
 	{
 		bam LUIOSW
 		area 244 482 45 42
-		sequence 1
-		clickable lua "(tonumber(storeDonateAmountEdit) or 0) > 0"
+		clickable lua "isStorePlusMinusButtonClickable(reverseDonateButtons)"
+		sequence lua "reverseDonateButtons and 1 or 3"
 		action
 		"
-			local amt = tonumber(storeDonateAmountEdit) or 0
-			storeDonateAmountEdit = amt - 1
+			storePlusMinusButtonClick(reverseDonateButtons)
 		"
 		actionHold
 		"
-			local amt = tonumber(storeDonateAmountEdit) or 0
-			storeDonateAmountEdit = amt - 1
+			storePlusMinusButtonClick(reverseDonateButtons)
 		"
 	}
 	button

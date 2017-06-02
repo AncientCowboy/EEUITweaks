@@ -1,5 +1,5 @@
--- Hidden Options IsTIWDonBG2
-
+-- Hidden Options IsTIWD2onBG2
+`
 if(modOptionsRegisterMenu) then
 	modOptionsRegisterMenu('HIDEOPT_TITLE', 'OPTIONS_HIDDEN', 'HIDEOPT_INFO', 0)
 end
@@ -41,7 +41,7 @@ menu
 	
 	label
 	{
-		area		207 6 481 44
+		area		207 12 481 44
 		text		"HIDEOPT_TITLE"
 		text style	title
 	}
@@ -100,7 +100,7 @@ menu
 -- Slider 1
 	text
 	{
-		area 450 186 370 72
+		area 456 186 370 72
 		text highlight lua "getSelected(currentHiddenSL, 1)"
 		text style	"normal"
 		text align	left center
@@ -114,7 +114,7 @@ menu
 	}
 	text
 	{
-		area		454 186 300 36
+		area		460 186 300 36
 		text lua	"t(hiddenOptionsSliders[1][1])"
 		text style	"normal"
 		text align	left bottom
@@ -127,7 +127,7 @@ menu
 	}
 	slider
 	{
-		area 			454 222 200 36
+		area 			460 222 200 36
 		position		"hiddenOptionsSliders[1][6]"
 		bam				'SLDRSTAR'
 		mosaic			GUISLDR
@@ -144,7 +144,7 @@ menu
 	}
 	text
 	{
-		area		700 222 100 36
+		area		706 222 100 36
 		text lua	"tostring(hiddenGetSliderValue(1))"
 		text style	"normal"
 		text align	right center
@@ -159,7 +159,7 @@ menu
 -- Slider 2
 	text
 	{
-		area 450 258 370 72
+		area 456 258 370 72
 		text highlight lua "getSelected(currentHiddenSL, 2)"
 		text style	"normal"
 		text align	left center
@@ -173,7 +173,7 @@ menu
 	}
 	text
 	{
-		area		454 258 300 36
+		area		460 258 300 36
 		text lua	"t(hiddenOptionsSliders[2][1])"
 		text style	"normal"
 		text align	left bottom
@@ -186,7 +186,7 @@ menu
 	}
 	slider
 	{
-		area 			454 294 200 36
+		area 			460 294 200 36
 		position		"hiddenOptionsSliders[2][6]"
 		bam				'SLDRSTAR'
 		mosaic			GUISLDR
@@ -203,7 +203,7 @@ menu
 	}
 	text
 	{
-		area		700 294 100 36
+		area		706 294 100 36
 		text lua	"tostring(hiddenGetSliderValue(2))"
 		text style	"normal"
 		text align	right center
@@ -218,7 +218,7 @@ menu
 -- Slider 3
 	text
 	{
-		area 450 330 370 72
+		area 456 330 370 72
 		text highlight lua "getSelected(currentHiddenSL, 3)"
 		text style	"normal"
 		text align	left center
@@ -232,7 +232,7 @@ menu
 	}
 	text
 	{
-		area		454 330 300 36
+		area		460 330 300 36
 		text lua	"t(hiddenOptionsSliders[3][1])"
 		text style	"normal"
 		text align	left bottom
@@ -245,7 +245,7 @@ menu
 	}
 	slider
 	{
-		area 			454 366 200 36
+		area 			460 366 200 36
 		position		"hiddenOptionsSliders[3][6]"
 		bam				'SLDRSTAR'
 		mosaic			GUISLDR
@@ -262,7 +262,7 @@ menu
 	}
 	text
 	{
-		area		700 366 100 36
+		area		706 366 100 36
 		text lua	"tostring(hiddenGetSliderValue(3))"
 		text style	"normal"
 		text align	right center
@@ -276,7 +276,7 @@ menu
 
 	text
 	{
-		area		442 512 378 98
+		area		454 520 378 98
 		rectangle	0
 		rectangle opacity 50
 		pad			8 8 8 8

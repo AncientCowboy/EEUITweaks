@@ -553,10 +553,31 @@ BEGIN
 	// Copy specific override files
 	LOG @17
 	SILENT
-	COPY ~%PKGNAME%/copy/ModsOptions/MODOPSOD.BAM~ ~override~
-	COPY ~%PKGNAME%/copy/ModsOptions/MOS5024.PVRZ~ ~override~
-	COPY ~%PKGNAME%/copy/ModsOptions/GUIERR8.MOS~ ~override~
-	COPY ~%PKGNAME%/copy/ModsOptions/MOS5019.PVRZ~ ~override~
+	LAF EEUITweaks.CopyPVRZResource
+		STR_VAR
+			source_folder = EVAL ~%PKGNAME%/copy/ModsOptions~
+			resource_file = ~MODOPSOD.BAM~
+			pvrz_files = ~MOS5024.PVRZ~
+		RET
+			$UIMenuIF("Succeeded") = succeeded
+	END
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @44
+	END
+
+	LAF EEUITweaks.CopyPVRZResource
+		STR_VAR
+			source_folder = EVAL ~%PKGNAME%/copy/ModsOptions~
+			resource_file = ~GUIERR8.MOS~
+			pvrz_files = ~MOS5019.PVRZ~
+		RET
+			$UIMenuIF("Succeeded") = succeeded
+	END
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @44
+	END
 	
 	// Patch START_OPTIONS
 	LOG @100
@@ -988,8 +1009,18 @@ BEGIN
 	// Copy specific override files
 	LOG @17
 	SILENT
-	COPY ~%PKGNAME%/copy/ModsOptions/MODOPSOD.BAM~ ~override~
-	COPY ~%PKGNAME%/copy/ModsOptions/MOS5024.PVRZ~ ~override~
+	LAF EEUITweaks.CopyPVRZResource
+		STR_VAR
+			source_folder = EVAL ~%PKGNAME%/copy/ModsOptions~
+			resource_file = ~MODOPSOD.BAM~
+			pvrz_files = ~MOS5024.PVRZ~
+		RET
+			$UIMenuIF("Succeeded") = succeeded
+	END
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @44
+	END
 
 	// Patch START_OPTIONS
 	LOG @100
@@ -1265,8 +1296,18 @@ BEGIN
 	// Copy specific override files
 	LOG @17
 	SILENT
-	COPY ~%PKGNAME%/copy/ModsOptions/modoimg1.BAM~ ~override~
-	COPY ~%PKGNAME%/copy/ModsOptions/MOS5020.PVRZ~ ~override~
+	LAF EEUITweaks.CopyPVRZResource
+		STR_VAR
+			source_folder = EVAL ~%PKGNAME%/copy/ModsOptions~
+			resource_file = ~modoimg1.BAM~
+			pvrz_files = ~MOS5020.PVRZ~
+		RET
+			$UIMenuIF("Succeeded") = succeeded
+	END
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @44
+	END
 
 	// Patch START_OPTIONS menu
 	LOG @100
@@ -1355,8 +1396,18 @@ BEGIN
 	// Copy specific override files
 	LOG @17
 	SILENT
-	COPY ~%PKGNAME%/copy/ModsOptions/modoimg2.BAM~ ~override~
-	COPY ~%PKGNAME%/copy/ModsOptions/MOS5021.PVRZ~ ~override~
+	LAF EEUITweaks.CopyPVRZResource
+		STR_VAR
+			source_folder = EVAL ~%PKGNAME%/copy/ModsOptions~
+			resource_file = ~modoimg2.BAM~
+			pvrz_files = ~MOS5021.PVRZ~
+		RET
+			$UIMenuIF("Succeeded") = succeeded
+	END
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @44
+	END
 
 	// Patch START_OPTIONS menu
 	LOG @100
@@ -1446,8 +1497,18 @@ BEGIN
 	// Copy specific override files
 	LOG @17
 	SILENT
-	COPY ~%PKGNAME%/copy/ModsOptions/modoimg1.BAM~ ~override~
-	COPY ~%PKGNAME%/copy/ModsOptions/MOS5020.PVRZ~ ~override~
+	LAF EEUITweaks.CopyPVRZResource
+		STR_VAR
+			source_folder = EVAL ~%PKGNAME%/copy/ModsOptions~
+			resource_file = ~modoimg1.BAM~
+			pvrz_files = ~MOS5020.PVRZ~
+		RET
+			$UIMenuIF("Succeeded") = succeeded
+	END
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @44
+	END
 
 	// Patch START_OPTIONS menu
 	LOG @100
@@ -1531,10 +1592,31 @@ BEGIN
 	// Copy specific override files
 	LOG @17
 	SILENT
-	COPY ~%PKGNAME%/copy/ModsOptions/MODOPSOD.BAM~ ~override~
-	COPY ~%PKGNAME%/copy/ModsOptions/MOS5024.PVRZ~ ~override~
-	COPY ~%PKGNAME%/copy/ModsOptions/GUIERR8.MOS~ ~override~
-	COPY ~%PKGNAME%/copy/ModsOptions/MOS5019.PVRZ~ ~override~
+	LAF EEUITweaks.CopyPVRZResource
+		STR_VAR
+			source_folder = EVAL ~%PKGNAME%/copy/ModsOptions~
+			resource_file = ~MODOPSOD.BAM~
+			pvrz_files = ~MOS5024.PVRZ~
+		RET
+			$UIMenuIF("Succeeded") = succeeded
+	END
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @44
+	END
+
+	LAF EEUITweaks.CopyPVRZResource
+		STR_VAR
+			source_folder = EVAL ~%PKGNAME%/copy/ModsOptions~
+			resource_file = ~GUIERR8.MOS~
+			pvrz_files = ~MOS5019.PVRZ~
+		RET
+			$UIMenuIF("Succeeded") = succeeded
+	END
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @44
+	END
 
 	// Patch START_OPTIONS menu
 	LOG @100
@@ -1618,10 +1700,31 @@ BEGIN
 	// Copy specific override files
 	LOG @17
 	SILENT
-	COPY ~%PKGNAME%/copy/ModsOptions/MODOPSOD.BAM~ ~override~
-	COPY ~%PKGNAME%/copy/ModsOptions/MOS5024.PVRZ~ ~override~
-	COPY ~%PKGNAME%/copy/ModsOptions/GUIERR8.MOS~ ~override~
-	COPY ~%PKGNAME%/copy/ModsOptions/MOS5019.PVRZ~ ~override~
+	LAF EEUITweaks.CopyPVRZResource
+		STR_VAR
+			source_folder = EVAL ~%PKGNAME%/copy/ModsOptions~
+			resource_file = ~MODOPSOD.BAM~
+			pvrz_files = ~MOS5024.PVRZ~
+		RET
+			$UIMenuIF("Succeeded") = succeeded
+	END
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @44
+	END
+
+	LAF EEUITweaks.CopyPVRZResource
+		STR_VAR
+			source_folder = EVAL ~%PKGNAME%/copy/ModsOptions~
+			resource_file = ~GUIERR8.MOS~
+			pvrz_files = ~MOS5019.PVRZ~
+		RET
+			$UIMenuIF("Succeeded") = succeeded
+	END
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @44
+	END
 
 	// Patch START_OPTIONS menu
 	LOG @100
@@ -1705,8 +1808,18 @@ BEGIN
 	// Copy specific override files
 	LOG @17
 	SILENT
-	COPY ~%PKGNAME%/copy/ModsOptions/modoimg2.BAM~ ~override~
-	COPY ~%PKGNAME%/copy/ModsOptions/MOS5021.PVRZ~ ~override~
+	LAF EEUITweaks.CopyPVRZResource
+		STR_VAR
+			source_folder = EVAL ~%PKGNAME%/copy/ModsOptions~
+			resource_file = ~modoimg2.BAM~
+			pvrz_files = ~MOS5021.PVRZ~
+		RET
+			$UIMenuIF("Succeeded") = succeeded
+	END
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @44
+	END
 
 	// Patch START_OPTIONS menu
 	LOG @100
@@ -1927,7 +2040,7 @@ END
 
 /*******************************************************************************
  *
- * IsTIWDonBG2/IsTIWDonSoD Section
+ * IsTIWDonBG2 Section
  *
  ******************************************************************************/
 //
@@ -2041,8 +2154,18 @@ BEGIN
 	// Copy specific override files
 	LOG @17
 	SILENT
-	COPY ~%PKGNAME%/copy/ModsOptions/modoimg1.BAM~ ~override~
-	COPY ~%PKGNAME%/copy/ModsOptions/MOS5020.PVRZ~ ~override~
+	LAF EEUITweaks.CopyPVRZResource
+		STR_VAR
+			source_folder = EVAL ~%PKGNAME%/copy/ModsOptions~
+			resource_file = ~modoimg1.BAM~
+			pvrz_files = ~MOS5020.PVRZ~
+		RET
+			$UIMenuIF("Succeeded") = succeeded
+	END
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @44
+	END
 
 	// Patch START_OPTIONS menu
 	LOG @100
@@ -2108,6 +2231,106 @@ BEGIN
 	LOG @100001
 	SILENT
 	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/ModsOptions/modoptions8.menu~
+	LAUNCH_ACTION_MACRO UIMenuAppendFile
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @100002
+	END
+END
+
+/*******************************************************************************
+ *
+ * IsTIWDonSoD Section
+ *
+ ******************************************************************************/
+//
+// ModOptions.TIWDonSoDSpecific
+// Main sequence
+//	
+DEFINE_ACTION_MACRO ModOptions.TIWDonSoDSpecific
+BEGIN	
+	LOG @40 // Installing trinit's IWD GUI
+	
+	// Copy specific override files
+	LOG @17
+	SILENT
+	LAF EEUITweaks.CopyPVRZResource
+		STR_VAR
+			source_folder = EVAL ~%PKGNAME%/copy/ModsOptions~
+			resource_file = ~modoimg2.BAM~
+			pvrz_files = ~MOS5021.PVRZ~
+		RET
+			$UIMenuIF("Succeeded") = succeeded
+	END
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @44
+	END
+
+	// Patch START_OPTIONS menu
+	LOG @100
+	SILENT
+
+	OUTER_SPRINT $UIMenuIF("MenuName") ~START_OPTIONS~
+	OUTER_SPRINT $UIMenuIF("Body") ~~
+	LAUNCH_ACTION_MACRO UIMenuGetMenu
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @101
+	END
+
+	LAUNCH_ACTION_MACRO ModOptions.TIWDonBG2PatchStartOptions
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @102
+	END
+
+	LAUNCH_ACTION_MACRO UIMenuUpdateMenu
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @103
+	END
+
+	// Patch ESC_MENU
+	LOG @104
+	SILENT
+
+	OUTER_SPRINT $UIMenuIF("MenuName") ~ESC_MENU~
+	OUTER_SPRINT $UIMenuIF("Body") ~~
+	LAUNCH_ACTION_MACRO UIMenuGetMenu
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @105
+	END
+
+	LAUNCH_ACTION_MACRO ModOptions.TOBEscMenuFirstPatch
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @106
+	END
+
+	LAUNCH_ACTION_MACRO ModOptions.TOBEscMenuSecondPatch
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @106
+	END
+
+	LAUNCH_ACTION_MACRO ModOptions.TIWDonBG2EscMenuThirdPatch
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @106
+	END
+
+	LAUNCH_ACTION_MACRO UIMenuUpdateMenu
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @103
+	END
+
+	// Add ModsOptions menus
+	LOG @100001
+	SILENT
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/ModsOptions/modoptions11.menu~
 	LAUNCH_ACTION_MACRO UIMenuAppendFile
 	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 	BEGIN
@@ -2231,8 +2454,18 @@ BEGIN
 	// Copy specific override files
 	LOG @17
 	SILENT
-	COPY ~%PKGNAME%/copy/ModsOptions/modoimg1.BAM~ ~override~
-	COPY ~%PKGNAME%/copy/ModsOptions/MOS5020.PVRZ~ ~override~
+	LAF EEUITweaks.CopyPVRZResource
+		STR_VAR
+			source_folder = EVAL ~%PKGNAME%/copy/ModsOptions~
+			resource_file = ~modoimg1.BAM~
+			pvrz_files = ~MOS5020.PVRZ~
+		RET
+			$UIMenuIF("Succeeded") = succeeded
+	END
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @44
+	END
 
 	// Patch START_OPTIONS menu
 	LOG @100
@@ -2311,61 +2544,6 @@ END
  *
  ******************************************************************************/
 //
-// ModOptions.AddFileAfterMatch
-// Adds the contents of the file passed in $UIMenuIF("Filespec") to the contents
-// of $UIMenuIF("Body") immediately after a match of $UIMenuIF("LuaRegex").
-// On completion $UIMenuIF("Succeeded") 1 => Success, 0 => Failure
-//
-DEFINE_ACTION_MACRO ModOptions.AddFileAfterMatch
-BEGIN
-	LOCAL_SPRINT tempstr $UIMenuIF("Body")
-	LOCAL_SPRINT matchstr $UIMenuIF("LuaRegex")
-	LOCAL_SPRINT insertstr $UIMenuIF("Filespec")
-	LOCAL_SPRINT adder ~~
-
-	// Read patch insertion from passed
-	LOCAL_SET found = SIZE_OF_FILE ~%insertstr%~
-	COPY - ~%insertstr%~ ~.../CounterInLine~
-		READ_ASCII 0 adder (%found%)
-
-	// Put target code into inline file
-	OUTER_SET found = 0 
-	COPY - ~ToInlineTemplate~ ~.../CounterInLine~
-		REPLACE_EVALUATE ~dummy~ BEGIN END
-		~%tempstr%~
-	OUTER_SPRINT tempstr ~~
-
-	// Search for all of assignment, add new code after it
-	ACTION_IF NOT %found% THEN
-	BEGIN
-		COPY - ~.../CounterInLine~ ~.../CounterInLine~
-			REPLACE_EVALUATE CASE_INSENSITIVE ~%matchstr%~
-			BEGIN
-				SPRINT tempstr ~%MATCH0%%adder%~
-				SET found = 1
-			END
-			~%tempstr%~
-	END
-
-	// If not found, nothing to do but fail.
-	ACTION_IF NOT %found% THEN
-	BEGIN
-		LOG ~In ModOptions.AddFileAfterMatch - failed to match regex~
-		OUTER_SET $UIMenuIF("Succeeded") = 0
-	END ELSE 
-
-	// Success copy .../CounterInLine to $UIMenuIF("Body")
-	BEGIN
-		OUTER_SPRINT $UIMenuIF("Body") ~~
-		OUTER_SET found = SIZE_OF_FILE ~.../CounterInLine~
-		COPY - ~.../CounterInLine~ ~.../CounterInLine~
-			READ_ASCII 0 $UIMenuIF("Body") (%found%-1)
-		OUTER_SET $UIMenuIF("Succeeded") = 1
-	END
-	COPY - ~EmptyInlineTemplate~ ~.../CounterInline~
-END
-
-//
 // ModOptions.PSTEESpecific
 // Main sequence
 //	
@@ -2376,7 +2554,6 @@ BEGIN
 	// Patch includes.lua
 	LOG @43
 	SILENT
-	INCLUDE ~%PKGNAME%/lib/ACFixIncludeLua.tpa~
 	LAUNCH_ACTION_MACRO EEUITweaks.FixIncludeLua
 
 	// Patch UI.MENU beginning to load lang_ModOp.lua
@@ -2392,7 +2569,7 @@ BEGIN
 	END
 
 	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/ModsOptions/uimenutop1.lua~
-	LAUNCH_ACTION_MACRO ModOptions.AddFileAfterMatch
+	LAUNCH_ACTION_MACRO EEUITweaks.AddFileAfterMatch
 	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 	BEGIN
 		FAIL @208
@@ -2462,12 +2639,12 @@ COPY ~%PKGNAME%/copy/ModsOptions/en_ModOp.lua~ ~override~
 
 ACTION_MATCH 1
 WITH
-	%IsSoD% %IsEETSoD% %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS4% %IsKRDS6% WHEN NOT(%IsKRDS5%)
+	%IsSoD% %IsEETSoD% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS4% %IsKRDS5% WHEN NOT(%IsKRDS0%)
 	BEGIN
 		LAUNCH_ACTION_MACRO ModOptions.SoDSpecific
 	END
 
-	%IsKRDS% %IsKRDS5%
+	%IsKRDS% %IsKRDS0%
 	BEGIN
 		LAUNCH_ACTION_MACRO ModOptions.KRDSSpecific
 	END
@@ -2517,9 +2694,14 @@ WITH
 		LAUNCH_ACTION_MACRO ModOptions.EETLeUISpecific
 	END
 
-	%IsTIWDonBG2% %IsTIWDonSoD%
+	%IsTIWDonBG2%
 	BEGIN
 		LAUNCH_ACTION_MACRO ModOptions.TIWDonBG2Specific
+	END
+
+	%IsTIWDonSoD%
+	BEGIN
+		LAUNCH_ACTION_MACRO ModOptions.TIWDonSoDSpecific
 	END
 
 	%IsTIWD2onBG2%

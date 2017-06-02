@@ -1,58 +1,4 @@
 
-/*******************************************************************************
- * AdulImprovedStore.PatchBody
- * 
- * In code previously read into $UIMenuIF("Body"), replaces occurances of 
- * $UIMenuIF("LuaRegex") with contents of $UIMenuIF("Filespec")  
- *
- * On completion $UIMenuIF("Succeeded") 1 => Success, 0 => Failure
- * 
- ******************************************************************************/
-DEFINE_ACTION_MACRO AdulImprovedStore.PatchBody
-BEGIN
-	LOCAL_SPRINT tempstr $UIMenuIF("Body")
-	LOCAL_SPRINT tempfs $UIMenuIF("Filespec")
-	LOCAL_SPRINT adder ~~
-	LOCAL_SPRINT pattern $UIMenuIF("LuaRegex")
-
-	// Read patch insertion from $UIMenuIF("Filespec")
-	LOCAL_SET found = SIZE_OF_FILE ~%tempfs%~
-	COPY - ~%tempfs%~ ~.../CounterInLine~
-		READ_ASCII 0 adder (%found%)
-	OUTER_SET found = 0 
-
-	// Put code block into inline file
-	COPY - ~ToInlineTemplate~ ~.../CounterInLine~
-		REPLACE_EVALUATE ~dummy~ BEGIN END
-		~%tempstr%~
-	OUTER_SPRINT tempstr ~~
-
-	// Find target function definitions, replace them
-	COPY - ~.../CounterInLine~ ~.../CounterInLine~
-		REPLACE_EVALUATE ~%pattern%~
-		BEGIN
-			SET found = 1
-		END
-		~%adder%~
-
-	// If not found, nothing to do but fail.
-	ACTION_IF NOT %found% THEN
-	BEGIN
-		LOG ~In AdulImprovedStore.PatchBody - failed to find pattern %pattern%~
-		OUTER_SET $UIMenuIF("Succeeded") = 0
-	END
-
-	// Success - copy .../CounterInLine to $UIMenuIF("Body")
-	ACTION_IF %found% THEN
-	BEGIN
-		OUTER_SPRINT $UIMenuIF("Body") ~~
-		OUTER_SET found = SIZE_OF_FILE ~.../CounterInLine~
-		COPY - ~.../CounterInLine~ ~.../CounterInLine~
-			READ_ASCII 0 $UIMenuIF("Body") (%found%-1)
-			OUTER_SET $UIMenuIF("Succeeded") = 1
-	END
-	COPY - ~EmptyInlineTemplate~ ~.../CounterInline~
-END
 
 /*******************************************************************************
  * Adul's Smooth Selling Installation
@@ -82,7 +28,7 @@ OUTER_SPRINT $UIMenuIF("LuaRegex") ~^[%TAB% ]*action%MWHITE%"%MWHITE%local[%TAB%
 
 OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/AdulImprovedStore/PopupRequesterPatch1.menu~
 
-LAUNCH_ACTION_MACRO AdulImprovedStore.PatchBody
+LAUNCH_ACTION_MACRO EEUITweaks.PatchBody
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
 	FAIL @181
@@ -110,7 +56,7 @@ OUTER_SPRINT $UIMenuIF("LuaRegex") ~^[%TAB% ]*action%MWHITE%%MDQUOTE%%MNOTDQUOTE
 
 OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/AdulImprovedStore/StoreBuySellPatch1.menu~
 
-LAUNCH_ACTION_MACRO AdulImprovedStore.PatchBody
+LAUNCH_ACTION_MACRO EEUITweaks.PatchBody
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
 	FAIL @124
@@ -120,7 +66,7 @@ OUTER_SPRINT $UIMenuIF("LuaRegex") ~^[%TAB% ]*action%MWHITE%%MDQUOTE%%MNOTDQUOTE
 
 OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/AdulImprovedStore/StoreBuySellPatch2.menu~
 
-LAUNCH_ACTION_MACRO AdulImprovedStore.PatchBody
+LAUNCH_ACTION_MACRO EEUITweaks.PatchBody
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
 	FAIL @124
@@ -130,7 +76,7 @@ OUTER_SPRINT $UIMenuIF("LuaRegex") ~^[%TAB% ]*action%MWHITE%%MDQUOTE%%MNOTDQUOTE
 
 OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/AdulImprovedStore/StoreBuySellPatch3.menu~
 
-LAUNCH_ACTION_MACRO AdulImprovedStore.PatchBody
+LAUNCH_ACTION_MACRO EEUITweaks.PatchBody
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
 	FAIL @124

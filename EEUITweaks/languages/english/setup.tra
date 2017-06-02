@@ -41,11 +41,8 @@
 @25   = ~Requires either BGEE or BG2EE~
 @26   = ~~
 @27   = ~~
-//@26   = ~Mods Options must be installed for this mod to function~
-//@27   = ~Either this mod is not supported by or conflicts with your game configuration~
 @28   = ~Installing for BG2EE configuration~
 @29   = ~~
-//@29   = ~Mr2150's Portrait Picker must be installed for this mod to function~
 @30   = ~Copying language specific files for:~
 @31   = ~Installing for EET BG2 GUI configuration~
 @32   = ~Installing for EET SoD GUI configuration~
@@ -56,11 +53,11 @@
 @37   = ~Installing for LeUI EET configuration~
 @38   = ~Installing for Kilivit's Revised Dragon Scale UI configuration~
 @39   = ~~
-//@39   = ~None of the possible options of this group are supported for your game configuration~
 @40   = ~Installing for trinit's IWD GUI for BG2EE/BG1EE with DJKajuru's Enhancement~
 @41   = ~Installing for trinit's IWD2 GUI for BG2EE~
 @42   = ~Installing for PST:EE configuration~
 @43   = ~Updating PST:EE includes.lua~
+@44   = ~Error encountered copying/converting resource file~
 
 ///////////////////////////////////////////////////////////////////////////////
 // Specific Menu patching/error messages
@@ -187,6 +184,10 @@
 @530  = ~Mr2150's Auto-Identify Items~
 @540  = ~Journal Fixes and Tweaks~
 @550  = ~Spell Books~
+@560  = ~lefreut's Improved Inventory Screen~
+@570  = ~lefreut's BG2 Store Screen Tweaks~
+@580  = ~lefreut's Character Creation Screens~
+@590  = ~lefreut's Improved Fonts~
 
 ///////////////////////////////////////////////////////////////////////////////
 // Component specific strings
@@ -253,7 +254,7 @@
 @108005 = ~Incompatible with Adul's Unhide Chargen Options~
 @108006 = ~Incompatible with Mr2150's Random PC Generator~
 
-@109000 = ~lefreut's Character Creation Screens~
+@109000 = ~Default Button Position~
 @109001 = ~Replacing CHARGEN menu~
 @109002 = ~Unable to replace CHARGEN menu~
 @109003 = ~Replacing CHARGEN_RACE menu~
@@ -318,6 +319,7 @@
 @109062 = ~Replacing CHARGEN_MEMORIZE_PRIEST lua block~
 @109063 = ~Unable to find CHARGEN_MEMORIZE_PRIEST lua block~
 @109064 = ~Unable to replace CHARGEN_MEMORIZE_PRIEST lua block~
+@109065 = ~Reversed Button Position~
 
 ///////////////////////////////////////////////////////////////////////////////
 // Game World/Maps/Travel Group
@@ -373,6 +375,10 @@
 @207000 = ~Dee's Permanent Thieving Button~
 
 @208000 = ~elminster's Easier Area Cheats~
+
+@209000 = ~LavaDelVortel's Sculpted Transparent Sidebars~
+
+@210000 = ~LavaDelVortel's Red Healthbar~
 
 ///////////////////////////////////////////////////////////////////////////////
 // Record/Inventory/Journal Group
@@ -447,10 +453,11 @@
 @304400	= ~Pay 100gp to identify items~
 @304500	= ~Pay 200gp to identify items~
 
-@305000 = ~lefreut's Improved Inventory Screen~
+@305000 = ~With Item Comparison~
 @305001 = ~Replacing INVENTORY Lua code block~
 @305002 = ~Unable to find INVENTORY Lua code block~
 @305003 = ~Unable to replace INVENTORY Lua code block~
+@305004 = ~Without Item Comparison~
 
 @306000 = ~lefreut's Improved Record Screen~
 @306001 = ~Replacing CHARACTER menu~
@@ -477,7 +484,7 @@
 @400000 = ~Joined Store Panels Using lefreut's Solution~
 @400001 = ~Incompatible with previously installed lefreut's BG2 Store Screen Tweaks~
 
-@400500 = ~lefreut's BG2 Store Screen Tweaks~
+@400500 = ~Default Button Position~
 @400501 = ~Incompatible with previously installed Joined Store Panels Using lefreut's Solution~
 @400502 = ~Uninstalling previously intalled but redundant lefreut's Steal Multiple Items~
 @400503 = ~Incompatible with previously installed Adul's Improved Store Useability~
@@ -485,6 +492,13 @@
 @400505	= ~Unable to get ITEM_DESCRIPTION Lua block~
 @400506	= ~Unable to patch ITEM_DESCRIPTION Lua block~
 @400507	= ~Incompatible with previously installed Mr2150's Auto-Identify Items~
+@400508	= ~Reversed Button Position~
+@400509 = ~Replacing STORE_DONATE Lua block~
+@400510	= ~Unable to get STORE_DONATE Lua block~
+@400511	= ~Unable to patch STORE_DONATE Lua block~
+@400512 = ~Replacing POPUP_REQUESTER Lua block~
+@400513	= ~Unable to get POPUP_REQUESTER Lua block~
+@400514	= ~Unable to patch POPUP_REQUESTER Lua block~
 
 @401000	= ~lefreut's Steal Multiple Items~
 @401004 = ~Redundant with previously installed lefreut's BG2 Store Screen Tweaks~
@@ -527,5 +541,6 @@
 
 @503000 = ~lefreut's Scroll Bar Override~
 
-@504000 = ~lefreut's Improved Fonts~
+@504000 = ~Non-Italicized fonts for descriptions~
+@504001 = ~BG2 vanilla fonts for descriptions~
 

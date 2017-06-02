@@ -18,14 +18,57 @@ WITH
 		// Copy files
 		LOG @17
 		SILENT
-		COPY ~%PKGNAME%/copy/ProgressBar/BLU2SLDR.MOS~ ~override~
-		COPY ~%PKGNAME%/copy/ProgressBar/MOS5025.PVRZ~ ~override~
-		COPY ~%PKGNAME%/copy/ProgressBar/FIL2SLDR.MOS~ ~override~
-		COPY ~%PKGNAME%/copy/ProgressBar/MOS5028.PVRZ~ ~override~
-		COPY ~%PKGNAME%/copy/ProgressBar/GRN2SLDR.MOS~ ~override~
-		COPY ~%PKGNAME%/copy/ProgressBar/MOS5030.PVRZ~ ~override~
-		COPY ~%PKGNAME%/copy/ProgressBar/RED2SLDR.MOS~ ~override~
-		COPY ~%PKGNAME%/copy/ProgressBar/MOS5034.PVRZ~ ~override~
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/ProgressBar~
+				resource_file = ~BLU2SLDR.MOS~
+				pvrz_files = ~MOS5025.PVRZ~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
+
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/ProgressBar~
+				resource_file = ~FIL2SLDR.MOS~
+				pvrz_files = ~MOS5028.PVRZ~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
+
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/ProgressBar~
+				resource_file = ~GRN2SLDR.MOS~
+				pvrz_files = ~MOS5030.PVRZ~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
+
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/ProgressBar~
+				resource_file = ~RED2SLDR.MOS~
+				pvrz_files = ~MOS5034.PVRZ~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
 
 		// Append OPTIONS_PROGBAR menu
 		LOG @301002
@@ -43,14 +86,57 @@ WITH
 		// Copy files
 		LOG @17
 		SILENT
-		COPY ~%PKGNAME%/copy/ProgressBar/BLU2SLDR.MOS~ ~override~
-		COPY ~%PKGNAME%/copy/ProgressBar/MOS5025.PVRZ~ ~override~
-		COPY ~%PKGNAME%/copy/ProgressBar/FIL2SLDR.MOS~ ~override~
-		COPY ~%PKGNAME%/copy/ProgressBar/MOS5028.PVRZ~ ~override~
-		COPY ~%PKGNAME%/copy/ProgressBar/GRN2SLDR.MOS~ ~override~
-		COPY ~%PKGNAME%/copy/ProgressBar/MOS5030.PVRZ~ ~override~
-		COPY ~%PKGNAME%/copy/ProgressBar/RED2SLDR.MOS~ ~override~
-		COPY ~%PKGNAME%/copy/ProgressBar/MOS5034.PVRZ~ ~override~
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/ProgressBar~
+				resource_file = ~BLU2SLDR.MOS~
+				pvrz_files = ~MOS5025.PVRZ~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
+
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/ProgressBar~
+				resource_file = ~FIL2SLDR.MOS~
+				pvrz_files = ~MOS5028.PVRZ~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
+
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/ProgressBar~
+				resource_file = ~GRN2SLDR.MOS~
+				pvrz_files = ~MOS5030.PVRZ~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
+
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/ProgressBar~
+				resource_file = ~RED2SLDR.MOS~
+				pvrz_files = ~MOS5034.PVRZ~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
 
 		// Append OPTIONS_PROGBAR menu
 		LOG @301002
@@ -68,16 +154,70 @@ WITH
 		// Copy files
 		LOG @17
 		SILENT
-		COPY ~%PKGNAME%/copy/ProgressBar/BLU2SLDR.MOS~ ~override~
-		COPY ~%PKGNAME%/copy/ProgressBar/MOS5025.PVRZ~ ~override~
-		COPY ~%PKGNAME%/copy/ProgressBar/FIL2SLDR.MOS~ ~override~
-		COPY ~%PKGNAME%/copy/ProgressBar/MOS5028.PVRZ~ ~override~
-		COPY ~%PKGNAME%/copy/ProgressBar/GRN2SLDR.MOS~ ~override~
-		COPY ~%PKGNAME%/copy/ProgressBar/MOS5030.PVRZ~ ~override~
-		COPY ~%PKGNAME%/copy/ProgressBar/RED2SLDR.MOS~ ~override~
-		COPY ~%PKGNAME%/copy/ProgressBar/MOS5034.PVRZ~ ~override~
-		COPY ~%PKGNAME%/copy/ProgressBar/GUICUSTX.MOS~ ~override~
-		COPY ~%PKGNAME%/copy/ProgressBar/MOS5033.PVRZ~ ~override~
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/ProgressBar~
+				resource_file = ~BLU2SLDR.MOS~
+				pvrz_files = ~MOS5025.PVRZ~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
+
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/ProgressBar~
+				resource_file = ~FIL2SLDR.MOS~
+				pvrz_files = ~MOS5028.PVRZ~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
+
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/ProgressBar~
+				resource_file = ~GRN2SLDR.MOS~
+				pvrz_files = ~MOS5030.PVRZ~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
+
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/ProgressBar~
+				resource_file = ~RED2SLDR.MOS~
+				pvrz_files = ~MOS5034.PVRZ~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
+
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/ProgressBar~
+				resource_file = ~GUICUSTX.MOS~
+				pvrz_files = ~MOS5033.PVRZ~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
 
 		// Append OPTIONS_PROGBAR menu
 		LOG @301002
@@ -95,14 +235,57 @@ WITH
 		// Copy files
 		LOG @17
 		SILENT
-		COPY ~%PKGNAME%/copy/ProgressBar/BLU3SLDR.MOS~ ~override~
-		COPY ~%PKGNAME%/copy/ProgressBar/MOS5026.PVRZ~ ~override~
-		COPY ~%PKGNAME%/copy/ProgressBar/FIL2SLDR.MOS~ ~override~
-		COPY ~%PKGNAME%/copy/ProgressBar/MOS5028.PVRZ~ ~override~
-		COPY ~%PKGNAME%/copy/ProgressBar/GRN3SLDR.MOS~ ~override~
-		COPY ~%PKGNAME%/copy/ProgressBar/MOS5031.PVRZ~ ~override~
-		COPY ~%PKGNAME%/copy/ProgressBar/RED3SLDR.MOS~ ~override~
-		COPY ~%PKGNAME%/copy/ProgressBar/MOS5035.PVRZ~ ~override~
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/ProgressBar~
+				resource_file = ~BLU3SLDR.MOS~
+				pvrz_files = ~MOS5026.PVRZ~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
+
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/ProgressBar~
+				resource_file = ~FIL2SLDR.MOS~
+				pvrz_files = ~MOS5028.PVRZ~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
+
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/ProgressBar~
+				resource_file = ~GRN3SLDR.MOS~
+				pvrz_files = ~MOS5031.PVRZ~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
+
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/ProgressBar~
+				resource_file = ~RED3SLDR.MOS~
+				pvrz_files = ~MOS5035.PVRZ~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
 
 		// Append OPTIONS_PROGBAR menu
 		LOG @301002
@@ -115,19 +298,62 @@ WITH
 		END
 	END
 
-	%IsSoD% %IsSoDOverhaul% %IsEETSoD% %IsKRDS% %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS4% %IsKRDS5% %IsKRDS6%
+	%IsSoD% %IsSoDOverhaul% %IsEETSoD% %IsKRDS% %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS4% %IsKRDS5%
 	BEGIN
 		// Copy files
 		LOG @17
 		SILENT
-		COPY ~%PKGNAME%/copy/ProgressBar/BLUSLDR.MOS~ ~override~
-		COPY ~%PKGNAME%/copy/ProgressBar/MOS5027.PVRZ~ ~override~
-		COPY ~%PKGNAME%/copy/ProgressBar/FILSLDR.MOS~ ~override~
-		COPY ~%PKGNAME%/copy/ProgressBar/MOS5029.PVRZ~ ~override~
-		COPY ~%PKGNAME%/copy/ProgressBar/GRNSLDR.MOS~ ~override~
-		COPY ~%PKGNAME%/copy/ProgressBar/MOS5032.PVRZ~ ~override~
-		COPY ~%PKGNAME%/copy/ProgressBar/REDSLDR.MOS~ ~override~
-		COPY ~%PKGNAME%/copy/ProgressBar/MOS5036.PVRZ~ ~override~
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/ProgressBar~
+				resource_file = ~BLUSLDR.MOS~
+				pvrz_files = ~MOS5027.PVRZ~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
+
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/ProgressBar~
+				resource_file = ~FILSLDR.MOS~
+				pvrz_files = ~MOS5029.PVRZ~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
+
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/ProgressBar~
+				resource_file = ~GRNSLDR.MOS~
+				pvrz_files = ~MOS5032.PVRZ~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
+
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/ProgressBar~
+				resource_file = ~REDSLDR.MOS~
+				pvrz_files = ~MOS5036.PVRZ~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
 
 		// Append OPTIONS_PROGBAR menu
 		LOG @301002

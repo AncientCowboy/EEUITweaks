@@ -16,14 +16,20 @@
  * IsLeUIBG1 - Lefreut's UI on BGEE no SoD
  * IsEETLeUI - EET with Lefreut's UI
  * IsKRDS - Kilivitz's Revised Dragon Scale UI on SoD, prior to V3
- * IsKRDS0 - Revised Dragon Scale V3, component 0 General tweaks
- * IsKRDS1 - Maps
- * IsKRDS2 - Inventory
- * IsKRDS3 - Record
- * IsKRDS4 - Classic Spellbook
- * IsKRDS5 - Start and Escape Menus
- * IsKRDS6 - Alternate Fonts
- * IsKRDSV3 - Kilivitz's Revised Dragon Scale UI on SoD V3. IsKRDS will also be set
+-- * IsKRDS0 - Revised Dragon Scale V3, component 0 General tweaks
+-- * IsKRDS1 - Maps
+-- * IsKRDS2 - Inventory
+-- * IsKRDS3 - Record
+-- * IsKRDS4 - Classic Spellbook
+-- * IsKRDS5 - Start and Escape Menus
+-- * IsKRDS6 - Alternate Fonts
+-- * IsKRDSV3 - Kilivitz's Revised Dragon Scale UI on SoD V3. IsKRDS will also be set
+ * IsKRDS0 - Revised Dragon Scale V4, component 0 General tweaks, Maps, Start and Escape Menus
+ * IsKRDS1 - Inventory
+ * IsKRDS2 - Record
+ * IsKRDS3 - Classic Spellbook
+ * IsKRDS4 - Larger Ring Icons
+ * IsKRDS5 - Alternate Fonts
  * IsTIWDonBG2 - trinit's IWD GUI on BG2
  * IsTIWDonSoD - trinit's IWD GUI on SoD
  * IsTIWD2onBG2 - trinit's IWD2 GUI on BG2EE
@@ -49,7 +55,6 @@ BEGIN
 	OUTER_SET IsKRDS3 = 0
 	OUTER_SET IsKRDS4 = 0
 	OUTER_SET IsKRDS5 = 0
-	OUTER_SET IsKRDS6 = 0
 	OUTER_SET IsTIWDonBG2 = 0
 	OUTER_SET IsTIWDonSoD = 0
 	OUTER_SET IsTIWD2onBG2 = 0
@@ -70,6 +75,34 @@ BEGIN
 		BEGIN
 			OUTER_SET IsEETSoD = 1
 			LOG ~IsEETSoD~
+			ACTION_IF FILE_EXISTS ~override/M_CKUI.LUA~ THEN
+			BEGIN
+				LOG ~IsKRDS~
+				ACTION_IF (MOD_IS_INSTALLED ~CKUISOD.tp2~ ~0~)
+				BEGIN
+					OUTER_SET IsKRDS0 = 1
+				END
+				ACTION_IF (MOD_IS_INSTALLED ~CKUISOD.tp2~ ~1~)
+				BEGIN
+					OUTER_SET IsKRDS1 = 1
+				END
+				ACTION_IF (MOD_IS_INSTALLED ~CKUISOD.tp2~ ~2~)
+				BEGIN
+					OUTER_SET IsKRDS2 = 1
+				END
+				ACTION_IF (MOD_IS_INSTALLED ~CKUISOD.tp2~ ~3~)
+				BEGIN
+					OUTER_SET IsKRDS3 = 1
+				END
+				ACTION_IF (MOD_IS_INSTALLED ~CKUISOD.tp2~ ~4~)
+				BEGIN
+					OUTER_SET IsKRDS4 = 1
+				END
+				ACTION_IF (MOD_IS_INSTALLED ~CKUISOD.tp2~ ~5~)
+				BEGIN
+					OUTER_SET IsKRDS5 = 1
+				END
+			END
 		END ELSE
 		BEGIN
 			ACTION_IF MOD_IS_INSTALLED ~LeUI.tp2~ ~0~ THEN
@@ -175,11 +208,6 @@ BEGIN
 							ACTION_IF (MOD_IS_INSTALLED ~CKUISOD.tp2~ ~5~)
 							BEGIN
 								OUTER_SET IsKRDS5 = 1
-								OUTER_SET IsKRDS = 0
-							END
-							ACTION_IF (MOD_IS_INSTALLED ~CKUISOD.tp2~ ~6~)
-							BEGIN
-								OUTER_SET IsKRDS6= 1
 								OUTER_SET IsKRDS = 0
 							END
 						END ELSE
