@@ -38,7 +38,10 @@ END
 /*******************************************************************************
  * EEUITweaks.CopyPVRZResource
  * Copies a V2 BAM or MOS file and its associated PVRZ files to 
- * override and dynamically fixes the PVRZ indicies.
+ * override and dynamically fixes the PVRZ indicies. Optionally
+ * allows renaming the V2 BAM/MOS file.
+ * 
+ * This is to be used when one V2 BAM/MOS references one or more PVRZ files.
  *
  * Inputs:
  * 	source_folder
@@ -142,6 +145,9 @@ END
  * EEUITweaks.MultiCopyPVRZResource
  * Variation on EEUITweaks.CopyPVRZResource that allows multiple resource_files
  * that reference the same pvrz file(s). Does not support resource_file renaming
+ *
+ * This is to be used when one or more V2 BAM/MOS files reference the same set of
+ * one or more PVRZ files.
  *
  * Inputs:
  * 	source_folder
