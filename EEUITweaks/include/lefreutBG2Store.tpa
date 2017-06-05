@@ -97,6 +97,17 @@ BEGIN
 	FAIL @142
 END
 
+// Patch POPUP_REQUESTER
+LOG @179
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~POPUP_REQUESTER~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutBG2Store/popuprequestermenu.menu~
+LAUNCH_ACTION_MACRO UIMenuReplaceMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @181
+END
+
 // Patch ITEM_DESCRIPTION
 LOG @191
 SILENT
@@ -141,6 +152,49 @@ BEGIN
 	FAIL @400506
 END
 
+// Replace STORE_DONATE Lua code block
+LOG @400509
+SILENT
+OUTER_SPRINT $UIMenuIF("LuaRegex") ~function[%TAB% ]+getDonationFrame[%TAB% ]*([%TAB% ]*)~
+LAUNCH_ACTION_MACRO UIMenuGetMatchingLuaBlock
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @400510
+END
+ACTION_IF lefrevstorebutt = 0 THEN
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/lefreutBG2Store/donatecode1.lua~
+END ELSE
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/lefreutBG2Store/donatecode2.lua~
+END
+LAUNCH_ACTION_MACRO UIMenuReplaceLuaBlock
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @400511
+END
+
+// Replace POPUP_REQUESTER Lua code block
+LOG @400512
+SILENT
+OUTER_SPRINT $UIMenuIF("LuaRegex") ~function[%TAB% ]+showItemAmountRequester[%TAB% ]*([^)]+)~
+LAUNCH_ACTION_MACRO UIMenuGetMatchingLuaBlock
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @400513
+END
+ACTION_IF lefrevstorebutt = 0 THEN
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/lefreutBG2Store/popuprequestercode1.lua~
+END ELSE
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/lefreutBG2Store/popuprequestercode2.lua~
+END
+LAUNCH_ACTION_MACRO UIMenuReplaceLuaBlock
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @400514
+END
 
 // Close UI.MENU
 LOG @13
@@ -162,79 +216,330 @@ COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUISTBBC.BAM~ ~override~
 
 COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LINNROOM.BAM~ ~override~
 
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUIOSTUL.BAM~ ~override~
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUIOSTUM.BAM~ ~override~
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUIOSTUR.BAM~ ~override~
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4004.PVRZ~ ~override~
+LAF EEUITweaks.MultiCopyPVRZResource
+	STR_VAR
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		resource_file = ~LUIOSTUL.BAM LUIOSTUM.BAM LUIOSTUR.BAM~
+		pvrz_files = ~MOS4004.PVRZ~
+	RET
+		$UIMenuIF("Succeeded") = succeeded
+END
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @44
+END
 
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LDONATE.BAM~ ~override~
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4005.PVRZ~ ~override~
+LAF EEUITweaks.CopyPVRZResource
+	STR_VAR
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		resource_file = ~LDONATE.BAM~
+		pvrz_files = ~MOS4005.PVRZ~
+	RET
+		$UIMenuIF("Succeeded") = succeeded
+END
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @44
+END
 
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUIOSW.BAM~ ~override~
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4015.PVRZ~ ~override~
+LAF EEUITweaks.CopyPVRZResource
+	STR_VAR
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		resource_file = ~LUIOSW.BAM~
+		pvrz_files = ~MOS4015.PVRZ~
+	RET
+		$UIMenuIF("Succeeded") = succeeded
+END
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @44
+END
 
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUIINVHI.MOS~ ~override~
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4267.PVRZ~ ~override~
+LAF EEUITweaks.CopyPVRZResource
+	STR_VAR
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		resource_file = ~LUIINVHI.MOS~
+		pvrz_files = ~MOS4267.PVRZ~
+	RET
+		$UIMenuIF("Succeeded") = succeeded
+END
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @44
+END
 
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/TVRNDRK0.MOS~ ~override~
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4275.PVRZ~ ~override~
+LAF EEUITweaks.CopyPVRZResource
+	STR_VAR
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		resource_file = ~TVRNDRK0.MOS~
+		pvrz_files = ~MOS4275.PVRZ~
+	RET
+		$UIMenuIF("Succeeded") = succeeded
+END
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @44
+END
 
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/TVRNDRK1.MOS~ ~override~
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4276.PVRZ~ ~override~
+LAF EEUITweaks.CopyPVRZResource
+	STR_VAR
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		resource_file = ~TVRNDRK1.MOS~
+		pvrz_files = ~MOS4276.PVRZ~
+	RET
+		$UIMenuIF("Succeeded") = succeeded
+END
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @44
+END
 
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/TVRNDRK2.MOS~ ~override~
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4277.PVRZ~ ~override~
+LAF EEUITweaks.CopyPVRZResource
+	STR_VAR
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		resource_file = ~TVRNDRK2.MOS~
+		pvrz_files = ~MOS4277.PVRZ~
+	RET
+		$UIMenuIF("Succeeded") = succeeded
+END
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @44
+END
 
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/TVRNQUL0.MOS~ ~override~
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4278.PVRZ~ ~override~
+LAF EEUITweaks.CopyPVRZResource
+	STR_VAR
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		resource_file = ~TVRNQUL0.MOS~
+		pvrz_files = ~MOS4278.PVRZ~
+	RET
+		$UIMenuIF("Succeeded") = succeeded
+END
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @44
+END
 
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/TVRNQUL1.MOS~ ~override~
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4279.PVRZ~ ~override~
+LAF EEUITweaks.CopyPVRZResource
+	STR_VAR
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		resource_file = ~TVRNQUL1.MOS~
+		pvrz_files = ~MOS4279.PVRZ~
+	RET
+		$UIMenuIF("Succeeded") = succeeded
+END
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @44
+END
 
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/TVRNQUL2.MOS~ ~override~
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4280.PVRZ~ ~override~
+LAF EEUITweaks.CopyPVRZResource
+	STR_VAR
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		resource_file = ~TVRNQUL2.MOS~
+		pvrz_files = ~MOS4280.PVRZ~
+	RET
+		$UIMenuIF("Succeeded") = succeeded
+END
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @44
+END
 
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/TVRNQUL3.MOS~ ~override~
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4281.PVRZ~ ~override~
+LAF EEUITweaks.CopyPVRZResource
+	STR_VAR
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		resource_file = ~TVRNQUL3.MOS~
+		pvrz_files = ~MOS4281.PVRZ~
+	RET
+		$UIMenuIF("Succeeded") = succeeded
+END
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @44
+END
 
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/STORBAG.MOS~ ~override~
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4282.PVRZ~ ~override~
+LAF EEUITweaks.CopyPVRZResource
+	STR_VAR
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		resource_file = ~STORBAG.MOS~
+		pvrz_files = ~MOS4282.PVRZ~
+	RET
+		$UIMenuIF("Succeeded") = succeeded
+END
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @44
+END
 
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/STORINN.MOS~ ~override~
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4283.PVRZ~ ~override~
+LAF EEUITweaks.CopyPVRZResource
+	STR_VAR
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		resource_file = ~STORINN.MOS~
+		pvrz_files = ~MOS4283.PVRZ~
+	RET
+		$UIMenuIF("Succeeded") = succeeded
+END
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @44
+END
 
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/STORSTOR.MOS~ ~override~
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4284.PVRZ~ ~override~
+LAF EEUITweaks.CopyPVRZResource
+	STR_VAR
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		resource_file = ~STORSTOR.MOS~
+		pvrz_files = ~MOS4284.PVRZ~
+	RET
+		$UIMenuIF("Succeeded") = succeeded
+END
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @44
+END
 
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/STORTMPL.MOS~ ~override~
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4285.PVRZ~ ~override~
+LAF EEUITweaks.CopyPVRZResource
+	STR_VAR
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		resource_file = ~STORTMPL.MOS~
+		pvrz_files = ~MOS4285.PVRZ~
+	RET
+		$UIMenuIF("Succeeded") = succeeded
+END
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @44
+END
 
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/STORTVRN.MOS~ ~override~
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4286.PVRZ~ ~override~
+LAF EEUITweaks.CopyPVRZResource
+	STR_VAR
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		resource_file = ~STORTVRN.MOS~
+		pvrz_files = ~MOS4286.PVRZ~
+	RET
+		$UIMenuIF("Succeeded") = succeeded
+END
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @44
+END
 
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUISTBBB.MOS~ ~override~
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4299.PVRZ~ ~override~
+LAF EEUITweaks.CopyPVRZResource
+	STR_VAR
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		resource_file = ~LUISTBBB.MOS~
+		pvrz_files = ~MOS4299.PVRZ~
+	RET
+		$UIMenuIF("Succeeded") = succeeded
+END
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @44
+END
 
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUISTBK1.MOS~ ~override~
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4300.PVRZ~ ~override~
+LAF EEUITweaks.CopyPVRZResource
+	STR_VAR
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		resource_file = ~LUISTBK1.MOS~
+		pvrz_files = ~MOS4300.PVRZ~
+	RET
+		$UIMenuIF("Succeeded") = succeeded
+END
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @44
+END
 
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUISTBK2.MOS~ ~override~
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4301.PVRZ~ ~override~
+LAF EEUITweaks.CopyPVRZResource
+	STR_VAR
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		resource_file = ~LUISTBK2.MOS~
+		pvrz_files = ~MOS4301.PVRZ~
+	RET
+		$UIMenuIF("Succeeded") = succeeded
+END
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @44
+END
 
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUISTBK3.MOS~ ~override~
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4302.PVRZ~ ~override~
+LAF EEUITweaks.CopyPVRZResource
+	STR_VAR
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		resource_file = ~LUISTBK3.MOS~
+		pvrz_files = ~MOS4302.PVRZ~
+	RET
+		$UIMenuIF("Succeeded") = succeeded
+END
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @44
+END
 
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUISTBSC.MOS~ ~override~
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4303.PVRZ~ ~override~
+LAF EEUITweaks.CopyPVRZResource
+	STR_VAR
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		resource_file = ~LUISTBSC.MOS~
+		pvrz_files = ~MOS4303.PVRZ~
+	RET
+		$UIMenuIF("Succeeded") = succeeded
+END
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @44
+END
 
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUISTDOB.MOS~ ~override~
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4304.PVRZ~ ~override~
+LAF EEUITweaks.CopyPVRZResource
+	STR_VAR
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		resource_file = ~LUISTDOB.MOS~
+		pvrz_files = ~MOS4304.PVRZ~
+	RET
+		$UIMenuIF("Succeeded") = succeeded
+END
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @44
+END
 
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUISTIDB.MOS~ ~override~
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4305.PVRZ~ ~override~
+LAF EEUITweaks.CopyPVRZResource
+	STR_VAR
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		resource_file = ~LUISTIDB.MOS~
+		pvrz_files = ~MOS4305.PVRZ~
+	RET
+		$UIMenuIF("Succeeded") = succeeded
+END
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @44
+END
 
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUISTROB.MOS~ ~override~
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/MOS4306.PVRZ~ ~override~
+LAF EEUITweaks.CopyPVRZResource
+	STR_VAR
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		resource_file = ~LUISTROB.MOS~
+		pvrz_files = ~MOS4306.PVRZ~
+	RET
+		$UIMenuIF("Succeeded") = succeeded
+END
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @44
+END
+
+LAF EEUITweaks.CopyPVRZResource
+	STR_VAR
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		resource_file = ~LUIERR.MOS~
+		pvrz_files = ~MOS4260.PVRZ~
+	RET
+		$UIMenuIF("Succeeded") = succeeded
+END
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @44
+END
 
 
 

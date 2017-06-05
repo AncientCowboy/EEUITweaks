@@ -54,8 +54,8 @@ menu
 			{
 				area 0 4 45 42
 				bam LUIOSW
-				frame lua "chargen.choose_spell[rowNumber].count > 0 and currentCellCheck(3) or 3"
-				sequence 1
+				frame lua "getPriestFrame(rowNumber, chargenReverseButtons) and currentCellCheck(3) or 3"
+				sequence lua "chargenReverseButtons and 1 or 3"
 			}
 		}
 		column
@@ -65,8 +65,8 @@ menu
 			{
 				area 0 4 45 42
 				bam LUIOSW
-				frame lua "chargen.extraSpells > 0 and currentCellCheck(4) or 3"
-				sequence 0
+				frame lua "getPriestFrame(rowNumber, not chargenReverseButtons) and currentCellCheck(4) or 3"
+				sequence lua "chargenReverseButtons and 0 or 4"
 			}
 		}
 		scrollbar 'LUISCRC'
@@ -77,12 +77,13 @@ menu
 		var currentChargenMemorizePriestSpell
 		action
 		"
+			local delta = chargenReverseButtons and -1 or 1
 			if cellNumber == 3 then
 				Infinity_PlaySound('GAM_09')
-				createCharScreen:OnMemorizePriestSpellButtonClick(currentChargenMemorizePriestSpell, -1)
+				createCharScreen:OnMemorizePriestSpellButtonClick(currentChargenMemorizePriestSpell, delta)
 			elseif cellNumber == 4 then
 				Infinity_PlaySound('GAM_09')
-				createCharScreen:OnMemorizePriestSpellButtonClick(currentChargenMemorizePriestSpell, 1)
+				createCharScreen:OnMemorizePriestSpellButtonClick(currentChargenMemorizePriestSpell, -delta)
 			end
 			cellNumber = nil
 		"

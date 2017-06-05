@@ -117,11 +117,6 @@ END
 /*******************************************************************************
  * Adul's Better Quick Loot Installation
  ******************************************************************************/
-// Copy files
-LOG @24
-SILENT
-COPY ~%PKGNAME%/copy/AdulQuickLoot~ ~override~
-
 // Open UI.MENU
 LOG @12
 SILENT
@@ -180,4 +175,37 @@ ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
 	FAIL @21
 END
+
+// Copy files
+LOG @24
+SILENT
+LAF EEUITweaks.CopyPVRZResource
+	STR_VAR
+		source_folder = EVAL ~%PKGNAME%/copy/AdulQuickLoot~
+		resource_file = ~A0BQAR.MOS~
+		pvrz_files = ~MOS5010.PVRZ~
+	RET
+		$UIMenuIF("Succeeded") = succeeded
+	END
+
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @44
+END
+	
+LAF EEUITweaks.CopyPVRZResource
+	STR_VAR
+		source_folder = EVAL ~%PKGNAME%/copy/AdulQuickLoot~
+		resource_file = ~A0BQSV10.bam~
+		pvrz_files = ~MOS5011.PVRZ~
+	RET
+		$UIMenuIF("Succeeded") = succeeded
+	END
+
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @44
+END
+	
+
 

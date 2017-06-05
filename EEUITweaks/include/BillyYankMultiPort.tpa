@@ -31,7 +31,7 @@ WITH
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/BillyYankMultiPort/chargenportSOD.menu~
 	END
 
-	%IsKRDS% %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS4% %IsKRDS5% %IsKRDS6%
+	%IsKRDS% %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS4% %IsKRDS5%
 	BEGIN
 		LOG @38
 		SILENT
@@ -134,23 +134,143 @@ ACTION_MATCH 1
 WITH
 	%IsSoD% %IsEETSoD% %IsKRDS% %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS4% %IsKRDS5% %IsKRDS6%
 	BEGIN
-		COPY ~%PKGNAME%/copy/BillyYankMultiPort/SOD~ ~override~
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/BillyYankMultiPort/SOD~
+				resource_file = ~BYCGAPP.MOS~
+				pvrz_files = ~MOS5008.PVRZ~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/BillyYankMultiPort/SOD~
+				resource_file = ~BYPRTBTN.BAM~
+				pvrz_files = ~MOS5009.PVRZ~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
 	END
 
 	%IsBG2% %IsBG2onSoD% %IsEETBG2% %IsLeUIBG2% %IsEETLeUI%
 	BEGIN
-		COPY ~%PKGNAME%/copy/BillyYankMultiPort/BG2~ ~override~
+		COPY ~%PKGNAME%/copy/BillyYankMultiPort/BG2/M_BYstyl.lua~ ~override~
+		COPY ~%PKGNAME%/copy/BillyYankMultiPort/BG2/BYGUIPRC.BAM~ ~override~
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/BillyYankMultiPort/BG2~
+				resource_file = ~BYGUIAPB.MOS~
+				pvrz_files = ~MOS5001.PVRZ~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/BillyYankMultiPort/BG2~
+				resource_file = ~BYOSTSM.BAM~
+				pvrz_files = ~MOS5004.PVRZ~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
 	END
 
 	%IsLeUISOD% %IsLeUIBG1%
 	BEGIN
-		COPY ~%PKGNAME%/copy/BillyYankMultiPort/BG2~ ~override~
-		COPY ~%PKGNAME%/copy/BillyYankMultiPort/GENDER~ ~override~
+		COPY ~%PKGNAME%/copy/BillyYankMultiPort/BG2/M_BYstyl.lua~ ~override~
+		COPY ~%PKGNAME%/copy/BillyYankMultiPort/BG2/BYGUIPRC.BAM~ ~override~
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/BillyYankMultiPort/BG2~
+				resource_file = ~BYGUIAPB.MOS~
+				pvrz_files = ~MOS5001.PVRZ~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/BillyYankMultiPort/BG2~
+				resource_file = ~BYOSTSM.BAM~
+				pvrz_files = ~MOS5004.PVRZ~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/BillyYankMultiPort/GENDER~
+				resource_file = ~GUIGDB.MOS~
+				pvrz_files = ~mos0130.PVRZ mos0131.PVRZ~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
 	END
 
 	%IsBGEE%
 	BEGIN
-		COPY ~%PKGNAME%/copy/BillyYankMultiPort/BGEE~ ~override~
+		COPY ~%PKGNAME%/copy/BillyYankMultiPort/BGEE/M_BYstyl.lua~ ~override~
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/BillyYankMultiPort/BGEE~
+				resource_file = ~BYGUIAPB.MOS~
+				pvrz_files = ~MOS5005.PVRZ~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/BillyYankMultiPort/BGEE~
+				resource_file = ~BYGUIPRC.BAM~
+				pvrz_files = ~MOS5006.PVRZ~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/BillyYankMultiPort/BGEE~
+				resource_file = ~BYOSTSM.BAM~
+				pvrz_files = ~MOS5007.PVRZ~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
 	END
 
 	DEFAULT

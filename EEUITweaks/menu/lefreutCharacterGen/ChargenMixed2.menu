@@ -1,0 +1,179 @@
+`
+fontcolors['D'] = 'FFA9D4FF'
+fontcolors['S'] = 'FF0066FF'
+fontcolors['H'] = 'FF00B7FF'
+
+chargenReverseButtons = true
+`
+menu
+{
+	name 'CHARGEN'
+	align center center
+	ignoreesc
+	onOpen
+	"
+		gender = 2
+	"
+	label
+	{
+		area 0 0 1024 768
+		mosaic LUICGB
+	}
+	label
+	{
+		area 64 16 898 44
+		text "CHARGEN_TITLE"
+		text style "title"
+	}
+	text
+	{
+		area 414 184 286 404
+		text lua "chargen.information"
+		scrollbar 'LUISCRC'
+		text style "parchment"
+		text color D
+	}
+	label
+	{
+		area 775 172 210 330
+		bitmap lua "chargen.portrait"
+	}
+
+	button
+	{
+		area 22 180 340 32
+		bam LUICHLNG
+		clickable lua "createCharScreen:GetCurrentStep() == 0"
+		glow lua "createCharScreen:GetCurrentStep() == 0"
+		text "GENDER_BUTTON"
+		text style "button"
+		action "createCharScreen:OnMenuButtonClick()"
+	}
+	button
+	{
+		area 22 216 340 32
+		bam LUICHLNG
+		clickable lua "createCharScreen:GetCurrentStep() == 3"
+		glow lua "createCharScreen:GetCurrentStep() == 3"
+		text "RACE_BUTTON"
+		text style "button"
+		action "createCharScreen:OnMenuButtonClick()"
+	}
+	button
+	{
+		area 22 252 340 32
+		bam LUICHLNG
+		clickable lua "createCharScreen:GetCurrentStep() == 4"
+		glow lua "createCharScreen:GetCurrentStep() == 4"
+		text "CLASS_BUTTON"
+		text style "button"
+		action "createCharScreen:OnMenuButtonClick()"
+	}
+	button
+	{
+		area 22 288 340 32
+		bam LUICHLNG
+		clickable lua "createCharScreen:GetCurrentStep() == 7"
+		glow lua "createCharScreen:GetCurrentStep() == 7"
+		text "ALIGNMENT_BUTTON"
+		text style "button"
+		action "createCharScreen:OnMenuButtonClick()"
+	}
+
+	button
+	{
+		area 22 324 340 32
+		bam LUICHLNG
+		clickable lua "createCharScreen:GetCurrentStep() == 8"
+		glow lua "createCharScreen:GetCurrentStep() == 8"
+		text "ABILITIES_BUTTON"
+		text style "button"
+		action "createCharScreen:OnMenuButtonClick()"
+	}
+	button
+	{
+		area 22 360 340 32
+		bam LUICHLNG
+		clickable lua "createCharScreen:GetCurrentStep() == 9"
+		glow lua "createCharScreen:GetCurrentStep() == 9"
+		text "SKILLS_BUTTON"
+		text style "button"
+		action "createCharScreen:OnMenuButtonClick()"
+	}
+	button
+	{
+		area 22 396 340 32
+		bam LUICHLNG
+		clickable lua "createCharScreen:GetCurrentStep() == 15"
+		glow lua "createCharScreen:GetCurrentStep() == 15"
+		text "APPEARANCE_BUTTON"
+		text style "button"
+		action "createCharScreen:OnMenuButtonClick()"
+	}
+	button
+	{
+		area 22 432 340 32
+		bam LUICHLNG
+		clickable lua "createCharScreen:GetCurrentStep() == 17"
+		glow lua "createCharScreen:GetCurrentStep() == 17"
+		text "NAME_BUTTON"
+		text style "button"
+		action "createCharScreen:OnMenuButtonClick()"
+	}
+
+	button
+	{
+		area 770 552 201 44
+		text "IMPORT_BUTTON"
+		text style "button"
+		bam LUIOSTUM
+		action "createCharScreen:OnImportCharacterButtonClick()"
+	}
+	button
+	{
+		area 770 604 201 44
+		text "BIOGRAPHY_BUTTON"
+		text style "button"
+		bam LUIOSTLM
+		clickable lua "createCharScreen:GetCurrentStep() >= 17"
+		action "createCharScreen:OnBiographyButtonClick()"
+	}
+	button
+	{
+		on escape
+		area 198 718 234 44
+		text "BACK_BUTTON"
+		text style "button"
+		bam LUIOSTUL
+		clickable lua "createCharScreen:IsMainBackButtonClickable()"
+		action "createCharScreen:OnMainBackButtonClick()"
+	}
+	button
+	{
+		on escape
+		area 198 718 234 44
+		text "CANCEL_BUTTON"
+		text style "button"
+		bam LUIOSTUL
+		enabled "not createCharScreen:IsMainBackButtonClickable()"
+		action "createCharScreen:OnMainCancelButtonClick()"
+	}
+	button
+	{
+		area 438 718 201 44
+		text lua "chargenAcceptOrExport()"
+		text style "button"
+		bam LUIOSTUM
+		clickable lua "createCharScreen:IsChargenComplete()"
+		action "createCharScreen:AcceptCharacter(-1)"
+	}
+	button
+	{
+		area 646 718 234 44
+		text "CREATE_PARTY_BUTTON"
+		text style "button"
+		bam LUIOSTUR
+		clickable lua "createCharScreen:IsAdvancedButtonClickable() == true"
+		action "createCharScreen:OnAdvancedButtonClick()"
+	}
+}

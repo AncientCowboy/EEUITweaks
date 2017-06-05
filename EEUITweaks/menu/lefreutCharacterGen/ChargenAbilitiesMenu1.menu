@@ -52,7 +52,7 @@ menu
 				area 0 6 45 42
 				bam LUIOSW
 				frame lua "currentCellCheck(3)"
-				sequence 1
+				sequence lua "chargenReverseButtons and 1 or 3"
 			}
 		}
 		column
@@ -63,7 +63,7 @@ menu
 				area 0 6 45 42
 				bam LUIOSW
 				frame lua "currentCellCheck(4)"
-				sequence 0
+				sequence lua "chargenReverseButtons and 0 or 4"
 			}
 		}
 		action
@@ -71,10 +71,10 @@ menu
 			if ticksStarting < 10 then
 				if cellNumber == 3 then
 					Infinity_PlaySound('GAM_09')
-					createCharScreen:OnAbilityPlusMinusButtonClick(currentChargenAbility, false)
+					createCharScreen:OnAbilityPlusMinusButtonClick(currentChargenAbility, not chargenReverseButtons)
 				elseif cellNumber == 4 then
 					Infinity_PlaySound('GAM_09')
-					createCharScreen:OnAbilityPlusMinusButtonClick(currentChargenAbility, true)
+					createCharScreen:OnAbilityPlusMinusButtonClick(currentChargenAbility, chargenReverseButtons)
 				end
 			end
 			cellNumber = nil
@@ -88,9 +88,9 @@ menu
 				ticksPassed = ticksPassed + 1
 				if ticksPassed > 7 then
 					if cellNumber == 3 then
-						createCharScreen:OnAbilityPlusMinusButtonClick(currentChargenAbility, false)
+						createCharScreen:OnAbilityPlusMinusButtonClick(currentChargenAbility, not chargenReverseButtons)
 					elseif cellNumber == 4 then
-						createCharScreen:OnAbilityPlusMinusButtonClick(currentChargenAbility, true)
+						createCharScreen:OnAbilityPlusMinusButtonClick(currentChargenAbility, chargenReverseButtons)
 					end
 					ticksPassed = 0
 				end

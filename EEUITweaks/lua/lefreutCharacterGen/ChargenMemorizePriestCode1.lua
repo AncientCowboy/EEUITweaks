@@ -9,4 +9,13 @@ function priestMemorizeSpellOrGeneralHelp()
 	end
 	return Infinity_FetchString(17253)
 end
+function getPriestFrame(cellNum, minus)
+	if minus and chargen.choose_spell[cellNum].count > 0 then
+		return true
+	elseif not minus and chargen.extraSpells > 0 then
+		return true
+	else
+		return false
+	end
+end
 `

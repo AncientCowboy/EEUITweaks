@@ -1,4 +1,4 @@
--- Hidden Options IsTIWDonBG2 IsTIWD2onBG2
+-- Hidden Options IsTIWDonBG2
 `
 if(modOptionsRegisterMenu) then
 	modOptionsRegisterMenu('HIDEOPT_TITLE', 'OPTIONS_HIDDEN', 'HIDEOPT_INFO', 0)

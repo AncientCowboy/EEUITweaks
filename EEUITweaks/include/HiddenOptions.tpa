@@ -209,119 +209,6 @@ BEGIN
 END
 
 /*******************************************************************************
- * PrependMenuonOpen
- * In menu previously read into $UIMenuIF("Body"), Appends "flushDeferredOptions()"
- * to start of menu onOpen event
- *
- * On completion $UIMenuIF("Succeeded") 1 => Success, 0 => Failure
- * 
- ******************************************************************************/
-DEFINE_ACTION_MACRO HiddenOptions.PrependMenuonOpen
-BEGIN
-	LOCAL_SPRINT tempstr $UIMenuIF("Body")
-	LOCAL_SPRINT tempfs $UIMenuIF("Filespec")
-	LOCAL_SPRINT adder ~%LE%%TAB%%TAB%%TAB%flushDeferredOptions() ~
-	LOCAL_SET found = 0
-
-	// Put current menu definition into inline file
-	COPY - ~ToInlineTemplate~ ~.../CounterInLine~
-		REPLACE_EVALUATE ~dummy~ BEGIN END
-		~%tempstr%~
-	OUTER_SPRINT tempstr ~~
-
-	COPY - ~.../CounterInLine~ ~.../CounterInLine~
-		REPLACE_EVALUATE CASE_INSENSITIVE ~\(^%MWHITE%onOpen%MWHITE%%MDQUOTE%\)\(%MNOTDQUOTE%*%MDQUOTE%\)~
-		BEGIN
-			SPRINT tempstr ~%MATCH1%%adder%%MATCH2%~
-			SET found = 1
-		END
-		~%tempstr%~
-
-	ACTION_IF NOT %found% THEN
-	BEGIN // Try for single quote
-		COPY - ~.../CounterInLine~ ~.../CounterInLine~
-		REPLACE_EVALUATE CASE_INSENSITIVE ~\(^%MWHITE%onOpen%MWHITE%%MSQUOTE%\)\(%MNOTSQUOTE%*%MSQUOTE%\)~
-			BEGIN
-				SPRINT tempstr ~%MATCH1%%adder2%%MATCH2%~
-				SET found = 1
-			END
-			~%tempstr%~
-
-	END
-	// Not found - give up
-	ACTION_IF NOT %found% THEN
-	BEGIN
-		LOG ~In HiddenOptions.PrependMenuonOpen - failed to find onOpen event~
-		OUTER_SET $UIMenuIF("Succeeded") = 0
-	END ELSE 
-
-	// Success somewhere - copy .../CounterInLine to $UIMenuIF("Body")
-	BEGIN
-		OUTER_SPRINT $UIMenuIF("Body") ~~
-		OUTER_SET found = SIZE_OF_FILE ~.../CounterInLine~
-		COPY - ~.../CounterInLine~ ~.../CounterInLine~
-			READ_ASCII 0 $UIMenuIF("Body") (%found%-1)
-		OUTER_SET $UIMenuIF("Succeeded") = 1
-	END
-	COPY - ~EmptyInlineTemplate~ ~.../CounterInline~
-END
-
-//
-// HiddenOptions.AddFileAfterMatch
-// Adds the contents of the file passed in $UIMenuIF("Filespec") to the contents
-// of $UIMenuIF("Body") immediately after a match of $UIMenuIF("LuaRegex").
-// On completion $UIMenuIF("Succeeded") 1 => Success, 0 => Failure
-//
-DEFINE_ACTION_MACRO HiddenOptions.AddFileAfterMatch
-BEGIN
-	LOCAL_SPRINT tempstr $UIMenuIF("Body")
-	LOCAL_SPRINT matchstr $UIMenuIF("LuaRegex")
-	LOCAL_SPRINT insertstr $UIMenuIF("Filespec")
-	LOCAL_SPRINT adder ~~
-
-	// Read patch insertion from passed
-	LOCAL_SET found = SIZE_OF_FILE ~%insertstr%~
-	COPY - ~%insertstr%~ ~.../CounterInLine~
-		READ_ASCII 0 adder (%found%)
-
-	// Put target code into inline file
-	OUTER_SET found = 0 
-	COPY - ~ToInlineTemplate~ ~.../CounterInLine~
-		REPLACE_EVALUATE ~dummy~ BEGIN END
-		~%tempstr%~
-	OUTER_SPRINT tempstr ~~
-
-	// Search for all of assignment, add new code after it
-	ACTION_IF NOT %found% THEN
-	BEGIN
-		COPY - ~.../CounterInLine~ ~.../CounterInLine~
-			REPLACE_EVALUATE CASE_INSENSITIVE ~%matchstr%~
-			BEGIN
-				SPRINT tempstr ~%MATCH0%%adder%~
-				SET found = 1
-			END
-			~%tempstr%~
-	END
-
-	// If not found, nothing to do but fail.
-	ACTION_IF NOT %found% THEN
-	BEGIN
-		LOG ~In HiddenOptions.AddFileAfterMatch - failed to match regex~
-		OUTER_SET $UIMenuIF("Succeeded") = 0
-	END ELSE 
-
-	// Success copy .../CounterInLine to $UIMenuIF("Body")
-	BEGIN
-		OUTER_SPRINT $UIMenuIF("Body") ~~
-		OUTER_SET found = SIZE_OF_FILE ~.../CounterInLine~
-		COPY - ~.../CounterInLine~ ~.../CounterInLine~
-			READ_ASCII 0 $UIMenuIF("Body") (%found%-1)
-		OUTER_SET $UIMenuIF("Succeeded") = 1
-	END
-	COPY - ~EmptyInlineTemplate~ ~.../CounterInline~
-END
-
-/*******************************************************************************
  * Hidden Options Installation
  ******************************************************************************/	
 
@@ -347,7 +234,8 @@ BEGIN
 	FAIL @195
 END
 
-LAUNCH_ACTION_MACRO HiddenOptions.PrependMenuonOpen
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/ModsOptions/modohiddenstart1.menu~
+LAUNCH_ACTION_MACRO EEUITweaks.PrependMenuonOpen
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
 	LAUNCH_ACTION_MACRO UIMenuClose
@@ -508,7 +396,7 @@ WITH
 		END
 	END
 
-	%IsTIWDonBG2% %IsTIWD2onBG2%
+	%IsTIWDonBG2%
 	BEGIN
 		// Copy override files
 		LOG @24
@@ -528,6 +416,26 @@ WITH
 		END
 	END
 
+	%IsTIWD2onBG2%
+	BEGIN
+		// Copy override files
+		LOG @24
+		SILENT
+		COPY ~%PKGNAME%/copy/ModsOptions/M_HideO.lua~ ~override~
+		COPY ~%PKGNAME%/copy/ModsOptions/en_HideO.lua~ ~override~
+
+		// Append Hidden Game Options to UI.MENU
+		LOG @101002
+		SILENT
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/ModsOptions/modohidden8.menu~
+		LAUNCH_ACTION_MACRO UIMenuAppendFile
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			LAUNCH_ACTION_MACRO UIMenuClose
+			FAIL @101004
+		END
+	END
+
 	%IsEETBG2%
 	BEGIN
 		// Copy override files
@@ -535,8 +443,18 @@ WITH
 		SILENT
 		COPY ~%PKGNAME%/copy/ModsOptions/M_HideO.lua~ ~override~
 		COPY ~%PKGNAME%/copy/ModsOptions/en_HideO.lua~ ~override~
-		COPY ~%PKGNAME%/copy/ModsOptions/modoimg1.bam~ ~override~
-		COPY ~%PKGNAME%/copy/ModsOptions/MOS5020.PVRZ~ ~override~
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/ModsOptions~
+				resource_file = ~modoimg1.BAM~
+				pvrz_files = ~MOS5020.PVRZ~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
 
 		// Append Hidden Game Options to UI.MENU
 		LOG @101002
@@ -557,10 +475,31 @@ WITH
 		SILENT
 		COPY ~%PKGNAME%/copy/ModsOptions/en_HideO.lua~ ~override~
 		COPY ~%PKGNAME%/copy/ModsOptions/M_HideO.lua~ ~override~
-		COPY ~%PKGNAME%/copy/ModsOptions/GUIMGX.MOS~ ~override~
-		COPY ~%PKGNAME%/copy/ModsOptions/MOS5018.PVRZ~ ~override~
-		COPY ~%PKGNAME%/copy/ModsOptions/MODOPBG2.BAM~ ~override~
-		COPY ~%PKGNAME%/copy/ModsOptions/MOS5022.PVRZ~ ~override~
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/ModsOptions~
+				resource_file = ~GUIMGX.MOS~
+				pvrz_files = ~MOS5018.PVRZ~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
+
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/ModsOptions~
+				resource_file = ~MODOPBG2.BAM~
+				pvrz_files = ~MOS5022.PVRZ~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
 
 		// Append Hidden Game Options to UI.MENU
 		LOG @101002
@@ -580,8 +519,18 @@ WITH
 		SILENT
 		COPY ~%PKGNAME%/copy/ModsOptions/en_HideO.lua~ ~override~
 		COPY ~%PKGNAME%/copy/ModsOptions/M_HideO.lua~ ~override~
-		COPY ~%PKGNAME%/copy/ModsOptions/MODOPEE.BAM~ ~override~
-		COPY ~%PKGNAME%/copy/ModsOptions/MOS5023.PVRZ~ ~override~
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/ModsOptions~
+				resource_file = ~MODOPEE.BAM~
+				pvrz_files = ~MOS5023.PVRZ~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
 
 		// Append Hidden Game Options to UI.MENU
 		LOG @101002
@@ -614,7 +563,7 @@ WITH
 		END
 	END
 	
-	%IsSoD% %IsEETSoD% %IsKRDS% %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS4% %IsKRDS5% %IsKRDS6%
+	%IsSoD% %IsEETSoD% %IsKRDS% %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS4% %IsKRDS5%
 	BEGIN
 		LOG @17
 		SILENT
@@ -644,7 +593,6 @@ WITH
 		// Patch includes.lua
 		LOG @43
 		SILENT
-		INCLUDE ~%PKGNAME%/lib/ACFixIncludeLua.tpa~
 		LAUNCH_ACTION_MACRO EEUITweaks.FixIncludeLua
 
 		// Patch UI.MENU beginning to load lang_HideO.lua
@@ -660,7 +608,7 @@ WITH
 		END
 
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/ModsOptions/uimenutop2.lua~
-		LAUNCH_ACTION_MACRO HiddenOptions.AddFileAfterMatch
+		LAUNCH_ACTION_MACRO EEUITweaks.AddFileAfterMatch
 		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 		BEGIN
 			FAIL @208

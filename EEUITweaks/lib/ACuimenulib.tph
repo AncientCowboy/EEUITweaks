@@ -483,9 +483,9 @@ BEGIN
 
 		OUTER_SET $UIMenuIF("Succeeded") = 1
 	END ELSE 
-	BEGIN // Not open
+	BEGIN // Not open - Log it (for debug), but don't flag as error
 		LOG ~In UIMenuClose: UI.MENU not open~	
-		OUTER_SET $UIMenuIF("Succeeded") = 0
+		OUTER_SET $UIMenuIF("Succeeded") = 1
 	END
 END
 

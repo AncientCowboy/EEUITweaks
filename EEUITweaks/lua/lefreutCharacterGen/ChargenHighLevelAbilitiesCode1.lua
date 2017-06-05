@@ -6,19 +6,13 @@ function chargenHLADescription()
 	end
 	return chargen.HLAs[currentHLASelection].description
 end
-function chargenHLAPlusMinusFrame(cell, rownumber)
-	if cell == 3 then
-		if chargen.HLAs[rownumber].canSubtract then
-			return currentCellCheck(cell)
-		else
-			return 3
-		end
-	elseif cell == 4 then
-		if chargen.HLAs[rownumber].canAdd then
-			return currentCellCheck(cell)
-		else
-			return 3
-		end
+function chargenHLAPlusMinusFrame(minus, cell, rownumber)
+	if minus and chargen.HLAs[rownumber].canSubtract then
+		return currentCellCheck(cell)
+	elseif not minus and chargen.HLAs[rownumber].canAdd then
+		return currentCellCheck(cell)
+	else
+		return 3
 	end
 end
 `

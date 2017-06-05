@@ -149,8 +149,8 @@ menu
 			{
 				area 0 6 45 42
 				bam LUIOSW
-				frame lua "getMinusFrame(7)"
-				sequence 1
+				frame lua "chargenReverseButtons and getMinusFrame(7) or getPlusFrame(7)"
+				sequence lua "chargenReverseButtons and 1 or 3"
 			}
 		}
 		column
@@ -160,20 +160,22 @@ menu
 			{
 				area 0 6 45 42
 				bam LUIOSW
-				sequence 0
-				frame lua "getPlusFrame(8)"
+				frame lua "chargenReverseButtons and getPlusFrame(8) or getMinusFrame(8)"
+				sequence lua "chargenReverseButtons and 0 or 4"
 			}
 		}
 		action
 		"
 			currentChargenThiefSkill = nil
 			if ticksStarting < 10 then
-				if cellNumber == 7 and minusButtonClickable(currentChargenProficiency) then
+				local isClickable1 = chargenReverseButtons and minusButtonClickable or plusButtonClickable
+				local isClickable2 = chargenReverseButtons and plusButtonClickable or minusButtonClickable
+				if cellNumber == 7 and isClickable1(currentChargenProficiency) then
 					Infinity_PlaySound('GAM_09')
-					createCharScreen:OnProficiencyPlusMinusButtonClick(chargen.proficiency[currentChargenProficiency].id, false)
-				elseif cellNumber == 8 and plusButtonClickable(currentChargenProficiency) then
+					createCharScreen:OnProficiencyPlusMinusButtonClick(chargen.proficiency[currentChargenProficiency].id, not chargenReverseButtons)
+				elseif cellNumber == 8 and isClickable2(currentChargenProficiency) then
 					Infinity_PlaySound('GAM_09')
-					createCharScreen:OnProficiencyPlusMinusButtonClick(chargen.proficiency[currentChargenProficiency].id, true)
+					createCharScreen:OnProficiencyPlusMinusButtonClick(chargen.proficiency[currentChargenProficiency].id, chargenReverseButtons)
 				end
 			end
 			cellNumber = nil
@@ -187,10 +189,12 @@ menu
 			if ticksStarting > 10 then
 				ticksPassed = ticksPassed + 1
 				if ticksPassed > 2 then
-					if cellNumber == 7 and minusButtonClickable(currentChargenProficiency) then
-						createCharScreen:OnProficiencyPlusMinusButtonClick(chargen.proficiency[currentChargenProficiency].id, false)
-					elseif cellNumber == 8 and plusButtonClickable(currentChargenProficiency) then
-						createCharScreen:OnProficiencyPlusMinusButtonClick(chargen.proficiency[currentChargenProficiency].id, true)
+					local isClickable1 = chargenReverseButtons and minusButtonClickable or plusButtonClickable
+					local isClickable2 = chargenReverseButtons and plusButtonClickable or minusButtonClickable
+					if cellNumber == 7 and isClickable1(currentChargenProficiency) then
+						createCharScreen:OnProficiencyPlusMinusButtonClick(chargen.proficiency[currentChargenProficiency].id, not chargenReverseButtons)
+					elseif cellNumber == 8 and isClickable2(currentChargenProficiency) then
+						createCharScreen:OnProficiencyPlusMinusButtonClick(chargen.proficiency[currentChargenProficiency].id, chargenReverseButtons)
 					end
 					ticksPassed = 0
 				end
@@ -236,7 +240,7 @@ menu
 				bam LUIOSW
 				enabled "createCharScreen:IsThiefSkillPlusMinusButtonClickable()"
 				frame lua "currentCellCheck(3)"
-				sequence 1
+				sequence lua "chargenReverseButtons and 1 or 3"
 			}
 		}
 		column
@@ -248,7 +252,7 @@ menu
 				bam LUIOSW
 				enabled "createCharScreen:IsThiefSkillPlusMinusButtonClickable()"
 				frame lua "currentCellCheck(4)"
-				sequence 0
+				sequence lua "chargenReverseButtons and 0 or 4"
 			}
 		}
 		action
@@ -257,9 +261,11 @@ menu
 			if ticksStarting < 10 then
 				if createCharScreen:IsThiefSkillPlusMinusButtonClickable() then
 					if cellNumber == 3 then
-						createCharScreen:OnThiefSkillPlusMinusButtonClick(chargen.thief_skill[currentChargenThiefSkill].id, false)
+						Infinity_PlaySound('GAM_09')
+						createCharScreen:OnThiefSkillPlusMinusButtonClick(chargen.thief_skill[currentChargenThiefSkill].id, not chargenReverseButtons)
 					elseif cellNumber == 4 then
-						createCharScreen:OnThiefSkillPlusMinusButtonClick(chargen.thief_skill[currentChargenThiefSkill].id, true)
+						Infinity_PlaySound('GAM_09')
+						createCharScreen:OnThiefSkillPlusMinusButtonClick(chargen.thief_skill[currentChargenThiefSkill].id, chargenReverseButtons)
 					end
 				end
 			end
@@ -276,11 +282,9 @@ menu
 					ticksPassed = ticksPassed + 1
 					if ticksPassed > 2 then
 						if cellNumber == 3 then
-							Infinity_PlaySound('GAM_09')
-							createCharScreen:OnThiefSkillPlusMinusButtonClick(chargen.thief_skill[currentChargenThiefSkill].id, false)
+							createCharScreen:OnThiefSkillPlusMinusButtonClick(chargen.thief_skill[currentChargenThiefSkill].id, not chargenReverseButtons)
 						elseif cellNumber == 4 then
-							Infinity_PlaySound('GAM_09')
-							createCharScreen:OnThiefSkillPlusMinusButtonClick(chargen.thief_skill[currentChargenThiefSkill].id, true)
+							createCharScreen:OnThiefSkillPlusMinusButtonClick(chargen.thief_skill[currentChargenThiefSkill].id, chargenReverseButtons)
 						end
 						ticksPassed = 0
 					end

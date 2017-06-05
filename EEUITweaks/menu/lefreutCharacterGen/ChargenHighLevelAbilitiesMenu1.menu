@@ -65,8 +65,8 @@ menu
 			{
 				area 0 4 45 42
 				bam LUIOSW
-				frame lua "chargenHLAPlusMinusFrame(3, rowNumber)"
-				sequence 1
+				frame lua "chargenHLAPlusMinusFrame(chargenReverseButtons, 3, rowNumber)"
+				sequence lua "chargenReverseButtons and 1 or 3"
 			}
 		}
 		column
@@ -76,8 +76,8 @@ menu
 			{
 				area 0 4 45 42
 				bam LUIOSW
-				frame lua "chargenHLAPlusMinusFrame(4, rowNumber)"
-				sequence 0
+				frame lua "chargenHLAPlusMinusFrame(not chargenReverseButtons, 4, rowNumber)"
+				sequence lua "chargenReverseButtons and 0 or 4"
 			}
 		}
 		scrollbar 'LUISCRC'
@@ -88,12 +88,13 @@ menu
 		var currentHLASelection
 		action
 		"
-			if cellNumber == 3 and chargenHLAPlusMinusFrame(3, currentHLASelection) ~= 3 then
+			local delta = chargenReverseButtons and -1 or 1
+			if cellNumber == 3 and chargenHLAPlusMinusFrame(chargenReverseButtons, 3, currentHLASelection) ~= 3 then
 				Infinity_PlaySound('GAM_09')
-				createCharScreen:OnHLAButtonClick(currentHLASelection, -1)
-			elseif cellNumber == 4 and chargenHLAPlusMinusFrame(4, currentHLASelection) ~= 3 then
+				createCharScreen:OnHLAButtonClick(currentHLASelection, delta)
+			elseif cellNumber == 4 and chargenHLAPlusMinusFrame(not chargenReverseButtons, 4, currentHLASelection) ~= 3 then
 				Infinity_PlaySound('GAM_09')
-				createCharScreen:OnHLAButtonClick(currentHLASelection, 1)
+				createCharScreen:OnHLAButtonClick(currentHLASelection, -delta)
 			end
 			cellNumber = nil
 		"

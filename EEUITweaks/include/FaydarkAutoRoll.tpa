@@ -164,7 +164,7 @@ OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_ABILITIES~
 
 ACTION_MATCH 1
 WITH
-	%IsSoD% %IsEETSoD% %IsKRDS% %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS4% %IsKRDS5% %IsKRDS6%
+	%IsSoD% %IsEETSoD% %IsKRDS% %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS4% %IsKRDS5%
 	BEGIN
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FaydarkAutoRoll/chargenabilitiesmenu1.menu~
 	END
@@ -207,7 +207,18 @@ ACTION_MATCH 1
 WITH
 	%IsLeUISOD% %IsLeUIBG1%
 	BEGIN
-		COPY ~%PKGNAME%/copy/FayDarkAutoRoll~ ~override~
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/FaydarkAutoRoll~
+				resource_file = ~GUISMDB.MOS~
+				pvrz_files = ~mos0156.PVRZ~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
 	END
 
 	DEFAULT

@@ -20,12 +20,13 @@ ALWAYS
 	BEGIN
 		OUTER_SPRINT PKGNAME ~EEUITweaks~
 		INCLUDE ~%PKGNAME%/lib/ACuimenulib.tph~
+		INCLUDE ~%PKGNAME%/lib/EEUITweaks.tph~
 		INCLUDE ~%PKGNAME%/lib/UIMenuPlatform.tpa~
 		LAUNCH_ACTION_MACRO EEUIGetMenuEnv
 	END
 END
 
-VERSION ~2.4~
+VERSION ~2.5~
 
 LANGUAGE 
 	~English~ ~EEUITweaks/languages/english~ ~EEUITweaks/languages/english/setup.tra~
@@ -54,7 +55,7 @@ ACTION_TRY
 	INCLUDE ~%PKGNAME%/include/ModOptionsSOD.tpa~
 WITH 
 	DEFAULT
-		LAM UIMenuClose
+		LAM UIMenuAbort
 		ACTION_RERAISE
 END
 
@@ -78,7 +79,7 @@ ACTION_TRY
 	INCLUDE ~%PKGNAME%/include/HiddenOptions.tpa~
 WITH 
 	DEFAULT
-		LAM UIMenuClose
+		LAM UIMenuAbort
 		ACTION_RERAISE
 END
 
@@ -111,12 +112,26 @@ REQUIRE_PREDICATE
 		)
 	)
 ) @27 // Only BG2 or BG2onSoD or EETBG2
+SUBCOMPONENT @580
 
 ACTION_TRY
+	OUTER_SET lefcgenreversebutt = 0
 	INCLUDE ~%PKGNAME%/include/lefreutCharacterGen.tpa~
 WITH 
 	DEFAULT
-		LAM UIMenuClose
+		LAM UIMenuAbort
+		ACTION_RERAISE
+END
+
+BEGIN @109065 DESIGNATED 1091
+GROUP @1
+SUBCOMPONENT @580
+ACTION_TRY
+	OUTER_SET lefcgenreversebutt = 1
+	INCLUDE ~%PKGNAME%/include/lefreutCharacterGen.tpa~
+WITH 
+	DEFAULT
+		LAM UIMenuAbort
 		ACTION_RERAISE
 END
 
@@ -130,6 +145,7 @@ REQUIRE_PREDICATE (
 	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1060~)) AND  // Not Mr2150's Roll First
 	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1080~)) AND  // Not lefreut's Portrait Picker
 	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1090~)) AND  // Not lefreut's Character Creation Screens
+	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1091~)) AND
 	(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~))          AND  // Not Lefreut's UI
 	(
 		(GAME_IS ~eet~) OR
@@ -145,7 +161,7 @@ ACTION_TRY
 	INCLUDE ~%PKGNAME%/include/Mr2150RndChar.tpa~
 WITH 
 	DEFAULT
-		LAM UIMenuClose
+		LAM UIMenuAbort
 		ACTION_RERAISE
 END
 
@@ -176,7 +192,7 @@ ACTION_TRY
 	INCLUDE ~%PKGNAME%/include/BillyYankMultiPort.tpa~
 WITH 
 	DEFAULT
-		LAM UIMenuClose
+		LAM UIMenuAbort
 		ACTION_RERAISE
 END
 
@@ -200,7 +216,7 @@ ACTION_TRY
 	INCLUDE ~%PKGNAME%/include/Mr2150PortraitPick.tpa~
 WITH 
 	DEFAULT
-		LAM UIMenuClose
+		LAM UIMenuAbort
 		ACTION_RERAISE
 END
 
@@ -215,16 +231,17 @@ SUBCOMPONENT @510
 	(
 		(
 			(GAME_IS ~eet~) AND
-			(MOD_IS_INSTALLED ~setup-EET_gui.tp2~ ~0~) // EET SoD GUI
+			(MOD_IS_INSTALLED ~setup-EET_gui.tp2~ ~0~) AND			// EET SoD GUI
+			(NOT(FILE_EXISTS ~override/M_CKUI.LUA~))				// Not Revised Dragon Scale  
 		) OR
 		(
 			(GAME_IS ~bgee~) AND 
-			(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND             // Not Lefreut's UI
-			(NOT(FILE_EXISTS ~override/ULGOTHST.MOS~)) AND         // Not BG2onSoD
-			(NOT(FILE_EXISTS ~override/M_CKUI.LUA~)) AND           // Not Revised Dragon Scale  
-			(NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~)) AND // Not Dragonspear UI++
-			(FILE_EXISTS_IN_GAME ~BD0010.ARE~) AND                 // Not simple BGEE
-			(NOT(FILE_EXISTS ~override/guiweidufile.png~))         // Not IWD GUI
+			(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND             	// Not Lefreut's UI
+			(NOT(FILE_EXISTS ~override/ULGOTHST.MOS~)) AND         	// Not BG2onSoD
+			(NOT(FILE_EXISTS ~override/M_CKUI.LUA~)) AND           	// Not Revised Dragon Scale  
+			(NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~)) AND 	// Not Dragonspear UI++
+			(FILE_EXISTS_IN_GAME ~BD0010.ARE~) AND                 	// Not simple BGEE
+			(NOT(FILE_EXISTS ~override/guiweidufile.png~))         	// Not IWD GUI
 		)
 	)
 ) // SoD/IsEETSoD Only
@@ -234,7 +251,7 @@ ACTION_TRY
 	INCLUDE ~%PKGNAME%/include/Mr2150PortraitPick.tpa~
 WITH 
 	DEFAULT
-		LAM UIMenuClose
+		LAM UIMenuAbort
 		ACTION_RERAISE
 END
 
@@ -271,7 +288,7 @@ ACTION_TRY
 	INCLUDE ~%PKGNAME%/include/lefreutPortraitPicker.tpa~
 WITH 
 	DEFAULT
-		LAM UIMenuClose
+		LAM UIMenuAbort
 		ACTION_RERAISE
 END
 
@@ -320,6 +337,7 @@ REQUIRE_PREDICATE (
 	(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND          // Not Lefreut's UI
 	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1080~)) AND // Not lefreut's Portrait Picker
 	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1090~)) AND // Not lefreut's Character Creation Screens
+	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1091~)) AND
 	(
 		(GAME_IS ~eet~) OR
 		(GAME_IS ~bg2ee~) OR
@@ -334,7 +352,7 @@ ACTION_TRY
 	INCLUDE ~%PKGNAME%/include/AdulUnhideChargen.tpa~
 WITH 
 	DEFAULT
-		LAM UIMenuClose
+		LAM UIMenuAbort
 		ACTION_RERAISE
 END
 
@@ -361,7 +379,7 @@ ACTION_TRY
 	INCLUDE ~%PKGNAME%/include/FaydarkAutoRoll.tpa~
 WITH 
 	DEFAULT
-		LAM UIMenuClose
+		LAM UIMenuAbort
 		ACTION_RERAISE
 END
 
@@ -397,7 +415,7 @@ ACTION_TRY
 	INCLUDE ~%PKGNAME%/include/Mr2150RollFirst.tpa~
 WITH 
 	DEFAULT
-		LAM UIMenuClose
+		LAM UIMenuAbort
 		ACTION_RERAISE
 END
 
@@ -427,7 +445,26 @@ ACTION_TRY
 	INCLUDE ~%PKGNAME%/include/TransparentSidebars.tpa~
 WITH 
 	DEFAULT
-		LAM UIMenuClose
+		LAM UIMenuAbort
+		ACTION_RERAISE
+END
+
+/******************************************************************************
+ * LavaDelVortel's Sculpted Transparent Sidebars
+ *****************************************************************************/
+BEGIN @209000 DESIGNATED 2090
+GROUP @2
+REQUIRE_PREDICATE (
+	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND // IE 2.0+
+	(
+		(GAME_IS ~pst~)
+	)
+) @27
+
+ACTION_TRY
+	INCLUDE ~%PKGNAME%/include/LavaDelVortelSideBars.tpa~
+WITH 
+	DEFAULT
 		ACTION_RERAISE
 END
 
@@ -456,7 +493,7 @@ ACTION_TRY
 	INCLUDE ~%PKGNAME%/include/FeedbackHack.tpa~
 WITH 
 	DEFAULT
-		LAM UIMenuClose
+		LAM UIMenuAbort
 		ACTION_RERAISE
 END
 
@@ -476,7 +513,7 @@ ACTION_TRY
 	INCLUDE ~%PKGNAME%/include/AdulsResizeButtons.tpa~
 WITH 
 	DEFAULT
-		LAM UIMenuClose
+		LAM UIMenuAbort
 		ACTION_RERAISE
 END
 
@@ -503,7 +540,7 @@ ACTION_TRY
 	INCLUDE ~%PKGNAME%/include/AdulQuickLoot.tpa~
 WITH 
 	DEFAULT
-		LAM UIMenuClose
+		LAM UIMenuAbort
 		ACTION_RERAISE
 END
 
@@ -531,7 +568,7 @@ ACTION_TRY
 	LAUNCH_ACTION_MACRO lefreutLevelUpCommon.InstallGlowNoClick
 WITH 
 	DEFAULT
-		LAM UIMenuClose
+		LAM UIMenuAbort
 		ACTION_RERAISE
 END
 
@@ -550,7 +587,7 @@ ACTION_TRY
 	LAUNCH_ACTION_MACRO lefreutLevelUpCommon.InstallGlowWithClick
 WITH 
 	DEFAULT
-		LAM UIMenuClose
+		LAM UIMenuAbort
 		ACTION_RERAISE
 END
 
@@ -569,7 +606,7 @@ ACTION_TRY
 	LAUNCH_ACTION_MACRO lefreutLevelUpCommon.InstallButtons
 WITH 
 	DEFAULT
-		LAM UIMenuClose
+		LAM UIMenuAbort
 		ACTION_RERAISE
 END
 
@@ -596,7 +633,7 @@ ACTION_TRY
 	INCLUDE ~%PKGNAME%/include/lefreut1_3ishDialog.tpa~
 WITH 
 	DEFAULT
-		LAM UIMenuClose
+		LAM UIMenuAbort
 		ACTION_RERAISE
 END
 
@@ -622,7 +659,7 @@ ACTION_TRY
 	INCLUDE ~%PKGNAME%/include/CenteredDialog.tpa~
 WITH 
 	DEFAULT
-		LAM UIMenuClose
+		LAM UIMenuAbort
 		ACTION_RERAISE
 END
 
@@ -645,7 +682,7 @@ ACTION_TRY
 	INCLUDE ~%PKGNAME%/include/DeesPermanentThieving.tpa~
 WITH 
 	DEFAULT
-		LAM UIMenuClose
+		LAM UIMenuAbort
 		ACTION_RERAISE
 END
 
@@ -663,9 +700,24 @@ ACTION_TRY
 	INCLUDE ~%PKGNAME%/include/elminsterAreaCheats.tpa~
 WITH 
 	DEFAULT
-		LAM UIMenuClose
 		ACTION_RERAISE
 END
+
+/******************************************************************************
+ * LavaDelVortel's Red Healthbar
+ *****************************************************************************/
+BEGIN @210000 DESIGNATED 2100
+GROUP @2
+REQUIRE_PREDICATE (
+	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND // IE 2.0+
+	(
+		(GAME_IS ~pst~)
+	)
+) @27
+
+LOG @24
+SILENT
+COPY ~%PKGNAME%/copy/LavaDelVortelHealthBar/fillbar.BAM~ ~override~
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -700,7 +752,7 @@ ACTION_TRY
 	INCLUDE ~%PKGNAME%/include/lefreutImprovedRecordScreen.tpa~
 WITH 
 	DEFAULT
-		LAM UIMenuClose
+		LAM UIMenuAbort
 		ACTION_RERAISE
 END
 
@@ -718,7 +770,7 @@ ACTION_TRY
 	INCLUDE ~%PKGNAME%/include/ProgressBars.tpa~
 WITH 
 	DEFAULT
-		LAM UIMenuClose
+		LAM UIMenuAbort
 		ACTION_RERAISE
 END
 
@@ -738,7 +790,7 @@ ACTION_TRY
 	INCLUDE ~%PKGNAME%/include/ProgressBarsOptions.tpa~
 WITH 
 	DEFAULT
-		LAM UIMenuClose
+		LAM UIMenuAbort
 		ACTION_RERAISE
 END
 
@@ -765,7 +817,7 @@ ACTION_TRY
 	INCLUDE ~%PKGNAME%/include/Mr2150JrnlFix.tpa~
 WITH 
 	DEFAULT
-		LAM UIMenuClose
+		LAM UIMenuAbort
 		ACTION_RERAISE
 END
 
@@ -796,7 +848,7 @@ ACTION_TRY
 	INCLUDE ~%PKGNAME%/include/lefreutJournal.tpa~
 WITH 
 	DEFAULT
-		LAM UIMenuClose
+		LAM UIMenuAbort
 		ACTION_RERAISE
 END
 
@@ -808,7 +860,12 @@ GROUP @3
 REQUIRE_PREDICATE (
 	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND                 // IE 2.0+
 	(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND          // Not Lefreut's UI
-	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~3023~)) AND // Not lefreut's Journal
+	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~3023~)) AND // Not lefreut's Journal	
+	(													// Not Kilivitz's Alternate Fonts without Core
+		(MOD_IS_INSTALLED  ~CKUISOD.tp2~ ~0~) OR
+		(NOT(MOD_IS_INSTALLED ~CKUISOD.tp2~ ~5~))
+	) AND
+
 	(
 		(GAME_IS ~eet~) OR
 		(GAME_IS ~bg2ee~) OR 
@@ -820,7 +877,7 @@ ACTION_TRY
 	INCLUDE ~%PKGNAME%/include/lefreutSimpleJournalFixes.tpa~
 WITH 
 	DEFAULT
-		LAM UIMenuClose
+		LAM UIMenuAbort
 		ACTION_RERAISE
 END
 
@@ -855,7 +912,7 @@ ACTION_TRY
 	INCLUDE ~%PKGNAME%/include/lefreutCustomizeScreensTweaks.tpa~
 WITH 
 	DEFAULT
-		LAM UIMenuClose
+		LAM UIMenuAbort
 		ACTION_RERAISE
 END
 
@@ -876,7 +933,7 @@ ACTION_TRY
 	INCLUDE ~%PKGNAME%/include/lefreutCustomAll.tpa~
 WITH 
 	DEFAULT
-		LAM UIMenuClose
+		LAM UIMenuAbort
 		ACTION_RERAISE
 END
 
@@ -890,6 +947,7 @@ REQUIRE_PREDICATE (
 	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND                 // IE 2.0+
 	(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND          // Not Lefreut's UI
 	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~4005~)) AND // Not lefreut's BG2 Store Screen Tweaks
+	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~4006~)) AND
 	(GAME_IS ~bgee bg2ee eet pst~)
 ) @39
 SUBCOMPONENT @530
@@ -899,7 +957,7 @@ ACTION_TRY
 	INCLUDE ~%PKGNAME%/include/Mr2150IdentifyItems.tpa~
 WITH 
 	DEFAULT
-		LAM UIMenuClose
+		LAM UIMenuAbort
 		ACTION_RERAISE
 END
 
@@ -911,7 +969,7 @@ ACTION_TRY
 	INCLUDE ~%PKGNAME%/include/Mr2150IdentifyItems.tpa~
 WITH 
 	DEFAULT
-		LAM UIMenuClose
+		LAM UIMenuAbort
 		ACTION_RERAISE
 END
 
@@ -923,7 +981,7 @@ ACTION_TRY
 	INCLUDE ~%PKGNAME%/include/Mr2150IdentifyItems.tpa~
 WITH 
 	DEFAULT
-		LAM UIMenuClose
+		LAM UIMenuAbort
 		ACTION_RERAISE
 END
 
@@ -935,7 +993,7 @@ ACTION_TRY
 	INCLUDE ~%PKGNAME%/include/Mr2150IdentifyItems.tpa~
 WITH 
 	DEFAULT
-		LAM UIMenuClose
+		LAM UIMenuAbort
 		ACTION_RERAISE
 END
 
@@ -947,7 +1005,7 @@ ACTION_TRY
 	INCLUDE ~%PKGNAME%/include/Mr2150IdentifyItems.tpa~
 WITH 
 	DEFAULT
-		LAM UIMenuClose
+		LAM UIMenuAbort
 		ACTION_RERAISE
 END
 
@@ -959,7 +1017,7 @@ ACTION_TRY
 	INCLUDE ~%PKGNAME%/include/Mr2150IdentifyItems.tpa~
 WITH 
 	DEFAULT
-		LAM UIMenuClose
+		LAM UIMenuAbort
 		ACTION_RERAISE
 END
 
@@ -976,12 +1034,26 @@ REQUIRE_PREDICATE (
 	(NOT(FILE_EXISTS ~override/guiiwd2dummy.png~)) AND // Not IWD2 GUI
 	(GAME_IS ~bgee bg2ee eet~)
 ) @27
+SUBCOMPONENT @560
 
 ACTION_TRY
+	OUTER_SET lefitemcompare = 1
 	INCLUDE ~%PKGNAME%/include/lefreutImprovedInventory.tpa~
 WITH 
 	DEFAULT
-		LAM UIMenuClose
+		LAM UIMenuAbort
+		ACTION_RERAISE
+END
+
+BEGIN @305004 DESIGNATED 3051
+GROUP @3
+SUBCOMPONENT @560
+ACTION_TRY
+	OUTER_SET lefitemcompare = 0
+	INCLUDE ~%PKGNAME%/include/lefreutImprovedInventory.tpa~
+WITH 
+	DEFAULT
+		LAM UIMenuAbort
 		ACTION_RERAISE
 END
 
@@ -1023,12 +1095,26 @@ REQUIRE_PREDICATE (
 		)
 	)
 ) @27
+SUBCOMPONENT @570
 
 ACTION_TRY
+	OUTER_SET lefrevstorebutt = 0
 	INCLUDE ~%PKGNAME%/include/lefreutBG2Store.tpa~
 WITH 
 	DEFAULT
-		LAM UIMenuClose
+		LAM UIMenuAbort
+		ACTION_RERAISE
+END
+
+BEGIN @400508 DESIGNATED 4006
+GROUP @4
+SUBCOMPONENT @570
+ACTION_TRY
+	OUTER_SET lefrevstorebutt = 1
+	INCLUDE ~%PKGNAME%/include/lefreutBG2Store.tpa~
+WITH 
+	DEFAULT
+		LAM UIMenuAbort
 		ACTION_RERAISE
 END
 
@@ -1042,25 +1128,19 @@ REQUIRE_PREDICATE (
 	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND                 // IE 2.0+
 	(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND          // Not Lefreut's UI
 	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~4005~)) AND // Not BG2 Store Screen Tweaks
+	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~4006~)) AND
 	(
-		(GAME_IS ~eet~) OR
+		(
+			(GAME_IS ~eet~) AND
+			(NOT(MOD_IS_INSTALLED ~CKUISOD.tp2~ ~0~))	// Not RDS V4 with component 0
+		) OR
 		(GAME_IS ~bg2ee~) OR 
 		(
 			(GAME_IS ~bgee~) AND 
 			(
 				(NOT(FILE_EXISTS ~override/M_CKUI.LUA~)) OR
-				(
-					(
-						(MOD_IS_INSTALLED ~CKUISOD.tp2~ ~1~) OR
-						(MOD_IS_INSTALLED ~CKUISOD.tp2~ ~2~) OR
-						(MOD_IS_INSTALLED ~CKUISOD.tp2~ ~3~) OR
-						(MOD_IS_INSTALLED ~CKUISOD.tp2~ ~4~) OR
-						(MOD_IS_INSTALLED ~CKUISOD.tp2~ ~5~) OR
-						(MOD_IS_INSTALLED ~CKUISOD.tp2~ ~6~)
-					) AND
-					(NOT(MOD_IS_INSTALLED ~CKUISOD.tp2~ ~0~))
-				)
-			) AND                                              // Not Revised DS V2 or RDS V3 without component 0
+				(NOT(MOD_IS_INSTALLED ~CKUISOD.tp2~ ~0~))
+			) AND                                              // Not Pre R3 RDS nor RDS V4 with component 0
 			(NOT(FILE_EXISTS ~override/ULGOTHST.MOS~)) AND     // Not BG2onSOD
 			(NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~)) // Not Dragonspear UI++
 		)
@@ -1071,7 +1151,7 @@ ACTION_TRY
 	INCLUDE ~%PKGNAME%/include/StoreFix.tpa~
 WITH 
 	DEFAULT
-		LAM UIMenuClose
+		LAM UIMenuAbort
 		ACTION_RERAISE
 END
 
@@ -1084,6 +1164,7 @@ REQUIRE_PREDICATE (
 	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND                 // IE 2.0+
 	(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND          // Not Lefreut's UI
 	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~4005~)) AND // Not lefreut's BG2 Store Screen Tweaks
+	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~4006~)) AND
 	(
 		(GAME_IS ~eet~) OR
 		(GAME_IS ~bg2ee~) OR 
@@ -1098,7 +1179,7 @@ ACTION_TRY
 	INCLUDE ~%PKGNAME%/include/lefreutStealMulti.tpa~
 WITH 
 	DEFAULT
-		LAM UIMenuClose
+		LAM UIMenuAbort
 		ACTION_RERAISE
 END
 
@@ -1111,6 +1192,7 @@ REQUIRE_PREDICATE (
 	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND                 // IE 2.0+
 	(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND          // Not Lefreut's UI
 	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~4005~)) AND // Not lefreut's BG2 Store Screen Tweaks
+	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~4006~)) AND
 	(
 		(GAME_IS ~eet~) OR
 		(GAME_IS ~bg2ee~) OR 
@@ -1125,12 +1207,12 @@ ACTION_TRY
 	INCLUDE ~%PKGNAME%/include/AdulImprovedStore.tpa~
 WITH 
 	DEFAULT
-		LAM UIMenuClose
+		LAM UIMenuAbort
 		ACTION_RERAISE
 END
 
 /******************************************************************************
- * lefleut's Inscribed Arcana
+ * lefreut's Inscribed Arcana
  *****************************************************************************/
 BEGIN @403000 DESIGNATED 4030
 GROUP @4
@@ -1138,17 +1220,17 @@ REQUIRE_PREDICATE (
 	// Predicate that all elements of the subgroup must meet 
 	// This prevents showing the subcomponent group with no selectable options
 	// when none of the subgroup elements can be installed
-	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND                // IE 2.0+
-	(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND // Not IWD UI
+	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND							// IE 2.0+
+	(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND			// Not IWD UI
+	(NOT(MOD_IS_INSTALLED ~CKUISOD.tp2~ ~3~)) AND      			// Not Revised Dragon Scale V.4 embedded Classic Spellbooks
 	(
 		(
 			(GAME_IS ~bgee~) AND
-			(NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~)) AND // Not Dragonspear UI++
-			(NOT(MOD_IS_INSTALLED ~CKUISOD.tp2~ ~4~))              // Not Revised Dragon Scale V.3 embedded Classic Spellbooks
+			(NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~))	// Not Dragonspear UI++
 		) OR 
 		(
 			(GAME_IS ~bg2ee~) AND
-			(NOT(FILE_EXISTS ~override/guiiwd2dummy.png~))     // Not IWD2 UI
+			(NOT(FILE_EXISTS ~override/guiiwd2dummy.png~))		// Not IWD2 UI
 		) OR 
 		(
 			(GAME_IS ~eet~)
@@ -1161,11 +1243,11 @@ SUBCOMPONENT @550
 	// either BG2 or BG2onSoD or EETBG2
 	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND                // IE 2.0+
 	(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND // Not IWD UI
+	(NOT(MOD_IS_INSTALLED ~CKUISOD.tp2~ ~3~)) AND      // Not Revised Dragon Scale V.4 embedded Classic Spellbooks
 	(
 		(
 			(GAME_IS ~bgee~) AND 
 			(NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~)) AND // Not Dragonspear UI++
-			(NOT(MOD_IS_INSTALLED ~CKUISOD.tp2~ ~4~)) AND          // Not Revised Dragon Scale V.3 embedded Classic Spellbooks
 			(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND             // Not Lefreut's UI
 			(FILE_EXISTS ~override/ULGOTHST.MOS~)                  // BGonSoD - Not SoD
 		) OR
@@ -1187,7 +1269,7 @@ ACTION_TRY
 	INCLUDE ~%PKGNAME%/include/lefreutInscribedArcana.tpa~
 WITH 
 	DEFAULT
-		LAM UIMenuClose
+		LAM UIMenuAbort
 		ACTION_RERAISE
 END
 
@@ -1199,18 +1281,18 @@ GROUP @4
 SUBCOMPONENT @550
 (
 	// Subcomponent specific predicate - Same as common
-	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND                // IE 2.0+
-	(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND // Not IWD UI
+	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND							// IE 2.0+
+	(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND			// Not IWD UI
+	(NOT(MOD_IS_INSTALLED ~CKUISOD.tp2~ ~3~)) AND      			// Not Revised Dragon Scale V.4 embedded Classic Spellbooks
 	(
 		(
-			(GAME_IS ~bgee~) AND 
-			(NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~)) AND // Not Dragonspear UI++
-			(NOT(MOD_IS_INSTALLED ~CKUISOD.tp2~ ~4~))              // Not Revised Dragon Scale V.3 embedded Classic Spellbooks
-		) OR
+			(GAME_IS ~bgee~) AND
+			(NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~))	// Not Dragonspear UI++
+		) OR 
 		(
 			(GAME_IS ~bg2ee~) AND
-			(NOT(FILE_EXISTS ~override/guiiwd2dummy.png~))     // Not IWD2 GUI
-		) OR
+			(NOT(FILE_EXISTS ~override/guiiwd2dummy.png~))		// Not IWD2 UI
+		) OR 
 		(
 			(GAME_IS ~eet~)
 		)
@@ -1221,7 +1303,7 @@ ACTION_TRY
 	INCLUDE ~%PKGNAME%/include/KilivitzClassicSpellbooks.tpa~
 WITH 
 	DEFAULT
-		LAM UIMenuClose
+		LAM UIMenuAbort
 		ACTION_RERAISE
 END
 
@@ -1300,10 +1382,18 @@ REQUIRE_PREDICATE (
 		)
 	)
 ) @27
+SUBCOMPONENT @590
 
 LOG @24
 SILENT
 COPY ~%PKGNAME%/copy/lefreutImprovedFonts/M_BG2STYLES.lua~ ~override/M_STYLES.lua~
+
+BEGIN @504001 DESIGNATED 5041
+GROUP @5
+SUBCOMPONENT @590
+LOG @24
+SILENT
+COPY ~%PKGNAME%/copy/lefreutImprovedFonts/M_BG2STYLES2.lua~ ~override/M_STYLES.lua~
 
 
 ///////////////////////////////////////////////////////////////////////////////

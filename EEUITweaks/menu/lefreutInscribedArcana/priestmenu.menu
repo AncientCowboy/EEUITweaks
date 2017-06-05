@@ -148,7 +148,7 @@ menu
 	}
 	text
 	{
-		area 138 180 256 22
+		area 138 178 256 22
 		text lua "Infinity_FetchString(11945)"
 		text style "normal_parchment"
 	}
@@ -198,11 +198,12 @@ menu
 				align center center
 			}
 		}
-		area 138 204 256 372
+		area 138 200 266 372
 		name "bookListPriest"
+		scrollbar 'LUISBR'
 		rowheight 62
 		hidehighlight
-		table "makeTable(length(characters[id].priestSpells[currentSpellLevel]) / 4)"
+		table "makeTable((#characters[id].priestSpells[currentSpellLevel] - 1) / 4)"
 		var currentBookSpell
 		action
 		"
@@ -227,7 +228,7 @@ menu
 	text
 	{
 		enabled "selectedSpell == nil"
-		area 460 180 256 22
+		area 460 178 256 22
 		text lua "Infinity_FetchString(11944)"
 		text style "normal_parchment"
 		text align right top
@@ -246,7 +247,7 @@ menu
 	text
 	{
 		enabled "selectedSpell ~= nil"
-		area 420 200 306 362
+		area 420 196 306 362
 		text lua "Infinity_FetchString(selectedSpell.description)"
 		text style "parchment"
 		scrollbar 'LUISBR'
@@ -260,54 +261,9 @@ menu
 			{
 				enabled "bottomSpellsPlaceHolder[4 * rowNumber - 3] ~= nil"
 				area 0 0 -1 -1
-				bam LPELFRMS
+				bam SPELFRMS
 				align center center
 			}
-		}
-		column
-		{
-			width 25
-			label
-			{
-				enabled "bottomSpellsPlaceHolder[4 * rowNumber - 2] ~= nil"
-				area 0 0 -1 -1
-				bam LPELFRMS
-				align center center
-			}
-		}
-		column
-		{
-			width 25
-			label
-			{
-				enabled "bottomSpellsPlaceHolder[4 * rowNumber - 1] ~= nil"
-				area 0 0 -1 -1
-				bam LPELFRMS
-				align center center
-			}
-		}
-		column
-		{
-			width 25
-			label
-			{
-				enabled "bottomSpellsPlaceHolder[4 * rowNumber] ~= nil"
-				area 0 0 -1 -1
-				bam LPELFRMS
-				align center center
-			}
-		}
-		enabled "selectedSpell == nil"
-		area 460 204 256 372
-		rowheight 62
-		hidehighlight
-		table "makeTable(length(bottomSpellsPlaceHolder) / 4)"
-	}
-	list
-	{
-		column
-		{
-			width 25
 			label
 			{
 				enabled "bottomSpells[4 * rowNumber - 3] ~= nil"
@@ -322,6 +278,13 @@ menu
 			width 25
 			label
 			{
+				enabled "bottomSpellsPlaceHolder[4 * rowNumber - 2] ~= nil"
+				area 0 0 -1 -1
+				bam SPELFRMS
+				align center center
+			}
+			label
+			{
 				enabled "bottomSpells[4 * rowNumber - 2] ~= nil"
 				area 0 0 -1 -1
 				bam lua "bottomSpells[4 * rowNumber - 2].icon"
@@ -332,6 +295,13 @@ menu
 		column
 		{
 			width 25
+			label
+			{
+				enabled "bottomSpellsPlaceHolder[4 * rowNumber - 1] ~= nil"
+				area 0 0 -1 -1
+				bam SPELFRMS
+				align center center
+			}
 			label
 			{
 				enabled "bottomSpells[4 * rowNumber - 1] ~= nil"
@@ -346,6 +316,13 @@ menu
 			width 25
 			label
 			{
+				enabled "bottomSpellsPlaceHolder[4 * rowNumber] ~= nil"
+				area 0 0 -1 -1
+				bam SPELFRMS
+				align center center
+			}
+			label
+			{
 				enabled "bottomSpells[4 * rowNumber] ~= nil"
 				area 0 0 -1 -1
 				bam lua "bottomSpells[4 * rowNumber].icon"
@@ -353,12 +330,13 @@ menu
 				align center center
 			}
 		}
-		area 460 204 256 372
+		area 460 200 266 372
 		name "memorizedListPriest"
-		enabled "#bottomSpells ~= 0 and selectedSpell == nil"
+		enabled "selectedSpell == nil"
+		scrollbar 'LUISBR'
 		rowheight 62
 		hidehighlight
-		table "makeTable(length(bottomSpells) / 4)"
+		table "makeTable((#bottomSpellsPlaceHolder - 1) / 4)"
 		var currentBottomSpell
 		action
 		"
