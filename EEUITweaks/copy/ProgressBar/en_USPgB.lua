@@ -3,6 +3,16 @@ pgBarStrings = {
 	PGBAR_ENABLE_LABEL = "Enable in",
 	PGBAR_ENABLED_LABEL = "Enabled",
 	PGBAR_UNKNOWN_LABEL = "Unknown",
+	PGBAR_LEVEL_LABEL = "Level",
+	PGBAR_XP_LABEL = "XP",
+	PGBAR_NEXT_LEVEL_LABEL = "Next Level in",
+	PGBAR_READY_TO_LEVEL_LABEL = "Ready to Level Up",
+	PGBAR_AC_LABEL = "AC",	
+	PGBAR_HP_LABEL = "HP",
+	PGBAR_THAC0_LABEL = "THAC0",
+	PGBAR_DAMAGE_LABEL = "Damage",
+	PGBAR_OFFHAND_LABEL = "Off Hand",
+	
 -- Progress bar options strings
 	PROGBAROPT_TITLE = "Progress Bar Tweaks",
 	PROGBAROPT_INFO = "Enables/disables features, and sets colors for the progress bar tweaks.",

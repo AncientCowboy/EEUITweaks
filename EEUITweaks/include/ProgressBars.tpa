@@ -37,10 +37,19 @@ BEGIN
 			OUTER_SET lvllimit = 41
 		END ELSE
 		BEGIN
-			OUTER_SPRINT target2da ~SODCLTXT.2DA~
-			OUTER_SET clasmincol = 9
-			OUTER_SET lvlmincol = 1
-			OUTER_SET lvllimit = 41
+			ACTION_IF %IsPSTEE% THEN
+			BEGIN
+				OUTER_SPRINT target2da ~clastext.2DA~
+				OUTER_SET clasmincol = 9
+				OUTER_SET lvlmincol = 1
+				OUTER_SET lvllimit = 42
+			END ELSE
+			BEGIN
+				OUTER_SPRINT target2da ~SODCLTXT.2DA~
+				OUTER_SET clasmincol = 9
+				OUTER_SET lvlmincol = 1
+				OUTER_SET lvllimit = 41
+			END
 		END
 	END
 
@@ -60,6 +69,7 @@ BEGIN
 				~%kitname%~ => ~VALID~
 			END
 		END
+		LOG ~Class name %kitname% is valid~
 	END
 
 // Now two tables to map base class name to class ID and the converse
@@ -76,8 +86,10 @@ BEGIN
 			READ_2DA_ENTRY_FORMER ~sodclasstxt~ %rownum% 1 classid
 			SET flag = ($validBaseClassNames(~%kitname%~) STRING_EQUAL ~VALID~)
 		END
+		LOG ~Testing if %kitname% is valid~
 		ACTION_IF (%flag% = 1)
 		BEGIN
+			LOG ~%kitname% is valid~
 			ACTION_DEFINE_ASSOCIATIVE_ARRAY baseClassNameToID
 			BEGIN
 				~%kitname%~ => ~%classid%~
@@ -789,6 +801,35 @@ BEGIN
 	FAIL @20
 END
 
+// For PSTEE, Patch UI.MENU beginning to load LANGPgB.lua
+ACTION_IF %IsPSTEE% THEN
+BEGIN
+	LOG @206
+	SILENT
+
+	OUTER_SPRINT $UIMenuIF("LuaRegex") ~^[%TAB% ]*if[%TAB% ]*([%TAB% ]*uiTranslationFile[%TAB% ]*)[%TAB% ]*then%MWHITE%Infinity_DoFile[%TAB% ]*([%TAB% ]*"L_"[%TAB% ]*\.\.[%TAB% ]*uiTranslationFile[%TAB% ]*)%MWHITE%else%MWHITE%Infinity_DoFile[%TAB% ]*([%TAB% ]*"L_en_us"[%TAB% ]*)%MWHITE%end.*$~
+	OUTER_SPRINT $UIMenuIF("Body") ~~
+	LAUNCH_ACTION_MACRO UIMenuGetMatchingLuaBlock
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @207
+	END
+
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/ProgressBar/uimenutop1.lua~
+	LAUNCH_ACTION_MACRO EEUITweaks.AddFileAfterMatch
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @208
+	END
+
+	LAUNCH_ACTION_MACRO UIMenuUpdateLuaBlock
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @103
+	END
+
+END
+
 // Patch CHARACTER menu
 LOG @110
 SILENT
@@ -802,20 +843,23 @@ BEGIN
 	FAIL @111
 END
 
-LAUNCH_ACTION_MACRO ProgressBars.CharacterFirstPatch
-ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+ACTION_IF NOT %IsPSTEE% THEN
 BEGIN
-	LAUNCH_ACTION_MACRO UIMenuClose
-	FAIL @112
-END
-LAUNCH_ACTION_MACRO UIMenuUpdateMenu
-ACTION_IF NOT $UIMenuIF("Succeeded") THEN
-BEGIN
-	LAUNCH_ACTION_MACRO UIMenuClose
-	FAIL @103
+	LAUNCH_ACTION_MACRO ProgressBars.CharacterFirstPatch
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		LAUNCH_ACTION_MACRO UIMenuClose
+		FAIL @112
+	END
+	LAUNCH_ACTION_MACRO UIMenuUpdateMenu
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		LAUNCH_ACTION_MACRO UIMenuClose
+		FAIL @103
+	END
 END
 
-ACTION_IF (NOT %IsSoDOverhaul%) AND (NOT %ProgressBars.lefreuts%) THEN
+ACTION_IF (NOT %IsSoDOverhaul%) AND (NOT %ProgressBars.lefreuts%) AND (NOT %IsPSTEE%) THEN
 BEGIN
 	OUTER_SPRINT $UIMenuIF("Body") ~~
 	LAUNCH_ACTION_MACRO UIMenuGetMenu
@@ -839,44 +883,96 @@ BEGIN
 	END
 END
 
-OUTER_SPRINT $UIMenuIF("Body") ~~
-LAUNCH_ACTION_MACRO UIMenuGetMenu
-ACTION_IF NOT $UIMenuIF("Succeeded") THEN
-BEGIN
-	LAUNCH_ACTION_MACRO UIMenuClose
-	FAIL @111
-END
 
-ACTION_IF NOT %ProgressBars.lefreuts% THEN
+ACTION_IF NOT %IsPSTEE% THEN
 BEGIN
-	LAUNCH_ACTION_MACRO ProgressBars.CharacterThirdPatch
-END ELSE
-BEGIN
-	LAUNCH_ACTION_MACRO ProgressBars.CharacterFourthPatch
-END
-
-ACTION_IF NOT $UIMenuIF("Succeeded") THEN
-BEGIN
-	LAUNCH_ACTION_MACRO UIMenuClose
-	FAIL @112
-END
-LAUNCH_ACTION_MACRO UIMenuUpdateMenu
-ACTION_IF NOT $UIMenuIF("Succeeded") THEN
-BEGIN
-	LAUNCH_ACTION_MACRO UIMenuClose
-	FAIL @103
-END
-
-ACTION_IF %IsBG2onSoD% THEN
-BEGIN
-	LOG @300001
-	SILENT
-	LAUNCH_ACTION_MACRO ProgressBars.PatchupdateAttrTable
+	OUTER_SPRINT $UIMenuIF("Body") ~~
+	LAUNCH_ACTION_MACRO UIMenuGetMenu
 	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 	BEGIN
 		LAUNCH_ACTION_MACRO UIMenuClose
-		FAIL @300002
+		FAIL @111
 	END
+
+	ACTION_IF NOT %ProgressBars.lefreuts% THEN
+	BEGIN
+		LAUNCH_ACTION_MACRO ProgressBars.CharacterThirdPatch
+	END ELSE
+	BEGIN
+		LAUNCH_ACTION_MACRO ProgressBars.CharacterFourthPatch
+	END
+
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		LAUNCH_ACTION_MACRO UIMenuClose
+		FAIL @112
+	END
+	LAUNCH_ACTION_MACRO UIMenuUpdateMenu
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		LAUNCH_ACTION_MACRO UIMenuClose
+		FAIL @103
+	END
+
+	ACTION_IF %IsBG2onSoD% THEN
+	BEGIN
+		LOG @300001
+		SILENT
+		LAUNCH_ACTION_MACRO ProgressBars.PatchupdateAttrTable
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			LAUNCH_ACTION_MACRO UIMenuClose
+			FAIL @300002
+		END
+	END
+END ELSE // PST:EE
+BEGIN
+	// Add OnOpen code to CHARACTER menu
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/ProgressBar/charonopen1.lua~
+	LAM EEUITweaks.PrependMenuonOpen
+
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @112
+	END
+	LAUNCH_ACTION_MACRO UIMenuUpdateMenu
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @103
+	END
+
+	// Replace text component displaying recordHelpString with showExtendedProgress gated version
+	// and the alternate set of components.
+	OUTER_SPRINT $UIMenuIF("LuaRegex") ~^%MWHITE%text%MWHITE%{[^}]*text[%TAB% ]+lua[%TAB% ]+"recordHelpString"[^}]+}.*%MEOL%~
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/ProgressBar/characterpatch4.menu~
+	LAM EEUITweaks.PatchBody
+
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @112
+	END
+	LAUNCH_ACTION_MACRO UIMenuUpdateMenu
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @103
+	END
+
+	// Replace character class label with version that enables showExtendedProgress when hovered over
+	OUTER_SPRINT $UIMenuIF("LuaRegex") ~^%MWHITE%label%MWHITE%{[^}]*text[%TAB% ]+lua[%TAB% ]+"characters\[currentID\]\.class"[^}]+}.*%MEOL%~
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/ProgressBar/characterpatch5.menu~
+	LAM EEUITweaks.PatchBody
+
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @112
+	END
+	LAUNCH_ACTION_MACRO UIMenuUpdateMenu
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @103
+	END
+
+
 END
 
 // Close UI.MENU
@@ -888,6 +984,17 @@ BEGIN
 	FAIL @21
 END
 
+// Copy files
+LOG @24
+SILENT
+COPY ~%PKGNAME%/copy/ProgressBar/M_PgBar.lua~ ~override~
+COPY ~%PKGNAME%/copy/ProgressBar/en_USPgB.lua~ ~override~
+ACTION_IF %IsPSTEE% THEN
+BEGIN
+	COPY ~%PKGNAME%/copy/ProgressBar/XPLEVEL.2DA~ ~override~
+	COPY ~%PKGNAME%/copy/ProgressBar/box3.PVRZ~ ~override~
+END
+
 // Create the two Lua files. They're based on 2DA files rather than UI.MENU
 LOG @300003
 SILENT
@@ -896,12 +1003,6 @@ ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
 	FAIL @300004
 END
-
-// Copy files
-LOG @24
-SILENT
-COPY ~%PKGNAME%/copy/ProgressBar/M_PgBar.lua~ ~override~
-COPY ~%PKGNAME%/copy/ProgressBar/en_USPgB.lua~ ~override~
 
 
 

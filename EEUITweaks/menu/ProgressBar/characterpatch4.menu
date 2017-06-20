@@ -1,0 +1,91 @@
+	text
+	{
+		enabled "not showExtendedProgress"
+		area 744 58 218 421
+		text lua "recordHelpString"
+		text style "normal_parchment"
+		scrollbar	'cgscrl1'
+	}
+	label
+	{
+		enabled 	"showExtendedProgress"
+		area 		744 58 188 20
+		text style	"normal_parchment"
+ 		text		lua "getFirstLevelLabel()"
+	}
+	label
+	{
+		enabled "showExtendedProgress"
+		area 746 80 182 20
+		progressbar lua "getPercent(getFirstLevelXPDeltas(true))" --progress percentage, number 0-100
+		greyscale 0
+		progressbar color lua "prgBarColor()"
+		progressbar full lua "prgBarFull()"
+	}
+	label
+	{
+		enabled "showExtendedProgress"
+		area 744 77 188 26
+		rectangle 2
+	}
+	label
+ 	{
+ 		enabled		"showExtendedProgress"
+ 		area 		746 80 182 20
+		text		lua "getAdjustedFirstLevelString()"
+ 		text style  'white_parchment'
+ 		text align	center center
+ 		text shadow 1
+	}
+	label
+	{
+		enabled 	"showExtendedProgress and (characters[currentID].classlevel.second ~= nil)"
+		area 		744 108 188 20
+		text style	"normal_parchment"
+ 		text		lua "getSecondLevelLabel()"
+	}
+	label
+	{
+		enabled "showExtendedProgress and (characters[currentID].classlevel.second ~= nil)"
+		area 746 130 182 20
+		progressbar lua "getPercent(getSecondLevelXPDeltas(true))" --progress percentage, number 0-100
+		greyscale 0
+		progressbar color lua "prgBarColor()"
+		progressbar full lua "prgBarFull()"
+	}
+	label
+	{
+		enabled "showExtendedProgress and (characters[currentID].classlevel.second ~= nil)"
+		area 744 127 188 26
+		rectangle 2
+	}
+	label
+ 	{
+ 		enabled		"showExtendedProgress and (characters[currentID].classlevel.second ~= nil)"
+ 		area 		746 130 182 20
+		text		lua "getAdjustedSecondLevelString()"
+ 		text style  'white_parchment'
+ 		text align	center center
+ 		text shadow 1
+	}
+
+	label
+	{
+		enabled		"showExtendedProgress and (characters[currentID].classlevel.second == nil)"
+		area		746 108 188 100
+ 		text		lua "getCombatString()"
+ 		text style  'normal_parchment'
+ 		text align	left center
+ 		text shadow 1
+	}
+
+	label
+	{
+		enabled		"showExtendedProgress and (characters[currentID].classlevel.second ~= nil)"
+		area		746 158 188 100
+ 		text		lua "getCombatString()"
+ 		text style  'normal_parchment'
+ 		text align	left center
+ 		text shadow 1
+	}
+
