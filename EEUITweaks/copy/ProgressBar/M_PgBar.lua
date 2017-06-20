@@ -379,7 +379,7 @@ end
 function getFirstLevelLabel()
 	local targetKit,targetLevel = string.match(characters[currentID].classlevel.first.details,
 	                                           KitStringToXPMap['Matchstring'])
-	return targetKit .. ' ' .. t("LEVEL_LABEL") .. ' '.. targetLevel
+	return targetKit .. ': ' .. t("PGBAR_LEVEL_LABEL") .. ' '.. targetLevel
 end
 
 function getSecondLevelLabel()
@@ -389,7 +389,7 @@ function getSecondLevelLabel()
 	
 	local targetKit,targetLevel = string.match(characters[currentID].classlevel.second.details,
 	                                           KitStringToXPMap['Matchstring'])
-	return targetKit .. ' ' .. t("LEVEL_LABEL") .. ' '.. targetLevel
+	return targetKit .. ': ' .. t("PGBAR_LEVEL_LABEL") .. ' '.. targetLevel
 end
 
 function getThirdLevelLabel()
@@ -399,20 +399,20 @@ function getThirdLevelLabel()
 	
 	local targetKit,targetLevel = string.match(characters[currentID].classlevel.third.details,
 	                                           KitStringToXPMap['Matchstring'])
-	return targetKit .. ' ' .. t("LEVEL_LABEL") .. ' '.. targetLevel
+	return targetKit .. ': ' .. t("PGBAR_LEVEL_LABEL") .. ' '.. targetLevel
 end
 
 function getCombatString()
-	local str = t("AC_LABEL") .. ' : ' .. characters[currentID].AC.current .. '\n'
-	str = str .. t("HP_LABEL") .. ' : ' .. characters[currentID].HP.current .. '/' .. characters[currentID].HP.max .. '\n'
-	str = str .. t("THAC0_LABEL") .. ' : ' .. characters[currentID].THAC0.current 
+	local str = t("PGBAR_AC_LABEL") .. ' : ' .. characters[currentID].AC.current .. '\n'
+	str = str .. t("PGBAR_HP_LABEL") .. ' : ' .. characters[currentID].HP.current .. '/' .. characters[currentID].HP.max .. '\n'
+	str = str .. t("PGBAR_THAC0_LABEL") .. ' : ' .. characters[currentID].THAC0.current 
 	if(characters[currentID].THAC0.offhand) then
 		str = str .. '/' .. characters[currentID].THAC0.offhand
 	end
 	str = str .. '\n'
-	str = str .. t("DAMAGE_LABEL") .. ' : ' .. characters[currentID].damage.min .. '-' .. characters[currentID].damage.max ..'\n'
+	str = str .. t("PGBAR_DAMAGE_LABEL") .. ' : ' .. characters[currentID].damage.min .. '-' .. characters[currentID].damage.max ..'\n'
 	if(characters[currentID].damage.maxOffhand) then
-		str = str .. t('OFFHAND_LABEL') .. ' : '  .. characters[currentID].damage.minOffhand .. '-' .. characters[currentID].damage.maxOffhand
+		str = str .. t('PGBAR_OFFHAND_LABEL') .. ' : '  .. characters[currentID].damage.minOffhand .. '-' .. characters[currentID].damage.maxOffhand
 	end
 	return str
 end
@@ -468,18 +468,18 @@ local function getLevelString(dualoriginal, nextLevelXp, multiplier)
 			str = str .. " "
 			str = str .. nextLevelXp
 			str = str .. " "
-			str = str .. t("XP_LABEL")
+			str = str .. t("PGBAR_XP_LABEL")
 		else
 			str = t("PGBAR_ENABLED_LABEL")		
 		end
 	elseif(nextLevelXp > 0) then
-		str = t("NEXT_LEVEL_LABEL")
+		str = t("PGBAR_NEXT_LEVEL_LABEL")
 		str = str .. " "
 		str = str .. nextLevelXp * multiplier
 		str = str .. " "
-		str = str .. t("XP_LABEL")
+		str = str .. t("PGBAR_XP_LABEL")
 	else
-		str = t("READY_TO_LEVEL_LABEL")
+		str = t("PGBAR_READY_TO_LEVEL_LABEL")
 	end
 	return str
 end

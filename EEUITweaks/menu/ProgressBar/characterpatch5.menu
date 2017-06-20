@@ -1,0 +1,20 @@
+	label
+	{
+		area		234 86 170 33
+		text		lua "characters[currentID].class"
+		text style  	'title'
+		text align	center center
+		ignoreFocus 1
+		actionEnter
+		"
+			showExtendedProgress = true
+		"
+		actionExit
+		"
+			showExtendedProgress = false
+		"
+		action
+		"
+			showExtendedProgress = true
+		"
+	}
