@@ -3,6 +3,18 @@
  *****************************************************************************/
 LOG @24
 SILENT
-COPY ~%PKGNAME%/copy/LavaDelVortelSideBars/mainwing.MOS~ ~override~
-COPY ~%PKGNAME%/copy/LavaDelVortelSideBars/MOS5000.PVRZ~ ~override~
+LAF EEUITweaks.CopyPVRZResource
+	STR_VAR
+		source_folder = EVAL ~%PKGNAME%/copy/LavaDelVortelSideBars~
+		resource_file = ~mainwing.MOS~
+		pvrz_files = ~MOS5000.PVRZ~
+	RET
+		$UIMenuIF("Succeeded") = succeeded
+END
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @44
+END
+
+
 
