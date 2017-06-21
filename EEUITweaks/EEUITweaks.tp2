@@ -47,7 +47,7 @@ REQUIRE_PREDICATE (
 		(GAME_IS ~eet~) OR
 		(GAME_IS ~bgee~) OR
 		(GAME_IS ~bg2ee~) OR
-		(GAME_IS ~pst~)
+		(GAME_IS ~pstee~)
 	)
 ) @27
 
@@ -70,7 +70,7 @@ REQUIRE_PREDICATE (
 		(GAME_IS ~eet~) OR
 		(GAME_IS ~bgee~) OR
 		(GAME_IS ~bg2ee~) OR
-		(GAME_IS ~pst~)
+		(GAME_IS ~pstee~)
 	)
 ) @27
 REQUIRE_COMPONENT ~EEUITweaks/EEUITweaks.tp2~ ~1000~ @26
@@ -457,7 +457,7 @@ GROUP @2
 REQUIRE_PREDICATE (
 	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND // IE 2.0+
 	(
-		(GAME_IS ~pst~)
+		(GAME_IS ~pstee~)
 	)
 ) @27
 
@@ -711,7 +711,7 @@ GROUP @2
 REQUIRE_PREDICATE (
 	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND // IE 2.0+
 	(
-		(GAME_IS ~pst~)
+		(GAME_IS ~pstee~)
 	)
 ) @27
 
@@ -763,7 +763,7 @@ BEGIN @300000 DESIGNATED 3000
 GROUP @3
 REQUIRE_PREDICATE (
 	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND // IE 2.0+
-	(GAME_IS ~bgee bg2ee eet pst~)
+	(GAME_IS ~bgee bg2ee eet pstee~)
 ) @27
 
 ACTION_TRY
@@ -948,7 +948,7 @@ REQUIRE_PREDICATE (
 	(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND          // Not Lefreut's UI
 	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~4005~)) AND // Not lefreut's BG2 Store Screen Tweaks
 	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~4006~)) AND
-	(GAME_IS ~bgee bg2ee eet pst~)
+	(GAME_IS ~bgee bg2ee eet pstee~)
 ) @39
 SUBCOMPONENT @530
 
