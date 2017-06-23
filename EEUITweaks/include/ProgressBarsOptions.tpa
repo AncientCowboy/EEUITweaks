@@ -366,6 +366,61 @@ WITH
 		END
 	END
 
+	%IsPSTEE%
+	BEGIN
+		// Copy files
+		LOG @17
+		SILENT
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/ProgressBar~
+				resource_file = ~SLDRBLU.BAM~
+				pvrz_files = ~MOS5002.PVRZ~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
+
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/ProgressBar~
+				resource_file = ~SLDRGRN.BAM~
+				pvrz_files = ~MOS5001.PVRZ~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
+
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/ProgressBar~
+				resource_file = ~SLDRRED.BAM~
+				pvrz_files = ~MOS5000.PVRZ~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
+
+		// Append OPTIONS_PROGBAR menu
+		LOG @301002
+		SILENT
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/ProgressBar/progressbaroptions6.menu~
+		LAUNCH_ACTION_MACRO UIMenuAppendFile
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @301004
+		END
+	END
+
 	DEFAULT
 		FAIL @15
 END
