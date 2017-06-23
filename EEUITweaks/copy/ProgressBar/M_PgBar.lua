@@ -595,6 +595,12 @@ progBarOptionsToggles = {
 	{"PROGBAROPT_BARS_BOTTOM_LABEL",	    "PROGBAROPT_BARS_BOTTOM_DESCR", 	    0,	0,	"Progress Bar",	"Bars On Bottom"},
 }
 
+pstprogBarOptionsToggles = {
+	{"PROGBAROPT_DISABLE_MULTIPLIER_LABEL",	"PROGBAROPT_DISABLE_MULTIPLIER_DESCR",	0,	0,	"Progress Bar",	"Disable Multiplier"},
+	{"PROGBAROPT_DISABLE_DELTAS_LABEL",		"PROGBAROPT_DISABLE_DELTAS_DESCR",		0,	0,	"Progress Bar",	"Disable Deltas"},
+	{"PROGBAROPT_DISABLE_COMBAT_LABEL",	    "PROGBAROPT_DISABLE_COMBAT_DESCR", 	    0,	0,	"Progress Bar",	"Disable Combat Stats"},
+}
+
 -- slider value, INI section name, INI option key
 progBarColorSliders = {
 	{0,	"Progress Bar",	"Color Red"},
@@ -623,8 +629,16 @@ function progBarGetToggleOption(idx)
 	return Infinity_GetINIValue(progBarOptionsToggles[idx][5], progBarOptionsToggles[idx][6])
 end
 
+function pstprogBarGetToggleOption(idx)
+	return Infinity_GetINIValue(pstprogBarOptionsToggles[idx][5], pstprogBarOptionsToggles[idx][6])
+end
+
 function progBarSaveToggleOption(idx)
 	Infinity_SetINIValue(progBarOptionsToggles[idx][5], progBarOptionsToggles[idx][6], progBarOptionsToggles[idx][4])
+end
+
+function pstprogBarSaveToggleOption(idx)
+	Infinity_SetINIValue(pstprogBarOptionsToggles[idx][5], pstprogBarOptionsToggles[idx][6], pstprogBarOptionsToggles[idx][4])
 end
 
 function progBarGetFillOption(idx)

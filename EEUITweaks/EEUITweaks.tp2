@@ -781,7 +781,7 @@ BEGIN @301000 DESIGNATED 3010
 GROUP @3
 REQUIRE_PREDICATE (
 	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND // IE 2.0+
-	(GAME_IS ~bgee bg2ee eet~)
+	(GAME_IS ~bgee bg2ee eet pstee~)
 ) @27
 REQUIRE_COMPONENT ~EEUITweaks.tp2~ ~1000~ @26     // Mods Options
 REQUIRE_COMPONENT ~EEUITweaks.tp2~ ~3000~ @301001 // Leveling Progress Bars Tweaks

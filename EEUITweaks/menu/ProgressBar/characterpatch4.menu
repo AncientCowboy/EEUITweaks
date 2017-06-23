@@ -71,7 +71,7 @@
 
 	label
 	{
-		enabled		"showExtendedProgress and (characters[currentID].classlevel.second == nil)"
+		enabled		"showExtendedProgress and (characters[currentID].classlevel.second == nil) and prgBarCombatEnabled()"
 		area		746 108 188 100
  		text		lua "getCombatString()"
  		text style  'normal_parchment'
@@ -81,7 +81,7 @@
 
 	label
 	{
-		enabled		"showExtendedProgress and (characters[currentID].classlevel.second ~= nil)"
+		enabled		"showExtendedProgress and (characters[currentID].classlevel.second ~= nil) and prgBarCombatEnabled()"
 		area		746 158 188 100
  		text		lua "getCombatString()"
  		text style  'normal_parchment'
