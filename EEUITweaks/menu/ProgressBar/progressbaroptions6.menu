@@ -82,7 +82,7 @@ menu
 			{
 				area 0 0 -1 -1
 				text lua "t(pstprogBarOptionsToggles[rowNumber][1])"
-				text style "normal_parchment" --"list"
+				text style "list"
 				text highlight 1
 			}
 		}
@@ -146,7 +146,7 @@ menu
 	{
 		area		107 322 336 20
 		text 		"PROGBAROPT_COLOR_LABEL"
-		text style	"normal_parchment"
+		text style	"list"
 		text align	left bottom
 		action 
 		"
@@ -172,7 +172,8 @@ menu
 	{
 		area	104 344 161 26
 		text lua	"progBarGetFillText()"
- 		text style  'white_parchment'
+ 		text style  'list'
+ 		text color  255 255 255 255
  		text align	center center
  		text shadow 1
 	}
@@ -255,7 +256,7 @@ menu
 	{
 		area		107 442 336 20
 		text 		"PROGBAROPT_FULL_LABEL"
-		text style	"normal_parchment"
+		text style	"list"
 		text align	left bottom
 		action 
 		"
@@ -281,7 +282,8 @@ menu
 	{
 		area	104 464 161 26
 		text lua	"progBarGetFullText()"
- 		text style  'white_parchment'
+ 		text style  'list'
+ 		text color  255 255 255 255
  		text align	center center
  		text shadow 1
 	}

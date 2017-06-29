@@ -56,7 +56,7 @@ menu
 			}
 		}
 		area 296 210 422 274
-		rowheight 	46
+		rowheight 	38
 		table		"modOptionsRegistrations"
 		var			modOptionsIdx
 		scrollbar	'CGSCRL1'
@@ -194,7 +194,7 @@ menu
 		}
 
 		area 296 210 422 274
-		rowheight	46
+		rowheight	38
 		table		"modOptionsToggles"
 		var			modOptionsOpIdx
 		scrollbar	'CGSCRL1'
