@@ -138,6 +138,7 @@ menu
 		sequence 0
 		text "REROLL_BUTTON"
 		text style "button"
+		on R
 		action "createCharScreen:OnAbilityReRollButtonClick()"
 	}
 	button
@@ -147,6 +148,7 @@ menu
 		sequence 0
 		text "STORE_BUTTON"
 		text style "button"
+		on S
 		action "createCharScreen:OnAbilityStoreButtonClick()"
 	}
 	button
@@ -156,6 +158,7 @@ menu
 		sequence 0
 		text "RECALL_BUTTON"
 		text style "button"
+		on C
 		clickable lua "createCharScreen:IsAbilityRecallButtonClickable()"
 		action "createCharScreen:OnAbilityRecallButtonClick()"
 	}

@@ -153,6 +153,17 @@ menu
 	}
 	button
 	{
+		enabled "not CurrentlyInGame()"
+		on "Left Shift"
+		action
+		"
+			if gender == 2 then gender = 1 else gender = 2 end
+			Infinity_PopMenu()
+			createCharScreen:OnCancelButtonClick()
+		"
+	}
+	button
+	{
 		on up
 		action
 		"

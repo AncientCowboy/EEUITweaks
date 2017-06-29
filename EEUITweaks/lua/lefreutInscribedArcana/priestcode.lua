@@ -40,10 +40,13 @@ function refreshPriestBook()
 	end
 end
 
-function setPriestBookLevel(num)
+function setPriestBookLevel(num, noSound)
 	currentBookSpell = 0
 	currentSpellLevel = num
 	selectedSpell = nil
+	if noSound ~= true then
+		Infinity_PlaySound('GAM_06')
+	end
 	refreshPriestBook()
 end
 

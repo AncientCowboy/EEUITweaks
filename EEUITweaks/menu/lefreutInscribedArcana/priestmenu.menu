@@ -9,7 +9,7 @@ menu
 		showPriestMemorizationFlash = false
 		selectedSpell = nil
 		pushSidebars()
-		setPriestBookLevel(1)
+		setPriestBookLevel(1, true)
 		currentAnimationID = 1
 		updateCounterMemorizationSparkles = 1
 	"
