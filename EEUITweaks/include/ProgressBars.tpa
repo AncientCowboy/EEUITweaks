@@ -788,7 +788,7 @@ END
  * Progress Bar Tweaks Installation
  ******************************************************************************/
 // Test for lefreut's Improved Record Screen
-OUTER_SET ProgressBars.lefreuts = ((MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2900~) OR (MOD_IS_INSTALLED ~LeUI.tp2~ ~0~) OR (MOD_IS_INSTALLED ~CKUISOD.tp2~ ~3~))
+OUTER_SET ProgressBars.lefreuts = ((MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2900~) OR (MOD_IS_INSTALLED ~LeUI.tp2~ ~0~))
 
 
 // Open UI.MENU
@@ -894,7 +894,7 @@ BEGIN
 		FAIL @111
 	END
 
-	ACTION_IF NOT %ProgressBars.lefreuts% THEN
+	ACTION_IF ((NOT %ProgressBars.lefreuts%) AND (NOT %IsKRDS2%)) THEN
 	BEGIN
 		LAUNCH_ACTION_MACRO ProgressBars.CharacterThirdPatch
 	END ELSE
