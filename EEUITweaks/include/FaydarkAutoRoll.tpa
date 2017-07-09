@@ -161,26 +161,39 @@ END
 LOG @107001
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_ABILITIES~
-
+OUTER_SET FadarkARUseLeUI = ((MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1090~) | (MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1091~))
 ACTION_MATCH 1
 WITH
-	%IsSoD% %IsEETSoD% %IsKRDS% %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS4% %IsKRDS5%
+	IsSoD IsEETSoD IsKRDS IsKRDS0 IsKRDS1 IsKRDS2 IsKRDS3 IsKRDS4 IsKRDS5
 	BEGIN
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FaydarkAutoRoll/chargenabilitiesmenu1.menu~
 	END
-	%IsBGEE%
+
+	IsBGEE
 	BEGIN
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FaydarkAutoRoll/chargenabilitiesmenu2.menu~
 	END
-	%IsBG2% %IsBG2onSoD% %IsEETBG2% %IsTIWDonBG2% %IsTIWDonSoD% %IsTIWD2onBG2%
+
+	IsTIWDonBG2 IsTIWDonSoD IsTIWD2onBG2
 	BEGIN
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FaydarkAutoRoll/chargenabilitiesmenu3.menu~
 	END		
-	%IsLeUIBG2% %IsLeUISOD% %IsLeUIBG1% %IsEETLeUI%
+
+	((IsBG2 | IsBG2onSoD | IsEETBG2) & (NOT(FadarkARUseLeUI)))
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FaydarkAutoRoll/chargenabilitiesmenu3.menu~
+	END		
+
+	IsLeUIBG2 IsLeUISOD IsLeUIBG1 IsEETLeUI
 	BEGIN
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FaydarkAutoRoll/chargenabilitiesmenu4.menu~
 	END
-		
+
+	FadarkARUseLeUI
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FaydarkAutoRoll/chargenabilitiesmenu5.menu~
+	END
+
 	DEFAULT
 		FAIL @15
 END
