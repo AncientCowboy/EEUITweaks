@@ -1,0 +1,385 @@
+-- Progress Bar Tweaks Options
+`
+if(modOptionsRegisterMenu) then
+	modOptionsRegisterMenu('PROGBAROPT_TITLE', 'OPTIONS_PROGBAR', 'PROGBAROPT_INFO', 0)
+end
+`
+menu
+{
+	name	'OPTIONS_PROGBAR'
+	modal
+	align center center
+	onOpen
+	"
+		initPgBarOptions()
+		currentProgBarInfo = 'PROGBAROPT_INFO'
+		currentProgBarIdx = 0
+		currentProgBarSlider = 0
+		currentProgBarRadio = 0
+		for index, var in ipairs(pstprogBarOptionsToggles) do
+			var[4] = pstprogBarGetToggleOption(index)
+			if var[4] == 0 then
+				var[3] = 0
+			else
+				var[3] = 2
+ 			end
+		end
+		for index, var in ipairs(progBarColorSliders) do
+			var[1] = progBarGetFillOption(index)
+		end
+		for index, var in ipairs(progBarFullSliders) do
+			var[1] = progBarGetFullOption(index)
+		end
+	"
+	button
+	{
+		area 0 0 905 667
+		mosaic	OPTPOP1
+		action
+		"
+			currentProgBarInfo = 'PROGBAROPT_INFO'
+			currentProgBarRadio = 0
+			currentProgBarIdx = 0
+			currentProgBarSlider = 0
+		"
+	}
+	label
+	{
+		area 47 38 214 229
+		bam "POPUPIMG"
+		sequence 0
+	}
+	label
+	{
+		area		366 70 460 64
+		text		"PROGBAROPT_TITLE"
+		text style	title
+		text font "exocet"
+		text shadow 1
+	}
+
+	text
+	{
+		area		372 164 460 136
+		text		lua "t(currentProgBarInfo)"
+		text style	normal
+		scrollbar	'CGSCRL1'
+		action
+		"
+			currentProgBarInfo = 'PROGBAROPT_INFO'
+			currentProgBarRadio = 0
+			currentProgBarIdx = 0
+			currentProgBarSlider = 0
+		"
+	}
+
+	list
+	{	
+		column 
+		{ 
+			width 90
+			label
+			{
+				area 0 0 -1 -1
+				text lua "t(pstprogBarOptionsToggles[rowNumber][1])"
+				text style "list"
+				text highlight 1
+			}
+		}
+		column 
+		{ 
+			width 10
+			label
+			{
+				area		4 7 24 24
+				bam			checkbut
+				frame		lua "pstprogBarOptionsToggles[rowNumber][3]"
+			}
+		}
+
+		area 492 326 344 216
+		
+		rowheight	38
+		table		"pstprogBarOptionsToggles"
+		var			currentProgBarIdx
+		scrollbar	'CGSCRL1'
+		hidehighlight
+		highlight color 255 255 255 255
+		focus color 255 255 255 255
+
+		action		
+		"
+			currentProgBarInfo = pstprogBarOptionsToggles[currentProgBarIdx][2]
+			currentProgBarSlider = 0
+			currentProgBarRadio = 0
+
+			if(cellNumber == 2) then
+				Infinity_PlaySound('GAM_09')
+
+				pstprogBarOptionsToggles[currentProgBarIdx][3] = toggleFrame(pstprogBarOptionsToggles[currentProgBarIdx][3])
+
+				if pstprogBarOptionsToggles[currentProgBarIdx][3] == 0 then
+					pstprogBarOptionsToggles[currentProgBarIdx][4] = 0
+				else 
+					pstprogBarOptionsToggles[currentProgBarIdx][4] = 1
+				end
+			end
+		"
+	}
+
+	text
+	{
+		area 98 322 358 98
+		text highlight lua "getSelected(currentProgBarSlider, 1)"
+		text style	"normal_parchment"
+		text align	left center
+		text ""
+		action 
+		"
+			currentProgBarSlider = 1
+			currentProgBarInfo = 'PROGBAROPT_COLOR_DESCR' 
+			currentProgBarIdx = 0
+			currentProgBarRadio = 0
+		" 
+	}
+	text
+	{
+		area		107 322 336 20
+		text 		"PROGBAROPT_COLOR_LABEL"
+		text style	"list"
+		text align	left bottom
+		action 
+		"
+			currentProgBarSlider = 1
+			currentProgBarInfo = 'PROGBAROPT_COLOR_DESCR' 
+			currentProgBarIdx = 0
+			currentProgBarRadio = 0
+		" 
+	}
+	
+	label
+	{
+		area	106 347 155 20
+		progressbar 100
+		progressbar full lua "progBarGetFillColor()"
+	}
+	label
+	{
+		area	104 344 161 26
+		rectangle 2
+	}
+	label
+	{
+		area	104 344 161 26
+		text lua	"progBarGetFillText()"
+ 		text style  'list'
+ 		text color  255 255 255 255
+ 		text align	center center
+ 		text shadow 1
+	}
+	button
+	{
+		area	104 344 161 26
+		action
+		"
+			currentProgBarSlider = 1
+			currentProgBarInfo = 'PROGBAROPT_COLOR_DESCR' 
+			currentProgBarIdx = 0
+			currentProgBarRadio = 0
+		"
+	}
+
+	slider
+	{
+		area 			291 344 161 26
+		position		"progBarColorSliders[1][1]"
+		bam				'SLDRRED'
+		mosaic			sliderbg
+		settings 		129
+		action
+		"
+			currentProgBarSlider = 1
+			currentProgBarInfo = 'PROGBAROPT_COLOR_DESCR' 
+			currentProgBarIdx = 0
+			currentProgBarRadio = 0
+		"
+	}
+
+	slider
+	{
+		area 			104 384 161 26
+		position		"progBarColorSliders[2][1]"
+		bam				'SLDRGRN'
+		mosaic			sliderbg
+		settings 		129
+		action
+		"
+			currentProgBarSlider = 1
+			currentProgBarInfo = 'PROGBAROPT_COLOR_DESCR' 
+			currentProgBarIdx = 0
+			currentProgBarRadio = 0
+		"
+	}
+
+	slider
+	{
+		area 			291 384 161 26
+		position		"progBarColorSliders[3][1]"
+		bam				'SLDRBLU'
+		mosaic			sliderbg
+		settings 		129
+		action
+		"
+			currentProgBarSlider = 1
+			currentProgBarInfo = 'PROGBAROPT_COLOR_DESCR' 
+			currentProgBarIdx = 0
+			currentProgBarRadio = 0
+		"
+	}
+
+	text
+	{
+		area 98 442 358 98
+		text highlight lua "getSelected(currentProgBarSlider, 2)"
+		text style	"normal_parchment"
+		text align	left center
+		text ""
+		action 
+		"
+			currentProgBarSlider = 2
+			currentProgBarInfo = 'PROGBAROPT_FULL_DESCR' 
+			currentProgBarIdx = 0
+			currentProgBarRadio = 0
+		" 
+	}
+	text
+	{
+		area		107 442 336 20
+		text 		"PROGBAROPT_FULL_LABEL"
+		text style	"list"
+		text align	left bottom
+		action 
+		"
+			currentProgBarSlider = 2
+			currentProgBarInfo = 'PROGBAROPT_FULL_DESCR' 
+			currentProgBarIdx = 0
+			currentProgBarRadio = 0
+		" 
+	}
+	
+	label
+	{
+		area	106 467 155 20
+		progressbar 100
+		progressbar full lua "progBarGetFullColor()"
+	}
+	label
+	{
+		area	104 464 161 26
+		rectangle 2
+	}
+	label
+	{
+		area	104 464 161 26
+		text lua	"progBarGetFullText()"
+ 		text style  'list'
+ 		text color  255 255 255 255
+ 		text align	center center
+ 		text shadow 1
+	}
+	button
+	{
+		area	104 464 161 26
+		action
+		"
+			currentProgBarSlider = 2
+			currentProgBarInfo = 'PROGBAROPT_FULL_DESCR' 
+			currentProgBarIdx = 0
+			currentProgBarRadio = 0
+		"
+	}
+	
+	slider
+	{
+		area 			291 464 161 26
+		position		"progBarFullSliders[1][1]"
+		bam				'SLDRRED'
+		mosaic			sliderbg
+		settings 		129
+		action
+		"
+			currentProgBarSlider = 2
+			currentProgBarInfo = 'PROGBAROPT_FULL_DESCR' 
+			currentProgBarIdx = 0
+			currentProgBarRadio = 0
+		"
+	}
+
+	slider
+	{
+		area 			104 504 161 26
+		position		"progBarFullSliders[2][1]"
+		bam				'SLDRGRN'
+		mosaic			sliderbg
+		settings 		129
+		action
+		"
+			currentProgBarSlider = 2
+			currentProgBarInfo = 'PROGBAROPT_FULL_DESCR' 
+			currentProgBarIdx = 0
+			currentProgBarRadio = 0
+		"
+	}
+
+	slider
+	{
+		area 			291 504 161 26
+		position		"progBarFullSliders[3][1]"
+		bam				'SLDRBLU'
+		mosaic			sliderbg
+		settings 		129
+		action
+		"
+			currentProgBarSlider = 2
+			currentProgBarInfo = 'PROGBAROPT_FULL_DESCR' 
+			currentProgBarIdx = 0
+			currentProgBarRadio = 0
+		"
+	}
+
+	button
+	{
+		area		552 566 138 56
+		bam			NORMBUTT
+		sequence	2
+		text 		"CANCEL_BUTTON"
+		text style	"button"
+		action
+		"
+			Infinity_PopMenu()
+		"
+	}
+	button
+	{
+		area		698 566 138 56
+		bam			NORMBUTT
+		sequence	2
+		text 		"DONE_BUTTON"
+		text style	"button"
+		action
+		"
+			for index, var in ipairs(pstprogBarOptionsToggles) do				
+				pstprogBarSaveToggleOption(index)
+			end
+			for index, var in ipairs(progBarColorSliders) do
+				progBarSaveFillOption(index)
+			end
+			for index, var in ipairs(progBarFullSliders) do
+				progBarSaveFullOption(index)
+			end
+			prgBarUpdateOptions()
+			
+			Infinity_PopMenu()
+		"
+	}
+}

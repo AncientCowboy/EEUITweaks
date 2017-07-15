@@ -8,7 +8,7 @@ menu
 	"
 		showMageMemorizationFlash = false
 		selectedSpell = nil
-		setMageBookLevel(1)
+		setMageBookLevel(1, true)
 		currentAnimationID = 1
 		updateCounterMemorizationSparkles = 1
 		if bookMode == 1 then
