@@ -31,7 +31,7 @@ BEGIN
 	ACTION_IF NOT %found% THEN
 	BEGIN
 		LOG ~In HiddenOptions.PatchQuitButton - failed to patch QUIT_BUTTON~
-		OUTER_SET $UIMenuIF("Succeeded") = 0
+		OUTER_SET $UIMenuIF("Succeeded") = 1
 	END ELSE 
 
 	// Success somewhere - copy .../CounterInLine to $UIMenuIF("Body")

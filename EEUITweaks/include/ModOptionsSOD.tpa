@@ -478,7 +478,7 @@ BEGIN
 	ACTION_IF NOT %found% THEN
 	BEGIN
 		LOG ~In ModOptions.BG2onSoDEscMenuSecondPatch - failed to find versionString label - bailing out~
-		OUTER_SET $UIMenuIF("Succeeded") = 0
+		OUTER_SET $UIMenuIF("Succeeded") = 1
 	END ELSE
 
 	// Success - copy .../CounterInLine to $UIMenuIF("Body")
@@ -516,7 +516,7 @@ BEGIN
 
 	// Search for GAMEPLAY_BUTTON, insert new button code before
 	COPY - ~.../CounterInLine~ ~.../CounterInLine~
-		REPLACE_EVALUATE CASE_INSENSITIVE ~[%TAB% ]+button%MWHITE%{%MNOBRACE%+Infinity_PushMenu[%TAB% ]*([%TAB ]*%MQUOTE%OPTIONS_GAMEPLAY%MQUOTE%[%TAB% ])~
+		REPLACE_EVALUATE CASE_INSENSITIVE ~[%TAB% ]+button%MWHITE%{%MNOBRACE%+Infinity_PushMenu[%TAB% ]*([%TAB ]*%MQUOTE%OPTIONS_GAMEPLAY%MQUOTE%[%TAB% ]*)~
 		BEGIN
 			SPRINT tempstr ~%adder%%MATCH0%~
 			SET found = 1
@@ -972,7 +972,7 @@ BEGIN
 
 	// Search for GAMEPLAY_BUTTON, insert new button code before
 	COPY - ~.../CounterInLine~ ~.../CounterInLine~
-		REPLACE_EVALUATE CASE_INSENSITIVE ~[%TAB% ]+button%MWHITE%{%MNOBRACE%+Infinity_PushMenu[%TAB% ]*([%TAB ]*%MQUOTE%OPTIONS_GAMEPLAY%MQUOTE%[%TAB% ])~
+		REPLACE_EVALUATE CASE_INSENSITIVE ~[%TAB% ]+button%MWHITE%{%MNOBRACE%+Infinity_PushMenu[%TAB% ]*([%TAB ]*%MQUOTE%OPTIONS_GAMEPLAY%MQUOTE%[%TAB% ]*)~
 		BEGIN
 			SPRINT tempstr ~%adder%%MATCH0%~
 			SET found = 1
@@ -1221,7 +1221,7 @@ BEGIN
 	ACTION_IF NOT %found% THEN
 	BEGIN
 		LOG ~In ModOptions.TOBEscMenuSecondPatch - failed to find versionString label - bailing out~
-		OUTER_SET $UIMenuIF("Succeeded") = 0
+		OUTER_SET $UIMenuIF("Succeeded") = 1
 	END ELSE
 
 	// Success - copy .../CounterInLine to $UIMenuIF("Body")
