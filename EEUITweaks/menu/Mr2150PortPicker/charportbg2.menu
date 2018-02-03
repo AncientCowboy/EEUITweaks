@@ -454,6 +454,7 @@ menu
 				enabled "PortraitContainsSearchString(rowNumber) and PortContainsSearchString(rowNumber) and string.lower(PortraitPicker[rowNumber][2]) ~= 'z' and string.lower(PortraitPicker[rowNumber][3]) ~= 'zzzzzzz' and SexFilter(rowNumber) and string.lower(string.sub(PortraitPicker[rowNumber][3],-1)) ~='m' and string.lower(string.sub(PortraitPicker[rowNumber][3],-1)) ~= 's'"
 				area		0 85 315 3
 				mosaic "BWGUIBA"
+				respectClipping
 			}
 		}
 		name		'Portrait_Picker'
