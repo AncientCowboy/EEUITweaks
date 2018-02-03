@@ -329,7 +329,6 @@ BEGIN @105000 DESIGNATED 1050
 GROUP @1
 REQUIRE_PREDICATE (
 	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND                 // IE 2.0+
-	(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND          // Not Lefreut's UI
 	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1080~)) AND // Not lefreut's Portrait Picker
 	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1090~)) AND // Not lefreut's Character Creation Screens
 	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1091~)) AND
@@ -341,7 +340,7 @@ REQUIRE_PREDICATE (
 	 		(NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~)) // Not Dragonspear UI++
 		)
 	)
-) @27 // NOT Dragonspear UI++ nor Lefreut's UI (several issues)
+) @27
 
 ACTION_TRY
 	INCLUDE ~%PKGNAME%/include/AdulUnhideChargen.tpa~
