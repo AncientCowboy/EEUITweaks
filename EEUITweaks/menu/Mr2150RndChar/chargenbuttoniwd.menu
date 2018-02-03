@@ -1,6 +1,6 @@
 	button
 	{
-		enabled "createCharScreen:GetCurrentStep() == 0"
+		enabled "createCharScreen:GetCurrentStep() < 15"
 		area 232 726 340 36
 		text "????"
 		text style "button"
@@ -19,10 +19,10 @@
 		action "
 			chargen.information = nil
 			randomCharacter = 0
-			for i=1,5,1 do
+			while createCharScreen:GetCurrentStep() > 0 do
 				createCharScreen:OnMainBackButtonClick()
 			end
 			randomCharacter = 1
 			randChar()
 		"
-	}	
+	}

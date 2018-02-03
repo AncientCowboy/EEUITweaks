@@ -115,9 +115,20 @@ BEGIN
 	ACTION_IF %found% THEN
 	BEGIN
 		OUTER_SET found = SIZE_OF_FILE ~%fname%~
-		COPY - ~%fname%~ ~.../CounterInLine~
-			READ_ASCII 0 adder (%found%)
-		OUTER_SET found = 0 
+
+		// Change the button style if lefreut's Character Creation Screens is installed
+		ACTION_IF ((MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1090~) OR (MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1091~)) THEN
+		BEGIN
+			COPY - ~%fname%~ ~.../CounterInLine~
+				REPLACE_TEXTUALLY ~GUICHLNG~ ~LUICHLNG~
+				READ_ASCII 0 adder (%found%)
+			OUTER_SET found = 0
+		END ELSE
+		BEGIN
+			COPY - ~%fname%~ ~.../CounterInLine~
+				READ_ASCII 0 adder (%found%)
+			OUTER_SET found = 0
+		END
 
 		// Put current menu definition into inline file
 		COPY - ~ToInlineTemplate~ ~.../CounterInLine~

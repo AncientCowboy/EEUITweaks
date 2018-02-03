@@ -143,9 +143,6 @@ GROUP @1
 REQUIRE_PREDICATE (
 	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND // IE 2.0+
 	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1060~)) AND  // Not Mr2150's Roll First
-	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1080~)) AND  // Not lefreut's Portrait Picker
-	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1090~)) AND  // Not lefreut's Character Creation Screens
-	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1091~)) AND
 	(
 		(GAME_IS ~eet~) OR
 		(GAME_IS ~bg2ee~) OR
@@ -262,7 +259,6 @@ GROUP @1
 SUBCOMPONENT @510 
 (
 	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1050~)) AND  // Adul's Unhide Chargen Options
-	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1020~)) AND  // Mr2150's Random PC Generator
 	(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~))          AND  // Not Lefreut's UI
 	(
 		(
