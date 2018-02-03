@@ -157,6 +157,8 @@ END
 /*******************************************************************************
  * Mr2150's Random PC Generator Installation
  ******************************************************************************/
+ACTION_IF NOT(IsLeUIBG2 | IsLeUISOD | IsLeUIBG1 | IsEETLeUI) THEN
+BEGIN
 // Open UI.MENU
 LOG @12
 SILENT
@@ -200,6 +202,7 @@ LAUNCH_ACTION_MACRO UIMenuClose
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
 	FAIL @21
+END
 END
 
 // Copy files

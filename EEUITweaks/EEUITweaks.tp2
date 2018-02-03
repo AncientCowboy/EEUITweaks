@@ -146,7 +146,6 @@ REQUIRE_PREDICATE (
 	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1080~)) AND  // Not lefreut's Portrait Picker
 	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1090~)) AND  // Not lefreut's Character Creation Screens
 	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1091~)) AND
-	(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~))          AND  // Not Lefreut's UI
 	(
 		(GAME_IS ~eet~) OR
 		(GAME_IS ~bg2ee~) OR

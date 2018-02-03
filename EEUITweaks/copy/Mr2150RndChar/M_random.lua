@@ -1,46 +1,23 @@
 function randChar()
-	RandGender = 0
-	choosePortrait = 0
-	toggleMale = 0
-	toggleFemale = 0
-	currentChargenRace = 0
-	currentChargenClass = 0
-	currentChargenKit = 0
-	currentChargenAlignment = 0
-	cCount = 0
-	myStep = ""
-	if randomCharacter == 0 then
-		randomCharacter = 1
-	end
-	
+	randomCharacter = 1
+
 	-- Gender
 	if createCharScreen:GetCurrentStep() == 0 then
-		RandGender = math.random(2)
+		-- Must be named 'gender' and must be called before OnMenuButtonClick for LeUI
+		gender = math.random(2)
 		createCharScreen:OnMenuButtonClick()
-		
-		if RandGender == 1 then
-			toggleMale = 1
-			toggleFemale = 0
-			createCharScreen:OnGenderSelectButtonClick(1)
-		elseif RandGender == 2 then
-			toggleMale = 0
-			toggleFemale = 1
-			createCharScreen:OnGenderSelectButtonClick(2)
+		-- LeUI automatically advance to the next screen
+		if createCharScreen:GetCurrentStep() == 0 then
+			createCharScreen:OnGenderSelectButtonClick(gender)
+			Infinity_PopMenu()
+			createCharScreen:OnDoneButtonClick()
 		end
-		Infinity_PopMenu()
-		createCharScreen:OnDoneButtonClick()
 	end
-	
+
 	-- Portrait
 	if createCharScreen:GetCurrentStep() == 1 then
-		if RandGender == 1 then
-			while createCharScreen:GetCurrentPortrait() ~= "MAN2L" do
-				createCharScreen:DecCurrentPortrait()
-			end
-		elseif RandGender == 2 then
-			while createCharScreen:GetCurrentPortrait() ~= "WOMAN2L" do
-				createCharScreen:DecCurrentPortrait()
-			end
+		while createCharScreen:GetCurrentPortrait() ~= "MAN2L" and createCharScreen:GetCurrentPortrait() ~= "WOMAN2L" do
+			createCharScreen:DecCurrentPortrait()
 		end
 		Infinity_PopMenu()
 		createCharScreen:OnDoneButtonClick()
@@ -54,19 +31,16 @@ function randChar()
 		Infinity_PopMenu()
 		createCharScreen:OnDoneButtonClick()
 	end
-	
+
 	-- Class
-	if createCharScreen:GetCurrentStep() == 4 then 
+	if createCharScreen:GetCurrentStep() == 4 then
 		createCharScreen:OnMenuButtonClick()
 		currentChargenClass = math.random(#chargen.class)
 		createCharScreen:OnClassSelectButtonClick(chargen.class[currentChargenClass].id)
-		Infinity_PopMenu('CHARGEN_CLASS')
+		Infinity_PopMenu()
 		createCharScreen:OnDoneButtonClick()
 	end
-	
-	if createCharScreen:GetCurrentStep() == 5 then
-	end
-	
+
 	-- Kit
 	if createCharScreen:GetCurrentStep() == 6 then
 		currentChargenKit = math.random(#chargen.kit)
@@ -74,7 +48,7 @@ function randChar()
 		Infinity_PopMenu()
 		createCharScreen:OnDoneButtonClick()
 	end
-	
+
 	-- Alignment
 	if createCharScreen:GetCurrentStep() == 7 then
 		createCharScreen:OnMenuButtonClick()
@@ -83,7 +57,7 @@ function randChar()
 		Infinity_PopMenu()
 		createCharScreen:OnDoneButtonClick()
 	end
-	
+
 	-- Abilities
 	if createCharScreen:GetCurrentStep() == 8 then
 		createCharScreen:OnMenuButtonClick()
@@ -93,7 +67,7 @@ function randChar()
 		Infinity_PopMenu()
 		createCharScreen:OnDoneButtonClick()
 	end
-	
+
 	-- Skills
 	if createCharScreen:GetCurrentStep() == 9 then
 		createCharScreen:OnMenuButtonClick()
@@ -110,67 +84,49 @@ function randChar()
 		Infinity_PopMenu()
 		createCharScreen:OnDoneButtonClick()
 	end
-	
+
 	-- Mage Choose Learned Spells
-	if createCharScreen:GetCurrentStep() == 11 then
-		while createCharScreen:GetCurrentStep() == 11 do
-			randLearnedMage()
+	while createCharScreen:GetCurrentStep() == 11 do
+		for idx, spell in pairs(chargen.choose_spell) do
+			if spell.enabled then
+				createCharScreen:OnLearnMageSpellButtonClick(idx)
+			end
 		end
+		while chargen.extraSpells > 0 do
+			currentChargenChooseMageSpell = math.random(#chargen.choose_spell)
+			createCharScreen:OnLearnMageSpellButtonClick(currentChargenChooseMageSpell)
+			if chargen.extraSpells == 0 and not createCharScreen:IsDoneButtonClickable() then
+				createCharScreen:OnLearnMageSpellButtonClick(currentChargenChooseMageSpell)
+			end
+		end
+		createCharScreen:OnDoneButtonClick()
 	end
-	
+
 	-- Mage Choose Active Spells
-	if createCharScreen:GetCurrentStep() == 12 then
-		while createCharScreen:GetCurrentStep() == 12 do
-			randActiveMage()
+	while createCharScreen:GetCurrentStep() == 12 do
+		while chargen.extraSpells > 0 do
+			currentChargenMemorizeMageSpell = math.random(#chargen.choose_spell)
+			createCharScreen:OnMemorizeMageSpellButtonClick(currentChargenMemorizeMageSpell, 1)
+			if chargen.extraSpells == 0 and not createCharScreen:IsDoneButtonClickable() then
+				createCharScreen:OnMemorizeMageSpellButtonClick(currentChargenMemorizeMageSpell, -1)
+			end
 		end
+		createCharScreen:OnDoneButtonClick()
 	end
-	
+
 	-- Priest
-	if createCharScreen:GetCurrentStep() == 13 then
-		while createCharScreen:GetCurrentStep() == 13 do
-			randPriest()
+	while createCharScreen:GetCurrentStep() == 13 do
+		while chargen.extraSpells > 0 do
+			currentChargenMemorizePriestSpell = math.random(#chargen.choose_spell)
+			createCharScreen:OnMemorizePriestSpellButtonClick(currentChargenMemorizePriestSpell, 1)
 		end
+		createCharScreen:OnDoneButtonClick()
 	end
-	
-	if createCharScreen:GetCurrentStep() == 14 then
-	end
-	
+
 	-- Racial Enemy
 	if createCharScreen:GetCurrentStep() == 10 then
 		currentChargenHatedRace = math.random(#chargen.hatedRace)
 		createCharScreen:OnRacialEnemySelectButtonClick(chargen.hatedRace[currentChargenHatedRace].id)
 		createCharScreen:OnDoneButtonClick()
 	end
-	chargen.information = "Random Character:" .. '\n\n' .. chargen.information
-	
-end
-
-
-function randLearnedMage()
-	while chargen.extraSpells > 0 do
-		currentChargenChooseMageSpell = math.random(#chargen.choose_spell)
-		createCharScreen:OnLearnMageSpellButtonClick(currentChargenChooseMageSpell)
-	end
-	createCharScreen:OnDoneButtonClick()
-end
-
-
-function randActiveMage()
-	while chargen.extraSpells > 0 do
-		currentChargenMemorizeMageSpell = math.random(#chargen.choose_spell)
-		createCharScreen:OnMemorizeMageSpellButtonClick(currentChargenMemorizeMageSpell, 1)
-		if chargen.extraSpells == 0 and not createCharScreen:IsDoneButtonClickable() then
-			createCharScreen:OnMemorizeMageSpellButtonClick(currentChargenMemorizeMageSpell, -1)
-		end
-	end
-	createCharScreen:OnDoneButtonClick()
-end
-
-
-function randPriest()
-	while chargen.extraSpells > 0 do
-		currentChargenMemorizePriestSpell = math.random(#chargen.choose_spell)
-		createCharScreen:OnMemorizePriestSpellButtonClick(currentChargenMemorizePriestSpell, 1)
-	end
-	createCharScreen:OnDoneButtonClick()
 end
