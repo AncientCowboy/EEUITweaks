@@ -164,6 +164,30 @@ menu
 	}
 	button
 	{
+		on "left"
+		action
+		"
+			selPortrait = selPortrait - 1
+			if selPortrait == 0 then
+				scrollPortrait = nil
+				selPortrait = #portraitTable
+			end
+		"
+	}
+	button
+	{
+		on "right"
+		action
+		"
+			if selPortrait == #portraitTable then
+				scrollPortrait = nil
+				selPortrait = 0
+			end
+			selPortrait = selPortrait + 1
+		"
+	}
+	button
+	{
 		on up
 		action
 		"

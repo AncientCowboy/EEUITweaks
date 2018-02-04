@@ -3,9 +3,11 @@ menu
 	name 'CHARGEN_GENDER'
 	onOpen
 	"
-		createCharScreen:OnGenderSelectButtonClick(gender)
-		Infinity_PopMenu()
-		createCharScreen:OnDoneButtonClick()
+		if gender ~= nil then
+			createCharScreen:OnGenderSelectButtonClick(gender)
+			Infinity_PopMenu()
+			createCharScreen:OnDoneButtonClick()
+		end
 	"
 	label
 	{

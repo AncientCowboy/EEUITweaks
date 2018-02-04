@@ -37,7 +37,6 @@ BEGIN
 				SET found = 1
 			END
 			~%tempstr%~
-
 	END
 
 	ACTION_IF NOT %found% THEN

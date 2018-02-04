@@ -9,7 +9,7 @@ DEFINE_ACTION_MACRO AdulUnhideChargen.ChargenPatch1
 BEGIN
 	LOCAL_SPRINT tempstr $UIMenuIF("Body")
 	LOCAL_SPRINT adder ~%TAB%onopen%LE%%TAB%"%LE%%TAB%%TAB%generateAllChargenOptions()%LE%%TAB%"%LE%~
-	LOCAL_SPRINT adder2 ~%LE%%TAB%%TAB%generateAllChargenOptions()%LE%%TAB%~
+	LOCAL_SPRINT adder2 ~%LE%%TAB%%TAB%gender = nil%LE%%TAB%%TAB%generateAllChargenOptions()%LE%~
 	LOCAL_SET found = 0
 
 	// Put current menu definition into inline file
@@ -20,7 +20,7 @@ BEGIN
 
 	// Allow for other patches that may have already added onopen - first single quote delimited
 	COPY - ~.../CounterInLine~ ~.../CounterInLine~
-		REPLACE_EVALUATE CASE_INSENSITIVE ~\(^[%TAB% ]*onopen%MWHITE%%MSQUOTE%%MNOTSQUOTE%*\)\(%MSQUOTE%.*%MEOL%\)~
+		REPLACE_EVALUATE CASE_INSENSITIVE ~\(^[%TAB% ]*onopen%MWHITE%%MSQUOTE%\)\(%MNOTSQUOTE%*%MSQUOTE%.*%MEOL%\)~
 		BEGIN
 			SPRINT tempstr ~%MATCH1%%adder2%%MATCH2%~
 			SET found = 1
@@ -30,7 +30,7 @@ BEGIN
 	ACTION_IF NOT %found% THEN
 	BEGIN // Try for double quote
 		COPY - ~.../CounterInLine~ ~.../CounterInLine~
-			REPLACE_EVALUATE CASE_INSENSITIVE ~\(^[%TAB% ]*onopen%MWHITE%%MDQUOTE%%MNOTDQUOTE%*\)\(%MDQUOTE%.*%MEOL%\)~
+			REPLACE_EVALUATE CASE_INSENSITIVE ~\(^[%TAB% ]*onopen%MWHITE%%MDQUOTE%\)\(%MNOTDQUOTE%*%MDQUOTE%.*%MEOL%\)~
 			BEGIN
 				SPRINT tempstr ~%MATCH1%%adder2%%MATCH2%~
 				SET found = 1
