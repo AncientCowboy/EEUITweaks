@@ -123,7 +123,7 @@ WITH
 			STR_VAR
 				source_folder = EVAL ~%PKGNAME%/copy/luicommon/SODTheme~
 				resource_file = ~INVENTOR.MOS~
-				pvrz_files = ~MOS5015.PVRZ~
+				pvrz_files = ~MOS4309.PVRZ~
 			RET
 				$UIMenuIF("Succeeded") = succeeded
 		END
@@ -136,7 +136,7 @@ WITH
 			STR_VAR
 				source_folder = EVAL ~%PKGNAME%/copy/luicommon/SODTheme~
 				resource_file = ~INVSEP1.MOS~
-				pvrz_files = ~MOS5016.PVRZ~
+				pvrz_files = ~MOS4310.PVRZ~
 			RET
 				$UIMenuIF("Succeeded") = succeeded
 		END
@@ -149,7 +149,7 @@ WITH
 			STR_VAR
 				source_folder = EVAL ~%PKGNAME%/copy/luicommon/SODTheme~
 				resource_file = ~INVSEP2.MOS~
-				pvrz_files = ~MOS5017.PVRZ~
+				pvrz_files = ~MOS4311.PVRZ~
 			RET
 				$UIMenuIF("Succeeded") = succeeded
 		END
@@ -235,7 +235,7 @@ WITH
 			STR_VAR
 				source_folder = EVAL ~%PKGNAME%/copy/luicommon/BGEETheme~
 				resource_file = ~INVENTOR.MOS~
-				pvrz_files = ~MOS5012.PVRZ~
+				pvrz_files = ~MOS4309.PVRZ~
 			RET
 				$UIMenuIF("Succeeded") = succeeded
 		END
@@ -248,7 +248,7 @@ WITH
 			STR_VAR
 				source_folder = EVAL ~%PKGNAME%/copy/luicommon/BGEETheme~
 				resource_file = ~INVSEP1.MOS~
-				pvrz_files = ~MOS5013.PVRZ~
+				pvrz_files = ~MOS4310.PVRZ~
 			RET
 				$UIMenuIF("Succeeded") = succeeded
 		END
@@ -261,7 +261,7 @@ WITH
 			STR_VAR
 				source_folder = EVAL ~%PKGNAME%/copy/luicommon/BGEETheme~
 				resource_file = ~INVSEP2.MOS~
-				pvrz_files = ~MOS5014.PVRZ~
+				pvrz_files = ~MOS4311.PVRZ~
 			RET
 				$UIMenuIF("Succeeded") = succeeded
 		END
