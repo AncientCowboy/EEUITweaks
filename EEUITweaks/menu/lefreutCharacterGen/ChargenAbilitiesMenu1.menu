@@ -68,12 +68,10 @@ menu
 		}
 		action
 		"
-			if ticksStarting < 10 then
+			if ticksStarting <= 10 then
 				if cellNumber == 3 then
-					Infinity_PlaySound('GAM_09')
 					createCharScreen:OnAbilityPlusMinusButtonClick(currentChargenAbility, not chargenReverseButtons)
 				elseif cellNumber == 4 then
-					Infinity_PlaySound('GAM_09')
 					createCharScreen:OnAbilityPlusMinusButtonClick(currentChargenAbility, chargenReverseButtons)
 				end
 			end
@@ -84,15 +82,12 @@ menu
 		actionUpdate
 		"
 			ticksStarting = ticksStarting + 1
+			if ticksStarting == 1 and (cellNumber == 3 or cellNumber == 4) then Infinity_PlaySound('GAM_09') end
 			if ticksStarting > 10 then
-				ticksPassed = ticksPassed + 1
-				if ticksPassed > 7 then
-					if cellNumber == 3 then
-						createCharScreen:OnAbilityPlusMinusButtonClick(currentChargenAbility, not chargenReverseButtons)
-					elseif cellNumber == 4 then
-						createCharScreen:OnAbilityPlusMinusButtonClick(currentChargenAbility, chargenReverseButtons)
-					end
-					ticksPassed = 0
+				if cellNumber == 3 then
+					createCharScreen:OnAbilityPlusMinusButtonClick(currentChargenAbility, not chargenReverseButtons)
+				elseif cellNumber == 4 then
+					createCharScreen:OnAbilityPlusMinusButtonClick(currentChargenAbility, chargenReverseButtons)
 				end
 			end
 		"

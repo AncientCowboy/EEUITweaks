@@ -76,7 +76,7 @@ menu
 	}
 	label
 	{
-		area 46 116 336 48
+		area 274 56 336 48
 		text lua "t('SPELLS_REMAINING_NORMAL') .. ': ' .. chargen.extraSpells"
 		text style "normal"
 		text align center center
@@ -88,6 +88,18 @@ menu
 		text lua "chooseSpellOrGeneralHelp()"
 		text style "normal"
 		scrollbar 'LUISCRC'
+	}
+	button
+	{
+		bam LUIOSTUM
+		area 111 120 201 44
+		text style "button"
+		text lua "Infinity_FetchString(engine_mode == 0 and 24411 or 34210)"
+		clickable lua "chargen.extraSpells > 0"
+		action
+		"
+			autopickSpells()
+		"
 	}
 	button
 	{

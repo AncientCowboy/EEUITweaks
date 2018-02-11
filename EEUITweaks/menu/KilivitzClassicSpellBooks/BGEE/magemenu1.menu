@@ -219,7 +219,7 @@ menu
 		name "bookListMage"
 		rowheight 62
 		hidehighlight
-		table "makeTable(length(bookSpells) / 4)"
+		table "makeTable(math.ceil(#bookSpells / 4))"
 		var currentBookSpell
 		action
 		"
@@ -297,7 +297,7 @@ menu
 		area 158 204 256 372
 		rowheight 62
 		hidehighlight
-		table "makeTable(length(bottomSpellsPlaceHolder) / 4)"
+		table "makeTable(math.ceil(#bottomSpellsPlaceHolder / 4))"
 	}
 	list
 	{
@@ -354,7 +354,7 @@ menu
 		enabled "#bottomSpells ~= 0"
 		rowheight 62
 		hidehighlight
-		table "makeTable(length(bottomSpells) / 4)"
+		table "makeTable(math.ceil(#bottomSpells / 4))"
 		var currentBottomSpell
 		action
 		"

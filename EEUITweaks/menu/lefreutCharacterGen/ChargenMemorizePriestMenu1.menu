@@ -78,10 +78,10 @@ menu
 		action
 		"
 			local delta = chargenReverseButtons and -1 or 1
-			if cellNumber == 3 then
+			if cellNumber == 3 and getPriestFrame(currentChargenMemorizePriestSpell, chargenReverseButtons) then
 				Infinity_PlaySound('GAM_09')
 				createCharScreen:OnMemorizePriestSpellButtonClick(currentChargenMemorizePriestSpell, delta)
-			elseif cellNumber == 4 then
+			elseif cellNumber == 4 and getPriestFrame(currentChargenMemorizePriestSpell, not chargenReverseButtons) then
 				Infinity_PlaySound('GAM_09')
 				createCharScreen:OnMemorizePriestSpellButtonClick(currentChargenMemorizePriestSpell, -delta)
 			end

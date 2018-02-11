@@ -167,14 +167,12 @@ menu
 		action
 		"
 			currentChargenThiefSkill = nil
-			if ticksStarting < 10 then
+			if ticksStarting <= 10 then
 				local isClickable1 = chargenReverseButtons and minusButtonClickable or plusButtonClickable
 				local isClickable2 = chargenReverseButtons and plusButtonClickable or minusButtonClickable
 				if cellNumber == 7 and isClickable1(currentChargenProficiency) then
-					Infinity_PlaySound('GAM_09')
 					createCharScreen:OnProficiencyPlusMinusButtonClick(chargen.proficiency[currentChargenProficiency].id, not chargenReverseButtons)
 				elseif cellNumber == 8 and isClickable2(currentChargenProficiency) then
-					Infinity_PlaySound('GAM_09')
 					createCharScreen:OnProficiencyPlusMinusButtonClick(chargen.proficiency[currentChargenProficiency].id, chargenReverseButtons)
 				end
 			end
@@ -186,17 +184,14 @@ menu
 		"
 			currentChargenThiefSkill = nil
 			ticksStarting = ticksStarting + 1
+			if ticksStarting == 1 and (cellNumber == 7 or cellNumber == 8) and proficiencyEnabled(currentChargenProficiency) then Infinity_PlaySound('GAM_09') end
 			if ticksStarting > 10 then
-				ticksPassed = ticksPassed + 1
-				if ticksPassed > 2 then
-					local isClickable1 = chargenReverseButtons and minusButtonClickable or plusButtonClickable
-					local isClickable2 = chargenReverseButtons and plusButtonClickable or minusButtonClickable
-					if cellNumber == 7 and isClickable1(currentChargenProficiency) then
-						createCharScreen:OnProficiencyPlusMinusButtonClick(chargen.proficiency[currentChargenProficiency].id, not chargenReverseButtons)
-					elseif cellNumber == 8 and isClickable2(currentChargenProficiency) then
-						createCharScreen:OnProficiencyPlusMinusButtonClick(chargen.proficiency[currentChargenProficiency].id, chargenReverseButtons)
-					end
-					ticksPassed = 0
+				local isClickable1 = chargenReverseButtons and minusButtonClickable or plusButtonClickable
+				local isClickable2 = chargenReverseButtons and plusButtonClickable or minusButtonClickable
+				if cellNumber == 7 and isClickable1(currentChargenProficiency) then
+					createCharScreen:OnProficiencyPlusMinusButtonClick(chargen.proficiency[currentChargenProficiency].id, not chargenReverseButtons)
+				elseif cellNumber == 8 and isClickable2(currentChargenProficiency) then
+					createCharScreen:OnProficiencyPlusMinusButtonClick(chargen.proficiency[currentChargenProficiency].id, chargenReverseButtons)
 				end
 			end
 		"
@@ -258,13 +253,11 @@ menu
 		action
 		"
 			currentChargenProficiency = nil
-			if ticksStarting < 10 then
+			if ticksStarting <= 10 then
 				if createCharScreen:IsThiefSkillPlusMinusButtonClickable() then
 					if cellNumber == 3 then
-						Infinity_PlaySound('GAM_09')
 						createCharScreen:OnThiefSkillPlusMinusButtonClick(chargen.thief_skill[currentChargenThiefSkill].id, not chargenReverseButtons)
 					elseif cellNumber == 4 then
-						Infinity_PlaySound('GAM_09')
 						createCharScreen:OnThiefSkillPlusMinusButtonClick(chargen.thief_skill[currentChargenThiefSkill].id, chargenReverseButtons)
 					end
 				end
@@ -278,15 +271,12 @@ menu
 			currentChargenProficiency = nil
 			if createCharScreen:IsThiefSkillPlusMinusButtonClickable() then
 				ticksStarting = ticksStarting + 1
+				if ticksStarting == 1 and (cellNumber == 3 or cellNumber == 4) then Infinity_PlaySound('GAM_09') end
 				if ticksStarting > 10 then
-					ticksPassed = ticksPassed + 1
-					if ticksPassed > 2 then
-						if cellNumber == 3 then
-							createCharScreen:OnThiefSkillPlusMinusButtonClick(chargen.thief_skill[currentChargenThiefSkill].id, not chargenReverseButtons)
-						elseif cellNumber == 4 then
-							createCharScreen:OnThiefSkillPlusMinusButtonClick(chargen.thief_skill[currentChargenThiefSkill].id, chargenReverseButtons)
-						end
-						ticksPassed = 0
+					if cellNumber == 3 then
+						createCharScreen:OnThiefSkillPlusMinusButtonClick(chargen.thief_skill[currentChargenThiefSkill].id, not chargenReverseButtons)
+					elseif cellNumber == 4 then
+						createCharScreen:OnThiefSkillPlusMinusButtonClick(chargen.thief_skill[currentChargenThiefSkill].id, chargenReverseButtons)
 					end
 				end
 			end

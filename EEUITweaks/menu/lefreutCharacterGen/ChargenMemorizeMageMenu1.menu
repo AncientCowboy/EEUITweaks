@@ -79,10 +79,10 @@ menu
 		action
 		"
 			local delta = chargenReverseButtons and -1 or 1
-			if cellNumber == 3 and (chargenReverseButtons or spellSelectable(currentChargenMemorizeMageSpell)) then
+			if cellNumber == 3 and getMageFrame(currentChargenMemorizeMageSpell, chargenReverseButtons) then
 				Infinity_PlaySound('GAM_09')
 				createCharScreen:OnMemorizeMageSpellButtonClick(currentChargenMemorizeMageSpell, delta)
-			elseif cellNumber == 4 and (not chargenReverseButtons or spellSelectable(currentChargenMemorizeMageSpell)) then
+			elseif cellNumber == 4 and getMageFrame(currentChargenMemorizeMageSpell, not chargenReverseButtons) then
 				Infinity_PlaySound('GAM_09')
 				createCharScreen:OnMemorizeMageSpellButtonClick(currentChargenMemorizeMageSpell, -delta)
 			end

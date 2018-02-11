@@ -23,7 +23,7 @@ function chooseSpellOrGeneralHelp()
 			return Infinity_FetchString(desc)
 		end
 	end
-	return Infinity_FetchString(engine_mode == 0 and 24314 or 55489)
+	return Infinity_FetchString(engine_mode == 0 and 24314 or 17250)
 end
 
 function nextOrDone()
@@ -31,6 +31,33 @@ function nextOrDone()
 		return t('NEXT_BUTTON')
 	else
 		return t('DONE_BUTTON')
+	end
+end
+
+function autopickSpells()
+	local spells = {table.unpack(chargen.choose_spell)}
+	local rnd = {}
+	for k, v in pairs(spells) do
+		local spell = spellBook[chargen.currentSpellLevelChoice][v.key]
+		local nb = (spell.autopick and 2 or 0) + (spell.specialist and 1 or 0)
+		rnd[spell.name] = math.random() + nb
+		v.k = k
+	end
+
+	table.sort(spells,
+		function(v1, v2)
+			local s1 = spellBook[chargen.currentSpellLevelChoice][v1.key]
+			local s2 = spellBook[chargen.currentSpellLevelChoice][v2.key]
+			return rnd[s1.name] > rnd[s2.name]
+		end)
+	for _, v in pairs(spells) do
+		local spell = spellBook[chargen.currentSpellLevelChoice][v.key]
+		if not v.enabled and chargen.extraSpells > 0 then
+			createCharScreen:OnLearnMageSpellButtonClick(v.k)
+			if chargen.extraSpells == 0 and not createCharScreen:IsDoneButtonClickable() then
+				createCharScreen:OnLearnMageSpellButtonClick(v.k)
+			end
+		end
 	end
 end
 `

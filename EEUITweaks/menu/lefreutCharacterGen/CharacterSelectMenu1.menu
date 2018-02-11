@@ -121,7 +121,7 @@ menu
 		area 28 128 960 536
 		rowheight 134
 		hidehighlight
-		table "makeTable(length(character_select) - 1)"
+		table "makeTable(#character_select)"
 		scrollbar 'LUISCRC'
 		scrollbar func "scrollFunc"
 	}

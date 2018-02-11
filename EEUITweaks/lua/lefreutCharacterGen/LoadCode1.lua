@@ -2,13 +2,6 @@
 currentPage = 0
 currentSave = 0
 forceScroll = false
-function getSaveBackground(row)
-	if(row == currentSave) then
-		return "GUISAVEC"
-	else
-		return "GUISAVEB"
-	end
-end
 function onScroll(nbPage)
 	if scrollDirection > 0 and currentPage > 0 then
 		currentPage = currentPage - 1
@@ -36,7 +29,7 @@ function sortSaves()
 end
 function makeTable(length)
 	local t = {}
-	for i=0,length do
+	for i=1,length do
 		table.insert(t, 1, '')
 	end
 	return t

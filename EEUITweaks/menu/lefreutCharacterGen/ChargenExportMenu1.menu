@@ -6,7 +6,7 @@ menu
 	ignoreEsc
 	onOpen
 	"
-		chargenExportCharacterEdit = chargen.name and chargen.name or ''
+		chargenExportCharacterEdit = chargen.name
 		Infinity_FocusTextEdit('chargenExportCharacterEditArea')
 	"
 	label

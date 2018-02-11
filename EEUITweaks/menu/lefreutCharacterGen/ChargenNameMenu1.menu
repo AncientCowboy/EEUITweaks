@@ -6,12 +6,12 @@ menu
 	ignoreesc
 	onopen
 	"
-		Infinity_FocusTextEdit('charNameEditArea')
 		if chargen.name then
 			charNameEdit = chargen.name
 		else
 			charNameEdit = ''
 		end
+		Infinity_FocusTextEdit('charNameEditArea')
 	"
 	label
 	{
@@ -20,8 +20,8 @@ menu
 	}
 	label
 	{
-		area 66 46 272 44
-		text "NAME_LABEL"
+		area 70 70 264 42
+		text "ENTER_NAME_LABEL"
 		text style "title"
 	}
 	edit
@@ -32,6 +32,14 @@ menu
 		text style	"edit"
 		maxlines	1
 		maxchars	20
+		action
+		"
+			--if key_pressed is return
+			if (key_pressed == 13) then
+				return 0
+			end
+			return 1
+		"
 	}
 	button
 	{

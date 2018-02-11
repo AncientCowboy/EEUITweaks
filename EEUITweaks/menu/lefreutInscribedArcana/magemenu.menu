@@ -221,7 +221,7 @@ menu
 		scrollbar 'LUISBR'
 		rowheight 62
 		hidehighlight
-		table "makeTable((#bookSpells - 1) / 4)"
+		table "makeTable(math.ceil(#bookSpells / 4))"
 		var currentBookSpell
 		action
 		"
@@ -354,7 +354,7 @@ menu
 		scrollbar 'LUISBR'
 		rowheight 62
 		hidehighlight
-		table "makeTable((#bottomSpellsPlaceHolder - 1) / 4)"
+		table "makeTable(math.ceil(#bottomSpellsPlaceHolder / 4))"
 		var currentBottomSpell
 		action
 		"

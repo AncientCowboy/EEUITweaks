@@ -1,6 +1,6 @@
 menu
 {
-	name 'LOAD'
+	name 'SAVE'
 	align center center
 	ignoreEsc
 	onOpen
@@ -15,7 +15,7 @@ menu
 	label
 	{
 		area 162 16 700 60
-		text lua "t(gameSaves.isImporting ~= 1 and 'LOAD_TITLE' or 'IMPORT_TITLE')"
+		text "SAVE_TITLE"
 		text style "title"
 		text point 26
 	}
@@ -270,7 +270,7 @@ menu
 		area 0 164 1004 536
 		rowheight 134
 		hidehighlight
-		table "makeTable(#gameSaves.files)"
+		table "makeSaveTable()"
 		scrollbar 'LUISCRC'
 		scrollbar func "scrollFunc"
 	}
@@ -280,11 +280,12 @@ menu
 		area 708 164 234 44
 		bam LUIOSTUR
 		clickable lua "gameSaves.files[currentPage + 1] ~= nil"
-		text lua "t(gameSaves.isImporting ~= 1 and 'LOAD_BUTTON' or 'IMPORT_BUTTON')"
+		text "SAVE_BUTTON"
 		text style "button"
 		action
 		"
-			loadScreen:LoadGame(gameSaves.files[currentPage + 1].fileName)
+			currentSave = currentPage + 1
+			Infinity_PushMenu('SAVE_NEWSAVE')
 		"
 		actionScroll
 		"
@@ -295,13 +296,13 @@ menu
 	{
 		area 708 214 234 44
 		bam LUIOSTLR
-		clickable lua "gameSaves.files[currentPage + 1] ~= nil"
+		clickable lua "gameSaves.files[currentPage + 1] ~= nil and currentPage > 0"
 		text "DELETE_BUTTON"
 		text style "button"
 		action
 		"
 			popup2Button(15305, 'DELETE_BUTTON',
-			 function() loadScreen:DeleteGame(gameSaves.files[currentPage + 1].slotIndex) end)
+			 function() saveScreen:DeleteGame(gameSaves.files[currentPage + 1].slotIndex) end)
 		"
 		actionScroll
 		"
@@ -313,11 +314,12 @@ menu
 		area 708 308 234 44
 		bam LUIOSTUR
 		clickable lua "gameSaves.files[currentPage + 2] ~= nil"
-		text lua "t(gameSaves.isImporting ~= 1 and 'LOAD_BUTTON' or 'IMPORT_BUTTON')"
+		text "SAVE_BUTTON"
 		text style "button"
 		action
 		"
-			loadScreen:LoadGame(gameSaves.files[currentPage + 2].fileName)
+			currentSave = currentPage + 2
+			Infinity_PushMenu('SAVE_NEWSAVE')
 		"
 		actionScroll
 		"
@@ -334,7 +336,7 @@ menu
 		action
 		"
 			popup2Button(15305, 'DELETE_BUTTON',
-			 function() loadScreen:DeleteGame(gameSaves.files[currentPage + 2].slotIndex) end)
+			 function() saveScreen:DeleteGame(gameSaves.files[currentPage + 2].slotIndex) end)
 		"
 		actionScroll
 		"
@@ -346,11 +348,12 @@ menu
 		area 708 453 234 44
 		bam LUIOSTUR
 		clickable lua "gameSaves.files[currentPage + 3] ~= nil"
-		text lua "t(gameSaves.isImporting ~= 1 and 'LOAD_BUTTON' or 'IMPORT_BUTTON')"
+		text "SAVE_BUTTON"
 		text style "button"
 		action
 		"
-			loadScreen:LoadGame(gameSaves.files[currentPage + 3].fileName)
+			currentSave = currentPage + 3
+			Infinity_PushMenu('SAVE_NEWSAVE')
 		"
 		actionScroll
 		"
@@ -367,7 +370,7 @@ menu
 		action
 		"
 			popup2Button(15305, 'DELETE_BUTTON',
-			 function() loadScreen:DeleteGame(gameSaves.files[currentPage + 3].slotIndex) end)
+			 function() saveScreen:DeleteGame(gameSaves.files[currentPage + 3].slotIndex) end)
 		"
 		actionScroll
 		"
@@ -379,11 +382,12 @@ menu
 		area 708 597 234 44
 		bam LUIOSTUR
 		clickable lua "gameSaves.files[currentPage + 4] ~= nil"
-		text lua "t(gameSaves.isImporting ~= 1 and 'LOAD_BUTTON' or 'IMPORT_BUTTON')"
+		text "SAVE_BUTTON"
 		text style "button"
 		action
 		"
-			loadScreen:LoadGame(gameSaves.files[currentPage + 4].fileName)
+			currentSave = currentPage + 4
+			Infinity_PushMenu('SAVE_NEWSAVE')
 		"
 		actionScroll
 		"
@@ -400,7 +404,7 @@ menu
 		action
 		"
 			popup2Button(15305, 'DELETE_BUTTON',
-			 function() loadScreen:DeleteGame(gameSaves.files[currentPage + 4].slotIndex) end)
+			 function() saveScreen:DeleteGame(gameSaves.files[currentPage + 4].slotIndex) end)
 		"
 		actionScroll
 		"
@@ -417,7 +421,7 @@ menu
 		on escape
 		action
 		"
-			loadScreen:OnMainCancelButtonClick()
+			saveScreen:OnMainCancelButtonClick()
 		"
 	}
 }

@@ -302,7 +302,7 @@ menu
 		area 580 578 232 106
 		hidehighlight
 		rowheight	106
-		table		"makeTable(Infinity_GetMaxGroundPage())"
+		table		"makeTable(Infinity_GetMaxGroundPage() + 1)"
 		scrollbar 'LUISCRC'
 		scrollbar func "groundScroll"
 	}

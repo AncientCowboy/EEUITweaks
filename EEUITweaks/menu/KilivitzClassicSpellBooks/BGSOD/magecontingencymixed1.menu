@@ -93,7 +93,7 @@ menu
 		area 54 130 256 248
 		rowheight 62
 		hidehighlight
-		table "makeTable(length(bookSpells) / 4)"
+		table "makeTable(math.ceil(#bookSpells / 4))"
 		var currentBookSpell
 		action
 		"

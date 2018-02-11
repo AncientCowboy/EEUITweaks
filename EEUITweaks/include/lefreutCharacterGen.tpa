@@ -203,10 +203,39 @@ BEGIN
 	FAIL @109026
 END
 
+// Replace SAVE Lua code block
+LOG @109068
+SILENT
+OUTER_SPRINT $UIMenuIF("LuaRegex") ~function[%TAB% ]+compareSaves~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+LAUNCH_ACTION_MACRO UIMenuGetMatchingLuaBlock
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @109069
+END
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/lefreutCharacterGen/SaveCode1.lua~
+LAUNCH_ACTION_MACRO UIMenuReplaceLuaBlock
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @109070
+END
+
+// Replace SAVE menu
+LOG @109066
+SILENT
+OUTER_SPRINT $UIMenuIF("MenuName") ~SAVE~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/SaveMenu1.menu~
+LAUNCH_ACTION_MACRO UIMenuReplaceMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @109067
+END
+
 // Replace LOAD Lua code block
 LOG @109056
 SILENT
-OUTER_SPRINT $UIMenuIF("LuaRegex") ~function[%TAB% ]+getSaveBackground[%TAB% ]*([%TAB% ]*[a-zA-Z0-9]+[%TAB% ]*)~
+OUTER_SPRINT $UIMenuIF("LuaRegex") ~currentSave[%TAB% ]*=[%TAB% ]*0~
 OUTER_SPRINT $UIMenuIF("Body") ~~
 LAUNCH_ACTION_MACRO UIMenuGetMatchingLuaBlock
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN

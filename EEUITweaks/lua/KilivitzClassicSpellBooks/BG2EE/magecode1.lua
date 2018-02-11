@@ -225,7 +225,7 @@ memorizationFlashes =
 }
 function makeTable(length)
 	local t = {}
-	for i=0,length do
+	for i=1,length do
 		table.insert(t, 1, '')
 	end
 	return t

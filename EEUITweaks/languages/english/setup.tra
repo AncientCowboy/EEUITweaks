@@ -320,6 +320,11 @@
 @109063 = ~Unable to find CHARGEN_MEMORIZE_PRIEST lua block~
 @109064 = ~Unable to replace CHARGEN_MEMORIZE_PRIEST lua block~
 @109065 = ~Reversed Button Position~
+@109066 = ~Replacing SAVE menu~
+@109067 = ~Unable to replace SAVE menu~
+@109068 = ~Replacing SAVE lua block~
+@109069 = ~Unable to find SAVE lua block~
+@109070 = ~Unable to replace SAVE lua block~
 
 ///////////////////////////////////////////////////////////////////////////////
 // Game World/Maps/Travel Group
