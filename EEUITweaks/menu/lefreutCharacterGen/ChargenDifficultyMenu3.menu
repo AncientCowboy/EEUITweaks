@@ -1,0 +1,120 @@
+menu
+{
+	name 'CHARGEN_DIFFICULTY'
+	align center center
+	ignoreesc
+	onopen
+	"
+		currentDifficulty = 3
+	"
+	label
+	{
+		mosaic LUICREDT
+		area 0 0 1024 768
+	}
+	label
+	{
+		area 92 12 840 44
+		text "DIFFICULTY_LABEL"
+		text style "title"
+	}
+	list
+	{
+		column
+		{
+			width 100
+			label
+			{
+				area 20 7 60 60
+				bam LUIDIFFS
+				frame lua "rowNumber-1"
+				align center center
+				glow lua "rowNumber == mouseoverRow"
+			}
+			label
+			{
+				area 110 0 64 74
+				text lua "t(difficulties[rowNumber].name)"
+				text style "label"
+				text align center center
+				glow lua "rowNumber == mouseoverRow"
+			}
+			label
+			{
+				area 200 0 -1 74
+				text lua "t(difficulties[rowNumber].description)"
+				text style "label"
+				text point	12
+				text align left center
+				glow lua "rowNumber == mouseoverRow"
+			}
+			label
+			{
+				enabled "currentDifficulty ~= rowNumber"
+				area 0 0 946 74
+				rectangle 1
+				rectangle opacity 150
+			}
+		}
+		area 40 110 946 518
+		hidehighlight
+		rowheight	74
+		table		"difficulties"
+		var			"currentDifficulty"
+		actionEnter	""
+		actionExit	"mouseoverRow = 0"
+	}
+	button
+	{
+		area 278 708 234 44
+		bam LUIOSTUL
+		text lua "t('VENTURE_FORTH')"
+		text style "button"
+		enabled "not fromMultiPlayer"
+		action
+		"
+			Infinity_PopMenu()
+			createCharScreen:AcceptCharacter(currentDifficulty)
+		"
+	}
+	button
+	{
+		area 278 708 234 44
+		bam LUIOSTUL
+		text 11973
+		text style "button"
+		enabled "fromMultiPlayer"
+		action
+		"
+			Infinity_PopMenu()
+			Infinity_PopMenu()
+			Infinity_PopMenu()
+			Infinity_PopMenu()
+
+			if connectionLocalNetworkGame == 1 then
+				connectionIsHosting = true
+				chooseNetworkProtocol(2)
+			end
+
+			fromMultiPlayer = false
+			mulitplayerPreexistingDifficulty = currentDifficulty
+			connectionScreen:OnNewGameButtonClick()
+		"
+	}
+	button
+	{
+		on escape
+		area 530 708 234 44
+		bam LUIOSTUR
+		text 15416
+		text style "button"
+		action
+		"
+			Infinity_PopMenu()
+			if(createCharScreen:GetEngineState() == 7) then
+				--if create char is in import mode, kick us back to the start screen.
+				e:SelectEngine(startEngine)
+			end
+		"
+	}
+}

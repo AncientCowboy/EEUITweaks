@@ -17,10 +17,32 @@ OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN~
 OUTER_SPRINT $UIMenuIF("Body") ~~
 ACTION_IF lefcgenreversebutt = 0 THEN
 BEGIN
-	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenMixed1.menu~
+	ACTION_IF IsBGEE THEN
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenMixed3.menu~
+	END
+	ACTION_IF IsSoD OR IsEETSoD OR IsKRDS OR IsKRDS0 OR IsKRDS1 OR IsKRDS2 OR IsKRDS3 OR IsKRDS4 OR IsKRDS5 THEN
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenMixed5.menu~
+	END
+	ACTION_IF IsBG2 OR IsBG2onSoD OR IsEETBG2 THEN
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenMixed1.menu~
+	END
 END ELSE
 BEGIN
-	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenMixed2.menu~
+	ACTION_IF IsBGEE THEN
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenMixed4.menu~
+	END
+	ACTION_IF IsSoD OR IsEETSoD OR IsKRDS OR IsKRDS0 OR IsKRDS1 OR IsKRDS2 OR IsKRDS3 OR IsKRDS4 OR IsKRDS5 THEN
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenMixed6.menu~
+	END
+	ACTION_IF IsBG2 OR IsBG2onSoD OR IsEETBG2 THEN
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenMixed2.menu~
+	END
 END
 LAUNCH_ACTION_MACRO UIMenuReplaceMenuMixed
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
@@ -28,26 +50,36 @@ BEGIN
 	FAIL @109002
 END
 
-
 // Replace CHARGEN_RACE menu
 LOG @109003
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_RACE~
 OUTER_SPRINT $UIMenuIF("Body") ~~
-OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenRaceMenu1.menu~
+ACTION_IF IsSoD OR IsEETSoD OR IsKRDS OR IsKRDS0 OR IsKRDS1 OR IsKRDS2 OR IsKRDS3 OR IsKRDS4 OR IsKRDS5 THEN
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenRaceMenu2.menu~
+END ELSE
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenRaceMenu1.menu~
+END
 LAUNCH_ACTION_MACRO UIMenuReplaceMenu
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
 	FAIL @109004
 END
 
-
 // Replace CHARGEN_CLASS menu
 LOG @109005
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_CLASS~
 OUTER_SPRINT $UIMenuIF("Body") ~~
-OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenClassMenu1.menu~
+ACTION_IF IsSoD OR IsEETSoD OR IsKRDS OR IsKRDS0 OR IsKRDS1 OR IsKRDS2 OR IsKRDS3 OR IsKRDS4 OR IsKRDS5 THEN
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenClassMenu2.menu~
+END ELSE
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenClassMenu1.menu~
+END
 LAUNCH_ACTION_MACRO UIMenuReplaceMenu
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
@@ -59,7 +91,13 @@ LOG @109007
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_KIT~
 OUTER_SPRINT $UIMenuIF("Body") ~~
-OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenKitMenu1.menu~
+ACTION_IF IsSoD OR IsEETSoD OR IsKRDS OR IsKRDS0 OR IsKRDS1 OR IsKRDS2 OR IsKRDS3 OR IsKRDS4 OR IsKRDS5 THEN
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenKitMenu2.menu~
+END ELSE
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenKitMenu1.menu~
+END
 LAUNCH_ACTION_MACRO UIMenuReplaceMenu
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
@@ -71,7 +109,13 @@ LOG @109009
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_ALIGNMENT~
 OUTER_SPRINT $UIMenuIF("Body") ~~
-OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenAlignmentMenu1.menu~
+ACTION_IF IsSoD OR IsEETSoD OR IsKRDS OR IsKRDS0 OR IsKRDS1 OR IsKRDS2 OR IsKRDS3 OR IsKRDS4 OR IsKRDS5 THEN
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenAlignmentMenu2.menu~
+END ELSE
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenAlignmentMenu1.menu~
+END
 LAUNCH_ACTION_MACRO UIMenuReplaceMenu
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
@@ -83,7 +127,13 @@ LOG @109011
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_ABILITIES~
 OUTER_SPRINT $UIMenuIF("Body") ~~
-OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenAbilitiesMenu1.menu~
+ACTION_IF IsSoD OR IsEETSoD OR IsKRDS OR IsKRDS0 OR IsKRDS1 OR IsKRDS2 OR IsKRDS3 OR IsKRDS4 OR IsKRDS5 THEN
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenAbilitiesMenu2.menu~
+END ELSE
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenAbilitiesMenu1.menu~
+END
 LAUNCH_ACTION_MACRO UIMenuReplaceMenu
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
@@ -95,7 +145,18 @@ LOG @109013
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_PROFICIENCIES~
 OUTER_SPRINT $UIMenuIF("Body") ~~
-OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenProficienciesMenu1.menu~
+ACTION_IF IsBGEE THEN
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenProficienciesMenu2.menu~
+END
+ACTION_IF IsSoD OR IsEETSoD OR IsKRDS OR IsKRDS0 OR IsKRDS1 OR IsKRDS2 OR IsKRDS3 OR IsKRDS4 OR IsKRDS5 THEN
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenProficienciesMenu3.menu~
+END
+ACTION_IF IsBG2 OR IsBG2onSoD OR IsEETBG2 THEN
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenProficienciesMenu1.menu~
+END
 LAUNCH_ACTION_MACRO UIMenuReplaceMenu
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
@@ -119,7 +180,13 @@ LOG @109015
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_CUSTOMSOUNDS~
 OUTER_SPRINT $UIMenuIF("Body") ~~
-OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenCustomSoundsMenu1.menu~
+ACTION_IF IsSoD OR IsEETSoD OR IsKRDS OR IsKRDS0 OR IsKRDS1 OR IsKRDS2 OR IsKRDS3 OR IsKRDS4 OR IsKRDS5 THEN
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenCustomSoundsMenu2.menu~
+END ELSE
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenCustomSoundsMenu1.menu~
+END
 LAUNCH_ACTION_MACRO UIMenuReplaceMenu
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
@@ -131,7 +198,13 @@ LOG @109017
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_HATEDRACE~
 OUTER_SPRINT $UIMenuIF("Body") ~~
-OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenHatedRaceMenu1.menu~
+ACTION_IF IsSoD OR IsEETSoD OR IsKRDS OR IsKRDS0 OR IsKRDS1 OR IsKRDS2 OR IsKRDS3 OR IsKRDS4 OR IsKRDS5 THEN
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenHatedRaceMenu2.menu~
+END ELSE
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenHatedRaceMenu1.menu~
+END
 LAUNCH_ACTION_MACRO UIMenuReplaceMenu
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
@@ -143,7 +216,18 @@ LOG @109019
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_NAME~
 OUTER_SPRINT $UIMenuIF("Body") ~~
-OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenNameMenu1.menu~
+ACTION_IF IsBGEE THEN
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenNameMenu2.menu~
+END
+ACTION_IF IsSoD OR IsEETSoD OR IsKRDS OR IsKRDS0 OR IsKRDS1 OR IsKRDS2 OR IsKRDS3 OR IsKRDS4 OR IsKRDS5 THEN
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenNameMenu3.menu~
+END
+ACTION_IF IsBG2 OR IsBG2onSoD OR IsEETBG2 THEN
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenNameMenu1.menu~
+END
 LAUNCH_ACTION_MACRO UIMenuReplaceMenu
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
@@ -172,7 +256,13 @@ LOG @109021
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_BIO~
 OUTER_SPRINT $UIMenuIF("Body") ~~
-OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenBioMenu1.menu~
+ACTION_IF IsSoD OR IsEETSoD OR IsKRDS OR IsKRDS0 OR IsKRDS1 OR IsKRDS2 OR IsKRDS3 OR IsKRDS4 OR IsKRDS5 THEN
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenBioMenu2.menu~
+END ELSE
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenBioMenu1.menu~
+END
 LAUNCH_ACTION_MACRO UIMenuReplaceMenu
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
@@ -184,7 +274,13 @@ LOG @109023
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_IMPORT~
 OUTER_SPRINT $UIMenuIF("Body") ~~
-OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenImportMenu1.menu~
+ACTION_IF IsSoD OR IsEETSoD OR IsKRDS OR IsKRDS0 OR IsKRDS1 OR IsKRDS2 OR IsKRDS3 OR IsKRDS4 OR IsKRDS5 THEN
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenImportMenu2.menu~
+END ELSE
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenImportMenu1.menu~
+END
 LAUNCH_ACTION_MACRO UIMenuReplaceMenu
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
@@ -196,7 +292,18 @@ LOG @109025
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~POPUP_THREEBUTTON~
 OUTER_SPRINT $UIMenuIF("Body") ~~
-OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/PopupThreebuttonMenu1.menu~
+ACTION_IF IsBGEE THEN
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/PopupThreebuttonMenu2.menu~
+END
+ACTION_IF IsSoD OR IsEETSoD OR IsKRDS OR IsKRDS0 OR IsKRDS1 OR IsKRDS2 OR IsKRDS3 OR IsKRDS4 OR IsKRDS5 THEN
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/PopupThreebuttonMenu3.menu~
+END
+ACTION_IF IsBG2 OR IsBG2onSoD OR IsEETBG2 THEN
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/PopupThreebuttonMenu1.menu~
+END
 LAUNCH_ACTION_MACRO UIMenuReplaceMenu
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
@@ -225,7 +332,13 @@ LOG @109066
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~SAVE~
 OUTER_SPRINT $UIMenuIF("Body") ~~
-OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/SaveMenu1.menu~
+ACTION_IF IsSoD OR IsEETSoD OR IsKRDS OR IsKRDS0 OR IsKRDS1 OR IsKRDS2 OR IsKRDS3 OR IsKRDS4 OR IsKRDS5 THEN
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/SaveMenu2.menu~
+END ELSE
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/SaveMenu1.menu~
+END
 LAUNCH_ACTION_MACRO UIMenuReplaceMenu
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
@@ -254,7 +367,18 @@ LOG @109027
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~LOAD~
 OUTER_SPRINT $UIMenuIF("Body") ~~
-OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/LoadMenu1.menu~
+ACTION_IF IsBGEE THEN
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/LoadMenu2.menu~
+END
+ACTION_IF IsSoD OR IsEETSoD OR IsKRDS OR IsKRDS0 OR IsKRDS1 OR IsKRDS2 OR IsKRDS3 OR IsKRDS4 OR IsKRDS5 THEN
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/LoadMenu3.menu~
+END
+ACTION_IF IsBG2 OR IsBG2onSoD OR IsEETBG2 THEN
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/LoadMenu1.menu~
+END
 LAUNCH_ACTION_MACRO UIMenuReplaceMenu
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
@@ -266,7 +390,18 @@ LOG @109029
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~CHARACTER_SELECT~
 OUTER_SPRINT $UIMenuIF("Body") ~~
-OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/CharacterSelectMenu1.menu~
+ACTION_IF IsBGEE THEN
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/CharacterSelectMenu2.menu~
+END
+ACTION_IF IsSoD OR IsEETSoD OR IsKRDS OR IsKRDS0 OR IsKRDS1 OR IsKRDS2 OR IsKRDS3 OR IsKRDS4 OR IsKRDS5 THEN
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/CharacterSelectMenu3.menu~
+END
+ACTION_IF IsBG2 OR IsBG2onSoD OR IsEETBG2 THEN
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/CharacterSelectMenu1.menu~
+END
 LAUNCH_ACTION_MACRO UIMenuReplaceMenu
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
@@ -278,7 +413,18 @@ LOG @109031
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~IMPORTPARTY~
 OUTER_SPRINT $UIMenuIF("Body") ~~
-OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ImportPartyMenu1.menu~
+ACTION_IF IsBGEE THEN
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ImportPartyMenu2.menu~
+END
+ACTION_IF IsSoD OR IsEETSoD OR IsKRDS OR IsKRDS0 OR IsKRDS1 OR IsKRDS2 OR IsKRDS3 OR IsKRDS4 OR IsKRDS5 THEN
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ImportPartyMenu3.menu~
+END
+ACTION_IF IsBG2 OR IsBG2onSoD OR IsEETBG2 THEN
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ImportPartyMenu1.menu~
+END
 LAUNCH_ACTION_MACRO UIMenuReplaceMenu
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
@@ -290,7 +436,18 @@ LOG @109033
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_DIFFICULTY~
 OUTER_SPRINT $UIMenuIF("Body") ~~
-OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenDifficultyMenu1.menu~
+ACTION_IF IsBGEE THEN
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenDifficultyMenu2.menu~
+END
+ACTION_IF IsSoD OR IsEETSoD OR IsKRDS OR IsKRDS0 OR IsKRDS1 OR IsKRDS2 OR IsKRDS3 OR IsKRDS4 OR IsKRDS5 THEN
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenDifficultyMenu3.menu~
+END
+ACTION_IF IsBG2 OR IsBG2onSoD OR IsEETBG2 THEN
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenDifficultyMenu1.menu~
+END
 LAUNCH_ACTION_MACRO UIMenuReplaceMenu
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
@@ -319,7 +476,13 @@ LOG @109035
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_CHOOSE_SPELLS~
 OUTER_SPRINT $UIMenuIF("Body") ~~
-OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenChooseSpellsMenu1.menu~
+ACTION_IF IsSoD OR IsEETSoD OR IsKRDS OR IsKRDS0 OR IsKRDS1 OR IsKRDS2 OR IsKRDS3 OR IsKRDS4 OR IsKRDS5 THEN
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenChooseSpellsMenu2.menu~
+END ELSE
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenChooseSpellsMenu1.menu~
+END
 LAUNCH_ACTION_MACRO UIMenuReplaceMenu
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
@@ -348,7 +511,13 @@ LOG @109037
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_MEMORIZE_MAGE~
 OUTER_SPRINT $UIMenuIF("Body") ~~
-OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenMemorizeMageMenu1.menu~
+ACTION_IF IsSoD OR IsEETSoD OR IsKRDS OR IsKRDS0 OR IsKRDS1 OR IsKRDS2 OR IsKRDS3 OR IsKRDS4 OR IsKRDS5 THEN
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenMemorizeMageMenu2.menu~
+END ELSE
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenMemorizeMageMenu1.menu~
+END
 LAUNCH_ACTION_MACRO UIMenuReplaceMenu
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
@@ -377,7 +546,13 @@ LOG @109039
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_MEMORIZE_PRIEST~
 OUTER_SPRINT $UIMenuIF("Body") ~~
-OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenMemorizePriestMenu1.menu~
+ACTION_IF IsSoD OR IsEETSoD OR IsKRDS OR IsKRDS0 OR IsKRDS1 OR IsKRDS2 OR IsKRDS3 OR IsKRDS4 OR IsKRDS5 THEN
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenMemorizePriestMenu2.menu~
+END ELSE
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenMemorizePriestMenu1.menu~
+END
 LAUNCH_ACTION_MACRO UIMenuReplaceMenu
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
@@ -389,7 +564,13 @@ LOG @109041
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_EXPORT~
 OUTER_SPRINT $UIMenuIF("Body") ~~
-OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenExportMenu1.menu~
+ACTION_IF IsSoD OR IsEETSoD OR IsKRDS OR IsKRDS0 OR IsKRDS1 OR IsKRDS2 OR IsKRDS3 OR IsKRDS4 OR IsKRDS5 THEN
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenExportMenu2.menu~
+END ELSE
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenExportMenu1.menu~
+END
 LAUNCH_ACTION_MACRO UIMenuReplaceMenu
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
@@ -401,14 +582,25 @@ LOG @109043
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_DUALCLASS~
 OUTER_SPRINT $UIMenuIF("Body") ~~
-OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenDualClassMenu1.menu~
+ACTION_IF IsBGEE THEN
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenDualClassMenu2.menu~
+END
+ACTION_IF IsSoD OR IsEETSoD OR IsKRDS OR IsKRDS0 OR IsKRDS1 OR IsKRDS2 OR IsKRDS3 OR IsKRDS4 OR IsKRDS5 THEN
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenDualClassMenu3.menu~
+END
+ACTION_IF IsBG2 OR IsBG2onSoD OR IsEETBG2 THEN
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenDualClassMenu1.menu~
+END
 LAUNCH_ACTION_MACRO UIMenuReplaceMenu
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
 	FAIL @109044
 END
 
-ACTION_IF NOT(IsBG2onSoD) THEN
+ACTION_IF NOT(IsSoD OR IsEETSoD OR IsKRDS OR IsKRDS0 OR IsKRDS1 OR IsKRDS2 OR IsKRDS3 OR IsKRDS4 OR IsKRDS5 OR IsBG2onSoD) THEN
 BEGIN
 	// Replace CHARGEN_HIGH_LEVEL_ABILITIES Lua code block
 	LOG @109047
@@ -432,7 +624,13 @@ BEGIN
 	SILENT
 	OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_HIGH_LEVEL_ABILITIES~
 	OUTER_SPRINT $UIMenuIF("Body") ~~
-	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenHighLevelAbilitiesMenu1.menu~
+	ACTION_IF IsSoD OR IsEETSoD OR IsKRDS OR IsKRDS0 OR IsKRDS1 OR IsKRDS2 OR IsKRDS3 OR IsKRDS4 OR IsKRDS5 THEN
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenHighLevelAbilitiesMenu2.menu~
+	END ELSE
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCharacterGen/ChargenHighLevelAbilitiesMenu1.menu~
+	END
 	LAUNCH_ACTION_MACRO UIMenuReplaceMenu
 	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 	BEGIN
@@ -451,12 +649,25 @@ END
 
 // Copy common UI resources
 LOG @17
+ACTION_IF IsBGEE THEN
+BEGIN
+	OUTER_SPRINT theme ~BGEETheme~
+END
+ACTION_IF IsSoD OR IsEETSoD OR IsKRDS OR IsKRDS0 OR IsKRDS1 OR IsKRDS2 OR IsKRDS3 OR IsKRDS4 OR IsKRDS5 THEN
+BEGIN
+	OUTER_SPRINT theme ~SODTheme~
+END
+ACTION_IF IsBG2 OR IsBG2onSoD OR IsEETBG2 THEN
+BEGIN
+	OUTER_SPRINT theme ~BG2Theme~
+END
+
 SILENT
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUISCRC.BAM~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/%theme%/LUISCRC.BAM~ ~override~
 
 LAF EEUITweaks.MultiCopyPVRZResource
 	STR_VAR
-		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/%theme%~
 		resource_file = ~LUIOSTUM.BAM LUIOSTLM.BAM LUIOSTUL.BAM LUIOSTUR.BAM LUIOSTLR.BAM LUIOSTCL.BAM~
 		pvrz_files = ~MOS4004.PVRZ~
 	RET
@@ -469,7 +680,7 @@ END
 
 LAF EEUITweaks.CopyPVRZResource
 	STR_VAR
-		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/%theme%~
 		resource_file = ~LLDRSTAR.BAM~
 		pvrz_files = ~MOS4006.PVRZ~
 	RET
@@ -482,7 +693,7 @@ END
 
 LAF EEUITweaks.CopyPVRZResource
 	STR_VAR
-		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/%theme%~
 		resource_file = ~LUIDIFFS.BAM~
 		pvrz_files = ~MOS4008.PVRZ~
 	RET
@@ -495,7 +706,7 @@ END
 
 LAF EEUITweaks.CopyPVRZResource
 	STR_VAR
-		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/%theme%~
 		resource_file = ~LUICHLNG.BAM~
 		pvrz_files = ~MOS4009.PVRZ~
 	RET
@@ -508,7 +719,7 @@ END
 
 LAF EEUITweaks.CopyPVRZResource
 	STR_VAR
-		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/%theme%~
 		resource_file = ~LUIRSP10.BAM~
 		pvrz_files = ~MOS4010.PVRZ~
 	RET
@@ -521,7 +732,7 @@ END
 
 LAF EEUITweaks.CopyPVRZResource
 	STR_VAR
-		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/%theme%~
 		resource_file = ~LUIOSW.BAM~
 		pvrz_files = ~MOS4015.PVRZ~
 	RET
@@ -534,7 +745,7 @@ END
 
 LAF EEUITweaks.CopyPVRZResource
 	STR_VAR
-		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/%theme%~
 		resource_file = ~LUIBTBUT.BAM~
 		pvrz_files = ~MOS4016.PVRZ~
 	RET
@@ -547,7 +758,7 @@ END
 
 LAF EEUITweaks.CopyPVRZResource
 	STR_VAR
-		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/%theme%~
 		resource_file = ~LOPSNDSB.MOS~
 		pvrz_files = ~MOS4248.PVRZ~
 	RET
@@ -560,7 +771,7 @@ END
 
 LAF EEUITweaks.CopyPVRZResource
 	STR_VAR
-		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/%theme%~
 		resource_file = ~LUICGB.MOS~
 		pvrz_files = ~MOS4251.PVRZ~
 	RET
@@ -573,7 +784,7 @@ END
 
 LAF EEUITweaks.CopyPVRZResource
 	STR_VAR
-		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/%theme%~
 		resource_file = ~LUICGPR.MOS~
 		pvrz_files = ~MOS4252.PVRZ~
 	RET
@@ -586,7 +797,7 @@ END
 
 LAF EEUITweaks.CopyPVRZResource
 	STR_VAR
-		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/%theme%~
 		resource_file = ~LUICHISD.MOS~
 		pvrz_files = ~MOS4253.PVRZ~
 	RET
@@ -599,7 +810,7 @@ END
 
 LAF EEUITweaks.CopyPVRZResource
 	STR_VAR
-		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/%theme%~
 		resource_file = ~LUICHISE.MOS~
 		pvrz_files = ~MOS4254.PVRZ~
 	RET
@@ -612,7 +823,7 @@ END
 
 LAF EEUITweaks.CopyPVRZResource
 	STR_VAR
-		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/%theme%~
 		resource_file = ~LUICREDT.MOS~
 		pvrz_files = ~MOS4257.PVRZ~
 	RET
@@ -625,7 +836,7 @@ END
 
 LAF EEUITweaks.CopyPVRZResource
 	STR_VAR
-		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/%theme%~
 		resource_file = ~LUICUSTB.MOS~
 		pvrz_files = ~MOS4258.PVRZ~
 	RET
@@ -638,7 +849,7 @@ END
 
 LAF EEUITweaks.CopyPVRZResource
 	STR_VAR
-		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/%theme%~
 		resource_file = ~LUIDCX.MOS~
 		pvrz_files = ~MOS4259.PVRZ~
 	RET
@@ -651,7 +862,7 @@ END
 
 LAF EEUITweaks.CopyPVRZResource
 	STR_VAR
-		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/%theme%~
 		resource_file = ~LUIERR.MOS~
 		pvrz_files = ~MOS4260.PVRZ~
 	RET
@@ -664,7 +875,7 @@ END
 
 LAF EEUITweaks.CopyPVRZResource
 	STR_VAR
-		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/%theme%~
 		resource_file = ~LUIERR2.MOS~
 		pvrz_files = ~MOS4261.PVRZ~
 	RET
@@ -677,7 +888,7 @@ END
 
 LAF EEUITweaks.CopyPVRZResource
 	STR_VAR
-		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/%theme%~
 		resource_file = ~LUISRSVB.MOS~
 		pvrz_files = ~MOS4297.PVRZ~
 	RET

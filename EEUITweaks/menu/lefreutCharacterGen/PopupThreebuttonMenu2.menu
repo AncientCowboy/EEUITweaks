@@ -1,0 +1,63 @@
+menu
+{
+	name 'POPUP_THREEBUTTON'
+	align center center
+	modal
+	label
+	{
+		area 0 0 406 415
+		mosaic LUIERR2
+	}
+	label
+	{
+		area 82 74 242 88
+		text lua "getStringFromAmbiguousSource(Popup3Button.info)"
+		text style "normal"
+		text align center center
+	}
+	button
+	{
+		area 52 218 300 44
+		bam LUIOSTCL
+		align center center
+		text lua "t(Popup3Button.rightText)"
+		text style "button"
+		action
+		"
+			Infinity_PopMenu()
+			if (Popup3Button.rightFunc) then
+				Popup3Button.rightFunc()
+			end
+		"
+	}
+	button
+	{
+		area 52 266 300 44
+		bam LUIOSTCL
+		align center center
+		text lua "t(Popup3Button.midText)"
+		text style "button"
+		action
+		"
+			Infinity_PopMenu()
+			if (Popup3Button.midFunc) then
+				Popup3Button.midFunc()
+			end
+		"
+	}
+	button
+	{
+		area 103 320 201 44
+		bam LUIOSTLM
+		align center center
+		text lua "t(Popup3Button.leftText)"
+		text style "button"
+		action
+		"
+			Infinity_PopMenu()
+			if (Popup3Button.leftFunc) then
+				Popup3Button.leftFunc()
+			end
+		"
+	}
+}

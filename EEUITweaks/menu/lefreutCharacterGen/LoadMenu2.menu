@@ -1,0 +1,423 @@
+menu
+{
+	name 'LOAD'
+	align center center
+	ignoreEsc
+	onOpen
+	"
+		currentPage = 0
+	"
+	label
+	{
+		area 0 0 1024 768
+		mosaic LUISRSVB
+	}
+	label
+	{
+		area 162 6 700 50
+		text lua "t(gameSaves.isImporting ~= 1 and 'LOAD_TITLE' or 'IMPORT_TITLE')"
+		text style "title"
+		text point 26
+	}
+
+	button
+	{
+		enabled "gameSaves.files[currentPage + 1] and gameSaves.files[currentPage + 1].hasScreenShot"
+		area 18 136 170 128
+		bitmap res "gameSaves.files[currentPage + 1].screenshot"
+		bitmap area 10 0 170 128
+	}
+	label
+	{
+		enabled "gameSaves.files[currentPage + 1] ~= nil"
+		area 222 138 450 26
+		text lua "gameSaves.files[currentPage + 1].slotName"
+		text style "label"
+		align left bottom
+	}
+	label
+	{
+		enabled "gameSaves.files[currentPage + 1] ~= nil"
+		area 222 170 450 26
+		text lua "gameSaves.files[currentPage + 1].chapter .. ': ' .. gameSaves.files[currentPage + 1].time"
+		text style "label"
+		align left bottom
+	}
+	button
+	{
+		enabled "gameSaves.files[currentPage + 1] and gameSaves.files[currentPage + 1].hasPortrait0"
+		area 316 206 30 48
+		bitmap res "gameSaves.files[currentPage + 1].portrait0"
+	}
+	button
+	{
+		enabled "gameSaves.files[currentPage + 1] and gameSaves.files[currentPage + 1].hasPortrait1"
+		area 377 206 30 48
+		bitmap res "gameSaves.files[currentPage + 1].portrait1"
+	}
+	button
+	{
+		enabled "gameSaves.files[currentPage + 1] and gameSaves.files[currentPage + 1].hasPortrait2"
+		area 439 206 30 48
+		bitmap res "gameSaves.files[currentPage + 1].portrait2"
+	}
+	button
+	{
+		enabled "gameSaves.files[currentPage + 1] and gameSaves.files[currentPage + 1].hasPortrait3"
+		area 500 206 30 48
+		bitmap res "gameSaves.files[currentPage + 1].portrait3"
+	}
+	button
+	{
+		enabled "gameSaves.files[currentPage + 1] and gameSaves.files[currentPage + 1].hasPortrait4"
+		area 564 206 30 48
+		bitmap res "gameSaves.files[currentPage + 1].portrait4"
+	}
+	button
+	{
+		enabled "gameSaves.files[currentPage + 1] and gameSaves.files[currentPage + 1].hasPortrait5"
+		area 626 206 30 48
+		bitmap res "gameSaves.files[currentPage + 1].portrait5"
+	}
+	button
+	{
+		enabled "gameSaves.files[currentPage + 2] and gameSaves.files[currentPage + 2].hasScreenShot"
+		area 18 280 170 128
+		bitmap res "gameSaves.files[currentPage + 2].screenshot"
+		bitmap area 10 0 170 128
+	}
+	label
+	{
+		enabled "gameSaves.files[currentPage + 2] ~= nil"
+		area 222 282 450 26
+		text lua "gameSaves.files[currentPage + 2].slotName"
+		text style "label"
+		align left bottom
+	}
+	label
+	{
+		enabled "gameSaves.files[currentPage + 2] ~= nil"
+		area 222 314 450 26
+		text lua "gameSaves.files[currentPage + 2].chapter .. ': ' .. gameSaves.files[currentPage + 2].time"
+		text style "label"
+		align left bottom
+	}
+	button
+	{
+		enabled "gameSaves.files[currentPage + 2] and gameSaves.files[currentPage + 2].hasPortrait0"
+		area 316 350 30 48
+		bitmap res "gameSaves.files[currentPage + 2].portrait0"
+	}
+	button
+	{
+		enabled "gameSaves.files[currentPage + 2] and gameSaves.files[currentPage + 2].hasPortrait1"
+		area 377 350 30 48
+		bitmap res "gameSaves.files[currentPage + 2].portrait1"
+	}
+	button
+	{
+		enabled "gameSaves.files[currentPage + 2] and gameSaves.files[currentPage + 2].hasPortrait2"
+		area 439 350 30 48
+		bitmap res "gameSaves.files[currentPage + 2].portrait2"
+	}
+	button
+	{
+		enabled "gameSaves.files[currentPage + 2] and gameSaves.files[currentPage + 2].hasPortrait3"
+		area 500 350 30 48
+		bitmap res "gameSaves.files[currentPage + 2].portrait3"
+	}
+	button
+	{
+		enabled "gameSaves.files[currentPage + 2] and gameSaves.files[currentPage + 2].hasPortrait4"
+		area 564 350 30 48
+		bitmap res "gameSaves.files[currentPage + 2].portrait4"
+	}
+	button
+	{
+		enabled "gameSaves.files[currentPage + 2] and gameSaves.files[currentPage + 2].hasPortrait5"
+		area 626 350 30 48
+		bitmap res "gameSaves.files[currentPage + 2].portrait5"
+	}
+	button
+	{
+		enabled "gameSaves.files[currentPage + 3] and gameSaves.files[currentPage + 3].hasScreenShot"
+		area 18 425 170 128
+		bitmap res "gameSaves.files[currentPage + 3].screenshot"
+		bitmap area 10 0 170 128
+	}
+	label
+	{
+		enabled "gameSaves.files[currentPage + 3] ~= nil"
+		area 222 427 450 26
+		text lua "gameSaves.files[currentPage + 3].slotName"
+		text style "label"
+		align left bottom
+	}
+	label
+	{
+		enabled "gameSaves.files[currentPage + 3] ~= nil"
+		area 222 459 450 26
+		text lua "gameSaves.files[currentPage + 3].chapter .. ': ' .. gameSaves.files[currentPage + 3].time"
+		text style "label"
+		align left bottom
+	}
+	button
+	{
+		enabled "gameSaves.files[currentPage + 3] and gameSaves.files[currentPage + 3].hasPortrait0"
+		area 316 495 30 48
+		bitmap res "gameSaves.files[currentPage + 3].portrait0"
+	}
+	button
+	{
+		enabled "gameSaves.files[currentPage + 3] and gameSaves.files[currentPage + 3].hasPortrait1"
+		area 377 495 30 48
+		bitmap res "gameSaves.files[currentPage + 3].portrait1"
+	}
+	button
+	{
+		enabled "gameSaves.files[currentPage + 3] and gameSaves.files[currentPage + 3].hasPortrait2"
+		area 439 495 30 48
+		bitmap res "gameSaves.files[currentPage + 3].portrait2"
+	}
+	button
+	{
+		enabled "gameSaves.files[currentPage + 3] and gameSaves.files[currentPage + 3].hasPortrait3"
+		area 500 495 30 48
+		bitmap res "gameSaves.files[currentPage + 3].portrait3"
+	}
+	button
+	{
+		enabled "gameSaves.files[currentPage + 3] and gameSaves.files[currentPage + 3].hasPortrait4"
+		area 564 495 30 48
+		bitmap res "gameSaves.files[currentPage + 3].portrait4"
+	}
+	button
+	{
+		enabled "gameSaves.files[currentPage + 3] and gameSaves.files[currentPage + 3].hasPortrait5"
+		area 626 495 30 48
+		bitmap res "gameSaves.files[currentPage + 3].portrait5"
+	}
+	button
+	{
+		enabled "gameSaves.files[currentPage + 4] and gameSaves.files[currentPage + 4].hasScreenShot"
+		area 18 569 170 128
+		bitmap res "gameSaves.files[currentPage + 4].screenshot"
+		bitmap area 10 0 170 128
+	}
+	label
+	{
+		enabled "gameSaves.files[currentPage + 4] ~= nil"
+		area 222 571 450 26
+		text lua "gameSaves.files[currentPage + 4].slotName"
+		text style "label"
+		align left bottom
+	}
+	label
+	{
+		enabled "gameSaves.files[currentPage + 4] ~= nil"
+		area 222 603 450 26
+		text lua "gameSaves.files[currentPage + 4].chapter .. ': ' .. gameSaves.files[currentPage + 4].time"
+		text style "label"
+		align left bottom
+	}
+	button
+	{
+		enabled "gameSaves.files[currentPage + 4] and gameSaves.files[currentPage + 4].hasPortrait0"
+		area 316 639 30 48
+		bitmap res "gameSaves.files[currentPage + 4].portrait0"
+	}
+	button
+	{
+		enabled "gameSaves.files[currentPage + 4] and gameSaves.files[currentPage + 4].hasPortrait1"
+		area 377 639 30 48
+		bitmap res "gameSaves.files[currentPage + 4].portrait1"
+	}
+	button
+	{
+		enabled "gameSaves.files[currentPage + 4] and gameSaves.files[currentPage + 4].hasPortrait2"
+		area 439 639 30 48
+		bitmap res "gameSaves.files[currentPage + 4].portrait2"
+	}
+	button
+	{
+		enabled "gameSaves.files[currentPage + 4] and gameSaves.files[currentPage + 4].hasPortrait3"
+		area 500 639 30 48
+		bitmap res "gameSaves.files[currentPage + 4].portrait3"
+	}
+	button
+	{
+		enabled "gameSaves.files[currentPage + 4] and gameSaves.files[currentPage + 4].hasPortrait4"
+		area 564 639 30 48
+		bitmap res "gameSaves.files[currentPage + 4].portrait4"
+	}
+	button
+	{
+		enabled "gameSaves.files[currentPage + 4] and gameSaves.files[currentPage + 4].hasPortrait5"
+		area 626 639 30 48
+		bitmap res "gameSaves.files[currentPage + 4].portrait5"
+	}
+
+	list
+	{
+		column
+		{
+			width 100
+			label
+			{
+				area 0 0 0 0
+			}
+		}
+		area 0 164 1004 536
+		rowheight 134
+		hidehighlight
+		table "makeTable(#gameSaves.files)"
+		scrollbar 'LUISCRC'
+		scrollbar func "scrollFunc"
+	}
+
+	button
+	{
+		area 712 166 234 44
+		bam LUIOSTUR
+		clickable lua "gameSaves.files[currentPage + 1] ~= nil"
+		text lua "t(gameSaves.isImporting ~= 1 and 'LOAD_BUTTON' or 'IMPORT_BUTTON')"
+		text style "button"
+		action
+		"
+			loadScreen:LoadGame(gameSaves.files[currentPage + 1].fileName)
+		"
+		actionScroll
+		"
+			onScroll(length(gameSaves.files) - 4)
+		"
+	}
+	button
+	{
+		area 712 214 234 44
+		bam LUIOSTLR
+		clickable lua "gameSaves.files[currentPage + 1] ~= nil"
+		text "DELETE_BUTTON"
+		text style "button"
+		action
+		"
+			popup2Button(15305, 'DELETE_BUTTON',
+			 function() loadScreen:DeleteGame(gameSaves.files[currentPage + 1].slotIndex) end)
+		"
+		actionScroll
+		"
+			onScroll(length(gameSaves.files) - 4)
+		"
+	}
+	button
+	{
+		area 712 310 234 44
+		bam LUIOSTUR
+		clickable lua "gameSaves.files[currentPage + 2] ~= nil"
+		text lua "t(gameSaves.isImporting ~= 1 and 'LOAD_BUTTON' or 'IMPORT_BUTTON')"
+		text style "button"
+		action
+		"
+			loadScreen:LoadGame(gameSaves.files[currentPage + 2].fileName)
+		"
+		actionScroll
+		"
+			onScroll(length(gameSaves.files) - 4)
+		"
+	}
+	button
+	{
+		area 712 358 234 44
+		bam LUIOSTLR
+		clickable lua "gameSaves.files[currentPage + 2] ~= nil"
+		text "DELETE_BUTTON"
+		text style "button"
+		action
+		"
+			popup2Button(15305, 'DELETE_BUTTON',
+			 function() loadScreen:DeleteGame(gameSaves.files[currentPage + 2].slotIndex) end)
+		"
+		actionScroll
+		"
+			onScroll(length(gameSaves.files) - 4)
+		"
+	}
+	button
+	{
+		area 712 455 234 44
+		bam LUIOSTUR
+		clickable lua "gameSaves.files[currentPage + 3] ~= nil"
+		text lua "t(gameSaves.isImporting ~= 1 and 'LOAD_BUTTON' or 'IMPORT_BUTTON')"
+		text style "button"
+		action
+		"
+			loadScreen:LoadGame(gameSaves.files[currentPage + 3].fileName)
+		"
+		actionScroll
+		"
+			onScroll(length(gameSaves.files) - 4)
+		"
+	}
+	button
+	{
+		area 712 503 234 44
+		bam LUIOSTLR
+		clickable lua "gameSaves.files[currentPage + 3] ~= nil"
+		text "DELETE_BUTTON"
+		text style "button"
+		action
+		"
+			popup2Button(15305, 'DELETE_BUTTON',
+			 function() loadScreen:DeleteGame(gameSaves.files[currentPage + 3].slotIndex) end)
+		"
+		actionScroll
+		"
+			onScroll(length(gameSaves.files) - 4)
+		"
+	}
+	button
+	{
+		area 712 599 234 44
+		bam LUIOSTUR
+		clickable lua "gameSaves.files[currentPage + 4] ~= nil"
+		text lua "t(gameSaves.isImporting ~= 1 and 'LOAD_BUTTON' or 'IMPORT_BUTTON')"
+		text style "button"
+		action
+		"
+			loadScreen:LoadGame(gameSaves.files[currentPage + 4].fileName)
+		"
+		actionScroll
+		"
+			onScroll(length(gameSaves.files) - 4)
+		"
+	}
+	button
+	{
+		area 712 647 234 44
+		bam LUIOSTLR
+		clickable lua "gameSaves.files[currentPage + 4] ~= nil"
+		text "DELETE_BUTTON"
+		text style "button"
+		action
+		"
+			popup2Button(15305, 'DELETE_BUTTON',
+			 function() loadScreen:DeleteGame(gameSaves.files[currentPage + 4].slotIndex) end)
+		"
+		actionScroll
+		"
+			onScroll(length(gameSaves.files) - 4)
+		"
+	}
+
+	button
+	{
+		area 668 712 300 44
+		bam LUIOSTCL
+		text "BACK_BUTTON"
+		text style "button"
+		on escape
+		action
+		"
+			loadScreen:OnMainCancelButtonClick()
+		"
+	}
+}

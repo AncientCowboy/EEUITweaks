@@ -1,0 +1,205 @@
+menu
+{
+	name 'CHARACTER_SELECT'
+	align center center
+	onopen "selectedCharacter = 0"
+	ignoreesc
+	onOpen
+	"
+		currentPage = 0
+	"
+	label
+	{
+		mosaic LUICGPR
+		area 0 0 1024 768
+	}
+	label
+	{
+		area 22 8 966 50
+		text "IMPORT_TITLE"
+		text style "title"
+	}
+
+	label
+	{
+		enabled "character_select[currentPage + 1] ~= nil"
+		area 48 144 54 84
+		bitmap lua "character_select[currentPage + 1].portrait"
+	}
+	label
+	{
+		enabled "character_select[currentPage + 1] ~= nil"
+		area 172 120 528 32
+		text lua "character_select[currentPage + 1].name"
+		text style "label"
+		text align left center
+	}
+	label
+	{
+		enabled "character_select[currentPage + 1] ~= nil"
+		area 130 166 600 80
+		text lua "character_select[currentPage + 1].desc"
+		text style "normal"
+		text align left top
+	}
+	label
+	{
+		enabled "character_select[currentPage + 2] ~= nil"
+		area 48 292 54 84
+		bitmap lua "character_select[currentPage + 2].portrait"
+	}
+	label
+	{
+		enabled "character_select[currentPage + 2] ~= nil"
+		area 172 268 528 32
+		text lua "character_select[currentPage + 2].name"
+		text style "label"
+		text align left center
+	}
+	label
+	{
+		enabled "character_select[currentPage + 2] ~= nil"
+		area 130 314 600 80
+		text lua "character_select[currentPage + 2].desc"
+		text style "normal"
+		text align left top
+	}
+	label
+	{
+		enabled "character_select[currentPage + 3] ~= nil"
+		area 48 444 54 84
+		bitmap lua "character_select[currentPage + 3].portrait"
+	}
+	label
+	{
+		enabled "character_select[currentPage + 3] ~= nil"
+		area 172 420 528 32
+		text lua "character_select[currentPage + 3].name"
+		text style "label"
+		text align left center
+	}
+	label
+	{
+		enabled "character_select[currentPage + 3] ~= nil"
+		area 130 466 600 80
+		text lua "character_select[currentPage + 3].desc"
+		text style "normal"
+		text align left top
+	}
+	label
+	{
+		enabled "character_select[currentPage + 4] ~= nil"
+		area 48 594 54 84
+		bitmap lua "character_select[currentPage + 4].portrait"
+	}
+	label
+	{
+		enabled "character_select[currentPage + 4] ~= nil"
+		area 172 570 528 32
+		text lua "character_select[currentPage + 4].name"
+		text style "label"
+		text align left center
+	}
+	label
+	{
+		enabled "character_select[currentPage + 4] ~= nil"
+		area 130 616 600 80
+		text lua "character_select[currentPage + 4].desc"
+		text style "normal"
+		text align left top
+	}
+	list
+	{
+		column
+		{
+			width 100
+			label
+			{
+				area 0 0 0 0
+			}
+		}
+		area 28 150 960 536
+		rowheight 134
+		hidehighlight
+		table "makeTable(#character_select)"
+		scrollbar 'LUISCRC'
+		scrollbar func "scrollFunc"
+	}
+	button
+	{
+		enabled "character_select[currentPage + 1] ~= nil"
+		area 748 202 201 44
+		text "IMPORT_BUTTON"
+		text style "button"
+		bam LUIOSTUM
+		action
+		"
+			createCharScreen:OnPrerollCharacterPick(character_select[currentPage + 1].id)
+			Infinity_PopMenu('CHARACTER_SELECT')
+		"
+		actionScroll
+		"
+			onScroll(length(character_select) - 4)
+		"
+	}
+	button
+	{
+		enabled "character_select[currentPage + 2] ~= nil"
+		area 748 350 201 44
+		text "IMPORT_BUTTON"
+		text style "button"
+		bam LUIOSTUM
+		action
+		"
+			createCharScreen:OnPrerollCharacterPick(character_select[currentPage + 2].id)
+			Infinity_PopMenu('CHARACTER_SELECT')
+		"
+		actionScroll
+		"
+			onScroll(length(character_select) - 4)
+		"
+	}
+	button
+	{
+		enabled "character_select[currentPage + 3] ~= nil"
+		area 748 502 201 44
+		text "IMPORT_BUTTON"
+		text style "button"
+		bam LUIOSTUM
+		action
+		"
+			createCharScreen:OnPrerollCharacterPick(character_select[currentPage + 3].id)
+			Infinity_PopMenu('CHARACTER_SELECT')
+		"
+		actionScroll
+		"
+			onScroll(length(character_select) - 4)
+		"
+	}
+	button
+	{
+		enabled "character_select[currentPage + 4] ~= nil"
+		area 748 652 201 44
+		text "IMPORT_BUTTON"
+		text style "button"
+		bam LUIOSTUM
+		action
+		"
+			createCharScreen:OnPrerollCharacterPick(character_select[currentPage + 4].id)
+			Infinity_PopMenu('CHARACTER_SELECT')
+		"
+		actionScroll
+		"
+			onScroll(length(character_select) - 4)
+		"
+	}
+	button
+	{
+		on escape
+		area 362 724 300 44
+		bam LUIOSTCL
+		text "BACK_BUTTON"
+		text style "button"
+		action "Infinity_PopMenu('CHARACTER_SELECT')"
+	}
+}

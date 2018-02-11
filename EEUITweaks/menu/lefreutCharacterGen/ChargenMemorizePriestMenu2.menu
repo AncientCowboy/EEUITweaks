@@ -1,0 +1,132 @@
+menu
+{
+	name 'CHARGEN_MEMORIZE_PRIEST'
+	modal
+	align center center
+	ignoreesc
+	onOpen
+	"
+		table.sort(chargen.choose_spell, sortByPriestSpellName)
+		currentChargenMemorizePriestSpell = nil
+	"
+	label
+	{
+		area 0 0 864 710
+		mosaic LUICUSTB
+	}
+	label
+	{
+		area 82 12 700 40
+		text lua "chargen.title"
+		text style "title"
+	}
+	list
+	{
+		column
+		{
+			width 16
+			label
+			{
+				bam LUIBTBUT
+				area 0 0 52 52
+				align center center
+				icon lua "priestSpells[chargen.currentSpellLevelChoice][chargen.choose_spell[rowNumber].key].groundicon"
+				frame 0
+				count lua "chargen.choose_spell[rowNumber].count"
+			}
+		}
+		column
+		{
+			width 56
+			label
+			{
+				area 4 0 -1 -1
+				text lua "Infinity_FetchString(priestSpells[chargen.currentSpellLevelChoice][chargen.choose_spell[rowNumber].key].name)"
+				text style "normal"
+				glow lua "chargen.choose_spell[rowNumber].enabled"
+				align left center
+			}
+		}
+		column
+		{
+			width 14
+			label
+			{
+				area 0 4 45 42
+				bam LUIOSW
+				frame lua "getPriestFrame(rowNumber, chargenReverseButtons) and currentCellCheck(3) or 3"
+				sequence lua "chargenReverseButtons and 1 or 3"
+			}
+		}
+		column
+		{
+			width 14
+			label
+			{
+				area 0 4 45 42
+				bam LUIOSW
+				frame lua "getPriestFrame(rowNumber, not chargenReverseButtons) and currentCellCheck(4) or 3"
+				sequence lua "chargenReverseButtons and 0 or 4"
+			}
+		}
+		scrollbar 'LUISCRC'
+		rowheight 52
+		hidehighlight
+		area 42 192 340 414
+		table "chargen.choose_spell"
+		var currentChargenMemorizePriestSpell
+		action
+		"
+			local delta = chargenReverseButtons and -1 or 1
+			if cellNumber == 3 and getPriestFrame(currentChargenMemorizePriestSpell, chargenReverseButtons) then
+				Infinity_PlaySound('GAM_09')
+				createCharScreen:OnMemorizePriestSpellButtonClick(currentChargenMemorizePriestSpell, delta)
+			elseif cellNumber == 4 and getPriestFrame(currentChargenMemorizePriestSpell, not chargenReverseButtons) then
+				Infinity_PlaySound('GAM_09')
+				createCharScreen:OnMemorizePriestSpellButtonClick(currentChargenMemorizePriestSpell, -delta)
+			end
+			cellNumber = nil
+		"
+	}
+	label
+	{
+		area 46 116 336 48
+		text lua "t('SPELLS_REMAINING_NORMAL') .. ': ' .. chargen.extraSpells"
+		text style "normal"
+		text align center center
+	}
+
+	text
+	{
+		area 436 128 382 478
+		text lua "priestMemorizeSpellOrGeneralHelp()"
+		text style "normal"
+		scrollbar 'LUISCRC'
+	}
+	button
+	{
+		on return
+		bam LUIOSTUL
+		area 210 640 234 44
+		text style "button"
+		text lua "nextOrDone()"
+		clickable lua "createCharScreen:IsDoneButtonClickable()"
+		action
+		"
+			createCharScreen:OnDoneButtonClick()
+		"
+	}
+	button
+	{
+		on escape
+		bam LUIOSTUR
+		area 464 640 234 44
+		text style "button"
+		text "BACK_BUTTON"
+		action
+		"
+			Infinity_PopMenu()
+			createCharScreen:OnCancelButtonClick()
+		"
+	}
+}

@@ -1,0 +1,90 @@
+menu
+{
+	name 'CHARGEN_DUALCLASS'
+	align center center
+	ignoreesc
+	label
+	{
+		area 0 0 864 710
+		mosaic LUIDCX
+	}
+	label
+	{
+		area 82 10 700 44
+		text "DUALCLASS_TITLE"
+		text style "title"
+	}
+	label
+	{
+		area 62 122 363 36
+		text lua "characters[currentID].name"
+		text style "label"
+	}
+	label
+	{
+		area 459 122 363 36
+		text lua "characters[currentID].class"
+		text style "label"
+	}
+	label
+	{
+		area 140 191 169 266
+		bitmap lua "characters[currentID].portrait"
+	}
+	text
+	{
+		area 481 194 336 407
+		text 10811 --dual class info
+		text style "parchment"
+		text color D
+		scrollbar 'LUISCRC'
+	}
+	button
+	{
+		area 90 498 300 44
+		clickable lua "createCharScreen:GetCurrentStep() == const.STEP_DUALCLASS_CLASS"
+		bam LUIOSTCL
+		text "CLASS_BUTTON"
+		text style "button"
+		action
+		"
+			createCharScreen:OnMenuButtonClick()
+		"
+	}
+	button
+	{
+		area 90 546 300 44
+		clickable lua "createCharScreen:GetCurrentStep() == const.STEP_DUALCLASS_PROFICIENCIES"
+		bam LUIOSTCL
+		text "SKILLS_BUTTON"
+		text style "button"
+		action
+		"
+			createCharScreen:OnMenuButtonClick()
+		"
+	}
+	button
+	{
+		bam LUIOSTUL
+		area 210 640 234 44
+		clickable lua "createCharScreen:GetCurrentStep() == const.STEP_DUALCLASS_DONE"
+		text "DONE_BUTTON"
+		text style "button"
+		action
+		"
+			createCharScreen:OnDoneButtonClick()
+		"
+	}
+	button
+	{
+		on escape
+		bam LUIOSTUR
+		area 464 640 234 44
+		text "CANCEL_BUTTON"
+		text style "button"
+		action
+		"
+			createCharScreen:OnCancelButtonClick()
+		"
+	}
+}

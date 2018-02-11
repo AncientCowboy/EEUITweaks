@@ -1,0 +1,63 @@
+menu
+{
+	name 'CHARGEN_NAME'
+	modal
+	align center center
+	ignoreesc
+	onopen
+	"
+		if chargen.name then
+			charNameEdit = chargen.name
+		else
+			charNameEdit = ''
+		end
+		Infinity_FocusTextEdit('charNameEditArea')
+	"
+	label
+	{
+		area 0 0 406 415
+		mosaic LUIERR
+	}
+	label
+	{
+		area 70 70 264 42
+		text "ENTER_NAME_LABEL"
+		text style "title"
+	}
+	edit
+	{
+		name		"charNameEditArea"
+		area		100 114 204 42
+		var			charNameEdit
+		text style	"edit"
+		maxlines	1
+		maxchars	20
+		action
+		"
+			--if key_pressed is return
+			if (key_pressed == 13) then
+				return 0
+			end
+			return 1
+		"
+	}
+	button
+	{
+		on return
+		area 52 218 300 44
+		bam LUIOSTCL
+		text "DONE_BUTTON"
+		text style "button"
+		clickable lua "createCharScreen:IsDoneButtonClickable()"
+		action "Infinity_PopMenu(); createCharScreen:OnDoneButtonClick()"
+	}
+	button
+	{
+		on escape
+		area 52 266 300 44
+		bam LUIOSTCL
+		text "BACK_BUTTON"
+		text style "button"
+		action "Infinity_PopMenu(); createCharScreen:OnCancelButtonClick()"
+	}
+}

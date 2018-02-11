@@ -92,7 +92,6 @@ REQUIRE_PREDICATE
 (
 	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND // IE 2.0+
 	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1050~)) AND // Not Adul's Unhide Chargen Options
-	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1020~)) AND // Not Mr2150's Random PC Generator
 	(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND          // Not Lefreut's UI
 	(
 		(
@@ -107,11 +106,10 @@ REQUIRE_PREDICATE
 		) OR
 		(
 			(GAME_IS ~bgee~) AND 
-			(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND // Not IWD GUI
-			(FILE_EXISTS ~override/ULGOTHST.MOS~)              // BG2onSoD
+			(NOT(FILE_EXISTS ~override/guiweidufile.png~)) // Not IWD GUI
 		)
 	)
-) @27 // Only BG2 or BG2onSoD or EETBG2
+) @27
 SUBCOMPONENT @580
 
 ACTION_TRY

@@ -1,0 +1,104 @@
+menu
+{
+	name 'CHARGEN_KIT'
+	modal
+	align center center
+	ignoreesc
+	onOpen
+	"
+		currentChargenKit = 1
+	"
+	label
+	{
+		area 0 0 864 710
+		mosaic LUICUSTB
+	}
+	label
+	{
+		area 82 12 700 40
+		text "CLASS_KIT_TITLE"
+		text style "title"
+	}
+	list
+	{
+		column
+		{
+			width 100
+			label
+			{
+				enabled "rowNumber ~= currentChargenKit and rowNumber ~= hoverChargenKit"
+				area 8 0 340 44
+				text lua "Infinity_FetchString(chargen.kit[rowNumber].name)"
+				text style "list"
+				text align center center
+				text color D
+			}
+			label
+			{
+				enabled "rowNumber == currentChargenKit and rowNumber ~= hoverChargenKit"
+				area 8 0 340 44
+				text lua "Infinity_FetchString(chargen.kit[rowNumber].name)"
+				text style "list"
+				text align center center
+				text color S
+			}
+			label
+			{
+				enabled "rowNumber == hoverChargenKit"
+				area 8 0 340 44
+				text lua "Infinity_FetchString(chargen.kit[rowNumber].name)"
+				text style "list"
+				text align center center
+				text color H
+			}
+		}
+		action
+		"
+			if chargen.kit[currentChargenKit] then
+				createCharScreen:OnKitSelectButtonClick(chargen.kit[currentChargenKit].id)
+			end
+		"
+		actionEnter	"hoverChargenKit = mouseoverRow"
+		actionExit	"hoverChargenKit = 0"
+		rowheight 44
+		hidehighlight
+		area 42 192 340 414
+		table "chargen.kit"
+		var currentChargenKit
+		scrollbar 'LUISCRC'
+	}
+	text
+	{
+		area 436 128 382 478
+		text lua "kitOrGeneralHelp()"
+		text style "normal"
+		scrollbar 'LUISCRC'
+	}
+	button
+	{
+		on return
+		bam LUIOSTUL
+		area 210 640 234 44
+		text style "button"
+		text "DONE_BUTTON"
+		clickable lua "createCharScreen:IsDoneButtonClickable() and currentChargenKit"
+		action
+		"
+			Infinity_PopMenu()
+			createCharScreen:OnDoneButtonClick()
+		"
+	}
+	button
+	{
+		on escape
+		bam LUIOSTUR
+		area 464 640 234 44
+		text style "button"
+		text "BACK_BUTTON"
+		action
+		"
+			Infinity_PopMenu()
+			createCharScreen:OnCancelButtonClick()
+		"
+	}
+}

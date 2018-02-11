@@ -1,0 +1,107 @@
+menu
+{
+	name 'CHARGEN_CLASS'
+	modal
+	align center center
+	ignoreesc
+	onOpen
+	"
+		currentChargenClass = nil
+		currentChargenKit = nil
+	"
+	label
+	{
+		area 0 0 864 710
+		mosaic LUICUSTB
+	}
+	label
+	{
+		area 82 12 700 40
+		text "CLASS_TITLE"
+		text style "title"
+	}
+	list
+	{
+		column
+		{
+			width 100
+			label
+			{
+				enabled "rowNumber ~= currentChargenClass and rowNumber ~= hoverChargenClass"
+				area 8 0 340 44
+				text lua "Infinity_FetchString(chargen.class[rowNumber].name)"
+				text style "list"
+				text align center center
+				text color D
+			}
+			label
+			{
+				enabled "rowNumber == currentChargenClass and rowNumber ~= hoverChargenClass"
+				area 8 0 340 44
+				text lua "Infinity_FetchString(chargen.class[rowNumber].name)"
+				text style "list"
+				text align center center
+				text color S
+			}
+			label
+			{
+				enabled "rowNumber == hoverChargenClass"
+				area 8 0 340 44
+				text lua "Infinity_FetchString(chargen.class[rowNumber].name)"
+				text style "list"
+				text align center center
+				text color H
+			}
+		}
+		action
+		"
+			if chargen.class[currentChargenClass] then
+				createCharScreen:OnClassSelectButtonClick(chargen.class[currentChargenClass].id)
+			end
+		"
+		actionEnter	"hoverChargenClass = mouseoverRow"
+		actionExit	"hoverChargenClass = 0"
+		rowheight 44
+		hidehighlight
+		area 42 192 340 414
+		table "chargen.class"
+		var currentChargenClass
+		scrollbar 'LUISCRC'
+	}
+	text
+	{
+		area 436 128 382 478
+		text lua "classOrGeneralHelp()"
+		text style "normal"
+		scrollbar 'LUISCRC'
+	}
+	button
+	{
+		on return
+		bam LUIOSTUL
+		area 210 640 234 44
+		text style "button"
+		text "DONE_BUTTON"
+		clickable lua "createCharScreen:IsDoneButtonClickable() and currentChargenClass"
+		action
+		"
+			Infinity_PopMenu()
+			createCharScreen:OnDoneButtonClick()
+		"
+	}
+	button
+	{
+		on escape
+		bam LUIOSTUR
+		area 464 640 234 44
+		text style "button"
+		text "BACK_BUTTON"
+		action
+		"
+			Infinity_PopMenu()
+			if createCharScreen:GetCurrentStep() ~= const.STEP_DUALCLASS_CLASS then
+				createCharScreen:OnCancelButtonClick()
+			end
+		"
+	}
+}
