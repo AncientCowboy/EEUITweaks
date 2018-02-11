@@ -76,7 +76,7 @@ menu
 		bam LUIOSTCL
 		area 272 120 300 44
 		text style "button"
-		text	"PLAY_IMPORT_BUTTON"
+		text	"PLAY_GAME_BUTTON"
 		action
 		"
 			characterScreen:OnPlayButtonClick()

@@ -12,6 +12,7 @@ menu
 	onClose 
 	"
 		Infinity_PopMenu('CHARACTER_COLOR')
+		Infinity_PopMenu('ITEM_DESCRIPTION')
 		popSidebars()
 	"
 	label
@@ -403,7 +404,6 @@ menu
 	{
 		area 0 0 864 710
 		enabled "shouldGreyOutInventory()"
-		rectangle 0
-		rectangle opacity 200
+		fill 0 0 0 200
 	}
 }

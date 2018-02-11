@@ -213,6 +213,14 @@ function removeMageSpell(idx)
 	mageScreen:UnmemorizeSpell(bottomSpells[idx].level, bottomSpells[idx].memorizedIndex)
 end
 
+function spellTooltip(spells, cellNumber)
+	local idx = 4 * (currentBookSpell - 1) + cellNumber
+	if spells[idx] then
+		return Infinity_FetchString(spells[idx].name)
+	end
+	return ''
+end
+
 memorizationFlashes =
 {
 	{false, 0, false},

@@ -10,13 +10,15 @@ function updateAttrTable()
 			{ characters[currentID].attr.wis, 9586 },
 			{ characters[currentID].attr.cha, 9587 }
 		}
+		buildRecordStats()
+		buildRecordInfos()
 	end
 end
--- Override
+
 function characterDescString(char)
 	return Infinity_FetchString(char.gender) .. "\n" .. Infinity_FetchString(char.race) .. "\n" .. char.class .. "\n" .. Infinity_FetchString(char.alignment)
 end
--- Override
+
 function displaySTR()
 	local txt = characters[currentID].attr.str.current
 
@@ -31,7 +33,7 @@ function displaySTR()
 	end
 	return txt
 end
--- Override
+
 function displayBuff(current, base)
 	if(current > base) then
 		return '^G' .. current .. '^-'
@@ -40,7 +42,7 @@ function displayBuff(current, base)
 	end
 	return current
 end
--- Override
+
 function displayAttr(index)
 	if (index == 1) then
 		return displaySTR()
@@ -48,7 +50,7 @@ function displayAttr(index)
 		return displayBuff(attributeItems[index][1].current, attributeItems[index][1].base)
 	end
 end
--- Override
+
 function CurrentlyInGame()
 	return characterScreen:IsInGame()
 end
@@ -83,8 +85,6 @@ function buildRecordStats()
 		local pos = s:find(":", 1)
 		table.insert(recordStats, {2,s:sub(1, pos - 1),s:sub(pos + 2)})
 	end
-
-	return recordStats
 end
 function empty(t)
 	if next(t) == nil then
@@ -152,7 +152,14 @@ function buildRecordInfos()
 	table.insert(recordInfos, {1,t("RESISTANCES_LABEL")})
 	table.insert(recordInfos, {1,characters[currentID].proficiencies.resistances})
 
-	return recordInfos
+	if characters[currentID].proficiencies.weaponStyleBonus then
+		local weaponStyleBonus = trim(characters[currentID].proficiencies.weaponStyleBonus)
+		if weaponStyleBonus ~= "" then
+			table.insert(recordInfos, {1,""})
+			table.insert(recordInfos, {1,t("WEAPON_STYLE_BONUS_LABEL")})
+			table.insert(recordInfos, {1,weaponStyleBonus})
+		end
+	end
 end
 `
 menu
@@ -234,7 +241,7 @@ menu
 		}
 		area 28 78 296 510
 		rowheight dynamic
-		table "buildRecordStats()"
+		table "recordStats"
 		hidehighlight
 	}
 	list
@@ -270,7 +277,7 @@ menu
 		}
 		area 548 84 296 502
 		rowheight dynamic
-		table "buildRecordInfos()"
+		table "recordInfos"
 		hidehighlight
 		scrollbar 'LUISCRC'
 	}
@@ -295,6 +302,7 @@ menu
 	}
 	button
 	{
+		on escape
 		enabled "not CurrentlyInGame()"
 		area 331 546 201 44
 		bam LUIOSTUM

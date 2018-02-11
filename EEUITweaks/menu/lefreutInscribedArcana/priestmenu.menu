@@ -223,6 +223,152 @@ menu
 				selectedSpell = characters[id].priestSpells[currentSpellLevel][idx]
 			end
 		"
+		actionEnter	"currentBookSpell = mouseoverRow"
+		actionExit	"currentBookSpell = 0"
+	}
+	text
+	{
+		area 138 200 62 62
+		ignoreEvents
+		tooltip lua "spellTooltip(characters[id].priestSpells[currentSpellLevel], 1)"
+	}
+	text
+	{
+		area 200 200 62 62
+		ignoreEvents
+		tooltip lua "spellTooltip(characters[id].priestSpells[currentSpellLevel], 2)"
+	}
+	text
+	{
+		area 262 200 62 62
+		ignoreEvents
+		tooltip lua "spellTooltip(characters[id].priestSpells[currentSpellLevel], 3)"
+	}
+	text
+	{
+		area 324 200 62 62
+		ignoreEvents
+		tooltip lua "spellTooltip(characters[id].priestSpells[currentSpellLevel], 4)"
+	}
+	text
+	{
+		area 138 262 62 62
+		ignoreEvents
+		tooltip lua "spellTooltip(characters[id].priestSpells[currentSpellLevel], 1)"
+	}
+	text
+	{
+		area 200 262 62 62
+		ignoreEvents
+		tooltip lua "spellTooltip(characters[id].priestSpells[currentSpellLevel], 2)"
+	}
+	text
+	{
+		area 262 262 62 62
+		ignoreEvents
+		tooltip lua "spellTooltip(characters[id].priestSpells[currentSpellLevel], 3)"
+	}
+	text
+	{
+		area 324 262 62 62
+		ignoreEvents
+		tooltip lua "spellTooltip(characters[id].priestSpells[currentSpellLevel], 4)"
+	}
+	text
+	{
+		area 138 324 62 62
+		ignoreEvents
+		tooltip lua "spellTooltip(characters[id].priestSpells[currentSpellLevel], 1)"
+	}
+	text
+	{
+		area 200 324 62 62
+		ignoreEvents
+		tooltip lua "spellTooltip(characters[id].priestSpells[currentSpellLevel], 2)"
+	}
+	text
+	{
+		area 262 324 62 62
+		ignoreEvents
+		tooltip lua "spellTooltip(characters[id].priestSpells[currentSpellLevel], 3)"
+	}
+	text
+	{
+		area 324 324 62 62
+		ignoreEvents
+		tooltip lua "spellTooltip(characters[id].priestSpells[currentSpellLevel], 4)"
+	}
+	text
+	{
+		area 138 386 62 62
+		ignoreEvents
+		tooltip lua "spellTooltip(characters[id].priestSpells[currentSpellLevel], 1)"
+	}
+	text
+	{
+		area 200 386 62 62
+		ignoreEvents
+		tooltip lua "spellTooltip(characters[id].priestSpells[currentSpellLevel], 2)"
+	}
+	text
+	{
+		area 262 386 62 62
+		ignoreEvents
+		tooltip lua "spellTooltip(characters[id].priestSpells[currentSpellLevel], 3)"
+	}
+	text
+	{
+		area 324 386 62 62
+		ignoreEvents
+		tooltip lua "spellTooltip(characters[id].priestSpells[currentSpellLevel], 4)"
+	}
+	text
+	{
+		area 138 448 62 62
+		ignoreEvents
+		tooltip lua "spellTooltip(characters[id].priestSpells[currentSpellLevel], 1)"
+	}
+	text
+	{
+		area 200 448 62 62
+		ignoreEvents
+		tooltip lua "spellTooltip(characters[id].priestSpells[currentSpellLevel], 2)"
+	}
+	text
+	{
+		area 262 448 62 62
+		ignoreEvents
+		tooltip lua "spellTooltip(characters[id].priestSpells[currentSpellLevel], 3)"
+	}
+	text
+	{
+		area 324 448 62 62
+		ignoreEvents
+		tooltip lua "spellTooltip(characters[id].priestSpells[currentSpellLevel], 4)"
+	}
+	text
+	{
+		area 138 510 62 62
+		ignoreEvents
+		tooltip lua "spellTooltip(characters[id].priestSpells[currentSpellLevel], 1)"
+	}
+	text
+	{
+		area 200 510 62 62
+		ignoreEvents
+		tooltip lua "spellTooltip(characters[id].priestSpells[currentSpellLevel], 2)"
+	}
+	text
+	{
+		area 262 510 62 62
+		ignoreEvents
+		tooltip lua "spellTooltip(characters[id].priestSpells[currentSpellLevel], 3)"
+	}
+	text
+	{
+		area 324 510 62 62
+		ignoreEvents
+		tooltip lua "spellTooltip(characters[id].priestSpells[currentSpellLevel], 4)"
 	}
 
 	text
@@ -349,11 +495,157 @@ menu
 				end
 			end
 		"
+		actionEnter	"currentBookSpell = mouseoverRow"
+		actionExit	"currentBookSpell = 0"
 	}
 	label
 	{
 		area 294 608 276 50
 		text lua "priestPageInfo()"
 		text style "label"
+	}
+	text
+	{
+		area 460 200 62 62
+		ignoreEvents
+		tooltip lua "spellTooltip(bottomSpells, 1)"
+	}
+	text
+	{
+		area 522 200 62 62
+		ignoreEvents
+		tooltip lua "spellTooltip(bottomSpells, 2)"
+	}
+	text
+	{
+		area 584 200 62 62
+		ignoreEvents
+		tooltip lua "spellTooltip(bottomSpells, 3)"
+	}
+	text
+	{
+		area 646 200 62 62
+		ignoreEvents
+		tooltip lua "spellTooltip(bottomSpells, 4)"
+	}
+	text
+	{
+		area 460 262 62 62
+		ignoreEvents
+		tooltip lua "spellTooltip(bottomSpells, 1)"
+	}
+	text
+	{
+		area 522 262 62 62
+		ignoreEvents
+		tooltip lua "spellTooltip(bottomSpells, 2)"
+	}
+	text
+	{
+		area 584 262 62 62
+		ignoreEvents
+		tooltip lua "spellTooltip(bottomSpells, 3)"
+	}
+	text
+	{
+		area 646 262 62 62
+		ignoreEvents
+		tooltip lua "spellTooltip(bottomSpells, 4)"
+	}
+	text
+	{
+		area 460 324 62 62
+		ignoreEvents
+		tooltip lua "spellTooltip(bottomSpells, 1)"
+	}
+	text
+	{
+		area 522 324 62 62
+		ignoreEvents
+		tooltip lua "spellTooltip(bottomSpells, 2)"
+	}
+	text
+	{
+		area 584 324 62 62
+		ignoreEvents
+		tooltip lua "spellTooltip(bottomSpells, 3)"
+	}
+	text
+	{
+		area 646 324 62 62
+		ignoreEvents
+		tooltip lua "spellTooltip(bottomSpells, 4)"
+	}
+	text
+	{
+		area 460 386 62 62
+		ignoreEvents
+		tooltip lua "spellTooltip(bottomSpells, 1)"
+	}
+	text
+	{
+		area 522 386 62 62
+		ignoreEvents
+		tooltip lua "spellTooltip(bottomSpells, 2)"
+	}
+	text
+	{
+		area 584 386 62 62
+		ignoreEvents
+		tooltip lua "spellTooltip(bottomSpells, 3)"
+	}
+	text
+	{
+		area 646 386 62 62
+		ignoreEvents
+		tooltip lua "spellTooltip(bottomSpells, 4)"
+	}
+	text
+	{
+		area 460 448 62 62
+		ignoreEvents
+		tooltip lua "spellTooltip(bottomSpells, 1)"
+	}
+	text
+	{
+		area 522 448 62 62
+		ignoreEvents
+		tooltip lua "spellTooltip(bottomSpells, 2)"
+	}
+	text
+	{
+		area 584 448 62 62
+		ignoreEvents
+		tooltip lua "spellTooltip(bottomSpells, 3)"
+	}
+	text
+	{
+		area 646 448 62 62
+		ignoreEvents
+		tooltip lua "spellTooltip(bottomSpells, 4)"
+	}
+	text
+	{
+		area 460 510 62 62
+		ignoreEvents
+		tooltip lua "spellTooltip(bottomSpells, 1)"
+	}
+	text
+	{
+		area 522 510 62 62
+		ignoreEvents
+		tooltip lua "spellTooltip(bottomSpells, 2)"
+	}
+	text
+	{
+		area 584 510 62 62
+		ignoreEvents
+		tooltip lua "spellTooltip(bottomSpells, 3)"
+	}
+	text
+	{
+		area 646 510 62 62
+		ignoreEvents
+		tooltip lua "spellTooltip(bottomSpells, 4)"
 	}
 }

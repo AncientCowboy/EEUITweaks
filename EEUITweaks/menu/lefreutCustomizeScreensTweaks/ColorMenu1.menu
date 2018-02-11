@@ -6,23 +6,6 @@ menu
 	modal
 	onOpen
 	"
-		if CurrentlyInGame() then
-			Infinity_PopMenu('CHARACTER_COLOR')
-		end
-		Infinity_PushMenu('CHARGEN_COLOR')
-	"
-	label
-	{
-		area 0 0 864 710
-	}
-}
-menu
-{
-	name 'CHARGEN_COLOR'
-	align center center
-	ignoreesc
-	onOpen
-	"
 		Infinity_UpdateLuaStats()
 
 		SLIDER_color_hair = characters[id].colors.hair
@@ -37,7 +20,6 @@ menu
 	"
 	onClose
 	"
-		Infinity_PopMenu('CHARACTER_COLOR')
 		if(SLIDER_color_hair_start ~= -1) then Infinity_SetHairColor(SLIDER_color_hair_start) end
 		if(SLIDER_color_skin_start ~= -1) then Infinity_SetSkinColor(SLIDER_color_skin_start) end
 		if(SLIDER_color_major_start ~= -1) then Infinity_SetMajorColor(SLIDER_color_major_start) end
@@ -200,7 +182,7 @@ menu
 				createCharScreen:OnDoneButtonClick()
 			end
 
-			Infinity_PopMenu('CHARGEN_COLOR')
+			Infinity_PopMenu('CHARACTER_COLOR')
 		"
 	}
 	button
@@ -212,7 +194,7 @@ menu
 		text "CANCEL_BUTTON"
 		action
 		"
-			Infinity_PopMenu('CHARGEN_COLOR')
+			Infinity_PopMenu('CHARACTER_COLOR')
 		"
 	}
 }
