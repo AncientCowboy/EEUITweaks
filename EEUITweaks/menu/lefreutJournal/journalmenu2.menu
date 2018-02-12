@@ -36,7 +36,7 @@ menu
 	}
 	button
 	{
-		area 24 132 52 132
+		area 30 132 52 132
 		bam LUIPRC
 		sequence 0
 		action
@@ -46,7 +46,7 @@ menu
 	}
 	button
 	{
-		area 788 132 52 132
+		area 782 132 52 132
 		bam LUIPRC
 		sequence 1
 		action
@@ -217,7 +217,7 @@ menu
 
 	button
 	{
-		area 72 94 234 44
+		area 132 70 234 44
 		bam LUIOSTUL
 		glow lua "journalMode == 0"
 		text "QUESTS_BUTTON"
@@ -229,7 +229,7 @@ menu
 	}
 	button
 	{
-		area 556 94 234 44
+		area 496 70 234 44
 		bam LUIOSTUR
 		glow lua "journalMode == 1"
 		text "DONE_QUESTS_BUTTON"
@@ -241,7 +241,7 @@ menu
 	}
 	button
 	{
-		area 58 604 234 44
+		area 72 620 234 44
 		bam LUIOSTLL
 		glow lua "journalMode == 2"
 		text "JOURNAL_BUTTON"
@@ -253,7 +253,7 @@ menu
 	}
 	button
 	{
-		area 332 610 201 44
+		area 332 620 201 44
 		bam LUIOSTLM
 		enabled "journalMode == 3"
 		clickable lua "chapter == Infinity_GetMaxChapterPage()"
@@ -268,7 +268,7 @@ menu
 	}
 	button
 	{
-		area 572 604 234 44
+		area 556 620 234 44
 		glow lua "journalMode == 3"
 		bam LUIOSTLR
 		text "USER_BUTTON"
