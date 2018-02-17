@@ -88,27 +88,16 @@ END
  *****************************************************************************/
 BEGIN @109000 DESIGNATED 1090
 GROUP @1
-REQUIRE_PREDICATE
-(
+REQUIRE_PREDICATE (
 	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND // IE 2.0+
-	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1050~)) AND // Not Adul's Unhide Chargen Options
-	(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND          // Not Lefreut's UI
-	(
-		(
-			(GAME_IS ~bg2ee~) AND
-			(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND // Not IWD GUI
-			(NOT(FILE_EXISTS ~override/guiiwd2dummy.png~))     // Not IWD2 GUI
-		) OR 
-		(
-			(GAME_IS ~eet~) AND
-			(NOT(MOD_IS_INSTALLED ~setup-EET_gui.tp2~ ~0~)) // Not EET SoD GUI
-
-		) OR
-		(
-			(GAME_IS ~bgee~) AND 
-			(NOT(FILE_EXISTS ~override/guiweidufile.png~)) // Not IWD GUI
-		)
-	)
+	(GAME_IS ~bgee bg2ee eet~) AND
+	(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND              // Not Lefreut's UI
+	(NOT(MOD_IS_INSTALLED ~LeUI-BG1EE.tp2~ ~0~)) AND        // Not Lefreut's UI (BG1EE skin)
+	(NOT(MOD_IS_INSTALLED ~LeUI-SoD.tp2~ ~0~)) AND          // Not Lefreut's UI (SoD skin)
+	(NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~)) AND  // Not Dragonspear UI++
+	(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND      // Not IWD GUI
+	(NOT(FILE_EXISTS ~override/guiiwd2dummy.png~)) AND      // Not IWD2 GUI
+	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1050~))         // Not Adul's Unhide Chargen Options
 ) @27
 SUBCOMPONENT @580
 
@@ -195,12 +184,12 @@ END
  *****************************************************************************/
 BEGIN @104000 DESIGNATED 1040
 GROUP @1
-SUBCOMPONENT @510 
+SUBCOMPONENT @510
 (
 	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1060~)) AND // Not Mr2150's Roll First
 	(
-		NOT(GAME_IS ~bgee~) OR 
-		(FILE_EXISTS_IN_GAME ~BD0010.ARE~) OR 
+		NOT(GAME_IS ~bgee~) OR
+		(FILE_EXISTS_IN_GAME ~BD0010.ARE~) OR
 		(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)
 	) // Not simple BGEE
 )
@@ -254,24 +243,15 @@ END
  *****************************************************************************/
 BEGIN @108000 DESIGNATED 1080
 GROUP @1
-SUBCOMPONENT @510 
+SUBCOMPONENT @510
 (
-	(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~))          AND  // Not Lefreut's UI
-	(
-		(
-			(GAME_IS ~bg2ee~) AND
-			(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND // Not IWD GUI
-			(NOT(FILE_EXISTS ~override/guiiwd2dummy.png~))     // Not IWD2 GUI
-		) OR
-		(
-			(GAME_IS ~eet~) AND
-			(NOT(MOD_IS_INSTALLED ~setup-EET_gui.tp2~ ~0~))    // Not EET SoD GUI
-		) OR
-		(
-			(GAME_IS ~bgee~) AND 
-			(NOT(FILE_EXISTS ~override/guiweidufile.png~))     // Not IWD GUI
-		)
-	)
+	(GAME_IS ~bgee bg2ee eet~) AND
+	(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND              // Not Lefreut's UI
+	(NOT(MOD_IS_INSTALLED ~LeUI-BG1EE.tp2~ ~0~)) AND        // Not Lefreut's UI (BG1EE skin)
+	(NOT(MOD_IS_INSTALLED ~LeUI-SoD.tp2~ ~0~)) AND          // Not Lefreut's UI (SoD skin)
+	(NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~)) AND  // Not Dragonspear UI++
+	(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND      // Not IWD GUI
+	(NOT(FILE_EXISTS ~override/guiiwd2dummy.png~))          // Not IWD2 GUI
 )
 
 ACTION_TRY
@@ -541,6 +521,8 @@ GROUP @2
 REQUIRE_PREDICATE (
 	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND                // IE 2.0+
 	(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND         // Not Lefreut's UI
+	(NOT(MOD_IS_INSTALLED ~LeUI-BG1EE.tp2~ ~0~)) AND   // Not Lefreut's UI (BG1EE skin)
+	(NOT(MOD_IS_INSTALLED ~LeUI-SoD.tp2~ ~0~)) AND     // Not Lefreut's UI (SoD skin)
 	(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND // Not IWD GUI
 	(NOT(FILE_EXISTS ~override/guiiwd2dummy.png~)) AND // Not IWD2 GUI
 	(
@@ -605,8 +587,10 @@ END
 BEGIN @206000 DESIGNATED 2060
 GROUP @2
 REQUIRE_PREDICATE (
-	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND        // IE 2.0+
-	(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND // Not Lefreut's UI
+	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND              // IE 2.0+
+	(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND       // Not Lefreut's UI
+	(NOT(MOD_IS_INSTALLED ~LeUI-BG1EE.tp2~ ~0~)) AND // Not Lefreut's UI (BG1EE skin)
+	(NOT(MOD_IS_INSTALLED ~LeUI-SoD.tp2~ ~0~)) AND   // Not Lefreut's UI (SoD skin)
 	(
 		(GAME_IS ~eet~) OR
 		(GAME_IS ~bg2ee~) OR 
@@ -718,23 +702,14 @@ COPY ~%PKGNAME%/copy/LavaDelVortelHealthBar/fillbar.BAM~ ~override~
 BEGIN @306000 DESIGNATED 2900
 GROUP @3
 REQUIRE_PREDICATE (
-	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND                // IE 2.0+
-	(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND         // Not Lefreut's UI
-	(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND // Not IWD GUI
-	(NOT(FILE_EXISTS ~override/guiiwd2dummy.png~)) AND // Not IWD2 GUI
-	(
-		(GAME_IS ~bg2ee~) OR 
-		(
-			(GAME_IS ~eet~) AND
-			(NOT(MOD_IS_INSTALLED ~setup-EET_gui.tp2~ ~0~)) // Not EET SoD GUI
-
-		) OR
-		(
-			(GAME_IS ~bgee~) AND 
-			(FILE_EXISTS ~override/ULGOTHST.MOS~) // BG2onSoD
-		)
-	)
-) @27 // Only BG2 or BG2onSoD or EETBG2
+	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND // IE 2.0+
+	(GAME_IS ~bgee bg2ee eet~) AND
+	(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND              // Not Lefreut's UI
+	(NOT(MOD_IS_INSTALLED ~LeUI-BG1EE.tp2~ ~0~)) AND        // Not Lefreut's UI (BG1EE skin)
+	(NOT(MOD_IS_INSTALLED ~LeUI-SoD.tp2~ ~0~)) AND          // Not Lefreut's UI (SoD skin)
+	(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND      // Not IWD GUI
+	(NOT(FILE_EXISTS ~override/guiiwd2dummy.png~))          // Not IWD2 GUI
+) @27
 
 ACTION_TRY
 	INCLUDE ~%PKGNAME%/include/lefreutImprovedRecordScreen.tpa~
