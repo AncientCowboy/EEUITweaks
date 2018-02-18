@@ -59,20 +59,26 @@ LOG @403008
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~MAGE_CONTINGENCY~
 OUTER_SPRINT $UIMenuIF("Body") ~~
-OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutInscribedArcana/magecontingencymixed.menu~
+ACTION_IF IsSoD OR IsEETSoD OR IsSoDOverhaul OR IsKRDS OR IsKRDS0 OR IsKRDS1 OR IsKRDS2 OR IsKRDS3 OR IsKRDS4 OR IsKRDS5 THEN
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutInscribedArcana/magecontingencymixed2.menu~
+END ELSE
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutInscribedArcana/magecontingencymixed1.menu~
+END
 LAUNCH_ACTION_MACRO UIMenuReplaceMenuMixed
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
 	FAIL @403009
 END
 
-// Replace POPUP_DETAILS menu
+// Replace mixed POPUP_DETAILS menu
 LOG @403010
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~POPUP_DETAILS~
 OUTER_SPRINT $UIMenuIF("Body") ~~
 OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutInscribedArcana/popupdetailsmenu.menu~
-LAUNCH_ACTION_MACRO UIMenuReplaceMenu
+LAUNCH_ACTION_MACRO UIMenuReplaceMenuMixed
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
 	FAIL @403011
@@ -118,14 +124,29 @@ END
 
 // Copy UI resources
 LOG @17
-SILENT
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUISCRC.BAM~ ~override~
+ACTION_IF IsBGEE THEN
+BEGIN
+	OUTER_SPRINT theme ~BGEETheme~
+END
+ACTION_IF IsSoD OR IsEETSoD OR IsSoDOverhaul OR IsKRDS OR IsKRDS0 OR IsKRDS1 OR IsKRDS2 OR IsKRDS3 OR IsKRDS4 OR IsKRDS5 THEN
+BEGIN
+	OUTER_SPRINT theme ~SODTheme~
+END
+ACTION_IF IsBG2 OR IsBG2onSoD OR IsEETBG2 THEN
+BEGIN
+	OUTER_SPRINT theme ~BG2Theme~
+END
 
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUISBR.BAM~ ~override~
+SILENT
+COPY ~%PKGNAME%/copy/luicommon/%theme%/LUISCRC.BAM~ ~override~
+
+COPY ~%PKGNAME%/copy/luicommon/%theme%/LUISBR.BAM~ ~override~
+
+COPY ~%PKGNAME%/copy/luicommon/INITIALS.BAM~ ~override~
 
 LAF EEUITweaks.CopyPVRZResource
 	STR_VAR
-		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/%theme%~
 		resource_file = ~LUIWDBUT.BAM~
 		pvrz_files = ~MOS4000.PVRZ~
 	RET
@@ -138,7 +159,7 @@ END
 
 LAF EEUITweaks.MultiCopyPVRZResource
 	STR_VAR
-		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/%theme%~
 		resource_file = ~LUIOSTLL.BAM LUIOSTLR.BAM LUIOSTUL.BAM LUIOSTUM.BAM LUIOSTUR.BAM~
 		pvrz_files = ~MOS4004.PVRZ~
 	RET
@@ -151,7 +172,7 @@ END
 
 LAF EEUITweaks.MultiCopyPVRZResource
 	STR_VAR
-		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/%theme%~
 		resource_file = ~LPELFRMS.BAM LUIPRTC.BAM~
 		pvrz_files = ~MOS4006.PVRZ~
 	RET
@@ -164,7 +185,7 @@ END
 
 LAF EEUITweaks.CopyPVRZResource
 	STR_VAR
-		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/%theme%~
 		resource_file = ~LUIPRC.BAM~
 		pvrz_files = ~MOS4010.PVRZ~
 	RET
@@ -177,7 +198,7 @@ END
 
 LAF EEUITweaks.CopyPVRZResource
 	STR_VAR
-		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/%theme%~
 		resource_file = ~LUIOSW.BAM~
 		pvrz_files = ~MOS4015.PVRZ~
 	RET
@@ -190,7 +211,7 @@ END
 
 LAF EEUITweaks.CopyPVRZResource
 	STR_VAR
-		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/%theme%~
 		resource_file = ~LUIINVHI.MOS~
 		pvrz_files = ~MOS4267.PVRZ~
 	RET
@@ -203,7 +224,7 @@ END
 
 LAF EEUITweaks.CopyPVRZResource
 	STR_VAR
-		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/%theme%~
 		resource_file = ~LUIMGCP.MOS~
 		pvrz_files = ~MOS4294.PVRZ~
 	RET
@@ -216,7 +237,7 @@ END
 
 LAF EEUITweaks.CopyPVRZResource
 	STR_VAR
-		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/%theme%~
 		resource_file = ~LUIPRB.MOS~
 		pvrz_files = ~MOS4313.PVRZ~
 	RET
@@ -229,7 +250,7 @@ END
 
 LAF EEUITweaks.CopyPVRZResource
 	STR_VAR
-		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/%theme%~
 		resource_file = ~LUIMGB.MOS~
 		pvrz_files = ~MOS4314.PVRZ~
 	RET
@@ -240,3 +261,15 @@ BEGIN
 	FAIL @44
 END
 
+LAF EEUITweaks.CopyPVRZResource
+	STR_VAR
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/%theme%~
+		resource_file = ~LTONSLOT.BAM~
+		pvrz_files = ~MOS4000.PVRZ~
+	RET
+		$UIMenuIF("Succeeded") = succeeded
+END
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @44
+END
