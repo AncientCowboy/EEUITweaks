@@ -695,6 +695,28 @@ LOG @24
 SILENT
 COPY ~%PKGNAME%/copy/LavaDelVortelHealthBar/fillbar.BAM~ ~override~
 
+/******************************************************************************
+ * lefreut's Keep Dialog Box active
+ *****************************************************************************/
+BEGIN @211000 DESIGNATED 2110
+GROUP @2
+REQUIRE_PREDICATE (
+	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND // IE 2.0+
+	(
+		(GAME_IS ~eet~) OR
+		(GAME_IS ~bgee~) OR
+		(GAME_IS ~bg2ee~)
+	)
+) @27
+
+ACTION_TRY
+	INCLUDE ~%PKGNAME%/include/lefreutKeepDialog.tpa~
+WITH 
+	DEFAULT
+		LAM UIMenuAbort
+		ACTION_RERAISE
+END
+
 
 ///////////////////////////////////////////////////////////////////////////////
 // Record/Inventory/Journal Group

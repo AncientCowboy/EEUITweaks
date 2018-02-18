@@ -172,6 +172,9 @@
 @206  = ~Patching UI.MENU initial code block~
 @207  = ~Unable to get UI.MENU initial code block~
 @208  = ~Unable to patch UI.MENU initial code block~
+@209  = ~Patching WORLD_DEATH menu~
+@210  = ~Unable to get WORLD_DEATH menu~
+@211  = ~Unable to patch WORLD_DEATH menu~
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -384,6 +387,8 @@
 @209000 = ~LavaDelVortel's Sculpted Transparent Sidebars~
 
 @210000 = ~LavaDelVortel's Red Healthbar~
+
+@211000 = ~lefreut's Keep Dialog Box active after death~
 
 ///////////////////////////////////////////////////////////////////////////////
 // Record/Inventory/Journal Group
