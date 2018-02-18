@@ -23,7 +23,13 @@ LOG @302801
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~CHARACTER_CUSTOMIZE~
 OUTER_SPRINT $UIMenuIF("Body") ~~
-OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCustomizeScreensTweaks/CustomizeMenu1.menu~
+ACTION_IF IsSoD OR IsEETSoD OR IsSoDOverhaul OR IsKRDS OR IsKRDS0 OR IsKRDS1 OR IsKRDS2 OR IsKRDS3 OR IsKRDS4 OR IsKRDS5 THEN
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCustomizeScreensTweaks/CustomizeMenu2.menu~
+END ELSE
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCustomizeScreensTweaks/CustomizeMenu1.menu~
+END
 LAUNCH_ACTION_MACRO UIMenuReplaceMenu
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
@@ -35,7 +41,13 @@ LOG @302803
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~CHARACTER_BIOGRAPHY~
 OUTER_SPRINT $UIMenuIF("Body") ~~
-OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCustomizeScreensTweaks/BiographyMenu1.menu~
+ACTION_IF IsSoD OR IsEETSoD OR IsSoDOverhaul OR IsKRDS OR IsKRDS0 OR IsKRDS1 OR IsKRDS2 OR IsKRDS3 OR IsKRDS4 OR IsKRDS5 THEN
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCustomizeScreensTweaks/BiographyMenu2.menu~
+END ELSE
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCustomizeScreensTweaks/BiographyMenu1.menu~
+END
 LAUNCH_ACTION_MACRO UIMenuReplaceMenu
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
@@ -64,7 +76,13 @@ LOG @302808
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~CHARACTER_SCRIPT~
 OUTER_SPRINT $UIMenuIF("Body") ~~
-OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCustomizeScreensTweaks/ScriptMenu1.menu~
+ACTION_IF IsSoD OR IsEETSoD OR IsSoDOverhaul OR IsKRDS OR IsKRDS0 OR IsKRDS1 OR IsKRDS2 OR IsKRDS3 OR IsKRDS4 OR IsKRDS5 THEN
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCustomizeScreensTweaks/ScriptMenu2.menu~
+END ELSE
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCustomizeScreensTweaks/ScriptMenu1.menu~
+END
 LAUNCH_ACTION_MACRO UIMenuReplaceMenu
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
@@ -76,7 +94,13 @@ LOG @302810
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~CHARACTER_COLOR~
 OUTER_SPRINT $UIMenuIF("Body") ~~
-OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCustomizeScreensTweaks/ColorMenu1.menu~
+ACTION_IF IsSoD OR IsEETSoD OR IsSoDOverhaul OR IsKRDS OR IsKRDS0 OR IsKRDS1 OR IsKRDS2 OR IsKRDS3 OR IsKRDS4 OR IsKRDS5 THEN
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCustomizeScreensTweaks/ColorMenu2.menu~
+END ELSE
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCustomizeScreensTweaks/ColorMenu1.menu~
+END
 LAUNCH_ACTION_MACRO UIMenuReplaceMenu
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
@@ -88,7 +112,13 @@ LOG @302812
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~CHARACTER_SOUND~
 OUTER_SPRINT $UIMenuIF("Body") ~~
-OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCustomizeScreensTweaks/SoundMenu1.menu~
+ACTION_IF IsSoD OR IsEETSoD OR IsSoDOverhaul OR IsKRDS OR IsKRDS0 OR IsKRDS1 OR IsKRDS2 OR IsKRDS3 OR IsKRDS4 OR IsKRDS5 THEN
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCustomizeScreensTweaks/SoundMenu2.menu~
+END ELSE
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutCustomizeScreensTweaks/SoundMenu1.menu~
+END
 LAUNCH_ACTION_MACRO UIMenuReplaceMenu
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
@@ -106,12 +136,25 @@ END
 
 // Copy common UI resources
 LOG @17
+ACTION_IF IsBGEE THEN
+BEGIN
+	OUTER_SPRINT theme ~BGEETheme~
+END
+ACTION_IF IsSoD OR IsEETSoD OR IsSoDOverhaul OR IsKRDS OR IsKRDS0 OR IsKRDS1 OR IsKRDS2 OR IsKRDS3 OR IsKRDS4 OR IsKRDS5 THEN
+BEGIN
+	OUTER_SPRINT theme ~SODTheme~
+END
+ACTION_IF IsBG2 OR IsBG2onSoD OR IsEETBG2 THEN
+BEGIN
+	OUTER_SPRINT theme ~BG2Theme~
+END
+
 SILENT
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUISCRC.BAM~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/%theme%/LUISCRC.BAM~ ~override~
 
 LAF EEUITweaks.CopyPVRZResource
 	STR_VAR
-		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/%theme%~
 		resource_file = ~LLDRSTAR.BAM~
 		pvrz_files = ~MOS4006.PVRZ~
 	RET
@@ -124,7 +167,7 @@ END
 
 LAF EEUITweaks.CopyPVRZResource
 	STR_VAR
-		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/%theme%~
 		resource_file = ~LUICHLNG.BAM~
 		pvrz_files = ~MOS4009.PVRZ~
 	RET
@@ -137,7 +180,7 @@ END
 
 LAF EEUITweaks.MultiCopyPVRZResource
 	STR_VAR
-		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/%theme%~
 		resource_file = ~LUIOSTUL.BAM LUIOSTUM.BAM LUIOSTUR.BAM~
 		pvrz_files = ~MOS4004.PVRZ~
 	RET
@@ -150,7 +193,7 @@ END
 
 LAF EEUITweaks.CopyPVRZResource
 	STR_VAR
-		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/%theme%~
 		resource_file = ~LUICHISD.MOS~
 		pvrz_files = ~MOS4253.PVRZ~
 	RET
@@ -163,7 +206,7 @@ END
 
 LAF EEUITweaks.CopyPVRZResource
 	STR_VAR
-		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/%theme%~
 		resource_file = ~LUICHISE.MOS~
 		pvrz_files = ~MOS4254.PVRZ~
 	RET
@@ -176,7 +219,7 @@ END
 
 LAF EEUITweaks.CopyPVRZResource
 	STR_VAR
-		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/%theme%~
 		resource_file = ~LUICUSTB.MOS~
 		pvrz_files = ~MOS4258.PVRZ~
 	RET
@@ -186,7 +229,3 @@ ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
 	FAIL @44
 END
-
-
-
-
