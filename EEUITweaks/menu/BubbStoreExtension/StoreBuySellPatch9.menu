@@ -1,0 +1,5 @@
+		name "storeBuysellBagList"
+		enabled "storeScreen:IsCloseBagButtonClickable()"
+		hidehighlight
+		rowheight	60
+		table		"store.groupItems"

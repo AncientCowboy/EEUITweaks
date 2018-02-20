@@ -1208,6 +1208,34 @@ WITH
 END
 
 /******************************************************************************
+ * Bubb's Store Extension
+ *****************************************************************************/
+BEGIN @402500 DESIGNATED 4025
+GROUP @4
+REQUIRE_PREDICATE (
+	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND // IE 2.0+
+	(GAME_IS ~bgee~ AND GAME_INCLUDES ~sod~) AND
+	(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND             // Not Lefreut's UI
+	(NOT(MOD_IS_INSTALLED ~LeUI-BG1EE.tp2~ ~0~)) AND       // Not Lefreut's UI (BG1EE skin)
+	(NOT(MOD_IS_INSTALLED ~LeUI-SoD.tp2~ ~0~)) AND         // Not Lefreut's UI (SoD skin)
+	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~4000~)) AND    // Not Joined Store Panels Using lefreut's Solution
+	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~4005~)) AND    // Not lefreut's BG2 Store Screen Tweaks
+	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~4006~)) AND
+	(NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~)) AND // Not Dragonspear UI++
+	(NOT(MOD_IS_INSTALLED ~CKUISOD.tp2~ ~0~)) AND          // Not RDS V4 with component 0
+	(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND     // Not IWD GUI
+	(NOT(FILE_EXISTS ~override/guiiwd2dummy.png~))         // Not IWD2 GUI
+) @27
+
+ACTION_TRY
+	INCLUDE ~%PKGNAME%/include/BubbStoreExtension.tpa~
+WITH 
+	DEFAULT
+		LAM UIMenuAbort
+		ACTION_RERAISE
+END
+
+/******************************************************************************
  * lefreut's Inscribed Arcana
  *****************************************************************************/
 BEGIN @403000 DESIGNATED 4030

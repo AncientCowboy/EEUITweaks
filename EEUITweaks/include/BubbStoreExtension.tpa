@@ -1,0 +1,198 @@
+/*******************************************************************************
+ * Bubb's Store Extension
+ ******************************************************************************/
+// Open UI.MENU abstraction
+LOG @12
+SILENT
+LAUNCH_ACTION_MACRO UIMenuOpen
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @20
+END
+
+// Patch STORE_BUYSELL
+LOG @122
+SILENT
+
+OUTER_SPRINT $UIMenuIF("MenuName") ~STORE_BUYSELL~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+LAUNCH_ACTION_MACRO UIMenuGetMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @123
+END
+
+OUTER_SPRINT $UIMenuIF("LuaRegex") ~^[%TAB% ]*onOpen "storeScreen:UpdateBuySellPanel()".*%MEOL%~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/BubbStoreExtension/StoreBuySellPatch1.menu~
+
+LAUNCH_ACTION_MACRO EEUITweaks.PatchBody
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @124
+END
+
+OUTER_SPRINT $UIMenuIF("LuaRegex") ~^[%TAB% ]*label%MWHITE%{%MWHITE%area 0 0 864 598%MWHITE%mosaic GUISTBSC%MWHITE%}.*%MEOL%~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/BubbStoreExtension/StoreBuySellPatch2.menu~
+
+LAUNCH_ACTION_MACRO EEUITweaks.PatchBody
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @124
+END
+
+OUTER_SPRINT $UIMenuIF("LuaRegex") ~^[%TAB% ]*text "COST_LABEL".*%MEOL%~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/BubbStoreExtension/StoreBuySellPatch3.menu~
+
+LAUNCH_ACTION_MACRO EEUITweaks.PatchBody
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @124
+END
+
+OUTER_SPRINT $UIMenuIF("LuaRegex") ~^[%TAB% ]*text lua "storeScreen:GetStoreCost()".*%MEOL%~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/BubbStoreExtension/StoreBuySellPatch4.menu~
+
+LAUNCH_ACTION_MACRO EEUITweaks.PatchBody
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @124
+END
+
+OUTER_SPRINT $UIMenuIF("LuaRegex") ~^[%TAB% ]*text "PRICE_LABEL".*%MEOL%~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/BubbStoreExtension/StoreBuySellPatch5.menu~
+
+LAUNCH_ACTION_MACRO EEUITweaks.PatchBody
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @124
+END
+
+OUTER_SPRINT $UIMenuIF("LuaRegex") ~^[%TAB% ]*text lua "storeScreen:GetGroupCost()".*%MEOL%~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/BubbStoreExtension/StoreBuySellPatch6.menu~
+
+LAUNCH_ACTION_MACRO EEUITweaks.PatchBody
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @124
+END
+
+OUTER_SPRINT $UIMenuIF("LuaRegex") ~^[%TAB% ]*table[%TAB% ]*"store.storeItems".*%MEOL%~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/BubbStoreExtension/StoreBuySellPatch7.menu~
+
+LAUNCH_ACTION_MACRO EEUITweaks.PatchBody
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @124
+END
+
+OUTER_SPRINT $UIMenuIF("LuaRegex") ~^[%TAB% ]*enabled "not storeScreen:IsCloseBagButtonClickable()"%MWHITE%hidehighlight%MWHITE%rowheight[%TAB% ]*60%MWHITE%table[%TAB% ]*"store.groupItems".*%MEOL%~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/BubbStoreExtension/StoreBuySellPatch8.menu~
+
+LAUNCH_ACTION_MACRO EEUITweaks.PatchBody
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @124
+END
+
+OUTER_SPRINT $UIMenuIF("LuaRegex") ~^[%TAB% ]*enabled "storeScreen:IsCloseBagButtonClickable()"%MWHITE%hidehighlight%MWHITE%rowheight[%TAB% ]*60%MWHITE%table[%TAB% ]*"store.groupItems".*%MEOL%~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/BubbStoreExtension/StoreBuySellPatch9.menu~
+
+LAUNCH_ACTION_MACRO EEUITweaks.PatchBody
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @124
+END
+
+OUTER_SPRINT $UIMenuIF("LuaRegex") ~^[%TAB% ]*text lua "checkContainerText('BUY_BUTTON', 'TO_BACKPACK_BUTTON')".*%MEOL%~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/BubbStoreExtension/StoreBuySellPatch10.menu~
+
+LAUNCH_ACTION_MACRO EEUITweaks.PatchBody
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @124
+END
+
+OUTER_SPRINT $UIMenuIF("LuaRegex") ~^[%TAB% ]*text lua "checkContainerText('SELL_BUTTON','TO_CONTAINER_BUTTON')".*%MEOL%~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/BubbStoreExtension/StoreBuySellPatch11.menu~
+
+LAUNCH_ACTION_MACRO EEUITweaks.PatchBody
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @124
+END
+
+OUTER_SPRINT $UIMenuIF("LuaRegex") ~^[%TAB% ]*text "STEAL_BUTTON".*%MEOL%~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/BubbStoreExtension/StoreBuySellPatch12.menu~
+
+LAUNCH_ACTION_MACRO EEUITweaks.PatchBody
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @124
+END
+
+OUTER_SPRINT $UIMenuIF("LuaRegex") ~^[%TAB% ]*text "CLOSE_CONTAINER_BUTTON".*%MEOL%~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/BubbStoreExtension/StoreBuySellPatch13.menu~
+
+LAUNCH_ACTION_MACRO EEUITweaks.PatchBody
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @124
+END
+
+OUTER_SPRINT $UIMenuIF("LuaRegex") ~^[%TAB% ]*encumbrance.*%MEOL%~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/BubbStoreExtension/StoreBuySellPatch14.menu~
+
+LAUNCH_ACTION_MACRO EEUITweaks.PatchBody
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @124
+END
+
+LAUNCH_ACTION_MACRO UIMenuUpdateMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @103
+END
+
+// Patch STORE_BUYSELL
+LOG @140
+SILENT
+
+OUTER_SPRINT $UIMenuIF("MenuName") ~STORE_CHOOSER~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+LAUNCH_ACTION_MACRO UIMenuGetMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @141
+END
+
+OUTER_SPRINT $UIMenuIF("LuaRegex") ~^[%TAB% ]*mosaic GUISTBBB.*%MEOL%~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/BubbStoreExtension/StoreBuySellPatch15.menu~
+
+LAUNCH_ACTION_MACRO EEUITweaks.PatchBody
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @142
+END
+
+LAUNCH_ACTION_MACRO UIMenuUpdateMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @103
+END
+
+// All done - close up
+LOG @13
+SILENT
+LAUNCH_ACTION_MACRO UIMenuClose
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @21
+END
+
+// Copy files
+LOG @24
+SILENT
+COPY ~%PKGNAME%/copy/BubbStoreExtension/GUISTBSC.MOS~ ~override~
+
+COPY ~%PKGNAME%/copy/BubbStoreExtension/STBAKBOT.MOS~ ~override~

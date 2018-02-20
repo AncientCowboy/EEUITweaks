@@ -1,0 +1,2 @@
+		name "storeBuysellSellButton"
+		text lua "checkContainerText('SELL_BUTTON','TO_CONTAINER_BUTTON')"

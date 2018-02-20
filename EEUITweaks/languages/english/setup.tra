@@ -517,9 +517,10 @@
 @401002	= ~Unable to get STORE_BUYSELL Lua block~
 @401003	= ~Unable to patch STORE_BUYSELL Lua block~
 
-
 @402000 = ~Adul's Smooth Selling~
 @402001 = ~Incompatible with previously installed lefreut's BG2 Store Screen Tweaks~
+
+@402500 = ~Bubb's Store Extension~
 
 @403000 = ~lefreut's Inscribed Arcana~
 @403001 = ~Replacing Mage Book Lua code block~

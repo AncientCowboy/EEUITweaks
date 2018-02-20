@@ -1,0 +1,12 @@
+	label
+	{
+		name "storeBuysellBackgroundBottom"
+		area 0 0 864 107
+		mosaic STBAKBOT
+	}
+	label
+	{
+		name "storeBuysellBackgroundTop"
+		area 0 0 864 598
+		mosaic GUISTBSC
+	}
