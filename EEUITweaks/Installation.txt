@@ -1,4 +1,4 @@
-EEUITweaks - Version 2.6
+EEUITweaks - Version 2.7
 
 This mod is configured as a WeiDU mod and consists of a setup program
 named setup-EEUITweaks.exe and a mod files directory named EEUITweaks.
@@ -15,7 +15,7 @@ EEUITweaks should be run after setup-EET_gui. In either case, if you want to
 switch guis; un-install all EEUITweaks mods first, run setup-EET_gui to install
 or remove the SoD gui, and then re-install the desired EEUITweaks mods. 
 Basically, the same procedure that is used for any full UI.MENU replacement 
-mods in non-EET environments. 
+mods in non-EET environments.
 
 To install the mod:
 
@@ -27,7 +27,7 @@ To install the mod:
    system, you may need to 'Run as Administrator'. In fact, it's probably a
    good idea just to do it anyway.
 
-That's it! It should install with no problems. 
+That's it! It should install with no problems.
 
 If you do have problems with the install, please message me (AncientCowboy) on
 the BeamDog forums and send me a zip (or rar, or ...) containing the DEBUG file

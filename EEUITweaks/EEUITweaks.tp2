@@ -13,7 +13,7 @@
  *****************************************************************************/
 
 BACKUP ~EEUITweaks/backup~
-AUTHOR ~AncientCowboy on the BeamDog Forums~
+AUTHOR ~AncientCowboy & lefreut on the BeamDog Forums~
 
 ALWAYS
 	ACTION_IF NOT IS_AN_INT IsBG2 THEN
@@ -26,7 +26,7 @@ ALWAYS
 	END
 END
 
-VERSION ~2.6~
+VERSION ~2.7~
 
 LANGUAGE 
 	~English~ ~EEUITweaks/languages/english~ ~EEUITweaks/languages/english/setup.tra~
