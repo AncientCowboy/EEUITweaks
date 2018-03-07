@@ -193,6 +193,18 @@ END
 // Copy files
 LOG @24
 SILENT
-COPY ~%PKGNAME%/copy/BubbStoreExtension/GUISTBSC.MOS~ ~override~
-
-COPY ~%PKGNAME%/copy/BubbStoreExtension/STBAKBOT.MOS~ ~override~
+ACTION_IF IsBGEE THEN
+BEGIN
+	COPY ~%PKGNAME%/copy/BubbStoreExtension/BGEETheme/GUISTBSC.MOS~ ~override~
+	COPY ~%PKGNAME%/copy/BubbStoreExtension/BGEETheme/STBAKBOT.MOS~ ~override~
+END
+ACTION_IF IsSoD OR IsEETSoD OR IsSoDOverhaul OR IsKRDS OR IsKRDS0 OR IsKRDS1 OR IsKRDS2 OR IsKRDS3 OR IsKRDS4 OR IsKRDS5 THEN
+BEGIN
+	COPY ~%PKGNAME%/copy/BubbStoreExtension/SODTheme/GUISTBSC.MOS~ ~override~
+	COPY ~%PKGNAME%/copy/BubbStoreExtension/SODTheme/STBAKBOT.MOS~ ~override~
+END
+ACTION_IF IsBG2 OR IsBG2onSoD OR IsEETBG2 THEN
+BEGIN
+	COPY ~%PKGNAME%/copy/BubbStoreExtension/BG2Theme/GUISTBSC.MOS~ ~override~
+	COPY ~%PKGNAME%/copy/BubbStoreExtension/BG2Theme/STBAKBOT.MOS~ ~override~
+END

@@ -2,11 +2,12 @@
 	"
 		storeScreen:UpdateBuySellPanel()
 
-		local screenWidth, screenHeight = Infinity_GetScreenSize()
-		local bottomX, bottomY, bottomWidth, bottomHeight = Infinity_GetArea('storeBuysellBottom')
-		local storeBuysellListX, storeBuysellListY, storeBuysellListWidth, storeBuysellListHeight = Infinity_GetArea('storeBuysellList')
+		local _, screenHeight = Infinity_GetScreenSize()
+		local _, _, _, bottomHeight = Infinity_GetArea('storeBuysellBottom')
+		local _, storeBuysellListY, _, storeBuysellListHeight = Infinity_GetArea('storeBuysellList')
+		local _, _, _, storeBuysellBackgroundBottomHeight = Infinity_GetArea('storeBuysellBackgroundBottom')
 
-		local height = screenHeight - storeBuysellListY - bottomHeight - 110
+		local height = screenHeight - storeBuysellListY - bottomHeight - storeBuysellBackgroundBottomHeight
 
 		Infinity_SetArea('storeBuysellList', nil, nil, nil, height)
 		Infinity_SetArea('storeBuysellGroupList', nil, nil, nil, height)
@@ -17,16 +18,21 @@
 		Infinity_SetArea('storeBuysellBackgroundTop', nil, nil, nil, listBottom)
 		Infinity_SetArea('storeBuysellBackgroundBottom', nil, listBottom, nil, nil)
 
-		Infinity_SetArea('storeBuysellEncumbrance', nil, listBottom + 6,  nil, nil)
+		local _, storeBuysellEncumbranceY = Infinity_GetArea('storeBuysellEncumbrance')
+		local offset = storeBuysellEncumbranceY - storeBuysellListHeight - storeBuysellListY
+		Infinity_SetArea('storeBuysellEncumbrance', nil, listBottom + offset,  nil, nil)
 
-		Infinity_SetArea('storeBuysellBuyButton', nil, listBottom + 44, nil, nil)
-		Infinity_SetArea('storeBuysellStealButton', nil, listBottom + 44, nil, nil)
-		Infinity_SetArea('storeBuysellBagClose', nil, listBottom + 44, nil, nil)
-		Infinity_SetArea('storeBuysellSellButton', nil, listBottom + 44, nil, nil)
+		local _, storeBuysellBuyButtonY = Infinity_GetArea('storeBuysellBuyButton')
+		offset = storeBuysellBuyButtonY - storeBuysellListHeight - storeBuysellListY
+		Infinity_SetArea('storeBuysellBuyButton', nil, listBottom + offset, nil, nil)
+		Infinity_SetArea('storeBuysellStealButton', nil, listBottom + offset, nil, nil)
+		Infinity_SetArea('storeBuysellBagClose', nil, listBottom + offset, nil, nil)
+		Infinity_SetArea('storeBuysellSellButton', nil, listBottom + offset, nil, nil)
 
-		Infinity_SetArea('storeBuysellCostLabel', nil, listBottom + 9, nil, nil)
-		Infinity_SetArea('storeBuysellCost', nil, listBottom + 9,  nil, nil)
-
-		Infinity_SetArea('storeBuysellGroupCostLabel', nil, listBottom + 9, nil, nil)
-		Infinity_SetArea('storeBuysellGroupCost', nil, listBottom + 9,  nil, nil)
+		local _, storeBuysellCostLabelY = Infinity_GetArea('storeBuysellCostLabel')
+		offset = storeBuysellCostLabelY - storeBuysellListHeight - storeBuysellListY
+		Infinity_SetArea('storeBuysellCostLabel', nil, listBottom + offset, nil, nil)
+		Infinity_SetArea('storeBuysellCost', nil, listBottom + offset, nil, nil)
+		Infinity_SetArea('storeBuysellGroupCostLabel', nil, listBottom + offset, nil, nil)
+		Infinity_SetArea('storeBuysellGroupCost', nil, listBottom + offset, nil, nil)
 	"
