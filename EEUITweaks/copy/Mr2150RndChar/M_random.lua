@@ -16,8 +16,10 @@ function randChar()
 
 	-- Portrait
 	if createCharScreen:GetCurrentStep() == 1 then
-		while createCharScreen:GetCurrentPortrait() ~= "MAN2L" and createCharScreen:GetCurrentPortrait() ~= "WOMAN2L" do
-			createCharScreen:DecCurrentPortrait()
+		if engine_mode ~= 2 then
+			while createCharScreen:GetCurrentPortrait() ~= "MAN2L" and createCharScreen:GetCurrentPortrait() ~= "WOMAN2L" do
+				createCharScreen:DecCurrentPortrait()
+			end
 		end
 		Infinity_PopMenu()
 		createCharScreen:OnDoneButtonClick()

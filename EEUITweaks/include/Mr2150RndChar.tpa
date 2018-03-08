@@ -92,7 +92,7 @@ BEGIN
 			OUTER_SPRINT fname ~%PKGNAME%/menu/Mr2150RndChar/chargenbuttonbg2.menu~
 		END
 
-		%IsSoD% %IsEETSoD% %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS4% %IsKRDS5%
+		%IsSoD% %IsEETSoD% %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS4% %IsKRDS5% %IsIWDEE%
 		BEGIN
 			OUTER_SPRINT fname ~%PKGNAME%/menu/Mr2150RndChar/chargenbuttonsod.menu~
 		END
