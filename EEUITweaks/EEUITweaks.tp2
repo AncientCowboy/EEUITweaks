@@ -336,6 +336,7 @@ REQUIRE_PREDICATE (
 	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND                 // IE 2.0+
 	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1060~)) AND // Not Mr2150's Roll First
 	(
+		(GAME_IS ~iwdee~) OR
 		(GAME_IS ~eet~) OR
 		(GAME_IS ~bg2ee~) OR 
 		(

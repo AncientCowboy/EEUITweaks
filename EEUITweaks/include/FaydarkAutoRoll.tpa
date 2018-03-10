@@ -201,6 +201,11 @@ WITH
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FaydarkAutoRoll/chargenabilitiesmenu6.menu~
 	END
 
+	IsIWDEE
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/FaydarkAutoRoll/chargenabilitiesmenu7.menu~
+	END
+
 	DEFAULT
 		FAIL @15
 END
