@@ -403,6 +403,7 @@ GROUP @2
 REQUIRE_PREDICATE (
 	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND // IE 2.0+
 	(
+		(GAME_IS ~iwdee~) OR
 		(GAME_IS ~eet~) OR
 		(GAME_IS ~bg2ee~) OR 
 		(
