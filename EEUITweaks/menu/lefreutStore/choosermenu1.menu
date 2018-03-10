@@ -1,0 +1,100 @@
+menu
+{
+	name 'STORE_CHOOSER'
+	align center center
+	offset 0 307
+	ignoreEsc
+	onOpen
+	"
+		local menuName = storeScreen:GetMenuName(storeCurMenuId)
+		Infinity_PushMenu(menuName)
+		pushSidebars()
+		local buttonId = storeScreen:GetPanelButtonId(storeCurMenuId)
+		storePanelButtonHighlightGroup = Infinity_FindUIItemByName('BUTTON_storechooser_' .. buttonId)
+	"
+	onClose
+	"
+		local menuName = storeScreen:GetMenuName(storeCurMenuId)
+		Infinity_PopMenu(menuName)
+		popSidebars()
+	"
+
+	label
+	{
+		area 0 0 864 96
+		mosaic LUISTBBB
+	}
+	label
+	{
+		area 66 12 63 66
+		mosaic lua "store.icon"
+	}
+	button
+	{
+		area 610 6 234 44
+		bam LUIOSTUR
+		text "DONE_BUTTON"
+		text style "button"
+		on escape
+		action
+		"
+			storeScreen:OnMainDoneButtonClick()
+		"
+	}
+	button
+	{
+		name 'BUTTON_storechooser_0'
+		area 145 12 62 64
+		enabled "storeScreen:GetPanelButtonEnabled(0)"
+		bam LUISTBBC
+		highlightgroup storePanelButtonHighlightGroup
+		sequence lua "storeScreen:GetPanelButtonSequence(0)"
+		tooltip lua "getBuySellTooltip()"
+		action
+		"
+			setStoreMainPanel(0)
+		"
+	}
+	button
+	{
+		name 'BUTTON_storechooser_1'
+		area 217 12 62 64
+		enabled "storeScreen:GetPanelButtonEnabled(1)"
+		bam LUISTBBC
+		highlightgroup storePanelButtonHighlightGroup
+		sequence lua "storeScreen:GetPanelButtonSequence(1)"
+		tooltip lua "Infinity_FetchString(storeScreen:GetPanelButtonToolTip(1))"
+		action
+		"
+			setStoreMainPanel(1)
+		"
+	}
+	button
+	{
+		name 'BUTTON_storechooser_2'
+		area 289 12 62 64
+		enabled "storeScreen:GetPanelButtonEnabled(2)"
+		bam LUISTBBC
+		highlightgroup storePanelButtonHighlightGroup
+		sequence lua "storeScreen:GetPanelButtonSequence(2)"
+		tooltip lua "Infinity_FetchString(storeScreen:GetPanelButtonToolTip(2))"
+		action
+		"
+			setStoreMainPanel(2)
+		"
+	}
+	button
+	{
+		name 'BUTTON_storechooser_3'
+		area 361 12 62 64
+		enabled "storeScreen:GetPanelButtonEnabled(3)"
+		bam LUISTBBC
+		highlightgroup storePanelButtonHighlightGroup
+		sequence lua "storeScreen:GetPanelButtonSequence(3)"
+		tooltip lua "Infinity_FetchString(storeScreen:GetPanelButtonToolTip(3))"
+		action
+		"
+			setStoreMainPanel(3)
+		"
+	}
+}

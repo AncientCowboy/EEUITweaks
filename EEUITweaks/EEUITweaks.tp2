@@ -1055,7 +1055,7 @@ END
 ///////////////////////////////////////////////////////////////////////////////
 
 /******************************************************************************
- * lefreut's BG2 Store Screen Tweaks
+ * lefreut's Store Screen Tweaks
  *****************************************************************************/
 BEGIN @400500 DESIGNATED 4005
 GROUP @4
@@ -1072,28 +1072,15 @@ REQUIRE_PREDICATE (
 	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~3043~)) AND // Not Mr2150's Auto-Identify Items 4
 	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~3044~)) AND // Not Mr2150's Auto-Identify Items 5
 	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~3045~)) AND // Not Mr2150's Auto-Identify Items 6
-	(
-		(
-			(GAME_IS ~bg2ee~) AND
-			(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND // Not IWD GUI
-			(NOT(FILE_EXISTS ~override/guiiwd2dummy.png~))     // Not IWD2 GUI
-		) OR 
-		(
-			(GAME_IS ~eet~) AND
-			(NOT(MOD_IS_INSTALLED ~setup-EET_gui.tp2~ ~0~)) // Not EET SoD GUI
-
-		) OR
-		(
-			(GAME_IS ~bgee~) AND 
-			(FILE_EXISTS ~override/ULGOTHST.MOS~) // BG2onSoD
-		)
-	)
+	(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND  // Not IWD GUI
+	(NOT(FILE_EXISTS ~override/guiiwd2dummy.png~)) AND  // Not IWD2 GUI
+	(GAME_IS ~bgee bg2ee eet~)
 ) @27
 SUBCOMPONENT @570
 
 ACTION_TRY
 	OUTER_SET lefrevstorebutt = 0
-	INCLUDE ~%PKGNAME%/include/lefreutBG2Store.tpa~
+	INCLUDE ~%PKGNAME%/include/lefreutStore.tpa~
 WITH 
 	DEFAULT
 		LAM UIMenuAbort
@@ -1105,7 +1092,7 @@ GROUP @4
 SUBCOMPONENT @570
 ACTION_TRY
 	OUTER_SET lefrevstorebutt = 1
-	INCLUDE ~%PKGNAME%/include/lefreutBG2Store.tpa~
+	INCLUDE ~%PKGNAME%/include/lefreutStore.tpa~
 WITH 
 	DEFAULT
 		LAM UIMenuAbort

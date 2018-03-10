@@ -188,7 +188,7 @@
 @540  = ~Journal Fixes and Tweaks~
 @550  = ~Spell Books~
 @560  = ~lefreut's Improved Inventory Screen~
-@570  = ~lefreut's BG2 Store Screen Tweaks~
+@570  = ~lefreut's Store Screen Tweaks~
 @580  = ~lefreut's Character Creation Screens~
 @590  = ~lefreut's Improved Fonts~
 
@@ -456,7 +456,7 @@
 @304002	= ~Patching ITEM_DESCRIPTION Lua block~
 @304003	= ~Unable to get ITEM_DESCRIPTION Lua block~
 @304004	= ~Unable to patch ITEM_DESCRIPTION Lua block~
-@304005	= ~Incompatible with previously installed lefreut's BG2 Store Screen Tweaks~
+@304005	= ~Incompatible with previously installed lefreut's Store Screen Tweaks~
 @304100	= ~Pay  10gp to identify items~
 @304200	= ~Pay  25gp to identify items~
 @304300	= ~Pay  50gp to identify items~
@@ -492,7 +492,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 @400000 = ~Joined Store Panels Using lefreut's Solution~
-@400001 = ~Incompatible with previously installed lefreut's BG2 Store Screen Tweaks~
+@400001 = ~Incompatible with previously installed lefreut's Store Screen Tweaks~
 
 @400500 = ~Default Button Position~
 @400501 = ~Incompatible with previously installed Joined Store Panels Using lefreut's Solution~
@@ -511,14 +511,14 @@
 @400514	= ~Unable to patch POPUP_REQUESTER Lua block~
 
 @401000	= ~lefreut's Steal Multiple Items~
-@401004 = ~Redundant with previously installed lefreut's BG2 Store Screen Tweaks~
+@401004 = ~Redundant with previously installed lefreut's Store Screen Tweaks~
 // Following shared with Adul's Improved Store Usability
 @401001	= ~Patching STORE_BUYSELL Lua block~
 @401002	= ~Unable to get STORE_BUYSELL Lua block~
 @401003	= ~Unable to patch STORE_BUYSELL Lua block~
 
 @402000 = ~Adul's Smooth Selling~
-@402001 = ~Incompatible with previously installed lefreut's BG2 Store Screen Tweaks~
+@402001 = ~Incompatible with previously installed lefreut's Store Screen Tweaks~
 
 @402500 = ~Bubb's Store Extension~
 

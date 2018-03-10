@@ -1,5 +1,5 @@
 /*******************************************************************************
- * lefreut's BG2 Store Screen Tweaks Installation
+ * lefreut's Store Screen Tweaks Installation
  ******************************************************************************/
 
 // Uninstall lefreut's Steal Multiple Items if it has been installed
@@ -23,7 +23,24 @@ END
 LOG @122
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~STORE_BUYSELL~
-OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutBG2Store/buysellmenu.menu~
+ACTION_MATCH 1
+WITH
+	%IsSoD% %IsEETSoD% %IsSoDOverhaul% %IsKRDS% %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS4% %IsKRDS5%
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutStore/buysellmenu1.menu~
+	END
+	%IsBG2% %IsEETBG2% %IsBG2onSoD%
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutStore/buysellmenu2.menu~
+	END
+	%IsBGEE%
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutStore/buysellmenu3.menu~
+	END
+
+	DEFAULT
+		FAIL @15
+END
 LAUNCH_ACTION_MACRO UIMenuReplaceMenu
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
@@ -34,7 +51,24 @@ END
 LOG @125
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~STORE_IDENTIFY~
-OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutBG2Store/identifymenu.menu~
+ACTION_MATCH 1
+WITH
+	%IsSoD% %IsEETSoD% %IsSoDOverhaul% %IsKRDS% %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS4% %IsKRDS5%
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutStore/identifymenu1.menu~
+	END
+	%IsBG2% %IsEETBG2% %IsBG2onSoD%
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutStore/identifymenu2.menu~
+	END
+	%IsBGEE%
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutStore/identifymenu3.menu~
+	END
+
+	DEFAULT
+		FAIL @15
+END
 LAUNCH_ACTION_MACRO UIMenuReplaceMenu
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
@@ -45,7 +79,24 @@ END
 LOG @128
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~STORE_DONATE~
-OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutBG2Store/donatemenu.menu~
+ACTION_MATCH 1
+WITH
+	%IsSoD% %IsEETSoD% %IsSoDOverhaul% %IsKRDS% %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS4% %IsKRDS5%
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutStore/donatemenu1.menu~
+	END
+	%IsBG2% %IsEETBG2% %IsBG2onSoD%
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutStore/donatemenu2.menu~
+	END
+	%IsBGEE%
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutStore/donatemenu3.menu~
+	END
+
+	DEFAULT
+		FAIL @15
+END
 LAUNCH_ACTION_MACRO UIMenuReplaceMenu
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
@@ -56,7 +107,24 @@ END
 LOG @131
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~STORE_ROOMS~
-OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutBG2Store/roomsmenu.menu~
+ACTION_MATCH 1
+WITH
+	%IsSoD% %IsEETSoD% %IsSoDOverhaul% %IsKRDS% %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS4% %IsKRDS5%
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutStore/roomsmenu1.menu~
+	END
+	%IsBG2% %IsEETBG2% %IsBG2onSoD%
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutStore/roomsmenu2.menu~
+	END
+	%IsBGEE%
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutStore/roomsmenu3.menu~
+	END
+
+	DEFAULT
+		FAIL @15
+END
 LAUNCH_ACTION_MACRO UIMenuReplaceMenu
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
@@ -67,7 +135,24 @@ END
 LOG @134
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~STORE_HEALING~
-OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutBG2Store/healingmenu.menu~
+ACTION_MATCH 1
+WITH
+	%IsSoD% %IsEETSoD% %IsSoDOverhaul% %IsKRDS% %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS4% %IsKRDS5%
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutStore/healingmenu1.menu~
+	END
+	%IsBG2% %IsEETBG2% %IsBG2onSoD%
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutStore/healingmenu2.menu~
+	END
+	%IsBGEE%
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutStore/healingmenu3.menu~
+	END
+
+	DEFAULT
+		FAIL @15
+END
 LAUNCH_ACTION_MACRO UIMenuReplaceMenu
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
@@ -79,7 +164,24 @@ LOG @137
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~STORE_DRINKS~
 OUTER_SPRINT $UIMenuIF("Body") ~~
-OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutBG2Store/drinksmenu.menu~
+ACTION_MATCH 1
+WITH
+	%IsSoD% %IsEETSoD% %IsSoDOverhaul% %IsKRDS% %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS4% %IsKRDS5%
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutStore/drinksmenu1.menu~
+	END
+	%IsBG2% %IsEETBG2% %IsBG2onSoD%
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutStore/drinksmenu2.menu~
+	END
+	%IsBGEE%
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutStore/drinksmenu3.menu~
+	END
+
+	DEFAULT
+		FAIL @15
+END
 LAUNCH_ACTION_MACRO UIMenuReplaceMenuMixed
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
@@ -90,7 +192,24 @@ END
 LOG @140
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~STORE_CHOOSER~
-OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutBG2Store/choosermenu.menu~
+ACTION_MATCH 1
+WITH
+	%IsSoD% %IsEETSoD% %IsSoDOverhaul% %IsKRDS% %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS4% %IsKRDS5%
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutStore/choosermenu1.menu~
+	END
+	%IsBG2% %IsEETBG2% %IsBG2onSoD%
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutStore/choosermenu2.menu~
+	END
+	%IsBGEE%
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutStore/choosermenu3.menu~
+	END
+
+	DEFAULT
+		FAIL @15
+END
 LAUNCH_ACTION_MACRO UIMenuReplaceMenu
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
@@ -101,7 +220,24 @@ END
 LOG @179
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~POPUP_REQUESTER~
-OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutBG2Store/popuprequestermenu.menu~
+ACTION_MATCH 1
+WITH
+	%IsSoD% %IsEETSoD% %IsSoDOverhaul% %IsKRDS% %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS4% %IsKRDS5%
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutStore/popuprequestermenu1.menu~
+	END
+	%IsBG2% %IsEETBG2% %IsBG2onSoD%
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutStore/popuprequestermenu2.menu~
+	END
+	%IsBGEE%
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutStore/popuprequestermenu3.menu~
+	END
+
+	DEFAULT
+		FAIL @15
+END
 LAUNCH_ACTION_MACRO UIMenuReplaceMenu
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
@@ -112,7 +248,24 @@ END
 LOG @191
 SILENT
 OUTER_SPRINT $UIMenuIF("MenuName") ~ITEM_DESCRIPTION~
-OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutBG2Store/itemdescmenu.menu~
+ACTION_MATCH 1
+WITH
+	%IsSoD% %IsEETSoD% %IsSoDOverhaul% %IsKRDS% %IsKRDS0% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS4% %IsKRDS5%
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutStore/itemdescmenu1.menu~
+	END
+	%IsBG2% %IsEETBG2% %IsBG2onSoD%
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutStore/itemdescmenu2.menu~
+	END
+	%IsBGEE%
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutStore/itemdescmenu3.menu~
+	END
+
+	DEFAULT
+		FAIL @15
+END
 LAUNCH_ACTION_MACRO UIMenuReplaceMenu
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
@@ -129,7 +282,7 @@ ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
 	FAIL @401002
 END
-OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/lefreutBG2Store/buysellcode.lua~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/lefreutStore/buysellcode.lua~
 LAUNCH_ACTION_MACRO UIMenuReplaceLuaBlock
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
@@ -145,7 +298,7 @@ ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
 	FAIL @400505
 END
-OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/lefreutBG2Store/itemdesccode.lua~
+OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/lefreutStore/itemdesccode.lua~
 LAUNCH_ACTION_MACRO UIMenuReplaceLuaBlock
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
@@ -163,10 +316,10 @@ BEGIN
 END
 ACTION_IF lefrevstorebutt = 0 THEN
 BEGIN
-	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/lefreutBG2Store/donatecode1.lua~
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/lefreutStore/donatecode1.lua~
 END ELSE
 BEGIN
-	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/lefreutBG2Store/donatecode2.lua~
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/lefreutStore/donatecode2.lua~
 END
 LAUNCH_ACTION_MACRO UIMenuReplaceLuaBlock
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
@@ -185,10 +338,10 @@ BEGIN
 END
 ACTION_IF lefrevstorebutt = 0 THEN
 BEGIN
-	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/lefreutBG2Store/popuprequestercode1.lua~
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/lefreutStore/popuprequestercode1.lua~
 END ELSE
 BEGIN
-	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/lefreutBG2Store/popuprequestercode2.lua~
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/lefreutStore/popuprequestercode2.lua~
 END
 LAUNCH_ACTION_MACRO UIMenuReplaceLuaBlock
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
@@ -207,19 +360,34 @@ END
 
 // Copy files
 LOG @24
+ACTION_IF IsBGEE THEN
+BEGIN
+	OUTER_SPRINT theme ~BGEETheme~
+END
+ACTION_IF IsSoD OR IsEETSoD OR IsSoDOverhaul OR IsKRDS OR IsKRDS0 OR IsKRDS1 OR IsKRDS2 OR IsKRDS3 OR IsKRDS4 OR IsKRDS5 THEN
+BEGIN
+	OUTER_SPRINT theme ~SODTheme~
+END
+ACTION_IF IsBG2 OR IsBG2onSoD OR IsEETBG2 THEN
+BEGIN
+	OUTER_SPRINT theme ~BG2Theme~
+END
+
 SILENT
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUISCRC.BAM~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/%theme%/LUISCRC.BAM~ ~override~
 
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUISBR.BAM~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/%theme%/LUISBR.BAM~ ~override~
 
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUISTBBC.BAM~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/%theme%/LUISTBBC.BAM~ ~override~
 
-COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LINNROOM.BAM~ ~override~
+COPY ~%PKGNAME%/copy/luicommon/INITIALS.BAM~ ~override~
+
+COPY ~%PKGNAME%/copy/luicommon/LINNROOM.BAM~ ~override~
 
 LAF EEUITweaks.MultiCopyPVRZResource
 	STR_VAR
-		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
-		resource_file = ~LUIOSTUL.BAM LUIOSTUM.BAM LUIOSTUR.BAM~
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/%theme%~
+		resource_file = ~LUIOSTUL.BAM LUIOSTUM.BAM LUIOSTUR.BAM LUIOSTCL.BAM~
 		pvrz_files = ~MOS4004.PVRZ~
 	RET
 		$UIMenuIF("Succeeded") = succeeded
@@ -231,7 +399,7 @@ END
 
 LAF EEUITweaks.CopyPVRZResource
 	STR_VAR
-		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/%theme%~
 		resource_file = ~LDONATE.BAM~
 		pvrz_files = ~MOS4005.PVRZ~
 	RET
@@ -244,7 +412,7 @@ END
 
 LAF EEUITweaks.CopyPVRZResource
 	STR_VAR
-		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/%theme%~
 		resource_file = ~LUIOSW.BAM~
 		pvrz_files = ~MOS4015.PVRZ~
 	RET
@@ -257,7 +425,7 @@ END
 
 LAF EEUITweaks.CopyPVRZResource
 	STR_VAR
-		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/%theme%~
 		resource_file = ~LUIINVHI.MOS~
 		pvrz_files = ~MOS4267.PVRZ~
 	RET
@@ -270,7 +438,7 @@ END
 
 LAF EEUITweaks.CopyPVRZResource
 	STR_VAR
-		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon~
 		resource_file = ~TVRNDRK0.MOS~
 		pvrz_files = ~MOS4275.PVRZ~
 	RET
@@ -283,7 +451,7 @@ END
 
 LAF EEUITweaks.CopyPVRZResource
 	STR_VAR
-		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon~
 		resource_file = ~TVRNDRK1.MOS~
 		pvrz_files = ~MOS4276.PVRZ~
 	RET
@@ -296,7 +464,7 @@ END
 
 LAF EEUITweaks.CopyPVRZResource
 	STR_VAR
-		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon~
 		resource_file = ~TVRNDRK2.MOS~
 		pvrz_files = ~MOS4277.PVRZ~
 	RET
@@ -309,7 +477,7 @@ END
 
 LAF EEUITweaks.CopyPVRZResource
 	STR_VAR
-		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon~
 		resource_file = ~TVRNQUL0.MOS~
 		pvrz_files = ~MOS4278.PVRZ~
 	RET
@@ -322,7 +490,7 @@ END
 
 LAF EEUITweaks.CopyPVRZResource
 	STR_VAR
-		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon~
 		resource_file = ~TVRNQUL1.MOS~
 		pvrz_files = ~MOS4279.PVRZ~
 	RET
@@ -335,7 +503,7 @@ END
 
 LAF EEUITweaks.CopyPVRZResource
 	STR_VAR
-		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon~
 		resource_file = ~TVRNQUL2.MOS~
 		pvrz_files = ~MOS4280.PVRZ~
 	RET
@@ -348,7 +516,7 @@ END
 
 LAF EEUITweaks.CopyPVRZResource
 	STR_VAR
-		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon~
 		resource_file = ~TVRNQUL3.MOS~
 		pvrz_files = ~MOS4281.PVRZ~
 	RET
@@ -361,7 +529,7 @@ END
 
 LAF EEUITweaks.CopyPVRZResource
 	STR_VAR
-		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/%theme%~
 		resource_file = ~STORBAG.MOS~
 		pvrz_files = ~MOS4282.PVRZ~
 	RET
@@ -374,7 +542,7 @@ END
 
 LAF EEUITweaks.CopyPVRZResource
 	STR_VAR
-		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/%theme%~
 		resource_file = ~STORINN.MOS~
 		pvrz_files = ~MOS4283.PVRZ~
 	RET
@@ -387,7 +555,7 @@ END
 
 LAF EEUITweaks.CopyPVRZResource
 	STR_VAR
-		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/%theme%~
 		resource_file = ~STORSTOR.MOS~
 		pvrz_files = ~MOS4284.PVRZ~
 	RET
@@ -400,7 +568,7 @@ END
 
 LAF EEUITweaks.CopyPVRZResource
 	STR_VAR
-		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/%theme%~
 		resource_file = ~STORTMPL.MOS~
 		pvrz_files = ~MOS4285.PVRZ~
 	RET
@@ -413,7 +581,7 @@ END
 
 LAF EEUITweaks.CopyPVRZResource
 	STR_VAR
-		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/%theme%~
 		resource_file = ~STORTVRN.MOS~
 		pvrz_files = ~MOS4286.PVRZ~
 	RET
@@ -426,7 +594,7 @@ END
 
 LAF EEUITweaks.CopyPVRZResource
 	STR_VAR
-		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/%theme%~
 		resource_file = ~LUISTBBB.MOS~
 		pvrz_files = ~MOS4299.PVRZ~
 	RET
@@ -439,7 +607,7 @@ END
 
 LAF EEUITweaks.CopyPVRZResource
 	STR_VAR
-		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/%theme%~
 		resource_file = ~LUISTBK1.MOS~
 		pvrz_files = ~MOS4300.PVRZ~
 	RET
@@ -452,7 +620,7 @@ END
 
 LAF EEUITweaks.CopyPVRZResource
 	STR_VAR
-		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/%theme%~
 		resource_file = ~LUISTBK2.MOS~
 		pvrz_files = ~MOS4301.PVRZ~
 	RET
@@ -465,7 +633,7 @@ END
 
 LAF EEUITweaks.CopyPVRZResource
 	STR_VAR
-		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/%theme%~
 		resource_file = ~LUISTBK3.MOS~
 		pvrz_files = ~MOS4302.PVRZ~
 	RET
@@ -478,7 +646,7 @@ END
 
 LAF EEUITweaks.CopyPVRZResource
 	STR_VAR
-		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/%theme%~
 		resource_file = ~LUISTBSC.MOS~
 		pvrz_files = ~MOS4303.PVRZ~
 	RET
@@ -491,7 +659,7 @@ END
 
 LAF EEUITweaks.CopyPVRZResource
 	STR_VAR
-		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/%theme%~
 		resource_file = ~LUISTDOB.MOS~
 		pvrz_files = ~MOS4304.PVRZ~
 	RET
@@ -504,7 +672,7 @@ END
 
 LAF EEUITweaks.CopyPVRZResource
 	STR_VAR
-		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/%theme%~
 		resource_file = ~LUISTIDB.MOS~
 		pvrz_files = ~MOS4305.PVRZ~
 	RET
@@ -517,7 +685,7 @@ END
 
 LAF EEUITweaks.CopyPVRZResource
 	STR_VAR
-		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/%theme%~
 		resource_file = ~LUISTROB.MOS~
 		pvrz_files = ~MOS4306.PVRZ~
 	RET
@@ -530,7 +698,7 @@ END
 
 LAF EEUITweaks.CopyPVRZResource
 	STR_VAR
-		source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/%theme%~
 		resource_file = ~LUIERR.MOS~
 		pvrz_files = ~MOS4260.PVRZ~
 	RET
@@ -541,6 +709,15 @@ BEGIN
 	FAIL @44
 END
 
-
-
-
+LAF EEUITweaks.CopyPVRZResource
+	STR_VAR
+		source_folder = EVAL ~%PKGNAME%/copy/luicommon/%theme%~
+		resource_file = ~LTONSLOT.BAM~
+		pvrz_files = ~MOS4000.PVRZ~
+	RET
+		$UIMenuIF("Succeeded") = succeeded
+END
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @44
+END

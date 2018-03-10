@@ -1,0 +1,107 @@
+menu
+{
+	name 'POPUP_REQUESTER'
+	align center center
+	modal
+	onOpen
+	"
+		if requester.selling == false then
+			itemRequestAmt = 1
+		else
+			itemRequestAmt = requester.requesterMax
+		end
+	"
+	onClose
+	"
+		requester.requesterFunc(0)
+	"
+
+	label
+	{
+		area 0 0 406 415
+		mosaic LUIERR
+	}
+	label
+	{
+		area 70 70 264 42
+		text "CHOOSE_AMT_LABEL"
+		text align center center
+		text style "label"
+	}
+	edit
+	{
+		area 100 114 112 42
+		var itemRequestAmt
+		text style "edit"
+		align center center
+		maxlines 1
+		action
+		"
+			-- only permit numbers as letters.
+			-- character limit of 4
+			if((tonumber(letter_pressed) ~= nil and #tostring(itemRequestAmt) < 4) or not letter_pressed) then
+				return 1
+			else
+				return 0
+			end
+		"
+	}
+	button
+	{
+		bam LUIOSW
+		area 258 114 45 42
+		clickable lua "isRequesterPlusMinusButtonClickable(not reverseDonateButtons)"
+		sequence lua "reverseDonateButtons and 0 or 4"
+		action
+		"
+			requesterPlusMinusButtonClick(not reverseDonateButtons)
+		"
+		actionHold
+		"
+			requesterPlusMinusButtonClick(not reverseDonateButtons)
+		"
+	}
+	button
+	{
+		bam LUIOSW
+		area 212 114 45 42
+		clickable lua "isRequesterPlusMinusButtonClickable(reverseDonateButtons)"
+		sequence lua "reverseDonateButtons and 1 or 3"
+		action
+		"
+			requesterPlusMinusButtonClick(reverseDonateButtons)
+		"
+		actionHold
+		"
+			requesterPlusMinusButtonClick(reverseDonateButtons)
+		"
+	}
+	button
+	{
+		on return
+		area 52 218 300 44
+		bam LUIOSTCL
+		text "DONE_BUTTON"
+		text style "button"
+		action
+		"
+			local cnt = tonumber(itemRequestAmt)
+			Infinity_PopMenu()
+			if(cnt and cnt > 0 and cnt <= requester.requesterMax) then
+				requester.requesterFunc(cnt)
+			end
+		"
+	}
+	button
+	{
+		on escape
+		area 52 266 300 44
+		bam LUIOSTCL
+		text "CANCEL_BUTTON"
+		text style "button"
+		action
+		"
+			Infinity_PopMenu()
+		"
+	}
+}

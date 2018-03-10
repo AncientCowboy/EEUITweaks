@@ -1,0 +1,137 @@
+menu
+{
+	name 'STORE_HEALING'
+	align center center
+	offset 0 -48
+	ignoreEsc
+	onOpen
+	"
+		storeScreen:UpdateBuySpellPanel()
+	"
+
+	label
+	{
+		area 0 0 864 614
+		mosaic LUISTIDB
+	}
+	label
+	{
+		area 48 6 768 52
+		text "HEALING_TITLE"
+		text style "title"
+	}
+	label
+	{
+		area 277 68 310 26
+		text lua "Infinity_FetchString(storeScreen:GetStoreName())"
+		text style "label"
+	}
+	label
+	{
+		area 274 103 313 31
+		text lua "game:GetPartyGold()"
+		text style "gold"
+	}
+	label
+	{
+		area 68 526 146 23
+		text "COST_LABEL"
+		text style "label"
+		align right center
+	}
+	label
+	{
+		area 260 526 108 23
+		text lua "storeScreen:GetSpellCost()"
+		text style "normal"
+		align right center
+	}
+	list
+	{
+		column
+		{
+			width 100
+			label
+			{
+				area 0 0 318 62
+				mosaic LUISTBK3
+				respectClipping
+			}
+			label
+			{
+				area 3 0 52 62
+				bam STONSLOT
+				frame lua "getStoreSlotHighlight(store.healingSpells[rowNumber].highlight)"
+				icon lua "store.healingSpells[rowNumber].icon"
+				tint lua "store.healingSpells[rowNumber].tint"
+				align center center
+			}
+			label
+			{
+				area 80 0 150 62
+				text lua "Infinity_FetchString(store.healingSpells[rowNumber].name)"
+				text style "normal"
+				text align left center
+			}
+			label
+			{
+				area 260 0 54 62
+				text style "gold"
+				text align center center
+				text lua "store.healingSpells[rowNumber].value"
+			}
+			label
+			{
+				enabled "store.healingSpells[rowNumber].valid == 0 or store.healingSpells[rowNumber].value > game:GetPartyGold()"
+				area 0 2 312 58
+				rectangle 1
+				rectangle opacity 150
+			}
+		}
+		area 62 138 350 384
+		hidehighlight
+		rowheight	62
+		table		"store.healingSpells"
+		var			"healingSpellsVar"
+		scrollbar 'LUISCRC'
+		action
+		"
+			local spell = store.healingSpells[healingSpellsVar]
+			if spell.highlight == 1 then
+				storeScreen:SelectSpellItem(healingSpellsVar - 1,  false)
+				store.spellText = ''
+			elseif spell.valid == 1 and spell.value <= game:GetPartyGold() then
+				storeScreen:SelectSpellItem(healingSpellsVar - 1,  true)
+				if store.spell[healingSpellsVar].valid == 0 then
+					storeScreen:SelectSpellItem(healingSpellsVar - 1,  false)
+					store.spellText = ''
+				end
+			end
+		"
+		actionAlt
+		"
+			local spell = store.healingSpells[healingSpellsVar]
+			popupDetails(16189, spell.name, spell.description, spell.icon)
+		"
+	}
+	button
+	{
+		area 119 554 201 44
+		bam LUIOSTUM
+		text "BUY_BUTTON"
+		text style "button"
+		clickable lua "storeScreen:GetSpellCost() > 0"
+		action
+		"
+			storeScreen:OnBuySpellButtonClick()
+			store.spellText = ''
+		"
+	}
+	text
+	{
+		area 480 182 313 364
+		text lua "store.spellText"
+		text style "normal_parchment"
+		scrollbar 'LUISBR'
+	}
+}
