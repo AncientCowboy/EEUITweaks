@@ -1,11 +1,8 @@
-		actionUpdate
+		action
 		"
-			if (allChargenClasses[currentChargenClass] and getClassDisabled(allChargenClasses[currentChargenClass].id)) then
-				currentChargenClass = lastChargenClass
-			else
-				lastChargenClass = currentChargenClass
-			end
-			if (allChargenClasses[currentChargenClass]) then
+			createCharScreen:OnClassSelectButtonClick(0)
+			Infinity_PlaySound('GAM_09')
+			if allChargenClasses[currentChargenClass] and not getClassDisabled(allChargenClasses[currentChargenClass].id) then
 				createCharScreen:OnClassSelectButtonClick(allChargenClasses[currentChargenClass].id)
 			end
 		"

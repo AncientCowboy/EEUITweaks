@@ -308,6 +308,7 @@ REQUIRE_PREDICATE (
 	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1090~)) AND // Not lefreut's Character Creation Screens
 	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1091~)) AND
 	(
+		(GAME_IS ~iwdee~) OR
 		(GAME_IS ~eet~) OR
 		(GAME_IS ~bg2ee~) OR
 		(

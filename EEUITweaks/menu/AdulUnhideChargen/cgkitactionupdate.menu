@@ -1,4 +1,4 @@
-		actionUpdate
+		action
 		"
 			if (allChargenClasses[currentChargenClass].kits[currentChargenKit] and getKitDisabled(allChargenClasses[currentChargenClass].kits[currentChargenKit].id)) then
 				currentChargenKit = lastChargenKit
@@ -6,6 +6,7 @@
 				lastChargenKit = currentChargenKit
 			end
 			if (allChargenClasses[currentChargenClass].kits[currentChargenKit]) then
+				Infinity_PlaySound('GAM_09')
 				createCharScreen:OnKitSelectButtonClick(allChargenClasses[currentChargenClass].kits[currentChargenKit].id)
 			end
 		"

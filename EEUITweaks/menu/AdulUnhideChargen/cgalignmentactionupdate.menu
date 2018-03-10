@@ -1,11 +1,8 @@
-		actionUpdate
+		action
 		"
-			if (allChargenAlignments[currentChargenAlignment] and getAlignmentDisabled(allChargenAlignments[currentChargenAlignment].id)) then
-				currentChargenAlignment = lastChargenAlignment
-			else
-				lastChargenAlignment = currentChargenAlignment
-			end
-			if allChargenAlignments[currentChargenAlignment] then
+			createCharScreen:OnAlignmentSelectButtonClick(0)
+			Infinity_PlaySound('GAM_09')
+			if allChargenAlignments[currentChargenAlignment] and not getAlignmentDisabled(allChargenAlignments[currentChargenAlignment].id) then
 				createCharScreen:OnAlignmentSelectButtonClick(allChargenAlignments[currentChargenAlignment].id)
 			end
 		"

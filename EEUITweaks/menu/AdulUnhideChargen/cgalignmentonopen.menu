@@ -1,5 +1,2 @@
-	onopen
-	"
 		lastChargenAlignment = nil
 		currentChargenAlignment = nil
-	"

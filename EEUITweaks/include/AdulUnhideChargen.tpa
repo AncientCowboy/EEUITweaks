@@ -81,6 +81,8 @@ BEGIN
 	LOCAL_SPRINT adder ~%TAB%%TAB%%TAB%%TAB%area 0 0 340 32%LE%~
 	LOCAL_SET found = 0
 
+	ACTION_IF NOT IsIWDEE THEN
+	BEGIN
 	// Put current menu definition into inline file
 	COPY - ~ToInlineTemplate~ ~.../CounterInLine~
 		REPLACE_EVALUATE ~dummy~ BEGIN END
@@ -100,7 +102,7 @@ BEGIN
 	BEGIN
 		LOG ~In AdulUnhideChargen.GeneralAreaPatch - failed to find area code~
 		OUTER_SET $UIMenuIF("Succeeded") = 0
-	END ELSE 
+	END ELSE
 
 	// Success somewhere - copy .../CounterInLine to $UIMenuIF("Body")
 	BEGIN
@@ -111,6 +113,7 @@ BEGIN
 		OUTER_SET $UIMenuIF("Succeeded") = 1
 	END
 	COPY - ~EmptyInlineTemplate~ ~.../CounterInline~
+	END
 END
 
 /*******************************************************************************
@@ -160,7 +163,7 @@ END
 
 /*******************************************************************************
  * CGClassPatch1
- * Replaces onopen with contents of 
+ * Adds at the end of onopen contents of
  * %PKGNAME%/menu/AdulUnhideChargen/cgclassonopen.menu
  *
  * On completion $UIMenuIF("Succeeded") 1 => Success, 0 => Failure
@@ -182,13 +185,14 @@ BEGIN
 		~%tempstr%~
 	OUTER_SPRINT tempstr ~~
 
-	// Find onopen and replace it
+	// Look for and patch onopen followed by double quoted code block
 	COPY - ~.../CounterInLine~ ~.../CounterInLine~
-		REPLACE_EVALUATE CASE_INSENSITIVE ~^[%TAB% ]*onopen[%TAB% ]*%MQUOTE%%MNOTQUOTE%*%MQUOTE%.*%MEOL%~
+		REPLACE_EVALUATE CASE_INSENSITIVE ~onopen%MWHITE%%MDQUOTE%\(%MNOTDQUOTE%*\)%MDQUOTE%~ 
 		BEGIN
+			SPRINT tempstr ~onopen%LE%%TAB%"%LE%%TAB%%TAB%%MATCH1%%LE%%adder%%LE%%TAB%"~
 			SET found = 1
 		END
-		~%adder%~
+		~%tempstr%~
 
 	// Not found - give up
 	ACTION_IF NOT %found% THEN
@@ -196,7 +200,6 @@ BEGIN
 		LOG ~In AdulUnhideChargen.CGClassPatch1 - failed to find onopen code~
 		OUTER_SET $UIMenuIF("Succeeded") = 0
 	END ELSE 
-
 	// Success somewhere - copy .../CounterInLine to $UIMenuIF("Body")
 	BEGIN
 		OUTER_SPRINT $UIMenuIF("Body") ~~
@@ -332,7 +335,7 @@ BEGIN
 
 	// Find list action section and replace it
 	COPY - ~.../CounterInLine~ ~.../CounterInLine~
-		REPLACE_EVALUATE CASE_INSENSITIVE ~\(^[%TAB% ]*list%MNOBRACE%*{%MNOBRACE%+{%MNOBRACE%+{%MNOBRACE%+}%MNOBRACE%+{%MNOBRACE%+}%MNOBRACE%*}.*%MEOL%\)[%TAB% ]*action%MWHITE%%MQUOTE%%MNOTQUOTE%+%MQUOTE%.*%MEOL%~
+		REPLACE_EVALUATE CASE_INSENSITIVE ~\(^[%TAB% ]*list%MNOBRACE%*{%MNOBRACE%+{%MNOBRACE%+{%MNOBRACE%+}%MNOBRACE%+{%MNOBRACE%+}%MNOBRACE%*}.*%MEOL%\)[%TAB% ]*action%MWHITE%%MDQUOTE%%MNOTDQUOTE%+%MDQUOTE%.*%MEOL%~
 		BEGIN
 			SET found = 1
 			SPRINT tempstr ~%MATCH1%%adder%~
@@ -644,7 +647,7 @@ BEGIN
 
 	// Find list action section and replace it
 	COPY - ~.../CounterInLine~ ~.../CounterInLine~
-		REPLACE_EVALUATE CASE_INSENSITIVE ~\(^[%TAB% ]*list%MNOBRACE%*{%MNOBRACE%+{%MNOBRACE%+{%MNOBRACE%+}%MNOBRACE%+{%MNOBRACE%+}%MNOBRACE%*}.*%MEOL%\)[%TAB% ]*action%MWHITE%%MQUOTE%%MNOTQUOTE%+%MQUOTE%.*%MEOL%~
+		REPLACE_EVALUATE CASE_INSENSITIVE ~\(^[%TAB% ]*list%MNOBRACE%*{%MNOBRACE%+{%MNOBRACE%+{%MNOBRACE%+}%MNOBRACE%+{%MNOBRACE%+}%MNOBRACE%*}.*%MEOL%\)[%TAB% ]*action%MWHITE%%MDQUOTE%%MNOTDQUOTE%+%MDQUOTE%.*%MEOL%~
 		BEGIN
 			SET found = 1
 			SPRINT tempstr ~%MATCH1%%adder%~
@@ -764,7 +767,7 @@ END
 
 /*******************************************************************************
  * CGAlignmentPatch1
- * Replaces onopen with contents of 
+ * Adds at the end of onopen contents of
  * %PKGNAME%/menu/AdulUnhideChargen/cgalignmentonopen.menu
  *
  * On completion $UIMenuIF("Succeeded") 1 => Success, 0 => Failure
@@ -786,13 +789,14 @@ BEGIN
 		~%tempstr%~
 	OUTER_SPRINT tempstr ~~
 
-	// Find onopen and replace it
+	// Look for and patch onopen followed by double quoted code block
 	COPY - ~.../CounterInLine~ ~.../CounterInLine~
-		REPLACE_EVALUATE CASE_INSENSITIVE ~^[%TAB% ]*onopen[%TAB% ]*%MQUOTE%%MNOTQUOTE%*%MQUOTE%.*%MEOL%~
+		REPLACE_EVALUATE CASE_INSENSITIVE ~onopen%MWHITE%%MDQUOTE%\(%MNOTDQUOTE%*\)%MDQUOTE%~ 
 		BEGIN
+			SPRINT tempstr ~onopen%LE%%TAB%"%LE%%TAB%%TAB%%MATCH1%%LE%%adder%%LE%%TAB%"~
 			SET found = 1
 		END
-		~%adder%~
+		~%tempstr%~
 
 	// Not found - give up
 	ACTION_IF NOT %found% THEN
@@ -800,7 +804,6 @@ BEGIN
 		LOG ~In AdulUnhideChargen.CGAlignmentPatch1 - failed to find onopen code~
 		OUTER_SET $UIMenuIF("Succeeded") = 0
 	END ELSE 
-
 	// Success somewhere - copy .../CounterInLine to $UIMenuIF("Body")
 	BEGIN
 		OUTER_SPRINT $UIMenuIF("Body") ~~
@@ -936,7 +939,7 @@ BEGIN
 
 	// Find list action section and replace it
 	COPY - ~.../CounterInLine~ ~.../CounterInLine~
-		REPLACE_EVALUATE CASE_INSENSITIVE ~\(^[%TAB% ]*list%MNOBRACE%*{%MNOBRACE%+{%MNOBRACE%+{%MNOBRACE%+}%MNOBRACE%+{%MNOBRACE%+}%MNOBRACE%*}.*%MEOL%\)[%TAB% ]*action%MWHITE%%MQUOTE%%MNOTQUOTE%+%MQUOTE%.*%MEOL%~
+		REPLACE_EVALUATE CASE_INSENSITIVE ~\(^[%TAB% ]*list%MNOBRACE%*{%MNOBRACE%+{%MNOBRACE%+{%MNOBRACE%+}%MNOBRACE%+{%MNOBRACE%+}%MNOBRACE%*}.*%MEOL%\)[%TAB% ]*action%MWHITE%%MDQUOTE%%MNOTDQUOTE%+%MDQUOTE%.*%MEOL%~
 		BEGIN
 			SET found = 1
 			SPRINT tempstr ~%MATCH1%%adder%~
@@ -1056,7 +1059,7 @@ END
 
 /*******************************************************************************
  * CGProficienciesPatch1
- * Replaces onopen with contents of 
+ * Adds at the end of onopen contents of
  * %PKGNAME%/menu/AdulUnhideChargen/cgproficienciesonopen.menu
  *
  * On completion $UIMenuIF("Succeeded") 1 => Success, 0 => Failure
@@ -1078,13 +1081,14 @@ BEGIN
 		~%tempstr%~
 	OUTER_SPRINT tempstr ~~
 
-	// Find onopen and replace it
+	// Look for and patch onopen followed by double quoted code block
 	COPY - ~.../CounterInLine~ ~.../CounterInLine~
-		REPLACE_EVALUATE CASE_INSENSITIVE ~^[%TAB% ]*onopen[%TAB% ]*%MQUOTE%%MNOTQUOTE%*%MQUOTE%.*%MEOL%~
+		REPLACE_EVALUATE CASE_INSENSITIVE ~onopen%MWHITE%%MDQUOTE%\(%MNOTDQUOTE%*\)%MDQUOTE%~ 
 		BEGIN
+			SPRINT tempstr ~onopen%LE%%TAB%"%LE%%TAB%%TAB%%MATCH1%%LE%%adder%%LE%%TAB%"~
 			SET found = 1
 		END
-		~%adder%~
+		~%tempstr%~
 
 	// Not found - give up
 	ACTION_IF NOT %found% THEN
@@ -1092,7 +1096,6 @@ BEGIN
 		LOG ~In AdulUnhideChargen.CGProficienciesPatch1 - failed to find onopen code~
 		OUTER_SET $UIMenuIF("Succeeded") = 0
 	END ELSE 
-
 	// Success somewhere - copy .../CounterInLine to $UIMenuIF("Body")
 	BEGIN
 		OUTER_SPRINT $UIMenuIF("Body") ~~
@@ -1393,7 +1396,7 @@ END
 DEFINE_ACTION_MACRO AdulUnhideChargen.CGProficienciesPatch8
 BEGIN
 	LOCAL_SPRINT tempstr $UIMenuIF("Body")
-	LOCAL_SPRINT adder ~%TAB%%TAB%text lua "getProficiencyHelpText()"%LE%~
+	LOCAL_SPRINT adder ~%TAB%%TAB%text lua "getProficiencyHelpText(engine_mode == 0 and 24315 or 9588)"%LE%~
 	LOCAL_SET found = 0
 
 	// Put current menu definition into inline file
@@ -1404,7 +1407,7 @@ BEGIN
 
 	// Find target and replace it
 	COPY - ~.../CounterInLine~ ~.../CounterInLine~
-		REPLACE_EVALUATE ~^[%TAB% ]+text[%TAB% ]+lua[%TAB% ]+%MQUOTE%[%TAB% ]*proficiencyOrGeneralHelp()[%TAB% ]*%MQUOTE%.*%MEOL%~
+		REPLACE_EVALUATE ~^[%TAB% ]+text[%TAB% ]+lua[%TAB% ]+%MQUOTE%[%TAB% ]*proficiencyOrGeneralHelp([0-9]*)[%TAB% ]*%MQUOTE%.*%MEOL%~
 		BEGIN
 			SET found = 1
 		END
