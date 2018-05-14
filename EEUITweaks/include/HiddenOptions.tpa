@@ -607,13 +607,6 @@ WITH
 			FAIL @207
 		END
 
-		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/ModsOptions/uimenutop2.lua~
-		LAUNCH_ACTION_MACRO EEUITweaks.AddFileAfterMatch
-		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
-		BEGIN
-			FAIL @208
-		END
-
 		LAUNCH_ACTION_MACRO UIMenuUpdateLuaBlock
 		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 		BEGIN

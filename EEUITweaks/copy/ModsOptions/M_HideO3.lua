@@ -1,3 +1,9 @@
+
+Infinity_RegisterFile("en_HideO.lua")
+if(uiTranslationFile) then
+	Infinity_RegisterFile(string.sub(uiTranslationFile,1,3).."HideO.lua")
+end
+
 -- Label Key, Description Key, toggle frame, toggle value, INI section name, INI option key  
 hiddenOptionsToggles = {
 	{"HIDEOPT_UI_EDIT_LABEL",		"HIDEOPT_UI_EDIT_DESCRIPTION",		0,	0,	"Program Options",	"UI Edit Mode"},

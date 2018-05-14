@@ -1,13 +1,7 @@
 
+Infinity_RegisterFile("en_HideO.lua")
 if(uiTranslationFile) then
-	Infinity_DoFile("L_" .. uiTranslationFile)
-	Infinity_DoFile(string.sub(uiTranslationFile,1,3).."HideO.lua")
-	if(uiStrings.HIDEOPT_TITLE == nil) then -- Badly named or non-existant file
-		Infinity_DoFile("en_HideO.lua")
-	end
-else
-	Infinity_DoFile("L_en_us")
-	Infinity_DoFile("en_HideO.lua")
+	Infinity_RegisterFile(string.sub(uiTranslationFile,1,3).."HideO.lua")
 end
 
 -- Label Key, Description Key, toggle frame, toggle value, INI section name, INI option key  

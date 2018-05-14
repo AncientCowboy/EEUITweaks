@@ -1,6 +1,6 @@
-
 local modOptionStrings 
 modOptionStrings = {
+	MODOPT_EMPTY = "",
 	MODOPT_TITLE = "Mods Options",
 	MODOPT_BRIEF = "Mods",
 	MODOPT_BUTTON = "MODS OPTIONS",
