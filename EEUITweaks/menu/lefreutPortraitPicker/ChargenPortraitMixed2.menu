@@ -42,6 +42,7 @@ menu
 	ignoreesc
 	onOpen
 	"
+		Infinity_PlaySound('GAM_03')
 		portraitTable = {}
 		selPortrait = 1
 		local firstPortrait = createCharScreen:GetCurrentPortrait():upper()
@@ -75,6 +76,7 @@ menu
 	onClose
 	"
 		portraitTable = nil
+		Infinity_PlaySound('GAM_04')
 	"
 	label
 	{

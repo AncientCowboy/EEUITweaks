@@ -85,14 +85,14 @@ menu
 	}
 	label
 	{
-		area 82 12 700 40
+		area 48 34 768 44
 		text "APPEARANCE_TITLE"
 		text style "title"
 	}
 	button
 	{
 		enabled "not CurrentlyInGame()"
-		area 122 545 77 68
+		area 122 526 77 68
 		bam LUIGEND1
 		frame lua "gender == 1 and 2 or 0"
 		sequence 0
@@ -106,7 +106,7 @@ menu
 	button
 	{
 		enabled "not CurrentlyInGame()"
-		area 226 545 77 68
+		area 226 526 77 68
 		bam LUIGEND1
 		frame lua "gender == 2 and 2 or 0"
 		sequence 1
@@ -124,33 +124,24 @@ menu
 			width 100
 			label
 			{
-				area 0 0 57 90
-				bitmap lua "portraitTable[rowNumber]"
-				glow lua "rowNumber == mouseoverRow"
-			}
-			label
-			{
-				area 70 0 -1 -1
+				area 0 0 378 94
+				pad 54 0 0 0
 				text lua "getPortrait(rowNumber)"
 				text style 'label'
-				glow lua "rowNumber == mouseoverRow"
+				glow lua "rowNumber == selPortrait"
 			}
 			label
 			{
-				enabled "selPortrait ~= rowNumber"
-				area 0 0 378 94
-				rectangle 1
-				rectangle opacity 150
+				area 0 0 57 90
+				bitmap lua "portraitTable[rowNumber]"
 			}
 		}
-		actionEnter	""
-		actionExit	"mouseoverRow = 0"
 		rowheight 94
 		hidehighlight
-		area 436 130 378 470
+		area 440 120 378 470
 		table "portraitTable"
 		var selPortrait
-		scrollbar 'LUISCRC'
+		scrollbar 'GUISCRC'
 		scrollbar func "portraitScroll"
 	}
 	button
@@ -222,26 +213,26 @@ menu
 	}
 	label
 	{
-		area 107 200 210 330
+		area 107 188 210 330
 		bitmap lua "portraitTable[selPortrait]"
 	}
 	label
 	{
 		enabled "portraitTable[selPortrait]:sub(-1) == 'L'"
-		area 344 320 64 90
-		bam LUIRSP10
+		area 340 308 64 90
+		bam GUIRSP10
 	}
 	label
 	{
 		enabled "portraitTable[selPortrait]:sub(-1) == 'L'"
-		area 348 322 55 85
+		area 344 310 55 85
 		bitmap lua "portraitTable[selPortrait]:sub(1, -2) .. 'M'"
 	}
 	button
 	{
 		on return
-		bam LUIOSTUL
-		area 210 653 234 44
+		bam GUIBUTMT
+		area 196 652 230 44
 		text style "button"
 		text "DONE_BUTTON"
 		clickable lua "createCharScreen:IsDoneButtonClickable()"
@@ -255,8 +246,8 @@ menu
 	button
 	{
 		on escape
-		area 464 653 234 44
-		bam LUIOSTUR
+		area 438 652 230 44
+		bam GUIBUTMT
 		text style "button"
 		text "CANCEL_BUTTON"
 		action

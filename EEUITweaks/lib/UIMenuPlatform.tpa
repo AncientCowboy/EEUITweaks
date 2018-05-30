@@ -26,7 +26,7 @@
  * IsTIWDonSoD - trinit's IWD GUI on SoD
  * IsTIWD2onBG2 - trinit's IWD2 GUI on BG2EE
  * IsPSTEE - Planescape Torment EE
- * IsPSTEE - Icewind Dale EE
+ * IsIWDEE - Icewind Dale EE
  ******************************************************************************/
 DEFINE_ACTION_MACRO EEUIGetMenuEnv
 BEGIN
