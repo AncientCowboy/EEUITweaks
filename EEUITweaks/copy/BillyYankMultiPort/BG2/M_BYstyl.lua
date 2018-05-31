@@ -5,5 +5,5 @@ styles.label_port =
 		point = 10,
 		valign = 'center',
 		halign = 'center',
-    useFontZoom = 0,
+		useFontZoom = 0,
 	}

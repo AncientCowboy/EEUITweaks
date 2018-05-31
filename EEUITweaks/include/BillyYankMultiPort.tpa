@@ -87,11 +87,18 @@ WITH
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/BillyYankMultiPort/chargenportBG2.menu~
 	END
 
-	%IsBGEE% 
+	%IsBGEE%
 	BEGIN
 		LOG @14
 		SILENT
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/BillyYankMultiPort/chargenportBGEE.menu~
+	END
+
+	%IsIWDEE%
+	BEGIN
+		PRINT @14
+		SILENT
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/BillyYankMultiPort/chargenportIWD.menu~
 	END
 
 	DEFAULT
@@ -271,6 +278,11 @@ WITH
 		BEGIN
 			FAIL @44
 		END
+	END
+
+	%IsIWDEE%
+	BEGIN
+		COPY ~%PKGNAME%/copy/BillyYankMultiPort/IWD~ ~override~
 	END
 
 	DEFAULT
