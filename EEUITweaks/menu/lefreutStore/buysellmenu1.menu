@@ -61,6 +61,52 @@ menu
 		text style "normal"
 		align right center
 	}
+	button
+	{
+		enabled "storeScreen:IsContainer()"
+		area 330 560 32 32
+		bam "ROUNDBUT"
+		action
+		"
+			for k,v in ipairs(store.storeItems) do
+				if v.valid == 1 and v.highlight == 0 then
+					storeScreen:SelectStoreItem(k - 1, true)
+					local maxCount = v.maxCount
+					if maxCount > 1 then
+						storeScreen:SetStoreItemCount(k - 1, maxCount)
+					end
+					if not storeScreen:IsBuyItemButtonClickable() then
+						storeScreen:SelectStoreItem(k - 1, false)
+						break
+					end
+				end
+			end
+		"
+	}
+	button
+	{
+		area 564 560 32 32
+		bam "ROUNDBUT"
+		action
+		"
+			for k,v in ipairs(store.groupItems) do
+				if v.valid == 1 and v.highlight == 0 then
+					storeScreen:SelectGroupItem(k - 1, true)
+					local count = v.item.count
+					local stock = v.numInStock or 0
+					if count > 1 then
+						storeScreen:SetGroupItemCount(k - 1, count)
+					elseif stock > 1 then
+						storeScreen:SetGroupItemCount(k - 1, stock)
+					end
+					if not storeScreen:IsSellItemButtonClickable() then
+						storeScreen:SelectGroupItem(k - 1, false)
+						break
+					end
+				end
+			end
+		"
+	}
 
 	list
 	{
@@ -123,6 +169,7 @@ menu
 						storeScreen:SetStoreItemCount(storeItemsVar - 1, maxCount)
 					end
 				end
+				Infinity_PlaySound('GAM_09')
 			end
 		"
 		actionalt
@@ -212,6 +259,7 @@ menu
 							storeScreen:SetGroupItemCount(storeGroupItemsVar - 1, stock)
 						end
 					end
+					Infinity_PlaySound('GAM_09')
 				end
 			end
 		"
