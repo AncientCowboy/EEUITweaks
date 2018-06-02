@@ -7,20 +7,40 @@ menu
 	onOpen
 	"
 		Infinity_PushMenu('WORLD_DIALOG_CONFIRM')
+		if(isTouchActionbar() and not dialogViewMode) then
+			Infinity_PushMenu('WORLD_DIALOG_LEFT')
+			Infinity_PushMenu('WORLD_DIALOG_RIGHT')
+		end
 		greySidebars()
-		previousTop = nil
-		scrolled = false
 	"
 	onClose
 	"
 		Infinity_PopMenu('WORLD_DIALOG_CONFIRM')
+		Infinity_PopMenu('WORLD_DIALOG_LEFT')
+		Infinity_PopMenu('WORLD_DIALOG_RIGHT')
 		ungreySidebars()
 	"
 	label
 	{
 		name "worldDialogBackground"
-		area 0 0 863 210
+		area 0 0 864 250
 		rectangle 4
+	}
+	button
+	{
+		on pageup
+		action
+		"
+			dragDialogMessagesY(-20)
+		"
+	}
+	button
+	{
+		on pagedown
+		action
+		"
+			dragDialogMessagesY(20)
+		"
 	}
 	label
 	{
@@ -28,68 +48,80 @@ menu
 		area 24 20 54 84
 		bitmap lua "worldNPCDialogPortrait"
 	}
+	handle
+	{
+		name "dialogHandleY"
+		area 0 0 864 20
+		actionDrag
+		"
+			dragDialogMessagesY(motionY)
+		"
+	}
 	list
 	{
 		column
 		{
 			width 100
-			label
-			{
-				area 0 0 -1 0
-				enabled "rowNumber == 1 and not scrolled"
-			}
 			text
 			{
+				enabled "rowNumber == 1"
+				opacity lua "step == 1 and 0 or 255"
 				area 0 0 -1 -1
-				pad 0 0 0 12
-				enabled "rowNumber == 2 and scrolled"
-				text lua "worldMessageBoxText"
+				text lua "getDialogText()"
 				text style "normal"
 			}
 			text
 			{
-				area 0 0 -1 -1
-				pad 0 0 0 12
-				enabled "rowNumber == 2 and not scrolled"
+				enabled "rowNumber == 2"
+				area 0 0 712 -1
+				pad 0 0 0 20
 				text lua "worldNPCDialogText:gsub('\n', ': ', 1)"
 				text style "normal"
 			}
 			label
 			{
-				area 0 0 -1 -1
-				pad 12 0 0 0
+				area 0 0 712 -1
 				enabled "rowNumber > 2 and dialogEntryGreyed()"
 				rectangle 1
 				rectangle opacity 100
 			}
 			text
 			{
-				area 0 0 -1 -1
-				pad 12 0 0 0
 				enabled "rowNumber > 2"
+				area 0 0 712 -1
 				text lua "getDialogEntryText(rowNumber)"
+				text style "normal"
+			}
+			text
+			{
+				enabled "rowNumber == #worldPlayerDialogChoices + 2"
+				area 0 0 712 500
 				text style "normal"
 			}
 		}
 		name "worldPlayerDialogChoicesList"
-		area 88 20 756 170
+		area 88 20 752 210
 		rowheight dynamic
 		hideHighlight
-		table "mergeDialog(worldPlayerDialogChoices)"
+		table "makeDialogTable()"
 		var "worldPlayerDialogSelection"
 		scrollbar 'GUISCRC'
 		scrollbar func "dialogScroll"
 		actionEnter
 		"
+			if(gameOptions.m_bConfirmDialog == true) then return end
 			worldPlayerDialogSelection = mouseoverRow
 		"
 		actionExit
 		"
+			if(gameOptions.m_bConfirmDialog == true) then return end
 			worldPlayerDialogSelection = 0
 		"
 		action
 		"
-			if (worldPlayerDialogChoices[worldPlayerDialogSelection - 2] == nil) then return end
+			--In confirm mode, just highlight the choice.
+			if(gameOptions.m_bConfirmDialog == true) then return end
+			if(worldPlayerDialogChoices[worldPlayerDialogSelection - 2] == nil) then return end
 			worldScreen:OnDialogReplyClick(worldPlayerDialogChoices[worldPlayerDialogSelection - 2].marker)
 			worldPlayerDialogSelection = 0
 		"

@@ -1,37 +1,47 @@
 `
-previousTop = nil
-scrolled = false
+step = 1
 worldNPCDialogText = ""
 worldPlayerDialogChoices = {}
 
 function dialogEntryGreyed()
 	return not worldScreen:GetInControlOfDialog()
 end
+
 function resizeDialog()
-	previousTop = nil
-	scrolled = false
+	buildResponsesList()
+	step = 1
 end
+
 function dialogScroll(top, height, contentHeight)
-	if scrolled then
-		if previousTop ~= nil and contentHeight > height then
-			local b = previousTop - contentHeight + 28
-			previousTop = nil
-			return b
-		end
+	if worldNPCDialogText == '' then
 		return nil
 	end
-	if top < -1 and previousTop ~= nil then
-		previousTop = top
-		return nil
+	
+	if step == 1 then
+		step = 2
+		return -contentHeight
 	end
-	if previousTop == -1 and top ~= previousTop then
-		scrolled = true
-		previousTop = math.max(height, contentHeight)
-		return 0
+
+	if -top > contentHeight - 500 then
+		return -(contentHeight - 500)
 	end
-	previousTop = -1
-	return -1
+
+	return nil
 end
+
+function dragDialogMessagesY(newY)
+	local x,y,w,hOld = Infinity_GetArea("worldDialogBackground")
+	h = hOld - newY
+	if h < 100 then
+		newY = hOld - 100
+	elseif h > 500 then
+		newY = hOld - 500
+	end
+
+	adjustItemGroup({"dialogHandleY","worldDialogPortraitArea"},0,newY,0,0)
+	adjustItemGroup({"worldDialogBackground","worldPlayerDialogChoicesList"},0,newY,0,-newY)
+end
+
 function getDialogEntryText(row)
 	local text = worldPlayerDialogChoices[row - 2].text
 	if (row == worldPlayerDialogSelection) then
@@ -40,13 +50,21 @@ function getDialogEntryText(row)
 	end
 	return text
 end
-function mergeDialog(t)
-	local dialog = {}
-	for key, value in pairs(t) do
-		dialog[key] = value
+
+function getDialogText()
+	local text = '\n' .. worldNPCDialogText:gsub('\n', ': ', 1)
+	if worldMessageBoxText:sub(-text:len()) == text then
+		return worldMessageBoxText:sub(1, worldMessageBoxText:len() - text:len())
 	end
-	table.insert(dialog, 1, '')
-	table.insert(dialog, 1, '')
-	return dialog
+	return worldMessageBoxText
+end
+
+function makeDialogTable()
+	local length = step == 1 and 1 or #worldPlayerDialogChoices + 2
+	local t = {}
+	for i=1,length do
+		table.insert(t, 1, '')
+	end
+	return t
 end
 `
