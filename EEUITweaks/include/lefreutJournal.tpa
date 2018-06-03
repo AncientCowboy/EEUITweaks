@@ -40,7 +40,13 @@ BEGIN
 	FAIL @302304
 END
 
-OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/lefreutJournal/journalcode1.lua~
+ACTION_IF %journalExpanded% = 1 THEN
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/lefreutJournal/journalcode1.lua~
+END ELSE
+BEGIN
+	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/lua/lefreutJournal/journalcode2.lua~
+END
 LAUNCH_ACTION_MACRO UIMenuReplaceLuaBlock
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
@@ -54,10 +60,22 @@ OUTER_SPRINT $UIMenuIF("MenuName") ~JOURNAL~
 OUTER_SPRINT $UIMenuIF("Body") ~~
 ACTION_IF IsSoD OR IsEETSoD OR IsSoDOverhaul OR IsKRDS OR IsKRDS0 OR IsKRDS1 OR IsKRDS2 OR IsKRDS3 OR IsKRDS4 OR IsKRDS5 THEN
 BEGIN
-	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutJournal/journalmenu2.menu~
+	ACTION_IF %journalExpanded% = 1 THEN
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutJournal/journalmenu2.menu~
+	END ELSE
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutJournal/journalmenu4.menu~
+	END
 END ELSE
 BEGIN
-	OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutJournal/journalmenu1.menu~
+	ACTION_IF %journalExpanded% = 1 THEN
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutJournal/journalmenu1.menu~
+	END ELSE
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/lefreutJournal/journalmenu3.menu~
+	END
 END
 LAUNCH_ACTION_MACRO UIMenuReplaceMenu
 ACTION_IF NOT $UIMenuIF("Succeeded") THEN
@@ -172,9 +190,3 @@ ACTION_IF NOT $UIMenuIF("Succeeded") THEN
 BEGIN
 	FAIL @44
 END
-
-
-
-
-
-

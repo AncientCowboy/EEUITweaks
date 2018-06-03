@@ -415,7 +415,7 @@
 @302005 = ~Uninstalling incompatible lefreut's Simple Journal Fixes~
 @302006 = ~Installing it again will make it compatible~
 
-@302300 = ~lefreut's Journal~
+@302300 = ~lefreut's Journal (quests expanded by default)~
 @302301 = ~Replacing textflash menu~
 @302302 = ~Unable to replace textflash menu~
 @302303 = ~Replacing Journal Lua code block~
@@ -427,6 +427,7 @@
 @302309 = ~Unable to replace JOURNAL_RECENT_EVENTS menu~
 @302010	= ~Incompatible with previously installed Mr2150's Journal Fixes~
 @302011 = ~Uninstalling redundant Simple Journal Fixes~
+@302400 = ~lefreut's Journal (quests collapsed by default)~
 
 @302800 = ~lefreut's Customize Screens Tweaks~
 @302801 = ~Replacing CHARACTER_CUSTOMIZE menu~
