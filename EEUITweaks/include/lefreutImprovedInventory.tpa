@@ -161,8 +161,6 @@ WITH
 
 	%IsBG2% %IsBG2onSoD% %IsEETBG2%
 	BEGIN
-		COPY ~%PKGNAME%/copy/luicommon/BG2Theme/LUISCRC.BAM~ ~override~
-
 		LAF EEUITweaks.CopyPVRZResource
 			STR_VAR
 				source_folder = EVAL ~%PKGNAME%/copy/luicommon/BG2Theme~

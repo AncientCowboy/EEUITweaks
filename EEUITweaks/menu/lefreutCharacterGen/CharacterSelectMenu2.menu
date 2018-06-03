@@ -122,7 +122,7 @@ menu
 		rowheight 134
 		hidehighlight
 		table "makeTable(#character_select)"
-		scrollbar 'LUISCRC'
+		scrollbar 'GUISCRC'
 		scrollbar func "scrollFunc"
 	}
 	button

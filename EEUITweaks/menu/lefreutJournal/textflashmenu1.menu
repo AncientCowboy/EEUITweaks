@@ -29,7 +29,7 @@ menu
 		text align left top
 		text point 14
 		text color D
-		scrollbar 'LUISCRC'
+		scrollbar 'GUISCRC'
 		scrollbar hide lua "1"
 	}
 	text
@@ -38,7 +38,7 @@ menu
 		text lua "getBodyString()"
 		text style "normal"
 		text align left top
-		scrollbar 'LUISCRC'
+		scrollbar 'GUISCRC'
 		scrollbar hide lua "1"
 		action
 		"

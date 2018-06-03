@@ -62,7 +62,7 @@ menu
 		hidehighlight
 		table		"list_GUIREC_13_0"
 		var			"list_GUIREC_13_0_idx"
-		scrollbar	'LUISCRC'
+		scrollbar	'GUISCRC'
 		action
 		"
 			Infinity_OnCharacterItemSelect(list_GUIREC_13_0_idx - 1)
@@ -97,7 +97,7 @@ menu
 	{
 		area 450 198 362 410
 		text 10962
-		scrollbar 'LUISCRC'
+		scrollbar 'GUISCRC'
 		text style normal
 		text color D
 	}

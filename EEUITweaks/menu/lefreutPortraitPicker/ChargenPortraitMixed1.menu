@@ -150,7 +150,7 @@ menu
 		area 436 130 378 470
 		table "portraitTable"
 		var selPortrait
-		scrollbar 'LUISCRC'
+		scrollbar 'GUISCRC'
 		scrollbar func "portraitScroll"
 	}
 	button

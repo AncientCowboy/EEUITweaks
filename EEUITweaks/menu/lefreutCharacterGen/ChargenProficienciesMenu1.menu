@@ -87,7 +87,7 @@ menu
 			width 4
 			label
 			{
-				bam LUISCRC
+				bam GUISCRC
 				area 0 16 16 22
 				frame 4
 				align center center
@@ -99,7 +99,7 @@ menu
 			width 4
 			label
 			{
-				bam LUISCRC
+				bam GUISCRC
 				area 0 16 16 22
 				frame 4
 				align center center
@@ -111,7 +111,7 @@ menu
 			width 4
 			label
 			{
-				bam LUISCRC
+				bam GUISCRC
 				area 0 16 16 22
 				frame 4
 				align center center
@@ -123,7 +123,7 @@ menu
 			width 4
 			label
 			{
-				bam LUISCRC
+				bam GUISCRC
 				area 0 16 16 22
 				frame 4
 				align center center
@@ -135,7 +135,7 @@ menu
 			width 4
 			label
 			{
-				bam LUISCRC
+				bam GUISCRC
 				area 0 16 16 22
 				frame 4
 				align center center
@@ -200,7 +200,7 @@ menu
 		area 52 178 422 276
 		table "chargen.proficiency"
 		var currentChargenProficiency
-		scrollbar 'LUISCRC'
+		scrollbar 'GUISCRC'
 	}
 	list
 	{
@@ -286,7 +286,7 @@ menu
 		area 474 178 336 276
 		table "chargen.thief_skill"
 		var currentChargenThiefSkill
-		scrollbar	'LUISCRC'
+		scrollbar	'GUISCRC'
 	}
 
 	text
@@ -294,7 +294,7 @@ menu
 		area 112 492 642 116
 		text lua "proficiencyOrGeneralHelp()"
 		text style "normal"
-		scrollbar 'LUISCRC'
+		scrollbar 'GUISCRC'
 	}
 	button
 	{

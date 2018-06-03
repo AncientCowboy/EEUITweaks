@@ -54,7 +54,7 @@ menu
 		hidehighlight
 		table		"list_GUICG_20_2"
 		var			"list_GUICG_20_2_idx"
-		scrollbar	'LUISCRC'
+		scrollbar	'GUISCRC'
 		action
 		"
 			Infinity_OnCharacterImportItemSelect(list_GUICG_20_2_idx - 1)
@@ -67,7 +67,7 @@ menu
 	{
 		area 450 198 362 410
 		text 10963
-		scrollbar 'LUISCRC'
+		scrollbar 'GUISCRC'
 		text style normal
 		text color D
 	}

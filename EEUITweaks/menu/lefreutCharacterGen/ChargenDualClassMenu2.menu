@@ -37,7 +37,7 @@ menu
 		text 10811 --dual class info
 		text style "parchment"
 		text color D
-		scrollbar 'LUISCRC'
+		scrollbar 'GUISCRC'
 	}
 	button
 	{

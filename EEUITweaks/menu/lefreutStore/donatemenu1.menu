@@ -110,6 +110,6 @@ menu
 		area 480 182 313 364
 		text lua "store.donateText"
 		text style "normal_parchment"
-		scrollbar 'LUISBR'
+		scrollbar 'GUISCRC'
 	}
 }

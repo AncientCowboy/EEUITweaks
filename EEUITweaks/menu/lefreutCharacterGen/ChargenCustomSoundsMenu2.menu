@@ -54,7 +54,7 @@ menu
 		hidehighlight
 		table		"chargen.customSound"
 		var			"currentChargenCustomSound"
-		scrollbar	'LUISCRC'
+		scrollbar	'GUISCRC'
 		action
 		"
 			createCharScreen:OnSoundItemSelect(currentChargenCustomSound-1)
@@ -67,7 +67,7 @@ menu
 	{
 		area 450 198 362 410
 		text "SOUND_DESCRIPTION"
-		scrollbar 'LUISCRC'
+		scrollbar 'GUISCRC'
 		text style normal
 		text color D
 	}

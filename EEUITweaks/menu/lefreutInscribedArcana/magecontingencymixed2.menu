@@ -91,7 +91,7 @@ menu
 			}
 		}
 		area 54 130 256 248
-		scrollbar 'LUISCRC'
+		scrollbar 'GUISCRC'
 		rowheight 62
 		hidehighlight
 		table "makeTable(math.ceil(#bookSpells / 4))"
@@ -224,7 +224,7 @@ menu
 		hidehighlight
 		table "contingencyConditions"
 		var currentContingencyCondition
-		scrollbar 'LUISCRC'
+		scrollbar 'GUISCRC'
 		action
 		"
 			contingencyDescription = contingencyConditions[currentContingencyCondition].desc
@@ -275,7 +275,7 @@ menu
 		hidehighlight
 		table "contingencyTargets"
 		var currentContingencyTarget
-		scrollbar 'LUISCRC'
+		scrollbar 'GUISCRC'
 		action
 		"
 			contingencyDescription = contingencyTargets[currentContingencyTarget].desc
@@ -288,7 +288,7 @@ menu
 		area 54 468 754 112
 		text lua "Infinity_FetchString(contingencyDescription)"
 		text style "normal"
-		scrollbar 'LUISCRC'
+		scrollbar 'GUISCRC'
 	}
 	button
 	{

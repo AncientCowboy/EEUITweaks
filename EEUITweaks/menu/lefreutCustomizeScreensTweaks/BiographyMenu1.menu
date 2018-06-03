@@ -23,7 +23,7 @@ menu
 	{
 		area		436 128 382 478
 		var			recBioEdit
-		scrollbar	'LUISCRC'
+		scrollbar	'GUISCRC'
 		text style	"edit"
 	}
 

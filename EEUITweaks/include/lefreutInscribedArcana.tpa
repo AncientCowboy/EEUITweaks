@@ -138,10 +138,6 @@ BEGIN
 END
 
 SILENT
-COPY ~%PKGNAME%/copy/luicommon/%theme%/LUISCRC.BAM~ ~override~
-
-COPY ~%PKGNAME%/copy/luicommon/%theme%/LUISBR.BAM~ ~override~
-
 COPY ~%PKGNAME%/copy/luicommon/INITIALS.BAM~ ~override~
 
 LAF EEUITweaks.CopyPVRZResource

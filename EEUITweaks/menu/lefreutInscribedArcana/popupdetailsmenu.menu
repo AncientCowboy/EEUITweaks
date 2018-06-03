@@ -73,7 +73,7 @@ menu
 		area 0 0 665 -1
 		text lua "Infinity_FetchString(PopupDetails.description):sub(startPos, curPos)"
 		text style "parchment"
-		scrollbar 'LUISBR'
+		scrollbar 'GUISCRC'
 	}
 	list
 	{
@@ -107,7 +107,7 @@ menu
 		hidehighlight
 		table "makeTable(2)"
 		area 71 185 715 340
-		scrollbar 'LUISBR'
+		scrollbar 'GUISCRC'
 	}
 	text
 	{
@@ -115,7 +115,7 @@ menu
 		area 71 185 715 340
 		text lua "Infinity_FetchString(PopupDetails.description)"
 		text style "parchment"
-		scrollbar 'LUISCRC'
+		scrollbar 'GUISCRC'
 	}
 	button
 	{

@@ -200,7 +200,7 @@ menu
 		}
 		area 138 200 266 372
 		name "bookListPriest"
-		scrollbar 'LUISBR'
+		scrollbar 'GUISCRC'
 		rowheight 62
 		hidehighlight
 		table "makeTable(math.ceil(#characters[id].priestSpells[currentSpellLevel] / 4))"
@@ -396,7 +396,7 @@ menu
 		area 420 196 306 362
 		text lua "Infinity_FetchString(selectedSpell.description)"
 		text style "parchment"
-		scrollbar 'LUISBR'
+		scrollbar 'GUISCRC'
 	}
 	list
 	{
@@ -479,7 +479,7 @@ menu
 		area 460 200 266 372
 		name "memorizedListPriest"
 		enabled "selectedSpell == nil"
-		scrollbar 'LUISBR'
+		scrollbar 'GUISCRC'
 		rowheight 62
 		hidehighlight
 		table "makeTable(math.ceil(#bottomSpellsPlaceHolder / 4))"

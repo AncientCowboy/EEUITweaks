@@ -66,14 +66,14 @@ menu
 		area 42 192 340 414
 		table "chargen.class"
 		var currentChargenClass
-		scrollbar 'LUISCRC'
+		scrollbar 'GUISCRC'
 	}
 	text
 	{
 		area 436 128 382 478
 		text lua "classOrGeneralHelp()"
 		text style "normal"
-		scrollbar 'LUISCRC'
+		scrollbar 'GUISCRC'
 	}
 	button
 	{

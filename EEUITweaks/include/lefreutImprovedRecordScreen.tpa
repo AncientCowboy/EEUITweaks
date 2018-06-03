@@ -80,8 +80,6 @@ BEGIN
 END
 
 SILENT
-COPY ~%PKGNAME%/copy/luicommon/%theme%/LUISCRC.BAM~ ~override~
-
 LAF EEUITweaks.MultiCopyPVRZResource
 	STR_VAR
 		source_folder = EVAL ~%PKGNAME%/copy/luicommon/%theme%~

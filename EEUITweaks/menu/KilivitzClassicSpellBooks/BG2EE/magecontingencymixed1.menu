@@ -276,7 +276,7 @@ menu
 		hidehighlight
 		table "contingencyTargets"
 		var currentContingencyTarget
-		scrollbar 'LUISCRC'
+		scrollbar 'GUISCRC'
 		action
 		"
 			contingencyDescription = contingencyTargets[currentContingencyTarget].desc

@@ -32,7 +32,7 @@ menu
 	{
 		area 430 177 290 422
 		text lua "chargen.information"
-		scrollbar 'LUISCRC'
+		scrollbar 'GUISCRC'
 		text style "parchment"
 		text color B
 	}

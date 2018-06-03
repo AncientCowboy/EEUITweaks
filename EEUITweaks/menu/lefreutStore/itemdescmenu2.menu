@@ -38,7 +38,7 @@ menu
 		area 0 0 380 -1
 		text lua "itemDesc.item.description:sub(startPos, curPos)"
 		text style "parchment"
-		scrollbar 'LUISBR'
+		scrollbar 'GUISCRC'
 	}
 	list
 	{
@@ -72,14 +72,14 @@ menu
 		hidehighlight
 		table "makeTable(2)"
 		area 356 185 430 340
-		scrollbar 'LUISBR'
+		scrollbar 'GUISCRC'
 	}
 	text
 	{
 		enabled "splitPos == -1"
 		area 356 185 430 340
 		text lua "itemDesc.item.description"
-		scrollbar 'LUISBR'
+		scrollbar 'GUISCRC'
 		text style "parchment"
 	}
 	text

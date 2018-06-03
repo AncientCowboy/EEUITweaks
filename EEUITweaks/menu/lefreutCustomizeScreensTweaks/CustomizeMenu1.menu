@@ -23,7 +23,7 @@ menu
 	{
 		area 436 130 378 470
 		text 11327 --Customize help text
-		scrollbar 'LUISCRC'
+		scrollbar 'GUISCRC'
 		text style	normal
 		text color D
 	}

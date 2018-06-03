@@ -83,7 +83,7 @@ menu
 		rowheight	dynamic
 		table		"store.identifyItems"
 		var			"identifyItemsVar"
-		scrollbar 'LUISCRC'
+		scrollbar 'GUISCRC'
 		action
 		"
 			local highlight = store.identifyItems[identifyItemsVar].highlight ~= 1
@@ -107,6 +107,6 @@ menu
 		area 480 182 313 364
 		text lua "store.identifyText"
 		text style "normal_parchment"
-		scrollbar 'LUISBR'
+		scrollbar 'GUISCRC'
 	}
 }

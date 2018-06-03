@@ -79,7 +79,7 @@ menu
 		text lua "TEXT_inventoryError"
 		text style normal
 		pad 8 8 8 8
-		scrollbar 'LUISCRC'
+		scrollbar 'GUISCRC'
 	}
 	label
 	{
@@ -209,7 +209,7 @@ menu
 		hidehighlight
 		table		"buildInventoryStats()"
 		var			inventoryVar
-		scrollbar	'LUISCRC'
+		scrollbar	'GUISCRC'
 		scrollbar func "inventoryScroll"
 		action
 		"
@@ -304,7 +304,7 @@ menu
 		hidehighlight
 		rowheight	106
 		table		"makeTable(Infinity_GetMaxGroundPage() + 1)"
-		scrollbar 'LUISCRC'
+		scrollbar 'GUISCRC'
 		scrollbar func "groundScroll"
 	}
 

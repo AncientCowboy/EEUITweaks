@@ -252,7 +252,7 @@ menu
 		area 436 128 382 478
 		text lua "abilityOrGeneralHelp()"
 		text style "normal"
-		scrollbar	'LUISCRC'
+		scrollbar	'GUISCRC'
 	}
 	button
 	{

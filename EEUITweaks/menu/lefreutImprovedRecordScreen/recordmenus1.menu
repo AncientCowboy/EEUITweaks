@@ -279,7 +279,7 @@ menu
 		rowheight dynamic
 		table "recordInfos"
 		hidehighlight
-		scrollbar 'LUISCRC'
+		scrollbar 'GUISCRC'
 	}
 	label
 	{
@@ -606,7 +606,7 @@ menu
 	{
 		area 44 198 768 410
 		text lua "Infinity_FetchString(characters[currentID].biography)"
-		scrollbar 'LUISCRC'
+		scrollbar 'GUISCRC'
 		text style parchment
 		text color D
 	}
@@ -644,7 +644,7 @@ menu
 	{
 		area 44 198 768 410
 		text lua "characters[currentID].kitDesc"
-		scrollbar 'LUISCRC'
+		scrollbar 'GUISCRC'
 		text style parchment
 		text color D
 	}

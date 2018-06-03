@@ -54,7 +54,7 @@ menu
 		hidehighlight
 		table		"list_GUIREC_20_5"
 		var			"list_GUIREC_20_5_idx"
-		scrollbar	'LUISCRC'
+		scrollbar	'GUISCRC'
 		action
 		"
 			Infinity_OnSoundItemSelect(list_GUIREC_20_5_idx - 1)
@@ -66,7 +66,7 @@ menu
 	{
 		area 450 198 362 410
 		text 11315
-		scrollbar 'LUISCRC'
+		scrollbar 'GUISCRC'
 		text style normal
 		text color D
 	}

@@ -56,7 +56,7 @@ menu
 				align left center
 			}
 		}
-		scrollbar 'LUISCRC'
+		scrollbar 'GUISCRC'
 		rowheight 52
 		hidehighlight
 		area 42 192 340 414
@@ -87,7 +87,7 @@ menu
 		area 436 128 382 478
 		text lua "chooseSpellOrGeneralHelp()"
 		text style "normal"
-		scrollbar 'LUISCRC'
+		scrollbar 'GUISCRC'
 	}
 	button
 	{

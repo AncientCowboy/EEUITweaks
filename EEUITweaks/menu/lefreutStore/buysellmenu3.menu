@@ -157,7 +157,7 @@ menu
 		rowheight	62
 		table		"store.storeItems"
 		var			"storeItemsVar"
-		scrollbar 'LUISCRC'
+		scrollbar 'GUISCRC'
 		action
 		"
 			if store.storeItems[storeItemsVar] then
@@ -240,7 +240,7 @@ menu
 		rowheight	62
 		table		"store.groupItems"
 		var			"storeGroupItemsVar"
-		scrollbar 'LUISCRC'
+		scrollbar 'GUISCRC'
 		action
 		"
 			if store.groupItems[storeGroupItemsVar] then

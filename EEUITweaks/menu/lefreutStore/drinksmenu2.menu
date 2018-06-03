@@ -108,7 +108,7 @@ menu
 		rowheight	62
 		table		"store.drinks"
 		var			"storeDrinksVar"
-		scrollbar 'LUISCRC'
+		scrollbar 'GUISCRC'
 		action
 		"
 			local drink = store.drinks[storeDrinksVar]
@@ -150,6 +150,6 @@ menu
 		area 484 274 315 273
 		text lua "store.drinkText"
 		text style "normal_parchment"
-		scrollbar 'LUISBR'
+		scrollbar 'GUISCRC'
 	}
 }

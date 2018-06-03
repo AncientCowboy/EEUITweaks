@@ -40,7 +40,7 @@ menu
 	{
 		area 450 528 366 80
 		text lua "scriptDescription"
-		scrollbar 'LUISCRC'
+		scrollbar 'GUISCRC'
 		text style	normal
 		enabled "showingSmartOptions == true"
 	}
@@ -48,7 +48,7 @@ menu
 	{
 		area 450 198 366 410
 		text lua "scriptDescription"
-		scrollbar 'LUISCRC'
+		scrollbar 'GUISCRC'
 		text style	normal
 		text color D
 		enabled "showingSmartOptions == false"
@@ -89,7 +89,7 @@ menu
 		hidehighlight
 		table		"scriptList"
 		var			"scriptList_idx"
-		scrollbar	'LUISCRC'
+		scrollbar	'GUISCRC'
 		action
 		"
 			if scriptList[scriptList_idx] == ' ' or scriptList_idx == -1 then
@@ -153,7 +153,7 @@ menu
 		hidehighlight
 		table		"scriptOptions"
 		var			selScriptOpt
-		scrollbar	'LUISCRC'
+		scrollbar	'GUISCRC'
 		enabled 	"showingSmartOptions == true"
 		action
 		"

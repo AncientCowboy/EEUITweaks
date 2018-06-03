@@ -271,7 +271,7 @@ menu
 		rowheight 134
 		hidehighlight
 		table "makeSaveTable()"
-		scrollbar 'LUISCRC'
+		scrollbar 'GUISCRC'
 		scrollbar func "scrollFunc"
 	}
 

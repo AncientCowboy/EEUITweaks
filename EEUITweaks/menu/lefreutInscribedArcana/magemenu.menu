@@ -218,7 +218,7 @@ menu
 		}
 		area 154 204 266 372
 		name "bookListMage"
-		scrollbar 'LUISBR'
+		scrollbar 'GUISCRC'
 		rowheight 62
 		hidehighlight
 		table "makeTable(math.ceil(#bookSpells / 4))"
@@ -414,7 +414,7 @@ menu
 		area 446 212 264 364
 		text lua "Infinity_FetchString(selectedSpell.description)"
 		text style "parchment"
-		scrollbar 'LUISBR'
+		scrollbar 'GUISCRC'
 	}
 	list
 	{
@@ -497,7 +497,7 @@ menu
 		area 450 204 266 372
 		name "memorizedListMage"
 		enabled "selectedSpell == nil"
-		scrollbar 'LUISBR'
+		scrollbar 'GUISCRC'
 		rowheight 62
 		hidehighlight
 		table "makeTable(math.ceil(#bottomSpellsPlaceHolder / 4))"

@@ -93,7 +93,7 @@ menu
 		rowheight	62
 		table		"store.healingSpells"
 		var			"healingSpellsVar"
-		scrollbar 'LUISCRC'
+		scrollbar 'GUISCRC'
 		action
 		"
 			local spell = store.healingSpells[healingSpellsVar]
@@ -132,6 +132,6 @@ menu
 		area 480 182 313 364
 		text lua "store.spellText"
 		text style "normal_parchment"
-		scrollbar 'LUISBR'
+		scrollbar 'GUISCRC'
 	}
 }
