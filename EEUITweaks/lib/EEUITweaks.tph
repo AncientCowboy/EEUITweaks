@@ -396,14 +396,29 @@ BEGIN
 	OUTER_SPRINT tempstr ~~
 
 	// See if onOpen exists, if so, patch it
-	OUTER_SET found = 0 
+	OUTER_SET found = 0
+
+	// Look for and patch onOpen followed by double quoted code block
 	COPY - ~.../CounterInLine~ ~.../CounterInLine~
-		REPLACE_EVALUATE CASE_INSENSITIVE ~\(^%MWHITE%onOpen%MWHITE%\(%MQUOTE%\).*%MEOL%\)\([^\2]*\2\)~
+		REPLACE_EVALUATE CASE_INSENSITIVE ~onOpen%MWHITE%%MDQUOTE%\(%MNOTDQUOTE%*\)%MDQUOTE%~
 		BEGIN
-			SPRINT tempstr ~%MATCH1%%adder%%MATCH3%~
+			SPRINT tempstr ~onOpen%LE%%TAB%"%LE%%MATCH1%%LE%%adder%%LE%%TAB%"~
 			SET found = 1
 		END
 		~%tempstr%~
+
+	// If not found, look for and patch onOpen followed by single quoted code block
+	ACTION_IF NOT %found% THEN
+	BEGIN
+		LOG ~In ModOptions.StartOptionsFirstPatch - failed to find onOpen with double quotes. Trying single~
+		COPY - ~.../CounterInLine~ ~.../CounterInLine~
+			REPLACE_EVALUATE CASE_INSENSITIVE ~onOpen%MWHITE%%MSQUOTE%\(%MNOTSQUOTE%*\)%MSQUOTE%~
+			BEGIN
+				SPRINT tempstr ~onOpen%LE%%TAB%'%LE%%MATCH1%%LE%%adder%%LE%%TAB%'~
+				SET found = 1
+			END
+			~%tempstr%~
+	END
 
 	ACTION_IF NOT %found% THEN
 	BEGIN // Manufacture onOpen
