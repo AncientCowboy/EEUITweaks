@@ -1367,8 +1367,16 @@ COPY ~%PKGNAME%/copy/lefreutTooltip~ ~override~
  * lefreut's Box 5 (Dialog Box) Override
  *****************************************************************************/
 BEGIN @502000 DESIGNATED 5020
-DEPRECATED @502000
 GROUP @5
+REQUIRE_PREDICATE (
+	(GAME_IS ~eet~) OR
+	(GAME_IS ~bg2ee~) OR
+	(GAME_IS ~bgee~)
+) @27
+
+LOG @24
+SILENT
+COPY ~%PKGNAME%/copy/lefreutBox5~ ~override~
 
 /******************************************************************************
  * lefreut's Scroll Bar Override
