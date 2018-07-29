@@ -1368,6 +1368,8 @@ COPY ~%PKGNAME%/copy/lefreutTooltip~ ~override~
 BEGIN @502000 DESIGNATED 5020
 GROUP @5
 REQUIRE_PREDICATE (
+	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND                 // IE 2.0+
+	(FILE_EXISTS_IN_GAME ~BITS.IDS~) AND                // 2.5
 	(GAME_IS ~eet~) OR
 	(GAME_IS ~bg2ee~) OR
 	(GAME_IS ~bgee~)
@@ -1384,6 +1386,7 @@ BEGIN @503000 DESIGNATED 5030
 GROUP @5
 REQUIRE_PREDICATE (
 	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND                 // IE 2.0+
+	(NOT(FILE_EXISTS_IN_GAME ~BITS.IDS~)) AND           // Not 2.5
 	(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND          // Not Lefreut's UI
 	(NOT(MOD_IS_INSTALLED ~LeUI-BG1EE.tp2~ ~0~)) AND    // Not Lefreut's UI (BG1EE skin)
 	(NOT(MOD_IS_INSTALLED ~LeUI-SoD.tp2~ ~0~)) AND      // Not Lefreut's UI (SoD skin)
