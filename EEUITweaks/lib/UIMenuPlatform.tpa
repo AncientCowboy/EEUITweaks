@@ -11,6 +11,7 @@
  * IsSoDOverhaul - Pecca's Dragonspear UI++
  * IsEETBG2  - EET with default BG2 GUI
  * IsEETSoD  - EET with SoD GUI Option
+ * IsLeUI - Lefreut's UI (BG1EE, SoD or BG2EE skin)
  * IsLeUIBG2 - Lefreut's UI on BG2EE
  * IsLeUISOD - Lefreut's UI on BGEESoD
  * IsLeUIBG1 - Lefreut's UI on BGEE no SoD
@@ -37,6 +38,7 @@ BEGIN
 	OUTER_SET IsSoDOverhaul = 0
 	OUTER_SET IsEETBG2 = 0
 	OUTER_SET IsEETSoD = 0
+	OUTER_SET IsLeUI = 0
 	OUTER_SET IsLeUIBG2 = 0
 	OUTER_SET IsLeUISOD = 0
 	OUTER_SET IsLeUIBG1 = 0
@@ -70,6 +72,14 @@ BEGIN
 			OUTER_SET IsPSTEE = 1
 			LOG ~IsPSTEE~
 		END
+	END
+
+	ACTION_IF
+		(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~) OR
+		(MOD_IS_INSTALLED ~LeUI-BG1EE.tp2~ ~0~) OR
+		(MOD_IS_INSTALLED ~LeUI-SoD.tp2~ ~0~) THEN
+	BEGIN
+		OUTER_SET IsLeUI = 1
 	END
 
 	ACTION_IF GAME_IS ~eet~ THEN

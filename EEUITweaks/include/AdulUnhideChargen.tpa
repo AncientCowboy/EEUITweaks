@@ -1434,7 +1434,7 @@ END
 /*******************************************************************************
  * Adul's Unhide Chargen Options Installation
  ******************************************************************************/
-ACTION_IF NOT(IsLeUIBG2 | IsLeUISOD | IsLeUIBG1 | IsEETLeUI) THEN
+ACTION_IF NOT(IsLeUI) THEN
 BEGIN
 // Open UI.MENU
 LOG @12
