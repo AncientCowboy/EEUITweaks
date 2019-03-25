@@ -987,6 +987,7 @@ END
 // Copy files
 LOG @24
 SILENT
+COPY ~%PKGNAME%/copy/ProgressBar/M__.lua~ ~override~
 COPY ~%PKGNAME%/copy/ProgressBar/M_PgBar.lua~ ~override~
 COPY ~%PKGNAME%/copy/ProgressBar/en_USPgB.lua~ ~override~
 ACTION_IF %IsPSTEE% THEN

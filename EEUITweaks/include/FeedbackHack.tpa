@@ -239,6 +239,7 @@ END
 // Copy common files
 LOG @24
 SILENT
+COPY ~%PKGNAME%/copy/FeedbackHack/M__.lua~ ~override~
 COPY ~%PKGNAME%/copy/FeedbackHack/M_FeedHk.lua~ ~override~
 COPY ~%PKGNAME%/copy/FeedbackHack/en_FeedH.lua~ ~override~
 

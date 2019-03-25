@@ -7,6 +7,11 @@ menu
 	onOpen
 	"
 		currentChargenAlignment = nil
+		Infinity_PlaySound('GAM_03')
+	"
+	onClose
+	"
+		Infinity_PlaySound('GAM_04')
 	"
 	label
 	{
@@ -24,45 +29,32 @@ menu
 		column
 		{
 			width 100
-			label
+			button
 			{
-				enabled "rowNumber ~= currentChargenAlignment and rowNumber ~= hoverChargenAlignment"
-				area 8 0 340 44
-				text lua "Infinity_FetchString(chargen.alignment[rowNumber].name)"
-				text style "list"
-				text align center center
-				text color D
+				area 0 0 356 32
+				bam LUICHLNG
+				frame lua "rowNumber == currentChargenAlignment and 2 or 0"
 			}
-			label
+			button
 			{
-				enabled "rowNumber == currentChargenAlignment and rowNumber ~= hoverChargenAlignment"
-				area 8 0 340 44
+				area 0 0 340 32
 				text lua "Infinity_FetchString(chargen.alignment[rowNumber].name)"
-				text style "list"
-				text align center center
-				text color S
-			}
-			label
-			{
-				enabled "rowNumber == hoverChargenAlignment"
-				area 8 0 340 44
-				text lua "Infinity_FetchString(chargen.alignment[rowNumber].name)"
-				text style "list"
-				text align center center
-				text color H
+				text style "button"
+				pad 8 8 8 8
 			}
 		}
 		action
 		"
 			if chargen.alignment[currentChargenAlignment] then
+				Infinity_PlaySound('GAM_09')
 				createCharScreen:OnAlignmentSelectButtonClick(chargen.alignment[currentChargenAlignment].id)
+			else
+				currentChargenAlignment = nil
 			end
 		"
-		actionEnter	"hoverChargenAlignment = mouseoverRow"
-		actionExit	"hoverChargenAlignment = 0"
-		rowheight 44
+		rowheight 34
 		hidehighlight
-		area 42 192 340 414
+		area 41 192 356 414
 		table "chargen.alignment"
 		var currentChargenAlignment
 		scrollbar 'GUISCRC'

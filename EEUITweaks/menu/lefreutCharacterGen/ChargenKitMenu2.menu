@@ -7,6 +7,11 @@ menu
 	onOpen
 	"
 		currentChargenKit = 1
+		Infinity_PlaySound('GAM_03')
+	"
+	onClose
+	"
+		Infinity_PlaySound('GAM_04')
 	"
 	label
 	{
@@ -24,45 +29,32 @@ menu
 		column
 		{
 			width 100
-			label
+			button
 			{
-				enabled "rowNumber ~= currentChargenKit and rowNumber ~= hoverChargenKit"
-				area 8 0 340 44
-				text lua "Infinity_FetchString(chargen.kit[rowNumber].name)"
-				text style "list"
-				text align center center
-				text color D
+				area 0 0 356 32
+				bam LUICHLNG
+				frame lua "rowNumber == currentChargenKit and 2 or 0"
 			}
-			label
+			button
 			{
-				enabled "rowNumber == currentChargenKit and rowNumber ~= hoverChargenKit"
-				area 8 0 340 44
+				area 0 0 340 32
 				text lua "Infinity_FetchString(chargen.kit[rowNumber].name)"
-				text style "list"
-				text align center center
-				text color S
-			}
-			label
-			{
-				enabled "rowNumber == hoverChargenKit"
-				area 8 0 340 44
-				text lua "Infinity_FetchString(chargen.kit[rowNumber].name)"
-				text style "list"
-				text align center center
-				text color H
+				text style "button"
+				pad 8 8 8 8
 			}
 		}
 		action
 		"
 			if chargen.kit[currentChargenKit] then
+				Infinity_PlaySound('GAM_09')
 				createCharScreen:OnKitSelectButtonClick(chargen.kit[currentChargenKit].id)
+			else
+				currentChargenKit = nil
 			end
 		"
-		actionEnter	"hoverChargenKit = mouseoverRow"
-		actionExit	"hoverChargenKit = 0"
-		rowheight 44
+		rowheight 34
 		hidehighlight
-		area 42 192 340 414
+		area 41 192 356 414
 		table "chargen.kit"
 		var currentChargenKit
 		scrollbar 'GUISCRC'

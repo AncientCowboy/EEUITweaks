@@ -26,7 +26,7 @@ ALWAYS
 	END
 END
 
-VERSION ~3.0~
+VERSION ~3.1~
 
 LANGUAGE 
 	~English~ ~EEUITweaks/languages/english~ ~EEUITweaks/languages/english/setup.tra~
@@ -96,8 +96,7 @@ REQUIRE_PREDICATE (
 	(NOT(MOD_IS_INSTALLED ~LeUI-SoD.tp2~ ~0~)) AND          // Not Lefreut's UI (SoD skin)
 	(NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~)) AND  // Not Dragonspear UI++
 	(NOT(FILE_EXISTS ~override/guiweidufile.png~)) AND      // Not IWD GUI
-	(NOT(FILE_EXISTS ~override/guiiwd2dummy.png~)) AND      // Not IWD2 GUI
-	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1050~))         // Not Adul's Unhide Chargen Options
+	(NOT(FILE_EXISTS ~override/guiiwd2dummy.png~))          // Not IWD2 GUI
 ) @27
 SUBCOMPONENT @580
 

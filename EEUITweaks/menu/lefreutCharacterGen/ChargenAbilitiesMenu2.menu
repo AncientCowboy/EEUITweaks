@@ -8,6 +8,11 @@ menu
 	"
 		ticksPassed = 0
 		ticksStarting = 0
+		Infinity_PlaySound('GAM_03')
+	"
+	onClose
+	"
+		Infinity_PlaySound('GAM_04')
 	"
 	label
 	{

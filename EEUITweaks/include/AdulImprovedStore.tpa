@@ -1,5 +1,3 @@
-
-
 /*******************************************************************************
  * Adul's Smooth Selling Installation
  ******************************************************************************/
@@ -52,7 +50,7 @@ BEGIN
 	FAIL @123
 END
 
-OUTER_SPRINT $UIMenuIF("LuaRegex") ~^[%TAB% ]*action%MWHITE%%MDQUOTE%%MNOTDQUOTE%+%MDQUOTE%%MWHITE%actionalt%MWHITE%%MDQUOTE%%MNOTDQUOTE%+%MDQUOTE%%MWHITE%actionDbl%MWHITE%%MDQUOTE%%MWHITE%if[%TAB% ]+not[%TAB% ]+storeScreen:IsCloseBagButtonClickable[%TAB% ]*([%TAB% ]*)[%TAB% ]+or[%TAB% ]+store\.storeItems\[[%TAB% ]*storeItemsVar[%TAB% ]*\]\.valid[%TAB% ]*==[%TAB% ]*1[%TAB% ]+then%MNOTDQUOTE%+%MDQUOTE%.*%MEOL%~
+OUTER_SPRINT $UIMenuIF("LuaRegex") ~^[%TAB% ]*action%MWHITE%%MDQUOTE%%MNOTDQUOTE%+%MDQUOTE%%MWHITE%actionalt%MWHITE%%MDQUOTE%%MNOTDQUOTE%+%MDQUOTE%%MWHITE%actionDbl%MWHITE%%MDQUOTE%%MWHITE%if[%TAB% ]+store\.storeItems\[[%TAB% ]*storeItemsVar[%TAB% ]*\]\.clickable[%TAB% ]*==[%TAB% ]*1[%TAB% ]+then%MNOTDQUOTE%+%MDQUOTE%.*%MEOL%~
 
 OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/AdulImprovedStore/StoreBuySellPatch1.menu~
 
