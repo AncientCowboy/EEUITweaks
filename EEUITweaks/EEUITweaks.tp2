@@ -26,7 +26,7 @@ ALWAYS
 	END
 END
 
-VERSION ~3.1~
+VERSION ~3.1.1~
 
 LANGUAGE 
 	~English~ ~EEUITweaks/languages/english~ ~EEUITweaks/languages/english/setup.tra~
@@ -276,7 +276,7 @@ REQUIRE_PREDICATE
 		(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1040~) OR // Mr2150's Portrait Picker - Scale UI
 		(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1041~)    // Mr2150's Portrait Picker - No Scale UI
 	)
-) @29
+) @27
 REQUIRE_PREDICATE FILE_EXISTS ~override/M_BG.lua~ @104201 
 
 LOG @24
@@ -295,7 +295,7 @@ REQUIRE_PREDICATE
 		(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1040~) OR // Mr2150's Portrait Picker - Scale UI
 		(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~1041~)    // Mr2150's Portrait Picker - No Scale UI
 	)
-) @29
+) @27
 
 INCLUDE ~%PKGNAME%/include/Mr2150UpdateM_BG.tpa~
 

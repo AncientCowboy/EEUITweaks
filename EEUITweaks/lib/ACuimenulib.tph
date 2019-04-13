@@ -428,6 +428,8 @@ BEGIN
 	BEGIN // Closed 
 		LAUNCH_ACTION_MACRO	uimenuclearglobal
 		COPY_EXISTING - ~UI.MENU~ ~$uimenulibglobal("uibuffer")~
+			REPLACE_TEXTUALLY ~\\\\~ ~¤§£~
+
 		// No need to do this more than once
 		ACTION_IF ~%LE%~ STRING_EQUAL ~~  THEN
 		BEGIN
@@ -477,6 +479,7 @@ BEGIN
 
 		// Write uibuffer to UI.MENU
 		COPY ~$uimenulibglobal("uibuffer")~ ~override/UI.MENU~
+			REPLACE_TEXTUALLY ~¤§£~ ~\\\\~
 
 		// Reset $uimenulibglobal to closed and empty
 		LAUNCH_ACTION_MACRO	uimenuclearglobal

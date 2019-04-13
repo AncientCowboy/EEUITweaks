@@ -96,7 +96,7 @@ WITH
 
 	%IsIWDEE%
 	BEGIN
-		PRINT @14
+		PRINT @29
 		SILENT
 		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/BillyYankMultiPort/chargenportIWD.menu~
 	END

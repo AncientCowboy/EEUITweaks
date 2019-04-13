@@ -42,7 +42,7 @@
 @26   = ~~
 @27   = ~~
 @28   = ~Installing for BG2EE configuration~
-@29   = ~~
+@29   = ~Installing for IWDEE configuration~
 @30   = ~Copying language specific files for:~
 @31   = ~Installing for EET BG2 GUI configuration~
 @32   = ~Installing for EET SoD GUI configuration~
@@ -401,8 +401,7 @@
 @300004 = ~Encountered error creating external Lua leveling information tables~ 
 
 @301000 = ~Leveling Progress Bars Options~
-@301001 = ~~
-//@301001 = ~Leveling Progress Bars Tweaks must be installed for this mod to function~
+@301001 = ~Leveling Progress Bars Tweaks must be installed for this mod to function~
 @301002 = ~Appending Progress Bars Options menu to UI.MENU~
 @301003 = ~Progress Bars Options menu already installed~
 @301004 = ~Encountered error appending Progress Bars Options menu~
