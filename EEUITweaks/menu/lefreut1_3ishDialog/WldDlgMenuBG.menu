@@ -73,29 +73,30 @@ menu
 			text
 			{
 				enabled "rowNumber == 2"
-				area 0 0 712 -1
-				pad 0 0 0 20
+				area 0 0 -1 -1
+				pad 0 0 0 12
 				text lua "worldNPCDialogText:gsub('\n', ': ', 1)"
 				text style "normal"
 			}
 			label
 			{
-				area 0 0 712 -1
-				enabled "rowNumber > 2 and dialogEntryGreyed()"
+				area 0 0 -1 -1
+				enabled "rowNumber > 2 and rowNumber < #worldPlayerDialogChoices + 3 and dialogEntryGreyed()"
 				rectangle 1
 				rectangle opacity 100
 			}
 			text
 			{
-				enabled "rowNumber > 2"
-				area 0 0 712 -1
+				enabled "rowNumber > 2 and rowNumber < #worldPlayerDialogChoices + 3"
+				area 0 0 -1 -1
 				text lua "getDialogEntryText(rowNumber)"
 				text style "normal"
 			}
 			text
 			{
-				enabled "rowNumber == #worldPlayerDialogChoices + 2"
-				area 0 0 712 500
+				enabled "rowNumber == #worldPlayerDialogChoices + 3"
+				area 0 0 -1 -1
+				text lua "getDialogPaddingText()"
 				text style "normal"
 			}
 		}
