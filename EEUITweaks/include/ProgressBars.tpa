@@ -788,7 +788,7 @@ END
  * Progress Bar Tweaks Installation
  ******************************************************************************/
 // Test for lefreut's Improved Record Screen
-OUTER_SET ProgressBars.lefreuts = ((MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2900~) OR (MOD_IS_INSTALLED ~LeUI.tp2~ ~0~))
+OUTER_SET ProgressBars.lefreuts = ((MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~2900~) OR (IsLeUI))
 
 
 // Open UI.MENU

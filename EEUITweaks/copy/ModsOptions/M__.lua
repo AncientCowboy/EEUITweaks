@@ -1,7 +1,7 @@
 savedInfinity_DoFile = nil
 files = {}
 
-function wrapper(str)
+local function wrapper(str)
 	savedInfinity_DoFile(str)
 
 	if str:sub(1, 2):upper() == "L_" then
