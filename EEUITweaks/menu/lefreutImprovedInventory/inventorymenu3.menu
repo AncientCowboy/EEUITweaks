@@ -75,10 +75,9 @@ menu
 	}
 	text
 	{
-		area 18 448 340 52
+		area 26 454 326 40
 		text lua "TEXT_inventoryError"
 		text style normal
-		pad 8 8 8 8
 		scrollbar 'GUISCRC'
 	}
 	label

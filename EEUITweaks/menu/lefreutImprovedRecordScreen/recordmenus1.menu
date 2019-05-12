@@ -143,7 +143,7 @@ function buildRecordInfos()
 	end
 
 	table.insert(recordInfos, {1,""})
-	table.insert(recordInfos, {1,t("ABILITIES_TITLE")})
+	table.insert(recordInfos, {1,Infinity_FetchString(10315)})
 	for k, v in ipairs(characters[currentID].proficiencies.ability) do
 		table.insert(recordInfos, {1,v.current})
 	end
@@ -173,6 +173,7 @@ menu
 		if(CurrentlyInGame()) then
 			pushSidebars()
 		end
+		characterViewable = characterScreen:IsCharacterViewable()
 		updateAttrTable()
 	"
 	onclose
@@ -239,6 +240,7 @@ menu
 				text align left center
 			}
 		}
+		enabled "characterViewable"
 		area 28 78 296 510
 		rowheight dynamic
 		table "recordStats"
@@ -275,6 +277,7 @@ menu
 				text color D
 			}
 		}
+		enabled "characterViewable"
 		area 548 84 296 502
 		rowheight dynamic
 		table "recordInfos"
@@ -315,6 +318,7 @@ menu
 	}
 	button
 	{
+		clickable lua "characterViewable"
 		area 36 610 234 44
 		bam LUIOSTUL
 		text 'INFORMATION_BUTTON'
@@ -361,7 +365,7 @@ menu
 	}
 	button
 	{
-		clickable lua "CurrentlyInGame()"
+		clickable lua "CurrentlyInGame() and characterScreen:IsMultiPlayerModifyable()"
 		area 598 610 234 44
 		bam LUIOSTUR
 		text 'CUSTOMIZE_BUTTON'
@@ -373,7 +377,7 @@ menu
 	}
 	button
 	{
-		clickable lua "CurrentlyInGame() and characters[currentID].PC == 1"
+		clickable lua "CurrentlyInGame() and characterScreen:IsExportButtonClickable()"
 		area 598 654 234 44
 		bam LUIOSTLR
 		text 'EXPORT_BUTTON'
@@ -400,6 +404,12 @@ menu
 		area 82 12 700 40
 		text lua "Infinity_FetchString(13707)"
 		text style 'title'
+	}
+	label
+	{
+		area 318 64 230 32
+		text lua "characters[currentID].name"
+		text style 'label'
 	}
 	label
 	{
@@ -602,6 +612,12 @@ menu
 		text "BIOGRAPHY_TITLE"
 		text style 'title'
 	}
+	label
+	{
+		area 318 64 230 32
+		text lua "characters[currentID].name"
+		text style 'label'
+	}
 	text
 	{
 		area 44 198 768 410
@@ -639,6 +655,12 @@ menu
 		area 82 12 700 40
 		text "KIT_DESC_LABEL"
 		text style 'title'
+	}
+	label
+	{
+		area 318 64 230 32
+		text lua "characters[currentID].name"
+		text style 'label'
 	}
 	text
 	{

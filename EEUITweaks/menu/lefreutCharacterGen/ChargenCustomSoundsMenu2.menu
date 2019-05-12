@@ -7,6 +7,11 @@ menu
 	onOpen
 	"
 		currentChargenCustomSound = 1
+		Infinity_PlaySound('GAM_03')
+	"
+	onClose
+	"
+		Infinity_PlaySound('GAM_04')
 	"
 	label
 	{
@@ -77,7 +82,7 @@ menu
 		bam LUIOSTCL
 		area 272 120 300 44
 		text style "button"
-		text "PLAY_GAME_BUTTON"
+		text "PLAY_SOUND_BUTTON"
 		action
 		"
 			createCharScreen:OnPlayButtonClick()
