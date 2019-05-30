@@ -10,10 +10,18 @@ menu
 		bam GUIOSTCL
 		text lua "dialogButtonText"
 		enabled "getDialogButtonEnabled()"
+		clickable lua "getDialogButtonClickable()"
 		text style "button"
 		action
 		"
-			worldScreen:StepDialog()
+			if(gameOptions.m_bConfirmDialog == true and (#worldPlayerDialogChoices > 0)) then
+				-- if confirm dialog and choices available.
+				worldScreen:OnDialogReplyClick(worldPlayerDialogChoices[worldPlayerDialogSelection - 2].marker)
+				worldPlayerDialogSelection = 0
+			else
+				-- no choices, just step.
+				worldScreen:StepDialog()
+			end
 		"
 	}
 }
