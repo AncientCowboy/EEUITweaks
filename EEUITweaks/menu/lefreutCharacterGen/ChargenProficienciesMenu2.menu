@@ -336,6 +336,20 @@ menu
 		text "BACK_BUTTON"
 		action
 		"
+			for k,v in pairs(chargen.proficiency) do
+				while plusButtonClickable(k) do
+					local points = chargen.extraProficiencySlots
+					createCharScreen:OnProficiencyPlusMinusButtonClick(v.id, true)
+					if points == chargen.extraProficiencySlots then break end
+				end
+			end
+			for k,v in pairs(chargen.thief_skill) do
+				while createCharScreen:IsThiefSkillPlusMinusButtonClickable() do
+					local points = chargen.extraSkillPoints
+					createCharScreen:OnThiefSkillPlusMinusButtonClick(v.id, true)
+					if points == chargen.extraSkillPoints then break end
+				end
+			end
 			createCharScreen:OnCancelButtonClick()
 		"
 	}
