@@ -1222,7 +1222,7 @@ REQUIRE_PREDICATE (
 		(GAME_IS ~eet~) OR
 		(GAME_IS ~bg2ee~) OR 
 		(
-			(GAME_IS ~bgee~) AND 
+			(GAME_IS ~bgee~) AND (GAME_INCLUDES ~sod~) AND
 			(NOT(MOD_IS_INSTALLED ~dragonspear_ui++.tp2~ ~1~)) // Not Dragonspear UI++
 		)
 	)
