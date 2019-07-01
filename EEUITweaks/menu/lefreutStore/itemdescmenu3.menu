@@ -70,7 +70,7 @@ menu
 		enabled "splitPos ~= -1"
 		rowheight dynamic
 		hidehighlight
-		table "makeTable(2)"
+		table "makeBlankTable(2)"
 		area 356 185 430 340
 		scrollbar 'GUISCRC'
 	}

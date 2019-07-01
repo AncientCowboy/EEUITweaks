@@ -12,7 +12,11 @@ end
 
 itemDesc = {}
 function showItemDescription(item, mode)
-	itemDesc = item
+	if (item.item ~= nil) then
+		itemDesc = item
+	else
+		itemDesc.item = item
+	end
 	itemDesc.mode = mode
 	Infinity_PushMenu('ITEM_DESCRIPTION',0,0)
 end
