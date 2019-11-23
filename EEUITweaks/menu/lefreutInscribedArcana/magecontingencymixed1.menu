@@ -102,7 +102,7 @@ menu
 			local idx = 4 * (currentBookSpell - 1) + cellNumber
 			if bookSpells[idx] and #bottomSpells < #bottomSpellsPlaceHolder then
 				Infinity_PlaySound('GAM_24')
-				mageScreen:SequenceSpell(bookSpells[idx].resref)
+				mageScreen:SequenceSpell(bookSpells[idx].resref, bookSpells[idx].masterResref)
 			end
 		"
 		actionAlt
@@ -175,7 +175,7 @@ menu
 		"
 			if bottomSpells[currentBottomSpell] then
 				Infinity_PlaySound('GAM_44')
-				mageScreen:UnSequenceSpell(bottomSpells[currentBottomSpell].resref)
+				mageScreen:UnSequenceSpell(bottomSpells[currentBottomSpell].resref, bottomSpells[currentBottomSpell].masterResref)
 				table.remove(sequencerSpells, currentBottomSpell)
 				bottomSpells = sequencerSpells
 			end

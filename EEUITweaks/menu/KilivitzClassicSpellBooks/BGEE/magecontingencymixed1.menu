@@ -100,7 +100,7 @@ menu
 			contingencyDescription = mageBookStrings[contingencyResRef].tip
 			local idx = 4 * (currentBookSpell - 1) + cellNumber
 			if bookSpells[idx] and #bottomSpells < #bottomSpellsPlaceHolder then
-				mageScreen:SequenceSpell(bookSpells[idx].resref)
+				mageScreen:SequenceSpell(bookSpells[idx].resref, bookSpells[idx].masterResref)
 			end
 		"
 		actionAlt
@@ -170,7 +170,7 @@ menu
 		action
 		"
 			if bottomSpells[currentBottomSpell] then
-				mageScreen:UnSequenceSpell(bottomSpells[currentBottomSpell].resref)
+				mageScreen:UnSequenceSpell(bottomSpells[currentBottomSpell].resref, bottomSpells[currentBottomSpell].masterResref)
 				table.remove(sequencerSpells, currentBottomSpell)
 				bottomSpells = sequencerSpells
 			end
