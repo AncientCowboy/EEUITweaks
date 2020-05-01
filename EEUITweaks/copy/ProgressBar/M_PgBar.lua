@@ -93,29 +93,21 @@ local function initializeXPMapKits()
 end
 
 function prgBarUpdateOptions()
-	local v1, v2, v3, inioptionsset
+	hidePortrait = true
 
-	inioptionsset = Infinity_GetINIValue('Progress Bar', 'IniOptionsSet')
-	v1 = Infinity_GetINIValue('Progress Bar','Color Red'  ) % 256
-	v2 = Infinity_GetINIValue('Progress Bar','Color Green') % 256
-	v3 = Infinity_GetINIValue('Progress Bar','Color Blue' ) % 256
-	if(v1 ~= 0 and v2 ~= 0 and v3 ~= 0) then
-		inioptionsset = 1
-	end
+	local v1 = Infinity_GetINIValue('Progress Bar','Color Red', 128) % 256
+	local v2 = Infinity_GetINIValue('Progress Bar','Color Green'   ) % 256
+	local v3 = Infinity_GetINIValue('Progress Bar','Color Blue'    ) % 256
 	KitStringToXPMap['Color'] = bit32.bor(bit32.bor(bit32.lshift(v3,16),bit32.lshift(v2, 8)),v1)
 
-	v1 = Infinity_GetINIValue('Progress Bar','Full Red'  ) % 256
-	v2 = Infinity_GetINIValue('Progress Bar','Full Green') % 256
-	v3 = Infinity_GetINIValue('Progress Bar','Full Blue' ) % 256
-	if(v1 ~= 0 and v2 ~= 0 and v3 ~= 0) then
-		inioptionsset = 1
-	end
+	v1 = Infinity_GetINIValue('Progress Bar','Full Red', 128) % 256
+	v2 = Infinity_GetINIValue('Progress Bar','Full Green'   ) % 256
+	v3 = Infinity_GetINIValue('Progress Bar','Full Blue'    ) % 256
 	KitStringToXPMap['Full']  = bit32.bor(bit32.bor(bit32.lshift(v3,16),bit32.lshift(v2, 8)),v1)
 
 	v1 = Infinity_GetINIValue('Progress Bar','Disable Multiplier')
 	if(v1 and v1 ~= 0) then	
 		KitStringToXPMap['NoMult'] = true
-		inioptionsset = 1
 	else
 		KitStringToXPMap['NoMult'] = false
 	end
@@ -123,7 +115,6 @@ function prgBarUpdateOptions()
 	v1 = Infinity_GetINIValue('Progress Bar','Disable Deltas')
 	if(v1 and v1 ~= 0) then	
 		KitStringToXPMap['NoDelta'] = true
-		inioptionsset = 1
 	else
 		KitStringToXPMap['NoDelta'] = false
 	end
@@ -131,7 +122,6 @@ function prgBarUpdateOptions()
 	v1 = Infinity_GetINIValue('Progress Bar','Disable Level Up')
 	if(v1 and v1 ~= 0) then	
 		KitStringToXPMap['NoLevel'] = true
-		inioptionsset = 1
 	else
 		KitStringToXPMap['NoLevel'] = false
 	end
@@ -139,7 +129,6 @@ function prgBarUpdateOptions()
 	v1 = Infinity_GetINIValue('Progress Bar','Empty Dual Enabled')
 	if(v1 and v1 ~= 0) then	
 		KitStringToXPMap['DualEmpty'] = true
-		inioptionsset = 1
 	else
 		KitStringToXPMap['DualEmpty'] = false
 	end
@@ -147,7 +136,6 @@ function prgBarUpdateOptions()
 	v1 = Infinity_GetINIValue('Progress Bar','Grey Scale Dual-Class')
 	if(v1 and v1 ~= 0) then	
 		KitStringToXPMap['DualGrey'] = true
-		inioptionsset = 1
 	else
 		KitStringToXPMap['DualGrey'] = false
 	end
@@ -155,15 +143,13 @@ function prgBarUpdateOptions()
 	v1 = Infinity_GetINIValue('Progress Bar','Disable Portrait Alternate')
 	if(v1 and v1 ~= 0) then	
 		KitStringToXPMap['NoPortrait'] = true
-		inioptionsset = 1
 	else
 		KitStringToXPMap['NoPortrait'] = false
 	end
 
-	v1 = Infinity_GetINIValue('Progress Bar','Disable Combat Stats')
+	v1 = Infinity_GetINIValue('Progress Bar','Disable Combat Stats', 1)
 	if(v1 and v1 ~= 0) then	
 		KitStringToXPMap['NoCombat'] = true
-		inioptionsset = 1
 	else
 		KitStringToXPMap['NoCombat'] = false
 	end
@@ -171,37 +157,18 @@ function prgBarUpdateOptions()
 	v1 = Infinity_GetINIValue('Progress Bar','Initial Display')
 	if(v1 and v1 == 1) then	
 		KitStringToXPMap['FirstPortrait'] = 1
-		inioptionsset = 1
 	elseif(v1 and v1 == 2) then	
 		KitStringToXPMap['FirstPortrait'] = 2
-		inioptionsset = 1
 	else
-		KitStringToXPMap['FirstPortrait'] = 0	
+		KitStringToXPMap['FirstPortrait'] = 0
 	end
 	
-	v1 = Infinity_GetINIValue('Progress Bar','Bars On Bottom')
+	v1 = Infinity_GetINIValue('Progress Bar','Bars On Bottom', 1)
 	if(v1 and v1 ~= 0) then	
 		KitStringToXPMap['BarsBottom'] = true
-		inioptionsset = 1
 	else
 		KitStringToXPMap['BarsBottom'] = false
 	end
-
-	if(inioptionsset == 0) then -- All options were zero including the tag that is written to 1 when Options Menu saves. Set default colors
-		v1 = 128
-		v2 = 0
-		v3 = 0
-		Infinity_SetINIValue('Progress Bar','Color Red', v1)
-		Infinity_SetINIValue('Progress Bar','Color Green', v2)
-		Infinity_SetINIValue('Progress Bar','Color Blue', v3 )
-		KitStringToXPMap['Color'] = bit32.bor(bit32.bor(bit32.lshift(v3,16),bit32.lshift(v2, 8)),v1)
-		Infinity_SetINIValue('Progress Bar','Full Red', v1)
-		Infinity_SetINIValue('Progress Bar','Full Green', v2)
-		Infinity_SetINIValue('Progress Bar','Full Blue', v3 )
-		KitStringToXPMap['Full'] = bit32.bor(bit32.bor(bit32.lshift(v3,16),bit32.lshift(v2, 8)),v1)
-		Infinity_SetINIValue('Progress Bar','IniOptionsSet', 1 )
-	end
-
 end
 
 --[[
@@ -740,5 +707,3 @@ function getPercent(first, second)
 	tempNumber = ( first/second ) *100
 	return tempNumber
 end
-
-

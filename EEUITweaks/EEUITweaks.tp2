@@ -974,8 +974,6 @@ REQUIRE_PREDICATE (
 	(NOT(MOD_IS_INSTALLED ~LeUI.tp2~ ~0~)) AND          // Not Lefreut's UI
 	(NOT(MOD_IS_INSTALLED ~LeUI-BG1EE.tp2~ ~0~)) AND    // Not Lefreut's UI (BG1EE skin)
 	(NOT(MOD_IS_INSTALLED ~LeUI-SoD.tp2~ ~0~)) AND      // Not Lefreut's UI (SoD skin)
-	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~4005~)) AND // Not lefreut's BG2 Store Screen Tweaks
-	(NOT(MOD_IS_INSTALLED ~EEUITweaks.tp2~ ~4006~)) AND
 	(GAME_IS ~bgee bg2ee eet pstee~)
 ) @39
 SUBCOMPONENT @530
