@@ -6,6 +6,17 @@ function getCastableCount(idx)
 	end
 	return nb
 end
+
+function getIconName(spell)
+	local icon = spell.icon
+	local iconB = icon:sub(1, -2) .. 'B'
+	for _, entry in ipairs(Infinity_GetFilesOfType("BAM")) do
+		if entry[1] == iconB then
+			return iconB
+		end
+	end
+	return icon
+end
 `
 menu
 {
@@ -46,7 +57,7 @@ menu
 				enabled "bookSpells[4 * rowNumber - 3] ~= nil"
 				area 6 5 52 52
 				bam GUIWDBUT
-				icon lua "bookSpells[4 * rowNumber - 3].icon:sub(1, -2) .. 'B'"
+				icon lua "getIconName(bookSpells[4 * rowNumber - 3])"
 				count lua "getCastableCount(4 * rowNumber - 3)"
 				align center center
 			}
@@ -59,7 +70,7 @@ menu
 				enabled "bookSpells[4 * rowNumber - 2] ~= nil"
 				area 6 5 52 52
 				bam GUIWDBUT
-				icon lua "bookSpells[4 * rowNumber - 2].icon:sub(1, -2) .. 'B'"
+				icon lua "getIconName(bookSpells[4 * rowNumber - 2])"
 				count lua "getCastableCount(4 * rowNumber - 2)"
 				align center center
 			}
@@ -72,7 +83,7 @@ menu
 				enabled "bookSpells[4 * rowNumber - 1] ~= nil"
 				area 6 5 52 52
 				bam GUIWDBUT
-				icon lua "bookSpells[4 * rowNumber - 1].icon:sub(1, -2) .. 'B'"
+				icon lua "getIconName(bookSpells[4 * rowNumber - 1])"
 				count lua "getCastableCount(4 * rowNumber - 1)"
 				align center center
 			}
@@ -85,7 +96,7 @@ menu
 				enabled "bookSpells[4 * rowNumber] ~= nil"
 				area 6 5 52 52
 				bam GUIWDBUT
-				icon lua "bookSpells[4 * rowNumber].icon:sub(1, -2) .. 'B'"
+				icon lua "getIconName(bookSpells[4 * rowNumber])"
 				count lua "getCastableCount(4 * rowNumber)"
 				align center center
 			}
@@ -157,7 +168,7 @@ menu
 			label
 			{
 				area 0 0 -1 -1
-				bam lua "bottomSpells[rowNumber].icon:sub(1, -2) .. 'B'"
+				bam lua "getIconName(bottomSpells[rowNumber])"
 				align center center
 			}
 		}
