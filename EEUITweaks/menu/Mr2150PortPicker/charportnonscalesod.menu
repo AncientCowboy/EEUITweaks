@@ -324,7 +324,6 @@ menu
 			PortSearchString = ''
 			toggleSex = ''
 			toggleMale = 0
-			toggleFrame = 0
 			PortraitPicker = {}
 			faNot = 0
 			fbNot = 0

@@ -271,7 +271,7 @@ menu
 	{
 		enabled "HasMediumPortrait ~= '' and CurrentImage ~= ''"
 		area 260 368 68 100
-		rectangle 5
+		rectangle 6
 	}
 	label
 	{
@@ -320,7 +320,6 @@ menu
 			PortSearchString = ''
 			toggleSex = ''
 			toggleMale = 0
-			toggleFrame = 0
 			PortraitPicker = {}
 			faNot = 0
 			fbNot = 0
