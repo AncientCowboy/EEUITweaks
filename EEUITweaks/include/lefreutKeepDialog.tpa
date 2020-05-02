@@ -20,7 +20,7 @@ BEGIN
 	COPY - ~.../CounterInLine~ ~.../CounterInLine~
 		REPLACE_EVALUATE CASE_INSENSITIVE ~onopen%MWHITE%%MDQUOTE%\(%MNOTDQUOTE%*\)%MDQUOTE%~ 
 		BEGIN
-			SPRINT tempstr ~onopen%LE%%TAB%"%LE%%TAB%%TAB%%MATCH1%%LE%%TAB%%TAB%%adder%%LE%%TAB%"~
+			SPRINT tempstr ~onopen%LE%%TAB%"%MATCH1%%LE%%TAB%%TAB%%adder%%LE%%TAB%"~
 			SET found = 1
 		END
 		~%tempstr%~
@@ -32,7 +32,7 @@ BEGIN
 		COPY - ~.../CounterInLine~ ~.../CounterInLine~
 			REPLACE_EVALUATE CASE_INSENSITIVE ~onopen%MWHITE%%MSQUOTE%\(%MNOTSQUOTE%*\)%MSQUOTE%~
 			BEGIN
-				SPRINT tempstr ~onopen%LE%%TAB%'%LE%%TAB%%TAB%%MATCH1%%LE%%TAB%%TAB%%adder%%LE%%TAB%'~
+				SPRINT tempstr ~onopen%LE%%TAB%'%MATCH1%%LE%%TAB%%TAB%%adder%%LE%%TAB%'~
 				SET found = 1
 			END
 			~%tempstr%~

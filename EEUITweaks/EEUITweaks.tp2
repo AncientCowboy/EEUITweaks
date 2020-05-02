@@ -721,6 +721,24 @@ WITH
 		ACTION_RERAISE
 END
 
+/******************************************************************************
+ * CLUAConsole for mobile
+ *****************************************************************************/
+BEGIN @212000 DESIGNATED 2120
+GROUP @2
+REQUIRE_PREDICATE (
+	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND // IE 2.0+
+	(GAME_IS ~bgee bg2ee eet iwdee~)
+) @27
+
+ACTION_TRY
+	INCLUDE ~%PKGNAME%/include/CLUAConsole.tpa~
+WITH 
+	DEFAULT
+		LAM UIMenuAbort
+		ACTION_RERAISE
+END
+
 
 ///////////////////////////////////////////////////////////////////////////////
 // Record/Inventory/Journal Group

@@ -1,0 +1,161 @@
+//
+// CLUAConsole.PatchOnOpen
+// Adds 'rgCheat = 0' to onopen
+// On completion $UIMenuIF("Succeeded") 1 => Success, 0 => Failure
+//
+DEFINE_ACTION_MACRO CLUAConsole.PatchOnOpen
+BEGIN
+	LOCAL_SPRINT tempstr $UIMenuIF("Body")
+	LOCAL_SPRINT adder ~rgCheat = 0~
+	LOCAL_SET found = 0
+
+	// Put current menu definition into inline file
+	COPY - ~ToInlineTemplate~ ~.../CounterInLine~
+		REPLACE_EVALUATE ~dummy~ BEGIN END
+		~%tempstr%~
+
+	OUTER_SPRINT tempstr ~~
+
+	// Look for and patch onopen followed by double quoted code block
+	COPY - ~.../CounterInLine~ ~.../CounterInLine~
+		REPLACE_EVALUATE CASE_INSENSITIVE ~onopen%MWHITE%%MDQUOTE%\(%MNOTDQUOTE%*\)%MDQUOTE%~
+		BEGIN
+			SPRINT tempstr ~onOpen%LE%%TAB%"%MATCH1%%LE%%TAB%%TAB%%adder%%LE%%TAB%"~
+			SET found = 1
+		END
+		~%tempstr%~
+
+	// If not found, look for and patch onopen followed by single quoted code block
+	ACTION_IF NOT %found% THEN
+	BEGIN
+		LOG ~In CLUAConsole.PatchOnOpen - failed to find onopen with double quotes. Trying single~
+		COPY - ~.../CounterInLine~ ~.../CounterInLine~
+			REPLACE_EVALUATE CASE_INSENSITIVE ~onopen%MWHITE%%MSQUOTE%\(%MNOTSQUOTE%*\)%MSQUOTE%~
+			BEGIN
+				SPRINT tempstr ~onOpen%LE%%TAB%'%MATCH1%%LE%%TAB%%TAB%%adder%%LE%%TAB%'~
+				SET found = 1
+			END
+			~%tempstr%~
+	END
+
+	// Not found - give up
+	ACTION_IF NOT %found% THEN
+	BEGIN
+		LOG ~In CLUAConsole.PatchOnOpen - failed to find onopen~
+		OUTER_SET $UIMenuIF("Succeeded") = 0
+	END ELSE 
+	// Success somewhere - copy .../CounterInLine to $UIMenuIF("Body")
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Body") ~~
+		OUTER_SET found = SIZE_OF_FILE ~.../CounterInLine~
+		COPY - ~.../CounterInLine~ ~.../CounterInLine~
+			READ_ASCII 0 $UIMenuIF("Body") (%found%-1)
+		OUTER_SET $UIMenuIF("Succeeded") = 1
+	END
+	COPY - ~EmptyInlineTemplate~ ~.../CounterInline~
+END
+
+//
+// CLUAConsole.AddActionAlt
+// Adds actionAlt to the first button
+// On completion $UIMenuIF("Succeeded") 1 => Success, 0 => Failure
+//
+DEFINE_ACTION_MACRO CLUAConsole.AddActionAlt
+BEGIN
+	LOCAL_SPRINT tempstr $UIMenuIF("Body")
+	LOCAL_SPRINT adder ~~
+
+	// Read patch insertion from actionalt.lua
+	LOCAL_SET found = SIZE_OF_FILE ~%PKGNAME%/lua/CLUAConsole/actionalt.lua~
+	COPY - ~%PKGNAME%/lua/CLUAConsole/actionalt.lua~ ~.../CounterInLine~
+		READ_ASCII 0 adder (%found%)
+	OUTER_SET found = 0
+
+	// Put current menu definition into inline file
+	COPY - ~ToInlineTemplate~ ~.../CounterInLine~
+		REPLACE_EVALUATE ~dummy~ BEGIN END
+		~%tempstr%~
+
+	OUTER_SPRINT tempstr ~~
+
+	COPY - ~.../CounterInLine~ ~.../CounterInLine~
+		REPLACE_EVALUATE CASE_INSENSITIVE ~\(OnLeftPanelButtonClick(0)%MNOTDQUOTE%*%MDQUOTE%\)~
+		BEGIN
+			SPRINT tempstr ~%MATCH1%%LE%%adder%~
+			SET found = 1
+		END
+		~%tempstr%~
+
+	// Not found - give up
+	ACTION_IF NOT %found% THEN
+	BEGIN
+		LOG ~In CLUAConsole.AddActionAlt - failed to add actionalt~
+		OUTER_SET $UIMenuIF("Succeeded") = 0
+	END ELSE 
+	// Success somewhere - copy .../CounterInLine to $UIMenuIF("Body")
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Body") ~~
+		OUTER_SET found = SIZE_OF_FILE ~.../CounterInLine~
+		COPY - ~.../CounterInLine~ ~.../CounterInLine~
+			READ_ASCII 0 $UIMenuIF("Body") (%found%-1)
+		OUTER_SET $UIMenuIF("Succeeded") = 1
+	END
+	COPY - ~EmptyInlineTemplate~ ~.../CounterInline~
+END
+
+/*******************************************************************************
+ * CLUAConsole for mobile
+ ******************************************************************************/
+// Open UI.MENU abstraction
+LOG @12
+SILENT
+LAUNCH_ACTION_MACRO UIMenuOpen
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @20
+END
+
+// Patch LEFT_SIDEBAR
+LOG @113
+SILENT
+
+OUTER_SPRINT $UIMenuIF("MenuName") ~LEFT_SIDEBAR~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+LAUNCH_ACTION_MACRO UIMenuGetMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @114
+END
+
+LAUNCH_ACTION_MACRO CLUAConsole.PatchOnOpen
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @115
+END
+
+LAUNCH_ACTION_MACRO UIMenuUpdateMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @103
+END
+
+LAUNCH_ACTION_MACRO CLUAConsole.AddActionAlt
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @115
+END
+
+LAUNCH_ACTION_MACRO UIMenuUpdateMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @103
+END
+
+// All done - close up
+LOG @13
+SILENT
+LAUNCH_ACTION_MACRO UIMenuClose
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @21
+END
