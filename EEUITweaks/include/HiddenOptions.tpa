@@ -353,9 +353,75 @@ BEGIN
 	COPY ~%PKGNAME%/copy/ModsOptions/backstab.SPL~ ~override~
 END
 
+OUTER_SET LeUIBGEE = (MOD_IS_INSTALLED ~LeUI-BG1EE.tp2~ ~0~)
+OUTER_SET LeUISoD = (MOD_IS_INSTALLED ~LeUI-SoD.tp2~ ~0~)
+
 // UI specific copy/patches
 ACTION_MATCH 1
 WITH
+	(%IsSoD% OR %IsBG2%) AND %LeUIBGEE%
+	BEGIN
+		LOG @17
+		SILENT
+		COPY ~%PKGNAME%/copy/ModsOptions/en_HideO.lua~ ~override~
+		COPY ~%PKGNAME%/copy/ModsOptions/M_HideO.lua~ ~override~
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/ModsOptions~
+				resource_file = ~MODOPEE.BAM~
+				pvrz_files = ~MOS5023.PVRZ~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/ModsOptions~
+				resource_file = ~GUIMGX1.MOS~
+				pvrz_files = ~MOS5025.PVRZ~
+				resource_rename = ~GUIMGX.MOS~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
+
+		// Append Hidden Game Options to UI.MENU
+		LOG @101002
+		SILENT
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/ModsOptions/modohidden4.menu~
+		LAUNCH_ACTION_MACRO UIMenuAppendFile
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			LAUNCH_ACTION_MACRO UIMenuClose
+			FAIL @101004
+		END
+	END
+
+	(%IsBGEE% OR %IsBG2%) AND %LeUISoD%
+	BEGIN
+		LOG @17
+		SILENT
+		COPY ~%PKGNAME%/copy/ModsOptions/en_HideO.lua~ ~override~
+		COPY ~%PKGNAME%/copy/ModsOptions/M_HideO.lua~ ~override~
+
+		// Append Hidden Game Options to UI.MENU
+		LOG @101002
+		SILENT
+		OUTER_SPRINT $UIMenuIF("Filespec") ~%PKGNAME%/menu/ModsOptions/modohidden6.menu~
+		LAUNCH_ACTION_MACRO UIMenuAppendFile
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			LAUNCH_ACTION_MACRO UIMenuClose
+			FAIL @101004
+		END
+	END
+
 	%IsBG2% %IsLeUIBG2%
 	BEGIN
 		// Copy override files
@@ -627,7 +693,6 @@ WITH
 
 	DEFAULT // Nothing left except Fail
 		FAIL @33
-
 END
 
 // All done - close up

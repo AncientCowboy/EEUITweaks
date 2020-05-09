@@ -15,7 +15,7 @@ menu
 	button
 	{
 		area 0 0 864 710
-		mosaic	GUIDCB
+		mosaic	GUIDCX
 		action
 		"
 			modOptionsIdx = 0
@@ -52,7 +52,7 @@ menu
 		hidehighlight
 		actionUpdate
 		"
-		
+
 			if(modOptionsIdx == 0) then
 				modOptionsInfo = 'MODOPT_INFO'
 			else
@@ -63,7 +63,7 @@ menu
 
 	text
 	{
-		area		36 478 399 133
+		area		63 492 348 100
 		pad			4 4 4 4
 		fill		0 0 0 128
 		text		lua "t(modOptionsInfo)"
@@ -157,9 +157,9 @@ menu
 	}
 
 	list
-	{	
-		column 
-		{ 
+	{
+		column
+		{
 			width 90
 			label
 			{
@@ -169,8 +169,8 @@ menu
 				text align left center
 			}
 		}
-		column 
-		{ 
+		column
+		{
 			width 10
 			label
 			{
@@ -186,7 +186,7 @@ menu
 		table		"modOptionsToggles"
 		var			modOptionsOpIdx
 		scrollbar	'GUISCRC'
-		action		
+		action
 		"
 			modOptionsOpInfo = modOptionsToggles[modOptionsOpIdx][2]
 
@@ -197,7 +197,7 @@ menu
 
 				if modOptionsToggles[modOptionsOpIdx][3] == 0 then
 					modOptionsToggles[modOptionsOpIdx][4] = 0
-				else 
+				else
 					modOptionsToggles[modOptionsOpIdx][4] = 1
 				end
 			end
@@ -209,7 +209,7 @@ menu
 			end
 		"
 	}
-	
+
 	text
 	{
 		area		106 288 382 148
@@ -228,7 +228,7 @@ menu
 
 	button
 	{
-		area		151 600 300 44
+		area		151 556 300 44
 		bam			GUIOSTCL
 		sequence	2
 		text 		"CANCEL_BUTTON"
@@ -240,14 +240,14 @@ menu
 	}
 	button
 	{
-		area		151 556 300 44
+		area		151 500 300 44
 		bam			GUIOSTCL
 		sequence	2
 		text 		"DONE_BUTTON"
 		text style	"button"
 		action
 		"
-			for index, var in ipairs(modOptionsToggles) do				
+			for index, var in ipairs(modOptionsToggles) do
 				modOptionSetToggleOption(index)
 			end
 			Infinity_PopMenu()

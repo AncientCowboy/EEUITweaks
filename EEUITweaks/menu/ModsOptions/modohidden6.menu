@@ -38,7 +38,7 @@ menu
 			currentHiddenSL = 0
 		"
 	}
-	
+
 	label
 	{
 		area		207 6 481 44
@@ -47,9 +47,9 @@ menu
 	}
 
 	list
-	{	
-		column 
-		{ 
+	{
+		column
+		{
 			width 90
 			label
 			{
@@ -59,8 +59,8 @@ menu
 				text align left center
 			}
 		}
-		column 
-		{ 
+		column
+		{
 			width 10
 			label
 			{
@@ -72,13 +72,13 @@ menu
 		}
 
 		area 36 186 360 424
-		
+
 		rowheight	46
 		table		"hiddenOptionsToggles"
 		var			currentHiddenIdx
 		scrollbar	'GUISCRC'
 
-		action		
+		action
 		"
 			currentHiddenInfo = hiddenOptionsToggles[currentHiddenIdx][2]
 			currentHiddenSL = 0
@@ -90,7 +90,7 @@ menu
 
 				if hiddenOptionsToggles[currentHiddenIdx][3] == 0 then
 					hiddenOptionsToggles[currentHiddenIdx][4] = 0
-				else 
+				else
 					hiddenOptionsToggles[currentHiddenIdx][4] = 1
 				end
 			end
@@ -105,12 +105,12 @@ menu
 		text style	"normal"
 		text align	left center
 		text ""
-		action 
+		action
 		"
 			currentHiddenSL = 1
-			currentHiddenInfo = hiddenOptionsSliders[currentHiddenSL][2] 
+			currentHiddenInfo = hiddenOptionsSliders[currentHiddenSL][2]
 			currentHiddenIdx = 0
-		" 
+		"
 	}
 	text
 	{
@@ -118,12 +118,12 @@ menu
 		text lua	"t(hiddenOptionsSliders[1][1])"
 		text style	"normal"
 		text align	left bottom
-		action 
+		action
 		"
 			currentHiddenSL = 1
-			currentHiddenInfo = hiddenOptionsSliders[currentHiddenSL][2] 
+			currentHiddenInfo = hiddenOptionsSliders[currentHiddenSL][2]
 			currentHiddenIdx = 0
-		" 
+		"
 	}
 	slider
 	{
@@ -138,7 +138,7 @@ menu
 		action
 		"
 			currentHiddenSL = 1
-			currentHiddenInfo = hiddenOptionsSliders[currentHiddenSL][2] 
+			currentHiddenInfo = hiddenOptionsSliders[currentHiddenSL][2]
 			currentHiddenIdx = 0
 		"
 	}
@@ -148,12 +148,12 @@ menu
 		text lua	"tostring(hiddenGetSliderValue(1))"
 		text style	"normal"
 		text align	right center
-		action 
+		action
 		"
 			currentHiddenSL = 1
-			currentHiddenInfo = hiddenOptionsSliders[currentHiddenSL][2] 
+			currentHiddenInfo = hiddenOptionsSliders[currentHiddenSL][2]
 			currentHiddenIdx = 0
-		" 
+		"
 	}
 
 -- Slider 2
@@ -164,12 +164,12 @@ menu
 		text style	"normal"
 		text align	left center
 		text ""
-		action 
+		action
 		"
 			currentHiddenSL = 2
-			currentHiddenInfo = hiddenOptionsSliders[currentHiddenSL][2] 
+			currentHiddenInfo = hiddenOptionsSliders[currentHiddenSL][2]
 			currentHiddenIdx = 0
-		" 
+		"
 	}
 	text
 	{
@@ -177,12 +177,12 @@ menu
 		text lua	"t(hiddenOptionsSliders[2][1])"
 		text style	"normal"
 		text align	left bottom
-		action 
+		action
 		"
 			currentHiddenSL = 2
-			currentHiddenInfo = hiddenOptionsSliders[currentHiddenSL][2] 
+			currentHiddenInfo = hiddenOptionsSliders[currentHiddenSL][2]
 			currentHiddenIdx = 0
-		" 
+		"
 	}
 	slider
 	{
@@ -197,7 +197,7 @@ menu
 		action
 		"
 			currentHiddenSL = 2
-			currentHiddenInfo = hiddenOptionsSliders[currentHiddenSL][2] 
+			currentHiddenInfo = hiddenOptionsSliders[currentHiddenSL][2]
 			currentHiddenIdx = 0
 		"
 	}
@@ -207,12 +207,12 @@ menu
 		text lua	"tostring(hiddenGetSliderValue(2))"
 		text style	"normal"
 		text align	right center
-		action 
+		action
 		"
 			currentHiddenSL = 2
-			currentHiddenInfo = hiddenOptionsSliders[currentHiddenSL][2] 
+			currentHiddenInfo = hiddenOptionsSliders[currentHiddenSL][2]
 			currentHiddenIdx = 0
-		" 
+		"
 	}
 
 -- Slider 3
@@ -223,12 +223,12 @@ menu
 		text style	"normal"
 		text align	left center
 		text ""
-		action 
+		action
 		"
 			currentHiddenSL = 3
-			currentHiddenInfo = hiddenOptionsSliders[currentHiddenSL][2] 
+			currentHiddenInfo = hiddenOptionsSliders[currentHiddenSL][2]
 			currentHiddenIdx = 0
-		" 
+		"
 	}
 	text
 	{
@@ -236,12 +236,12 @@ menu
 		text lua	"t(hiddenOptionsSliders[3][1])"
 		text style	"normal"
 		text align	left bottom
-		action 
+		action
 		"
 			currentHiddenSL = 3
-			currentHiddenInfo = hiddenOptionsSliders[currentHiddenSL][2] 
+			currentHiddenInfo = hiddenOptionsSliders[currentHiddenSL][2]
 			currentHiddenIdx = 0
-		" 
+		"
 	}
 	slider
 	{
@@ -256,7 +256,7 @@ menu
 		action
 		"
 			currentHiddenSL = 3
-			currentHiddenInfo = hiddenOptionsSliders[currentHiddenSL][2] 
+			currentHiddenInfo = hiddenOptionsSliders[currentHiddenSL][2]
 			currentHiddenIdx = 0
 		"
 	}
@@ -266,12 +266,12 @@ menu
 		text lua	"tostring(hiddenGetSliderValue(3))"
 		text style	"normal"
 		text align	right center
-		action 
+		action
 		"
 			currentHiddenSL = 3
-			currentHiddenInfo = hiddenOptionsSliders[currentHiddenSL][2] 
+			currentHiddenInfo = hiddenOptionsSliders[currentHiddenSL][2]
 			currentHiddenIdx = 0
-		" 
+		"
 	}
 
 	text
@@ -314,7 +314,7 @@ menu
 		text style	"button"
 		action
 		"
-			for index, var in ipairs(hiddenOptionsToggles) do				
+			for index, var in ipairs(hiddenOptionsToggles) do
 				hiddenSaveToggleOption(index)
 			end
 			for index, var in ipairs(hiddenOptionsSliders) do

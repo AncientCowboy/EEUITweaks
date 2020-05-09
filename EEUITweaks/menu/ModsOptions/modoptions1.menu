@@ -55,7 +55,6 @@ menu
 		hidehighlight
 		actionUpdate
 		"
-		
 			if(modOptionsIdx == 0) then
 				modOptionsInfo = 'MODOPT_INFO'
 			else
@@ -148,9 +147,9 @@ menu
 	}
 
 	list
-	{	
-		column 
-		{ 
+	{
+		column
+		{
 			width 90
 			label
 			{
@@ -160,14 +159,14 @@ menu
 				text align left center
 			}
 		}
-		column 
-		{ 
+		column
+		{
 			width 10
 			label
 			{
-				area		10 8 -1 -1
+				area		10 8 32 32
 				bam			ROUNDBUT
-				align 		center center
+				scaleToClip
 				frame		lua "modOptionsToggles[rowNumber][3]"
 			}
 		}
@@ -177,7 +176,7 @@ menu
 		table		"modOptionsToggles"
 		var			modOptionsOpIdx
 		scrollbar	'GUISCRC'
-		action		
+		action
 		"
 			modOptionsOpInfo = modOptionsToggles[modOptionsOpIdx][2]
 
@@ -188,7 +187,7 @@ menu
 
 				if modOptionsToggles[modOptionsOpIdx][3] == 0 then
 					modOptionsToggles[modOptionsOpIdx][4] = 0
-				else 
+				else
 					modOptionsToggles[modOptionsOpIdx][4] = 1
 				end
 			end
@@ -200,7 +199,7 @@ menu
 			end
 		"
 	}
-	
+
 	text
 	{
 		area		207 406 481 178
@@ -235,7 +234,7 @@ menu
 		text style	"button"
 		action
 		"
-			for index, var in ipairs(modOptionsToggles) do				
+			for index, var in ipairs(modOptionsToggles) do
 				modOptionSetToggleOption(index)
 			end
 			Infinity_PopMenu()

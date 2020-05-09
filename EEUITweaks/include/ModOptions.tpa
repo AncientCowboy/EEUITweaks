@@ -1605,17 +1605,20 @@ BEGIN
 		FAIL @44
 	END
 
-	LAF EEUITweaks.CopyPVRZResource
-		STR_VAR
-			source_folder = EVAL ~%PKGNAME%/copy/ModsOptions~
-			resource_file = ~GUIERR8.MOS~
-			pvrz_files = ~MOS5019.PVRZ~
-		RET
-			$UIMenuIF("Succeeded") = succeeded
-	END
-	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	ACTION_IF IsLeUISOD
 	BEGIN
-		FAIL @44
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/ModsOptions~
+				resource_file = ~GUIERR8.MOS~
+				pvrz_files = ~MOS5019.PVRZ~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
 	END
 
 	// Patch START_OPTIONS menu
@@ -1713,17 +1716,20 @@ BEGIN
 		FAIL @44
 	END
 
-	LAF EEUITweaks.CopyPVRZResource
-		STR_VAR
-			source_folder = EVAL ~%PKGNAME%/copy/ModsOptions~
-			resource_file = ~GUIERR8.MOS~
-			pvrz_files = ~MOS5019.PVRZ~
-		RET
-			$UIMenuIF("Succeeded") = succeeded
-	END
-	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	ACTION_IF IsLeUIBG1
 	BEGIN
-		FAIL @44
+		LAF EEUITweaks.CopyPVRZResource
+			STR_VAR
+				source_folder = EVAL ~%PKGNAME%/copy/ModsOptions~
+				resource_file = ~GUIERR8.MOS~
+				pvrz_files = ~MOS5019.PVRZ~
+			RET
+				$UIMenuIF("Succeeded") = succeeded
+		END
+		ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+		BEGIN
+			FAIL @44
+		END
 	END
 
 	// Patch START_OPTIONS menu
@@ -2631,9 +2637,12 @@ COPY ~%PKGNAME%/copy/ModsOptions/M__.lua~ ~override~
 COPY ~%PKGNAME%/copy/ModsOptions/M_ModsOp.lua~ ~override~
 COPY ~%PKGNAME%/copy/ModsOptions/en_ModOp.lua~ ~override~
 
+OUTER_SET LeUIBGEE = (MOD_IS_INSTALLED ~LeUI-BG1EE.tp2~ ~0~)
+OUTER_SET LeUISoD = (MOD_IS_INSTALLED ~LeUI-SoD.tp2~ ~0~)
+
 ACTION_MATCH 1
 WITH
-	%IsSoD% %IsEETSoD% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS4% %IsKRDS5% WHEN NOT(%IsKRDS0%)
+	%IsEETSoD% %IsKRDS1% %IsKRDS2% %IsKRDS3% %IsKRDS4% %IsKRDS5% WHEN NOT(%IsKRDS0%)
 	BEGIN
 		LAUNCH_ACTION_MACRO ModOptions.SoDSpecific
 	END
@@ -2655,12 +2664,35 @@ WITH
 
 	%IsBGEE%
 	BEGIN
-		LAUNCH_ACTION_MACRO ModOptions.BGEESpecific
+		ACTION_IF (LeUIBGEE | LeUISoD) THEN
+		BEGIN
+			LAUNCH_ACTION_MACRO ModOptions.LeUIBG1Specific
+		END ELSE
+		BEGIN
+			LAUNCH_ACTION_MACRO ModOptions.BGEESpecific
+		END
+	END
+
+	%IsSoD%
+	BEGIN
+		ACTION_IF (LeUIBGEE | LeUISoD) THEN
+		BEGIN
+			LAUNCH_ACTION_MACRO ModOptions.LeUISODSpecific
+		END ELSE
+		BEGIN
+			LAUNCH_ACTION_MACRO ModOptions.SoDSpecific
+		END
 	END
 
 	%IsBG2%
 	BEGIN
-		LAUNCH_ACTION_MACRO ModOptions.BG2TOBSpecific
+		ACTION_IF (LeUIBGEE | LeUISoD) THEN
+		BEGIN
+			LAUNCH_ACTION_MACRO ModOptions.LeUIBG2Specific
+		END ELSE
+		BEGIN
+			LAUNCH_ACTION_MACRO ModOptions.BG2TOBSpecific
+		END
 	END
 
 	%IsEETBG2%

@@ -52,7 +52,7 @@ REQUIRE_PREDICATE (
 ) @27
 
 ACTION_TRY
-	INCLUDE ~%PKGNAME%/include/ModOptionsSOD.tpa~
+	INCLUDE ~%PKGNAME%/include/ModOptions.tpa~
 WITH 
 	DEFAULT
 		LAM UIMenuAbort
