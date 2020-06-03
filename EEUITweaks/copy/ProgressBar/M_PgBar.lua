@@ -7,10 +7,6 @@ end
 MixIdtoClassIdMap = {}
 ClassIdToXPLevelMap = {}
 
-Infinity_DoFile("YZ_PgBar.lua") -- Loads MixIdtoClassIdMap
-Infinity_DoFile("WX_PgBar.lua") -- Loads ClassIdToXPLevelMap
-
-
 local u8asciiMatchString
 u8asciiMatchString = "^([^:]-)%s*:%D+(%d+)"
 local u3colonMatchString
@@ -28,7 +24,7 @@ LanguageMatch = {
 	['it_IT'] = u8asciiMatchString,
 	['ja_JP'] = u3colonMatchString,
 	['ko_KR'] = u8asciiMatchString,
-	['nb_NO'] = u8asciiMatchString, 
+	['nb_NO'] = u8asciiMatchString,
 	['pl_PL'] = u8asciiMatchString,
 	['pt_BR'] = u8asciiMatchString,
 	['ru_RU'] = u8asciiMatchString,
@@ -43,7 +39,7 @@ LanguageMatch = {
 ['IniInited'] => true once INI file info has been initialized
 ['Matchstring']  => appropriate language specific match string from LanguageMatch.
 Used to parse kit name and current level from characters[currentID].claslevel.first/second/third.details string
-[first kit name] => 
+[first kit name] =>
     {[1] MIXEDID,
      [2] => {[1]  Level 1 XP
              [2]  Level 2 XP
@@ -68,18 +64,21 @@ Used to parse kit name and current level from characters[currentID].claslevel.fi
 ['DualEmpty'] => true second level (initial class) progress bar for Dual-class characters will
                  appear empty when initial class is reactivated. False it will appear full
 ['DualGrey'] => true second level (initial class) progress bar will be grey-scale rather than
-                color for dual-class characters				 
+                color for dual-class characters
 ['NoPortrait'] => true disables portrait click alternate display
 ['FirstPortrait'] => 0 as last, 1 portrait, 2 alternate display
 ['NoCombat'] => true disables combat stats on alternate display
-['BarsBottom'] => true makes small portrait (and combat stats) appear above the 
+['BarsBottom'] => true makes small portrait (and combat stats) appear above the
                   progress bars on alternate display
 ]]
-	
+
 local KitStringToXPMap
 KitStringToXPMap = {}
 
 local function initializeXPMapKits()
+	Infinity_DoFile("YZ_PgBar.lua") -- Loads MixIdtoClassIdMap
+	Infinity_DoFile("WX_PgBar.lua") -- Loads ClassIdToXPLevelMap
+
 	for k,v in pairs(MixIdtoClassIdMap) do
 --		tstr = Infinity_FetchString(k)
 --		Infinity_Log(tostring(k) .. " -> " .. tstr .. " -> " .. tostring(v) .. "\n")
@@ -106,65 +105,65 @@ function prgBarUpdateOptions()
 	KitStringToXPMap['Full']  = bit32.bor(bit32.bor(bit32.lshift(v3,16),bit32.lshift(v2, 8)),v1)
 
 	v1 = Infinity_GetINIValue('Progress Bar','Disable Multiplier')
-	if(v1 and v1 ~= 0) then	
+	if(v1 and v1 ~= 0) then
 		KitStringToXPMap['NoMult'] = true
 	else
 		KitStringToXPMap['NoMult'] = false
 	end
 
 	v1 = Infinity_GetINIValue('Progress Bar','Disable Deltas')
-	if(v1 and v1 ~= 0) then	
+	if(v1 and v1 ~= 0) then
 		KitStringToXPMap['NoDelta'] = true
 	else
 		KitStringToXPMap['NoDelta'] = false
 	end
 
 	v1 = Infinity_GetINIValue('Progress Bar','Disable Level Up')
-	if(v1 and v1 ~= 0) then	
+	if(v1 and v1 ~= 0) then
 		KitStringToXPMap['NoLevel'] = true
 	else
 		KitStringToXPMap['NoLevel'] = false
 	end
 
 	v1 = Infinity_GetINIValue('Progress Bar','Empty Dual Enabled')
-	if(v1 and v1 ~= 0) then	
+	if(v1 and v1 ~= 0) then
 		KitStringToXPMap['DualEmpty'] = true
 	else
 		KitStringToXPMap['DualEmpty'] = false
 	end
 
 	v1 = Infinity_GetINIValue('Progress Bar','Grey Scale Dual-Class')
-	if(v1 and v1 ~= 0) then	
+	if(v1 and v1 ~= 0) then
 		KitStringToXPMap['DualGrey'] = true
 	else
 		KitStringToXPMap['DualGrey'] = false
 	end
 
 	v1 = Infinity_GetINIValue('Progress Bar','Disable Portrait Alternate')
-	if(v1 and v1 ~= 0) then	
+	if(v1 and v1 ~= 0) then
 		KitStringToXPMap['NoPortrait'] = true
 	else
 		KitStringToXPMap['NoPortrait'] = false
 	end
 
 	v1 = Infinity_GetINIValue('Progress Bar','Disable Combat Stats', 1)
-	if(v1 and v1 ~= 0) then	
+	if(v1 and v1 ~= 0) then
 		KitStringToXPMap['NoCombat'] = true
 	else
 		KitStringToXPMap['NoCombat'] = false
 	end
 
 	v1 = Infinity_GetINIValue('Progress Bar','Initial Display')
-	if(v1 and v1 == 1) then	
+	if(v1 and v1 == 1) then
 		KitStringToXPMap['FirstPortrait'] = 1
-	elseif(v1 and v1 == 2) then	
+	elseif(v1 and v1 == 2) then
 		KitStringToXPMap['FirstPortrait'] = 2
 	else
 		KitStringToXPMap['FirstPortrait'] = 0
 	end
-	
+
 	v1 = Infinity_GetINIValue('Progress Bar','Bars On Bottom', 1)
-	if(v1 and v1 ~= 0) then	
+	if(v1 and v1 ~= 0) then
 		KitStringToXPMap['BarsBottom'] = true
 	else
 		KitStringToXPMap['BarsBottom'] = false
@@ -195,18 +194,18 @@ end
 
 local function getDualToActivate()
 	local need, have = 0, 0
-	local dontcare, secondlevel = 
-		string.match(characters[currentID].classlevel.second.details, 
+	local dontcare, secondlevel =
+		string.match(characters[currentID].classlevel.second.details,
 					 KitStringToXPMap['Matchstring'])
 	secondlevel = tonumber(secondlevel)
-	
+
 	local firstlevel
-	dontcare, firstlevel = string.match(characters[currentID].classlevel.first.details, 
+	dontcare, firstlevel = string.match(characters[currentID].classlevel.first.details,
 										 KitStringToXPMap['Matchstring'])
 	firstlevel = tonumber(firstlevel)
 	if(firstlevel and secondlevel) then
 		if(firstlevel <= secondlevel) then
-			need = KitStringToXPMap[dontcare][2][secondlevel+1] 
+			need = KitStringToXPMap[dontcare][2][secondlevel+1]
 			have = characters[currentID].classlevel.first.xp
 		end
 	end
@@ -221,12 +220,12 @@ local function getCurrentLevelBaseXP(targetDetails)
 	-- Capture kit name, current level from targetDetails string
 	local targetKit,targetLevel = string.match(targetDetails, KitStringToXPMap['Matchstring'])
 	if	( -- Fail safe for kit strings that haven't yet been put into language files
-		targetKit and 
+		targetKit and
 		targetLevel and
 		#targetKit > 0 and
 		not string.match(targetKit, "placeholder") and
 		KitStringToXPMap[targetKit]
-		) 
+		)
 	then
 		currentlevelxp = KitStringToXPMap[targetKit][2][tonumber(targetLevel)]
 	end
@@ -243,13 +242,13 @@ function getNextLevelXPDeltas()
 		return characters[currentID].level.xp, characters[currentID].level.nextLvlXp
 	end
 
---[[ 
+--[[
 Array of current char/current level base XP for each class that is defined, allowed
 (e.g. not dual initial class) to level up, and whose next level up XP is the same as
 the char's 'nextLvlXp' value.
 ]]
-	local candidates = {} 
-	
+	local candidates = {}
+
 	if	(
 		characters[currentID].classlevel.third and
 		characters[currentID].classlevel.third.active and
@@ -258,7 +257,7 @@ the char's 'nextLvlXp' value.
 	then
 		candidates[#candidates+1] = getCurrentLevelBaseXP(characters[currentID].classlevel.third.details)
 	end
-	
+
 	if	(
 		characters[currentID].classlevel.second and
 		characters[currentID].classlevel.second.active and
@@ -267,11 +266,11 @@ the char's 'nextLvlXp' value.
 	then
 		candidates[#candidates+1] = getCurrentLevelBaseXP(characters[currentID].classlevel.second.details)
 	end
-	
+
 	if (characters[currentID].classlevel.first.nextLvlXp == characters[currentID].level.nextLvlXp) then
 		candidates[#candidates+1] = getCurrentLevelBaseXP(characters[currentID].classlevel.first.details)
 	end
-		
+
 	local currentlevelxp
 	if(#candidates > 0) then
 		currentlevelxp = candidates[1]
@@ -284,22 +283,22 @@ the char's 'nextLvlXp' value.
 	end
 
 	return characters[currentID].level.xp - currentlevelxp, characters[currentID].level.nextLvlXp - currentlevelxp
-end	
+end
 
 function getFirstLevelXPDeltas()
 	local currentlevelxp = 0
 	if(not KitStringToXPMap['NoDelta']) then
 		currentlevelxp = getCurrentLevelBaseXP(characters[currentID].classlevel.first.details)
 	end
-	return characters[currentID].classlevel.first.xp - currentlevelxp, 
+	return characters[currentID].classlevel.first.xp - currentlevelxp,
 	       characters[currentID].classlevel.first.nextLvlXp - currentlevelxp
 end
 
-function getSecondLevelXPDeltas()  
+function getSecondLevelXPDeltas()
 	if(not characters[currentID].classlevel.second) then  -- Fail safe
 		return characters[currentID].level.xp, characters[currentID].level.nextLvlXp
 	end
-	
+
 	local currentlevelxp = 0
 	local need, have
 	if (characters[currentID].classlevel.second.active) then -- Multi-class
@@ -328,12 +327,12 @@ function getThirdLevelXPDeltas()
 	if(not characters[currentID].classlevel.third) then -- Fail safe
 		return characters[currentID].level.xp, characters[currentID].level.nextLvlXp
 	end
-	
+
 	local currentlevelxp = 0
 	if(KitStringToXPMap['Matchstring'] and (not KitStringToXPMap['NoDelta'])) then
 		currentlevelxp = getCurrentLevelBaseXP(characters[currentID].classlevel.third.details)
 	end
-	return characters[currentID].classlevel.third.xp - currentlevelxp, 
+	return characters[currentID].classlevel.third.xp - currentlevelxp,
 	       characters[currentID].classlevel.third.nextLvlXp - currentlevelxp
 end
 
@@ -347,7 +346,7 @@ function getSecondLevelLabel()
 	if(not characters[currentID].classlevel.second) then  -- Fail safe
 		return ""
 	end
-	
+
 	local targetKit,targetLevel = string.match(characters[currentID].classlevel.second.details,
 	                                           KitStringToXPMap['Matchstring'])
 	return targetKit .. ': ' .. t("PGBAR_LEVEL_LABEL") .. ' '.. targetLevel
@@ -357,7 +356,7 @@ function getThirdLevelLabel()
 	if(not characters[currentID].classlevel.third) then  -- Fail safe
 		return ""
 	end
-	
+
 	local targetKit,targetLevel = string.match(characters[currentID].classlevel.third.details,
 	                                           KitStringToXPMap['Matchstring'])
 	return targetKit .. ': ' .. t("PGBAR_LEVEL_LABEL") .. ' '.. targetLevel
@@ -366,7 +365,7 @@ end
 function getCombatString()
 	local str = t("PGBAR_AC_LABEL") .. ' : ' .. characters[currentID].AC.current .. '\n'
 	str = str .. t("PGBAR_HP_LABEL") .. ' : ' .. characters[currentID].HP.current .. '/' .. characters[currentID].HP.max .. '\n'
-	str = str .. t("PGBAR_THAC0_LABEL") .. ' : ' .. characters[currentID].THAC0.current 
+	str = str .. t("PGBAR_THAC0_LABEL") .. ' : ' .. characters[currentID].THAC0.current
 	if(characters[currentID].THAC0.offhand) then
 		str = str .. '/' .. characters[currentID].THAC0.offhand
 	end
@@ -377,7 +376,7 @@ function getCombatString()
 	end
 	return str
 end
-	
+
 function firstCanLevelUp()
 	if(KitStringToXPMap['NoLevel']) then
 		return false
@@ -420,7 +419,7 @@ end
 
 local function getLevelString(dualoriginal, nextLevelXp, multiplier)
 	local str = ""
-	
+
 	if(not nextLevelXp) then  --Parsing for levels failed
 		str = t("PGBAR_UNKNOWN_LABEL")
 	elseif(dualoriginal) then
@@ -431,7 +430,7 @@ local function getLevelString(dualoriginal, nextLevelXp, multiplier)
 			str = str .. " "
 			str = str .. t("PGBAR_XP_LABEL")
 		else
-			str = t("PGBAR_ENABLED_LABEL")		
+			str = t("PGBAR_ENABLED_LABEL")
 		end
 	elseif(nextLevelXp > 0) then
 		str = t("PGBAR_NEXT_LEVEL_LABEL")
@@ -447,14 +446,14 @@ end
 
 function getAdjustedNextLevelString(targetclasslevel)
 	local multiplier = getMultiplier()
-	local nextLevelXp = characters[currentID].level.nextLvlXp - 
+	local nextLevelXp = characters[currentID].level.nextLvlXp -
 	                    characters[currentID].level.xp
 	return getLevelString(false, nextLevelXp, multiplier)
 end
 
-function getAdjustedFirstLevelString()	
+function getAdjustedFirstLevelString()
 	local multiplier = getMultiplier()
-	local nextLevelXp = characters[currentID].classlevel.first.nextLvlXp - 
+	local nextLevelXp = characters[currentID].classlevel.first.nextLvlXp -
 	                    characters[currentID].classlevel.first.xp
 	return getLevelString(false, nextLevelXp, multiplier)
 end
@@ -465,7 +464,7 @@ function getAdjustedSecondLevelString()
 	local nextLevelXp
 	if(characters[currentID].classlevel.second) then
 		if(characters[currentID].classlevel.second.active) then
-			nextLevelXp = characters[currentID].classlevel.second.nextLvlXp - 
+			nextLevelXp = characters[currentID].classlevel.second.nextLvlXp -
 			              characters[currentID].classlevel.second.xp
 		else
 			local need, have = getDualToActivate()
@@ -480,12 +479,12 @@ function getAdjustedThirdLevelString()
 	local multiplier = getMultiplier()
 	local nextLevelXp
 	if(characters[currentID].classlevel.third) then
-		nextLevelXp = characters[currentID].classlevel.third.nextLvlXp - 
+		nextLevelXp = characters[currentID].classlevel.third.nextLvlXp -
 		              characters[currentID].classlevel.third.xp
 	end
 	return getLevelString(false, nextLevelXp, multiplier)
 end
-		
+
 function prgBarColor()
 	return KitStringToXPMap['Color']
 end
@@ -527,12 +526,12 @@ function prgBarPBarsBottom()
 end
 
 --[[
-Called in CHARACTER:onopen, passed current value of 'hidePortrait', 
+Called in CHARACTER:onopen, passed current value of 'hidePortrait',
 returns value to be assigned to 'hidePortrait'.
 Return value is based on 'FirstPortrait' option
 ]]
 function prgBarInitialDisplay(hidePortrait)
-	if(KitStringToXPMap['NoPortrait']) then 
+	if(KitStringToXPMap['NoPortrait']) then
 		return false
 	elseif(KitStringToXPMap['FirstPortrait'] == 0) then -- Prior
 		return hidePortrait
@@ -544,7 +543,7 @@ function prgBarInitialDisplay(hidePortrait)
 end
 
 -- Progress Bar Options resources
--- Label Key, Description Key, toggle frame, toggle value, INI section name, INI option key  
+-- Label Key, Description Key, toggle frame, toggle value, INI section name, INI option key
 progBarOptionsToggles = {
 	{"PROGBAROPT_DISABLE_MULTIPLIER_LABEL",	"PROGBAROPT_DISABLE_MULTIPLIER_DESCR",	0,	0,	"Progress Bar",	"Disable Multiplier"},
 	{"PROGBAROPT_DISABLE_DELTAS_LABEL",		"PROGBAROPT_DISABLE_DELTAS_DESCR",		0,	0,	"Progress Bar",	"Disable Deltas"},
@@ -576,7 +575,7 @@ progBarFullSliders = {
 	{0,	"Progress Bar",	"Full Blue"},
 }
 
--- Portrait frame, Portrait state, Alternate frame, Alternate state, Prior frame, Prior state 
+-- Portrait frame, Portrait state, Alternate frame, Alternate state, Prior frame, Prior state
 progBarInitialRadio = {
 	{0,	0,	0,	0,	0,	0},
 }
@@ -622,7 +621,7 @@ function progBarGetFillText()
 end
 
 function progBarSaveFillOption(idx)
-	Infinity_SetINIValue(progBarColorSliders[idx][2], progBarColorSliders[idx][3], 
+	Infinity_SetINIValue(progBarColorSliders[idx][2], progBarColorSliders[idx][3],
 	                     ((progBarColorSliders[idx][1]==128) and 255 or (progBarColorSliders[idx][1]*2)))
 end
 
@@ -646,7 +645,7 @@ function progBarGetFullText()
 end
 
 function progBarSaveFullOption(idx)
-	Infinity_SetINIValue(progBarFullSliders[idx][2], progBarFullSliders[idx][3], 
+	Infinity_SetINIValue(progBarFullSliders[idx][2], progBarFullSliders[idx][3],
 	                     ((progBarFullSliders[idx][1]==128) and 255 or (progBarFullSliders[idx][1]*2)))
 end
 
