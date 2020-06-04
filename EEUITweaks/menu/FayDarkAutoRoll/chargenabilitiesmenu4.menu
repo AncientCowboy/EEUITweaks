@@ -1,77 +1,44 @@
 `
---auto-roller version 2.1.63.2.0006
-raceHasExceptionalStr = { 
-	true, -- Human
-	true, -- Elf
-	true, -- Half-Elf
-	true, -- Dwarf
-	false, -- Halfling
-	true, -- Gnome
-	true -- Half-Orc
-	}
-classHasExceptionalStr = { 
-	false, -- Mage
-	true, -- Fighter
-	false, -- Cleric
-	false, -- Thief
-	false, -- Bard
-	true, -- Paladin
-	true, -- Fighter / Mage
-	true, -- Fighter / Cleric
-	true, -- Fighter / Thief
-	true, -- Fighter / Mage / Thief
-	false, -- Druid
-	true, -- Ranger
-	false, -- Mage / Thief
-	false, -- Cleric / Mage
-	false, -- Cleric / Thief
-	true, -- Fighter / Druid
-	true, -- Fighter / Mage / Cleric
-	true, -- Cleric / Ranger
-	false, -- Sorcerer
-	false, -- Monk
-	false -- Shaman
- }
-function HasExceptionalStrength( )
-  return raceHasExceptionalStr[ chargen.selectedRace ] and classHasExceptionalStr[ chargen.selectedClass ]
-end
-
-function ShowExceptionalStrength( )
-	local strength = tonumber( string.sub( chargen.ability[ 1 ].roll, 1, 2 ) )
+--auto-roller version 0007
+function GetExceptionalStrength( )
 	local abilityToDec = 2
-	if strength ~= nil then
-		while ( strength ~= nil ) and ( strength < 18 ) do
-			createCharScreen:OnAbilityPlusMinusButtonClick( abilityToDec, false )
-			abilityToDec = abilityToDec + 1
-			if( abilityToDec == 7 ) then
-				abilityToDec = 2
-			end
+	while true do
+		local roll = chargen.ability[ abilityToDec ].roll
+		createCharScreen:OnAbilityPlusMinusButtonClick( abilityToDec, false )
+		if roll ~= chargen.ability[ abilityToDec ].roll then
+			roll = chargen.ability[ 1 ].roll
 			createCharScreen:OnAbilityPlusMinusButtonClick( 1, true )
-			strength = tonumber( string.sub( chargen.ability[ 1 ].roll, 1, 2 ) )
+			if roll == chargen.ability[ 1 ].roll then break end
+		end
+		
+		abilityToDec = abilityToDec + 1
+		if( abilityToDec == 7 ) then
+			abilityToDec = 2
 		end
 	end
+	createCharScreen:OnAbilityPlusMinusButtonClick( abilityToDec, true )
+
+	local exceptionalStrength = tonumber( string.sub( chargen.ability[ 1 ].roll, 4 ) )
+	if exceptionalStrength ~= nil then
+		if exceptionalStrength == 0 then
+			exceptionalStrength = 100
+		end	
+	else
+		exceptionalStrength = 0
+	end
+	return exceptionalStrength
 end
 
-function AutoRoll( )
-	createCharScreen:OnAbilityReRollButtonClick()
-	
+function StoreIfBest( )
 	local exceptionalStrength = 0
-	if( HasExceptionalStrength() ) then
-		ShowExceptionalStrength( )
-		exceptionalStrength = tonumber( string.sub( chargen.ability[ 1 ].roll, 4 ) )
-		if exceptionalStrength ~= nil then
-			if exceptionalStrength == 0 then
-				exceptionalStrength = 100
-			end	
-		else
-			exceptionalStrength = 0
-		end
+	if ( storedTotalRoll == chargen.totalRoll ) then
+		exceptionalStrength = GetExceptionalStrength( )
 	end
-	
-	if ( ( storedTotalRoll == chargen.totalRoll ) and ( chargen.ability[ 1 ].exceptional < exceptionalStrength ) ) or
+
+	if ( ( storedTotalRoll == chargen.totalRoll ) and ( storedExceptionalStrength < exceptionalStrength ) ) or
 		 ( storedTotalRoll < chargen.totalRoll ) then
 		storedTotalRoll = chargen.totalRoll
-		chargen.ability[ 1 ].exceptional = exceptionalStrength
+		storedExceptionalStrength = exceptionalStrength
 		chargen.ability[ 1 ].storedRoll = chargen.ability[ 1 ].roll
 		chargen.ability[ 2 ].storedRoll = chargen.ability[ 2 ].roll
 		chargen.ability[ 3 ].storedRoll = chargen.ability[ 3 ].roll
@@ -82,20 +49,14 @@ function AutoRoll( )
 	end
 end
 
-RerollFrame = 0
 storedTotalRoll = 0
+storedExceptionalStrength = 0
 function UpdateAutoRoll()
 	if rolling == 1 then
-		RerollFrame = RerollFrame + 1
-		if RerollFrame > 1 then
-			RerollFrame = 0
-		end
-	
-		if RerollFrame == 0 then
-		  local index = 1
-			for index = 1, 1000, 1 do
-				AutoRoll( )
-			end
+		local index = 1
+		for index = 1, 1000, 1 do
+			createCharScreen:OnAbilityReRollButtonClick()
+			StoreIfBest( )
 		end
 	end
 end
@@ -110,6 +71,24 @@ menu
 	"
 		ticksPassed = 0
 		ticksStarting = 0
+		rolling = 0
+
+		if not createCharScreen:IsAbilityRecallButtonClickable() then
+			storedTotalRoll = 0
+			storedExceptionalStrength = 0
+			chargen.ability[ 1 ].storedRoll = nil
+			chargen.ability[ 2 ].storedRoll = nil
+			chargen.ability[ 3 ].storedRoll = nil
+			chargen.ability[ 4 ].storedRoll = nil
+			chargen.ability[ 5 ].storedRoll = nil
+			chargen.ability[ 6 ].storedRoll = nil
+		end
+		Infinity_PlaySound('GAM_03')
+	"
+	onClose
+	"
+		rolling = 0
+		Infinity_PlaySound('GAM_04')
 	"
 	label
 	{
@@ -251,28 +230,22 @@ menu
 	}
 	button
 	{
-		area 432 578 340 32
+		area 454 578 340 32
 		bam GUICHLNG
 		sequence 0
 		text "AUTO-REROLL"
 		text style "button"
 		on A
-		action "
+		action
+		"
 			if rolling == 1 then
 				rolling = 0
 				createCharScreen:OnAbilityRecallButtonClick()
 			else
-				chargen.ability[ 1 ].exceptional = tonumber( string.sub( chargen.ability[ 1 ].roll, 4 ) )
-				if chargen.ability[ 1 ].exceptional ~= nil then
-					if chargen.ability[ 1 ].exceptional == 0 then
-						chargen.ability[ 1 ].exceptional = 100
-					end	
-				else
-					chargen.ability[ 1 ].exceptional = 0
-				end
-				storedTotalRoll = chargen.totalRoll
+				StoreIfBest()
 				rolling = 1
-			end"
+			end
+		"
 	}
 	button
 	{
@@ -297,24 +270,13 @@ menu
 		text "STORE_BUTTON"
 		text style "button"
 		on S
-		action "local exceptionalStrength = tonumber( string.sub( chargen.ability[ 1 ].roll, 4 ) )
-				if exceptionalStrength ~= nil then
-					if exceptionalStrength == 0 then
-						exceptionalStrength = 100
-					end	
-				else
-					exceptionalStrength = 0
-				end
-				storedTotalRoll = chargen.totalRoll
-				chargen.ability[ 1 ].exceptional = exceptionalStrength
-				chargen.ability[ 1 ].storedRoll = chargen.ability[ 1 ].roll
-				chargen.ability[ 2 ].storedRoll = chargen.ability[ 2 ].roll
-				chargen.ability[ 3 ].storedRoll = chargen.ability[ 3 ].roll
-				chargen.ability[ 4 ].storedRoll = chargen.ability[ 4 ].roll
-				chargen.ability[ 5 ].storedRoll = chargen.ability[ 5 ].roll
-				chargen.ability[ 6 ].storedRoll = chargen.ability[ 6 ].roll
-				createCharScreen:OnAbilityStoreButtonClick()
-				"
+		action
+		"
+			storedTotalRoll = 0
+			storedExceptionalStrength = 0
+			StoreIfBest()
+			createCharScreen:OnAbilityStoreButtonClick()
+		"
 	}
 	button
 	{
