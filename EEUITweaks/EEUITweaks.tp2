@@ -13,7 +13,8 @@
  *****************************************************************************/
 
 BACKUP ~EEUITweaks/backup~
-AUTHOR ~AncientCowboy & lefreut~
+//AUTHOR ~AncientCowboy~
+SUPPORT ~lefreut at https://www.gibberlings3.net/forums/topic/30832-ui-eeuitweaks-mod-collection-all-ees~
 
 ALWAYS
 	ACTION_IF NOT IS_AN_INT IsBG2 THEN
