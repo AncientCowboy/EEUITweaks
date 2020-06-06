@@ -2,7 +2,12 @@
 --auto-roller version 0007
 function GetExceptionalStrength( )
 	local abilityToDec = 2
-	while true do
+	local strength = tonumber( string.sub( chargen.ability[ 1 ].roll, 1, 2 ) )
+	while strength > 18 do
+		createCharScreen:OnAbilityPlusMinusButtonClick( 1, false )
+		strength = tonumber( string.sub( chargen.ability[ 1 ].roll, 1, 2 ) )
+	end
+	while strength < 18 do
 		local roll = chargen.ability[ abilityToDec ].roll
 		createCharScreen:OnAbilityPlusMinusButtonClick( abilityToDec, false )
 		if roll ~= chargen.ability[ abilityToDec ].roll then
@@ -10,11 +15,11 @@ function GetExceptionalStrength( )
 			createCharScreen:OnAbilityPlusMinusButtonClick( 1, true )
 			if roll == chargen.ability[ 1 ].roll then break end
 		end
-		
 		abilityToDec = abilityToDec + 1
 		if( abilityToDec == 7 ) then
 			abilityToDec = 2
 		end
+		strength = tonumber( string.sub( chargen.ability[ 1 ].roll, 1, 2 ) )
 	end
 	createCharScreen:OnAbilityPlusMinusButtonClick( abilityToDec, true )
 
@@ -22,7 +27,7 @@ function GetExceptionalStrength( )
 	if exceptionalStrength ~= nil then
 		if exceptionalStrength == 0 then
 			exceptionalStrength = 100
-		end	
+		end
 	else
 		exceptionalStrength = 0
 	end
