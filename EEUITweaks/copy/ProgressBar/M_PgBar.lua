@@ -551,26 +551,26 @@ progBarOptionsToggles = {
 	{"PROGBAROPT_ENABLE_EMPTYDUAL_LABEL",	"PROGBAROPT_ENABLE_EMPTYDUAL_DESCR", 	0,	0,	"Progress Bar",	"Empty Dual Enabled"},
 	{"PROGBAROPT_GREY_SCALE_DUAL_LABEL",	"PROGBAROPT_GREY_SCALE_DUAL_DESCR", 	0,	0,	"Progress Bar",	"Grey Scale Dual-Class"},
 	{"PROGBAROPT_DISABLE_PORTRAIT_LABEL",	"PROGBAROPT_DISABLE_PORTRAIT_DESCR", 	0,	0,	"Progress Bar",	"Disable Portrait Alternate"},
-	{"PROGBAROPT_DISABLE_COMBAT_LABEL",	    "PROGBAROPT_DISABLE_COMBAT_DESCR", 	    0,	0,	"Progress Bar",	"Disable Combat Stats"},
-	{"PROGBAROPT_BARS_BOTTOM_LABEL",	    "PROGBAROPT_BARS_BOTTOM_DESCR", 	    0,	0,	"Progress Bar",	"Bars On Bottom"},
+	{"PROGBAROPT_DISABLE_COMBAT_LABEL",	    "PROGBAROPT_DISABLE_COMBAT_DESCR", 	    0,	1,	"Progress Bar",	"Disable Combat Stats"},
+	{"PROGBAROPT_BARS_BOTTOM_LABEL",	    "PROGBAROPT_BARS_BOTTOM_DESCR", 	    0,	1,	"Progress Bar",	"Bars On Bottom"},
 }
 
 pstprogBarOptionsToggles = {
 	{"PROGBAROPT_DISABLE_MULTIPLIER_LABEL",	"PROGBAROPT_DISABLE_MULTIPLIER_DESCR",	0,	0,	"Progress Bar",	"Disable Multiplier"},
 	{"PROGBAROPT_DISABLE_DELTAS_LABEL",		"PROGBAROPT_DISABLE_DELTAS_DESCR",		0,	0,	"Progress Bar",	"Disable Deltas"},
-	{"PROGBAROPT_DISABLE_COMBAT_LABEL",	    "PROGBAROPT_DISABLE_COMBAT_DESCR", 	    0,	0,	"Progress Bar",	"Disable Combat Stats"},
+	{"PROGBAROPT_DISABLE_COMBAT_LABEL",	    "PROGBAROPT_DISABLE_COMBAT_DESCR", 	    0,	1,	"Progress Bar",	"Disable Combat Stats"},
 }
 
 -- slider value, INI section name, INI option key
 progBarColorSliders = {
-	{0,	"Progress Bar",	"Color Red"},
+	{128,	"Progress Bar",	"Color Red"},
 	{0,	"Progress Bar",	"Color Green"},
 	{0,	"Progress Bar",	"Color Blue"},
 }
 
 -- slider value, INI section name, INI option key
 progBarFullSliders = {
-	{0,	"Progress Bar",	"Full Red"},
+	{128,	"Progress Bar",	"Full Red"},
 	{0,	"Progress Bar",	"Full Green"},
 	{0,	"Progress Bar",	"Full Blue"},
 }
@@ -586,11 +586,11 @@ currentProgBarSlider = 0
 currentProgBarRadio = 0
 
 function progBarGetToggleOption(idx)
-	return Infinity_GetINIValue(progBarOptionsToggles[idx][5], progBarOptionsToggles[idx][6])
+	return Infinity_GetINIValue(progBarOptionsToggles[idx][5], progBarOptionsToggles[idx][6], progBarOptionsToggles[idx][4])
 end
 
 function pstprogBarGetToggleOption(idx)
-	return Infinity_GetINIValue(pstprogBarOptionsToggles[idx][5], pstprogBarOptionsToggles[idx][6])
+	return Infinity_GetINIValue(pstprogBarOptionsToggles[idx][5], pstprogBarOptionsToggles[idx][6], pstprogBarOptionsToggles[idx][4])
 end
 
 function progBarSaveToggleOption(idx)
@@ -602,7 +602,7 @@ function pstprogBarSaveToggleOption(idx)
 end
 
 function progBarGetFillOption(idx)
-	local rval = Infinity_GetINIValue(progBarColorSliders[idx][2], progBarColorSliders[idx][3])
+	local rval = Infinity_GetINIValue(progBarColorSliders[idx][2], progBarColorSliders[idx][3], progBarColorSliders[idx][1])
 	return (rval == 255) and 128 or math.floor(rval/2)
 end
 
@@ -626,7 +626,7 @@ function progBarSaveFillOption(idx)
 end
 
 function progBarGetFullOption(idx)
-	local rval = Infinity_GetINIValue(progBarFullSliders[idx][2], progBarFullSliders[idx][3])
+	local rval = Infinity_GetINIValue(progBarFullSliders[idx][2], progBarFullSliders[idx][3], progBarFullSliders[idx][1])
 	return (rval == 255) and 128 or math.floor(rval/2)
 end
 
@@ -699,7 +699,6 @@ end
 function progBarSavePortraitOption()
 	local val = (progBarInitialRadio[1][2] == 1 and 1) or (progBarInitialRadio[1][4] == 1 and 2) or 0
 	Infinity_SetINIValue('Progress Bar', 'Initial Display', val)
-	Infinity_SetINIValue('Progress Bar', 'IniOptionsSet', 1)
 end
 
 function getPercent(first, second)

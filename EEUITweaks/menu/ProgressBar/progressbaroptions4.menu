@@ -1,4 +1,3 @@
-
 -- Progress Bar Tweaks Options
 `
 if(modOptionsRegisterMenu) then
@@ -48,7 +47,7 @@ menu
 	
 	label
 	{
-		area		97 15 680 44
+		area		97 10 680 44
 		text		"PROGBAROPT_TITLE"
 		text style	title
 	}

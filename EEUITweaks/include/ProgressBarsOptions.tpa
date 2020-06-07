@@ -11,6 +11,50 @@ BEGIN
 	FAIL @20
 END
 
+ACTION_IF (MOD_IS_INSTALLED ~LeUI-BG1EE.tp2~ ~0~) AND (IsSoD | IsBG2 | IsEETBG2) THEN
+BEGIN
+	OUTER_SET IsBGEE = 1
+	OUTER_SET IsSoD = 0
+	OUTER_SET IsBG2 = 0
+	OUTER_SET IsEETBG2 = 0
+
+	LAF EEUITweaks.CopyPVRZResource
+		STR_VAR
+			source_folder = EVAL ~%PKGNAME%/copy/ProgressBar~
+			resource_file = ~GUICUSTX1.MOS~
+			pvrz_files = ~MOS5037.PVRZ~
+			resource_rename = ~GUICUSTX.MOS~
+		RET
+			$UIMenuIF("Succeeded") = succeeded
+	END
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @44
+	END
+END
+
+ACTION_IF (MOD_IS_INSTALLED ~LeUI-SoD.tp2~ ~0~) AND (IsBGEE | IsBG2 | IsEETBG2) THEN
+BEGIN
+	OUTER_SET IsBGEE = 1
+	OUTER_SET IsSoD = 0
+	OUTER_SET IsBG2 = 0
+	OUTER_SET IsEETBG2 = 0
+
+	LAF EEUITweaks.CopyPVRZResource
+		STR_VAR
+			source_folder = EVAL ~%PKGNAME%/copy/ProgressBar~
+			resource_file = ~GUICUSTX2.MOS~
+			pvrz_files = ~MOS5038.PVRZ~
+			resource_rename = ~GUICUSTX.MOS~
+		RET
+			$UIMenuIF("Succeeded") = succeeded
+	END
+	ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+	BEGIN
+		FAIL @44
+	END
+END
+
 ACTION_MATCH 1
 WITH
 	%IsBG2% %IsEETBG2% %IsLeUIBG2% %IsEETLeUI% %IsTIWDonBG2% %IsTIWDonSoD%

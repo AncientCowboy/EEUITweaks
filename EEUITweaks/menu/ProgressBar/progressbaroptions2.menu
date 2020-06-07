@@ -1,4 +1,3 @@
-
 -- Progress Bar Tweaks Options
 `
 if(modOptionsRegisterMenu) then
