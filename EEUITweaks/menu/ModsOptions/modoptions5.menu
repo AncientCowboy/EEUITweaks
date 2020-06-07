@@ -52,7 +52,6 @@ menu
 		hidehighlight
 		actionUpdate
 		"
-
 			if(modOptionsIdx == 0) then
 				modOptionsInfo = 'MODOPT_INFO'
 			else
