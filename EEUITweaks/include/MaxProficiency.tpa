@@ -1,0 +1,262 @@
+//
+// MaxProficiency.Patch4
+// On completion $UIMenuIF("Succeeded") 1 => Success, 0 => Failure
+//
+DEFINE_ACTION_MACRO MaxProficiency.Patch4
+BEGIN
+	LOCAL_SPRINT tempstr $UIMenuIF("Body")
+	LOCAL_SET found = 0
+
+	// Put current menu definition into inline file
+	COPY - ~ToInlineTemplate~ ~.../CounterInLine~
+		REPLACE_EVALUATE ~dummy~ BEGIN END
+		~%tempstr%~
+
+	OUTER_SPRINT tempstr ~~
+
+	// Look for and patch enabled
+	COPY - ~.../CounterInLine~ ~.../CounterInLine~
+		REPLACE_EVALUATE CASE_INSENSITIVE ~enabled%MWHITE%%MDQUOTE%\(.*\)\.value > 4%MDQUOTE%~
+		BEGIN
+			SPRINT tempstr ~opacity lua "(%MATCH1%.value > 4) and 255 or 100"%LE%%TAB%%TAB%%TAB%%TAB%enabled "%MATCH1%.max > 4"~
+			SET found = 1
+		END
+		~%tempstr%~
+
+	// Not found - give up
+	ACTION_IF NOT %found% THEN
+	BEGIN
+		LOG ~In MaxProficiency.Patch4 - failed to find enabled~
+		OUTER_SET $UIMenuIF("Succeeded") = 0
+	END ELSE 
+	// Success somewhere - copy .../CounterInLine to $UIMenuIF("Body")
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Body") ~~
+		OUTER_SET found = SIZE_OF_FILE ~.../CounterInLine~
+		COPY - ~.../CounterInLine~ ~.../CounterInLine~
+			READ_ASCII 0 $UIMenuIF("Body") (%found%-1)
+		OUTER_SET $UIMenuIF("Succeeded") = 1
+	END
+	COPY - ~EmptyInlineTemplate~ ~.../CounterInline~
+END
+
+DEFINE_ACTION_MACRO MaxProficiency.Patch3
+BEGIN
+	LOCAL_SPRINT tempstr $UIMenuIF("Body")
+	LOCAL_SET found = 0
+
+	// Put current menu definition into inline file
+	COPY - ~ToInlineTemplate~ ~.../CounterInLine~
+		REPLACE_EVALUATE ~dummy~ BEGIN END
+		~%tempstr%~
+
+	OUTER_SPRINT tempstr ~~
+
+	// Look for and patch enabled
+	COPY - ~.../CounterInLine~ ~.../CounterInLine~
+		REPLACE_EVALUATE CASE_INSENSITIVE ~enabled%MWHITE%%MDQUOTE%\(.*\)\.value > 3%MDQUOTE%~
+		BEGIN
+			SPRINT tempstr ~opacity lua "(%MATCH1%.value > 3) and 255 or 100"%LE%%TAB%%TAB%%TAB%%TAB%enabled "%MATCH1%.max > 3"~
+			SET found = 1
+		END
+		~%tempstr%~
+
+	// Not found - give up
+	ACTION_IF NOT %found% THEN
+	BEGIN
+		LOG ~In MaxProficiency.Patch3 - failed to find enabled~
+		OUTER_SET $UIMenuIF("Succeeded") = 0
+	END ELSE 
+	// Success somewhere - copy .../CounterInLine to $UIMenuIF("Body")
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Body") ~~
+		OUTER_SET found = SIZE_OF_FILE ~.../CounterInLine~
+		COPY - ~.../CounterInLine~ ~.../CounterInLine~
+			READ_ASCII 0 $UIMenuIF("Body") (%found%-1)
+		OUTER_SET $UIMenuIF("Succeeded") = 1
+	END
+	COPY - ~EmptyInlineTemplate~ ~.../CounterInline~
+END
+
+DEFINE_ACTION_MACRO MaxProficiency.Patch2
+BEGIN
+	LOCAL_SPRINT tempstr $UIMenuIF("Body")
+	LOCAL_SET found = 0
+
+	// Put current menu definition into inline file
+	COPY - ~ToInlineTemplate~ ~.../CounterInLine~
+		REPLACE_EVALUATE ~dummy~ BEGIN END
+		~%tempstr%~
+
+	OUTER_SPRINT tempstr ~~
+
+	// Look for and patch enabled
+	COPY - ~.../CounterInLine~ ~.../CounterInLine~
+		REPLACE_EVALUATE CASE_INSENSITIVE ~enabled%MWHITE%%MDQUOTE%\(.*\)\.value > 2%MDQUOTE%~
+		BEGIN
+			SPRINT tempstr ~opacity lua "(%MATCH1%.value > 2) and 255 or 100"%LE%%TAB%%TAB%%TAB%%TAB%enabled "%MATCH1%.max > 2"~
+			SET found = 1
+		END
+		~%tempstr%~
+
+	// Not found - give up
+	ACTION_IF NOT %found% THEN
+	BEGIN
+		LOG ~In MaxProficiency.Patch2 - failed to find enabled~
+		OUTER_SET $UIMenuIF("Succeeded") = 0
+	END ELSE 
+	// Success somewhere - copy .../CounterInLine to $UIMenuIF("Body")
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Body") ~~
+		OUTER_SET found = SIZE_OF_FILE ~.../CounterInLine~
+		COPY - ~.../CounterInLine~ ~.../CounterInLine~
+			READ_ASCII 0 $UIMenuIF("Body") (%found%-1)
+		OUTER_SET $UIMenuIF("Succeeded") = 1
+	END
+	COPY - ~EmptyInlineTemplate~ ~.../CounterInline~
+END
+
+DEFINE_ACTION_MACRO MaxProficiency.Patch1
+BEGIN
+	LOCAL_SPRINT tempstr $UIMenuIF("Body")
+	LOCAL_SET found = 0
+
+	// Put current menu definition into inline file
+	COPY - ~ToInlineTemplate~ ~.../CounterInLine~
+		REPLACE_EVALUATE ~dummy~ BEGIN END
+		~%tempstr%~
+
+	OUTER_SPRINT tempstr ~~
+
+	// Look for and patch enabled
+	COPY - ~.../CounterInLine~ ~.../CounterInLine~
+		REPLACE_EVALUATE CASE_INSENSITIVE ~enabled%MWHITE%%MDQUOTE%\(.*\)\.value > 1%MDQUOTE%~
+		BEGIN
+			SPRINT tempstr ~opacity lua "(%MATCH1%.value > 1) and 255 or 100"%LE%%TAB%%TAB%%TAB%%TAB%enabled "%MATCH1%.max > 1"~
+			SET found = 1
+		END
+		~%tempstr%~
+
+	// Not found - give up
+	ACTION_IF NOT %found% THEN
+	BEGIN
+		LOG ~In MaxProficiency.Patch1 - failed to find enabled~
+		OUTER_SET $UIMenuIF("Succeeded") = 0
+	END ELSE 
+	// Success somewhere - copy .../CounterInLine to $UIMenuIF("Body")
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Body") ~~
+		OUTER_SET found = SIZE_OF_FILE ~.../CounterInLine~
+		COPY - ~.../CounterInLine~ ~.../CounterInLine~
+			READ_ASCII 0 $UIMenuIF("Body") (%found%-1)
+		OUTER_SET $UIMenuIF("Succeeded") = 1
+	END
+	COPY - ~EmptyInlineTemplate~ ~.../CounterInline~
+END
+
+DEFINE_ACTION_MACRO MaxProficiency.Patch0
+BEGIN
+	LOCAL_SPRINT tempstr $UIMenuIF("Body")
+	LOCAL_SET found = 0
+
+	// Put current menu definition into inline file
+	COPY - ~ToInlineTemplate~ ~.../CounterInLine~
+		REPLACE_EVALUATE ~dummy~ BEGIN END
+		~%tempstr%~
+
+	OUTER_SPRINT tempstr ~~
+
+	// Look for and patch enabled
+	COPY - ~.../CounterInLine~ ~.../CounterInLine~
+		REPLACE_EVALUATE CASE_INSENSITIVE ~enabled%MWHITE%%MDQUOTE%\(.*\)\.value > 0%MDQUOTE%~
+		BEGIN
+			SPRINT tempstr ~opacity lua "(%MATCH1%.value > 0) and 255 or 100"%LE%%TAB%%TAB%%TAB%%TAB%enabled "%MATCH1%.max > 0"~
+			SET found = 1
+		END
+		~%tempstr%~
+
+	// Not found - give up
+	ACTION_IF NOT %found% THEN
+	BEGIN
+		LOG ~In MaxProficiency.Patch0 - failed to find enabled~
+		OUTER_SET $UIMenuIF("Succeeded") = 0
+	END ELSE 
+	// Success somewhere - copy .../CounterInLine to $UIMenuIF("Body")
+	BEGIN
+		OUTER_SPRINT $UIMenuIF("Body") ~~
+		OUTER_SET found = SIZE_OF_FILE ~.../CounterInLine~
+		COPY - ~.../CounterInLine~ ~.../CounterInLine~
+			READ_ASCII 0 $UIMenuIF("Body") (%found%-1)
+		OUTER_SET $UIMenuIF("Succeeded") = 1
+	END
+	COPY - ~EmptyInlineTemplate~ ~.../CounterInline~
+END
+
+/*******************************************************************************
+ * Display max proficiency limits
+ ******************************************************************************/
+// Open UI.MENU abstraction
+LOG @12
+SILENT
+LAUNCH_ACTION_MACRO UIMenuOpen
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @20
+END
+
+// Patch CHARGEN_PROFICIENCIES
+LOG @176
+SILENT
+
+OUTER_SPRINT $UIMenuIF("MenuName") ~CHARGEN_PROFICIENCIES~
+OUTER_SPRINT $UIMenuIF("Body") ~~
+LAUNCH_ACTION_MACRO UIMenuGetMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @177
+END
+
+LAUNCH_ACTION_MACRO MaxProficiency.Patch4
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @178
+END
+
+LAUNCH_ACTION_MACRO MaxProficiency.Patch3
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @178
+END
+
+LAUNCH_ACTION_MACRO MaxProficiency.Patch2
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @178
+END
+
+LAUNCH_ACTION_MACRO MaxProficiency.Patch1
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @178
+END
+
+LAUNCH_ACTION_MACRO MaxProficiency.Patch0
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @178
+END
+
+LAUNCH_ACTION_MACRO UIMenuUpdateMenu
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @103
+END
+
+// All done - close up
+LOG @13
+SILENT
+LAUNCH_ACTION_MACRO UIMenuClose
+ACTION_IF NOT $UIMenuIF("Succeeded") THEN
+BEGIN
+	FAIL @21
+END

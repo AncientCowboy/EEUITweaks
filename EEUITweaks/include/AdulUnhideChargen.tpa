@@ -1156,7 +1156,7 @@ END
 /*******************************************************************************
  * CGProficienciesPatch3
  * Replaces all occurances of chargen.proficiency[rowNumber].value
- * with getTranslatedProficiencyValue(rowNumber)
+ * with getTranslatedProficiency(rowNumber).value
  *
  * On completion $UIMenuIF("Succeeded") 1 => Success, 0 => Failure
  * 
@@ -1164,7 +1164,7 @@ END
 DEFINE_ACTION_MACRO AdulUnhideChargen.CGProficienciesPatch3
 BEGIN
 	LOCAL_SPRINT tempstr $UIMenuIF("Body")
-	LOCAL_SPRINT adder ~getTranslatedProficiencyValue(rowNumber)~
+	LOCAL_SPRINT adder ~getTranslatedProficiency(rowNumber).value~
 	LOCAL_SET found = 0
 
 	// Put current menu definition into inline file
@@ -1296,7 +1296,7 @@ END
 /*******************************************************************************
  * CGProficienciesPatch6
  * Replaces all occurances of chargen.proficiency[currentChargenProficiency].id
- * with getTranslatedProficiencyId(currentChargenProficiency)
+ * with getTranslatedProficiency(currentChargenProficiency).id
  *
  * On completion $UIMenuIF("Succeeded") 1 => Success, 0 => Failure
  * 
@@ -1304,7 +1304,7 @@ END
 DEFINE_ACTION_MACRO AdulUnhideChargen.CGProficienciesPatch6
 BEGIN
 	LOCAL_SPRINT tempstr $UIMenuIF("Body")
-	LOCAL_SPRINT adder ~getTranslatedProficiencyId(currentChargenProficiency)~
+	LOCAL_SPRINT adder ~getTranslatedProficiency(currentChargenProficiency).id~
 	LOCAL_SET found = 0
 
 	// Put current menu definition into inline file

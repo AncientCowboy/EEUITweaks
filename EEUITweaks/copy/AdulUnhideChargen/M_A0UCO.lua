@@ -199,22 +199,13 @@ function getTranslatedProficiencyEnabled(row)
 	return false
 end
 
-function getTranslatedProficiencyId(row)
+function getTranslatedProficiency(row)
 	if (not profRowDict) then
-		return chargen.proficiency[row].id
+		return chargen.proficiency[row]
 	elseif (profRowDict[row] and chargen.proficiency[profRowDict[row]]) then
-		return chargen.proficiency[profRowDict[row]].id
+		return chargen.proficiency[profRowDict[row]]
 	end
-	return nil
-end
-
-function getTranslatedProficiencyValue(row)
-	if (not profRowDict) then
-		return chargen.proficiency[row].value
-	elseif (profRowDict[row] and chargen.proficiency[profRowDict[row]]) then
-		return chargen.proficiency[profRowDict[row]].value
-	end
-	return 0
+	return {}
 end
 
 function getProficiencyHelpText()

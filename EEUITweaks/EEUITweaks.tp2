@@ -393,6 +393,25 @@ WITH
 END
 
 
+/******************************************************************************
+ * Display max proficiency limits
+ *****************************************************************************/
+BEGIN @110000 DESIGNATED 1100
+GROUP @1
+REQUIRE_PREDICATE (
+	(FILE_EXISTS_IN_GAME ~UI.MENU~) AND // IE 2.0+
+	(GAME_IS ~bgee bg2ee eet iwdee~)
+) @27
+
+ACTION_TRY
+	INCLUDE ~%PKGNAME%/include/MaxProficiency.tpa~
+WITH 
+	DEFAULT
+		LAM UIMenuAbort
+		ACTION_RERAISE
+END
+
+
 ///////////////////////////////////////////////////////////////////////////////
 // Game World/Maps/Travel Group
 ///////////////////////////////////////////////////////////////////////////////
