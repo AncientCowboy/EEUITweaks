@@ -54,14 +54,21 @@ function StoreIfBest( )
 	end
 end
 
+RerollFrame = 0
 storedTotalRoll = 0
 storedExceptionalStrength = 0
 function UpdateAutoRoll()
 	if rolling == 1 then
-		local index = 1
-		for index = 1, 1000, 1 do
-			createCharScreen:OnAbilityReRollButtonClick()
-			StoreIfBest( )
+		RerollFrame = RerollFrame + 1
+		if RerollFrame > 1 then
+			RerollFrame = 0
+		end
+	
+		if RerollFrame == 0 then
+		  local index = 1
+			for index = 1, 1000, 1 do
+				AutoRoll( )
+			end
 		end
 	end
 end
