@@ -65,9 +65,10 @@ function UpdateAutoRoll()
 		end
 	
 		if RerollFrame == 0 then
-		  local index = 1
+			local index = 1
 			for index = 1, 1000, 1 do
-				AutoRoll( )
+				createCharScreen:OnAbilityReRollButtonClick()
+				StoreIfBest( )
 			end
 		end
 	end
