@@ -260,10 +260,12 @@ menu
 			currentChargenProficiency = nil
 			if ticksStarting <= 10 then
 				if createCharScreen:IsThiefSkillPlusMinusButtonClickable() then
-					if cellNumber == 3 then
-						createCharScreen:OnThiefSkillPlusMinusButtonClick(chargen.thief_skill[currentChargenThiefSkill].id, not chargenReverseButtons)
-					elseif cellNumber == 4 then
-						createCharScreen:OnThiefSkillPlusMinusButtonClick(chargen.thief_skill[currentChargenThiefSkill].id, chargenReverseButtons)
+					local plusCell = chargenReverseButtons and 4 or 3
+					local minusCell = chargenReverseButtons and 3 or 4
+					if cellNumber == plusCell then
+						createCharScreen:OnThiefSkillPlusMinusButtonClick(chargen.thief_skill[currentChargenThiefSkill].id, true)
+					elseif cellNumber == minusCell then
+						createCharScreen:OnThiefSkillPlusMinusButtonClick(chargen.thief_skill[currentChargenThiefSkill].id, false)
 					end
 				end
 			end
@@ -278,10 +280,12 @@ menu
 				ticksStarting = ticksStarting + 1
 				if ticksStarting == 1 and (cellNumber == 3 or cellNumber == 4) then Infinity_PlaySound('GAM_09') end
 				if ticksStarting > 10 then
-					if cellNumber == 3 then
-						createCharScreen:OnThiefSkillPlusMinusButtonClick(chargen.thief_skill[currentChargenThiefSkill].id, not chargenReverseButtons)
-					elseif cellNumber == 4 then
-						createCharScreen:OnThiefSkillPlusMinusButtonClick(chargen.thief_skill[currentChargenThiefSkill].id, chargenReverseButtons)
+					local plusCell = chargenReverseButtons and 4 or 3
+					local minusCell = chargenReverseButtons and 3 or 4
+					if cellNumber == plusCell then
+						createCharScreen:OnThiefSkillPlusMinusButtonClick(chargen.thief_skill[currentChargenThiefSkill].id, true)
+					elseif cellNumber == minusCell then
+						createCharScreen:OnThiefSkillPlusMinusButtonClick(chargen.thief_skill[currentChargenThiefSkill].id, false)
 					end
 				end
 			end
