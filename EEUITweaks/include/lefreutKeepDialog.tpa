@@ -16,6 +16,9 @@ BEGIN
 
 	OUTER_SPRINT tempstr ~~
 
+	COPY - ~.../CounterInLine~ ~.../CounterInLine~
+		REPLACE_TEXTUALLY ~Infinity_PopMenu()~ ~Infinity_PopMenu('WORLD_DEATH')~
+
 	// Look for and patch onopen followed by double quoted code block
 	COPY - ~.../CounterInLine~ ~.../CounterInLine~
 		REPLACE_EVALUATE CASE_INSENSITIVE ~onopen%MWHITE%%MDQUOTE%\(%MNOTDQUOTE%*\)%MDQUOTE%~ 

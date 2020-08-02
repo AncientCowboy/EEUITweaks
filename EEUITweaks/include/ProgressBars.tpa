@@ -471,7 +471,7 @@ BEGIN
 	COPY - ~ToInlineTemplate~ ~.../CounterInLine~
 		REPLACE_EVALUATE ~dummy~ BEGIN END
 		~%tempstr%~
-	OUTER_SPRINT teempstr ~~
+	OUTER_SPRINT tempstr ~~
 
 	// Check to see if the patch has already been manually applied. If so, replace it
 	COPY - ~.../CounterInLine~ ~.../CounterInLine~
@@ -656,7 +656,7 @@ BEGIN
 	COPY - ~ToInlineTemplate~ ~.../CounterInLine~
 		REPLACE_EVALUATE ~dummy~ BEGIN END
 		~%tempstr%~
-	OUTER_SPRINT teempstr ~~
+	OUTER_SPRINT tempstr ~~
 
 	// Find and replace Portrait label
 	COPY - ~.../CounterInLine~ ~.../CounterInLine~

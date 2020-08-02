@@ -18,7 +18,7 @@ BEGIN
 	COPY - ~ToInlineTemplate~ ~.../CounterInLine~
 		REPLACE_EVALUATE ~dummy~ BEGIN END
 		~%tempstr%~
-	OUTER_SPRINT teempstr ~~
+	OUTER_SPRINT tempstr ~~
 
 	// Allow for other patches that may have already added onopen - first single quote delimited
 	COPY - ~.../CounterInLine~ ~.../CounterInLine~
@@ -89,7 +89,7 @@ BEGIN
 	COPY - ~ToInlineTemplate~ ~.../CounterInLine~
 		REPLACE_EVALUATE ~dummy~ BEGIN END
 		~%tempstr%~
-	OUTER_SPRINT teempstr ~~
+	OUTER_SPRINT tempstr ~~
 
 	// Find target, insert code
 	COPY - ~.../CounterInLine~ ~.../CounterInLine~
@@ -144,7 +144,7 @@ BEGIN
 	COPY - ~ToInlineTemplate~ ~.../CounterInLine~
 		REPLACE_EVALUATE ~dummy~ BEGIN END
 		~%tempstr%~
-	OUTER_SPRINT teempstr ~~
+	OUTER_SPRINT tempstr ~~
 
 	// Find target, insert code
 	COPY - ~.../CounterInLine~ ~.../CounterInLine~
@@ -199,7 +199,7 @@ BEGIN
 	COPY - ~ToInlineTemplate~ ~.../CounterInLine~
 		REPLACE_EVALUATE ~dummy~ BEGIN END
 		~%tempstr%~
-	OUTER_SPRINT teempstr ~~
+	OUTER_SPRINT tempstr ~~
 
 	// Find target, insert code
 	COPY - ~.../CounterInLine~ ~.../CounterInLine~
@@ -254,7 +254,7 @@ BEGIN
 	COPY - ~ToInlineTemplate~ ~.../CounterInLine~
 		REPLACE_EVALUATE ~dummy~ BEGIN END
 		~%tempstr%~
-	OUTER_SPRINT teempstr ~~
+	OUTER_SPRINT tempstr ~~
 
 	// Find target, insert code
 	COPY - ~.../CounterInLine~ ~.../CounterInLine~
@@ -302,7 +302,7 @@ BEGIN
 	COPY - ~ToInlineTemplate~ ~.../CounterInLine~
 		REPLACE_EVALUATE ~dummy~ BEGIN END
 		~%tempstr%~
-	OUTER_SPRINT teempstr ~~
+	OUTER_SPRINT tempstr ~~
 
 	// Find target, insert code
 	COPY - ~.../CounterInLine~ ~.../CounterInLine~
@@ -351,7 +351,7 @@ BEGIN
 	COPY - ~ToInlineTemplate~ ~.../CounterInLine~
 		REPLACE_EVALUATE ~dummy~ BEGIN END
 		~%tempstr%~
-	OUTER_SPRINT teempstr ~~
+	OUTER_SPRINT tempstr ~~
 
 	// Find target, insert code
 	COPY - ~.../CounterInLine~ ~.../CounterInLine~
@@ -406,7 +406,7 @@ BEGIN
 	COPY - ~ToInlineTemplate~ ~.../CounterInLine~
 		REPLACE_EVALUATE ~dummy~ BEGIN END
 		~%tempstr%~
-	OUTER_SPRINT teempstr ~~
+	OUTER_SPRINT tempstr ~~
 
 	// Find target, insert code
 	COPY - ~.../CounterInLine~ ~.../CounterInLine~
@@ -455,7 +455,7 @@ BEGIN
 	COPY - ~ToInlineTemplate~ ~.../CounterInLine~
 		REPLACE_EVALUATE ~dummy~ BEGIN END
 		~%tempstr%~
-	OUTER_SPRINT teempstr ~~
+	OUTER_SPRINT tempstr ~~
 
 	// Find target, insert code
 	COPY - ~.../CounterInLine~ ~.../CounterInLine~
@@ -510,7 +510,7 @@ BEGIN
 	COPY - ~ToInlineTemplate~ ~.../CounterInLine~
 		REPLACE_EVALUATE ~dummy~ BEGIN END
 		~%tempstr%~
-	OUTER_SPRINT teempstr ~~
+	OUTER_SPRINT tempstr ~~
 
 	// Find target, insert code
 	COPY - ~.../CounterInLine~ ~.../CounterInLine~
@@ -565,7 +565,7 @@ BEGIN
 	COPY - ~ToInlineTemplate~ ~.../CounterInLine~
 		REPLACE_EVALUATE ~dummy~ BEGIN END
 		~%tempstr%~
-	OUTER_SPRINT teempstr ~~
+	OUTER_SPRINT tempstr ~~
 
 	// Find target, insert code
 	COPY - ~.../CounterInLine~ ~.../CounterInLine~
@@ -620,7 +620,7 @@ BEGIN
 	COPY - ~ToInlineTemplate~ ~.../CounterInLine~
 		REPLACE_EVALUATE ~dummy~ BEGIN END
 		~%tempstr%~
-	OUTER_SPRINT teempstr ~~
+	OUTER_SPRINT tempstr ~~
 
 	// Find target, insert code
 	COPY - ~.../CounterInLine~ ~.../CounterInLine~
