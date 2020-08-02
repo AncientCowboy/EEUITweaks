@@ -54,73 +54,46 @@ menu
 			width 25
 			label
 			{
-				enabled "bookSpells[4 * rowNumber - 3] ~= nil"
 				area 6 5 52 52
 				bam LUIWDBUT
-				icon lua "getIconName(bookSpells[4 * rowNumber - 3])"
-				count lua "getCastableCount(4 * rowNumber - 3)"
+				icon lua "getIconName(bookSpells[rowNumber])"
+				count lua "getCastableCount(rowNumber)"
 				align center center
 			}
 		}
 		column
 		{
-			width 25
+			width 75
 			label
 			{
-				enabled "bookSpells[4 * rowNumber - 2] ~= nil"
-				area 6 5 52 52
-				bam LUIWDBUT
-				icon lua "getIconName(bookSpells[4 * rowNumber - 2])"
-				count lua "getCastableCount(4 * rowNumber - 2)"
-				align center center
-			}
-		}
-		column
-		{
-			width 25
-			label
-			{
-				enabled "bookSpells[4 * rowNumber - 1] ~= nil"
-				area 6 5 52 52
-				bam LUIWDBUT
-				icon lua "getIconName(bookSpells[4 * rowNumber - 1])"
-				count lua "getCastableCount(4 * rowNumber - 1)"
-				align center center
-			}
-		}
-		column
-		{
-			width 25
-			label
-			{
-				enabled "bookSpells[4 * rowNumber] ~= nil"
-				area 6 5 52 52
-				bam LUIWDBUT
-				icon lua "getIconName(bookSpells[4 * rowNumber])"
-				count lua "getCastableCount(4 * rowNumber)"
-				align center center
+				area 10 0 -1 -1
+				text lua "Infinity_FetchString(bookSpells[rowNumber].name)"
+				text style "normal"
+				text color D
+				text align left center
 			}
 		}
 		area 54 130 256 248
 		scrollbar 'GUISCRC'
 		rowheight 62
 		hidehighlight
-		table "makeTable(math.ceil(#bookSpells / 4))"
+		table "bookSpells"
 		var currentBookSpell
 		action
 		"
 			contingencyDescription = mageBookStrings[contingencyResRef].tip
-			local idx = 4 * (currentBookSpell - 1) + cellNumber
-			if bookSpells[idx] and #bottomSpells < #bottomSpellsPlaceHolder then
-				Infinity_PlaySound('GAM_24')
-				mageScreen:SequenceSpell(bookSpells[idx].resref, bookSpells[idx].masterResref)
+			if bookSpells[currentBookSpell] then
+				if cellNumber == 1 and #bottomSpells < #bottomSpellsPlaceHolder then
+					Infinity_PlaySound('GAM_24')
+					mageScreen:SequenceSpell(bookSpells[currentBookSpell].resref, bookSpells[currentBookSpell].masterResref)
+				end
+				contingencyDescription = bookSpells[currentBookSpell].description
 			end
 		"
 		actionAlt
 		"
-			local idx = 4 * (currentBookSpell - 1) + cellNumber
-			if bookSpells[idx] then
-				contingencyDescription = bookSpells[idx].description
+			if bookSpells[currentBookSpell] then
+				contingencyDescription = bookSpells[currentBookSpell].description
 			end
 		"
 	}
