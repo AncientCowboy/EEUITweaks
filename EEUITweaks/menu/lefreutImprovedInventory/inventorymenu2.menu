@@ -195,7 +195,7 @@ menu
 			}
 			label
 			{
-				area		8 0 262 -1
+				area		8 0 250 -1
 				enabled		"inventoryStats[rowNumber][1] == 2 or inventoryStats[rowNumber][1] == 3"
 				text		lua "inventoryStats[rowNumber][2]"
 				text style  'normal'
@@ -254,7 +254,7 @@ menu
 			}
 			label
 			{
-				area		8 0 262 -1
+				area		8 0 250 -1
 				enabled		"inventoryStats[rowNumber][1] == 2 or inventoryStats[rowNumber][1] == 3"
 				text		lua "inventoryStats[rowNumber][2]"
 				text style  'normal'
@@ -262,7 +262,7 @@ menu
 			}
 			label
 			{
-				area		8 0 262 -1
+				area		8 0 250 -1
 				enabled		"inventoryStats[rowNumber][1] == 3"
 				text		lua "inventoryStats[rowNumber][3]"
 				text style  'normal'
